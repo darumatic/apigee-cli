@@ -1,0 +1,2329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>apigee.api package &mdash; apigee-cli 0.31.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="apigee.abstract.api package" href="apigee.abstract.api.html" />
+    <link rel="prev" title="auth" href="../auth.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> apigee-cli
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../auth.html">auth</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">apigee.api package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.apiproducts">apigee.api.apiproducts module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.apis">apigee.api.apis module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.apps">apigee.api.apps module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.caches">apigee.api.caches module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.debugsessions">apigee.api.debugsessions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.deploy">apigee.api.deploy module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.deployments">apigee.api.deployments module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.developers">apigee.api.developers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.keyvaluemaps">apigee.api.keyvaluemaps module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.maskconfigs">apigee.api.maskconfigs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.permissions">apigee.api.permissions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.targetservers">apigee.api.targetservers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.userroles">apigee.api.userroles module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="apigee.abstract.api.html">apigee.abstract.api package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apigee.parsers.html">apigee.parsers package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Apache License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../disclaimer.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../help.html">Need Help</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">apigee-cli</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>apigee.api package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/apigee.api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="apigee-api-package">
+<h1>apigee.api package<a class="headerlink" href="#apigee-api-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-apigee.api.apiproducts">
+<span id="apigee-api-apiproducts-module"></span><h2>apigee.api.apiproducts module<a class="headerlink" href="#module-apigee.api.apiproducts" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/api-products-1">https://apidocs.apigee.com/api/api-products-1</a></p>
+<p>Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/organizations">https://api.enterprise.apigee.com/v1/organizations</a>/{org_name}</p>
+<p>API Resource Path: /apiproducts</p>
+<p>A list of URIs with an associated Quota (or “service plan”), which is used to
+expose customized API bundles to different developer groups.</p>
+<p>API products enable you to bundle and distribute your APIs to multiple developer
+groups simultaneously, without having to modify code. An API product consists of
+a list of API resources (URIs) combined with a Service Plan (rate-limiting
+policy settings) plus any custom metadata required by the API provider.
+API products provide the basis for access control in Apigee, since they provide
+control over the set of API resources that apps are allowed to consume.</p>
+<p>As part of the app provisioning workflow, developers select from a list of
+API products. This selection of an API product is usually made in the context of
+a developer portal. The developer app is provisioned with a key and secret
+(generated by and stored on Apigee Edge) that enable the app to access the URIs
+bundled in the selected API product. To access access API resources bundled in
+an API product, the app must present the API key issued by Apigee Edge.
+Apigee Edge will resolve the key that is presented against an API product, and
+then check associated  API resources and quota settings.</p>
+<p>The API supports multiple API products per app key–your developers can consume
+multiple API products without requiring multiple keys. Also, a key can be
+‘promoted’ from one API product to another. This enables you to promote
+developers from ‘free’ to ‘premium’ API products seamlessly and without user
+interruption.</p>
+<dl class="class">
+<dt id="apigee.api.apiproducts.Apiproducts">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.apiproducts.</code><code class="sig-name descname">Apiproducts</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.apiproducts.IApiproducts" title="apigee.abstract.api.apiproducts.IApiproducts"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apiproducts.IApiproducts</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.apiproducts.Apiproducts.create_api_product">
+<code class="sig-name descname">create_api_product</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.create_api_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an API product</p>
+<p>A list of API resources (URIs) combined with Quota settings that you can
+use to deliver customized API bundles to your developers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apiproducts.Apiproducts.delete_api_product">
+<code class="sig-name descname">delete_api_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.delete_api_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes an API Product</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apiproducts.Apiproducts.get_api_product">
+<code class="sig-name descname">get_api_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.get_api_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an API Product</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apiproducts.Apiproducts.list_api_products">
+<code class="sig-name descname">list_api_products</code><span class="sig-paren">(</span><em class="sig-param">prefix=None</em>, <em class="sig-param">expand=False</em>, <em class="sig-param">count=1000</em>, <em class="sig-param">startkey=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.list_api_products" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists all API Products by name for an organization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string.
+Defaults to None.</p></li>
+<li><p><strong>expand</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, show product details.
+Defaults to False.</p></li>
+<li><p><strong>count</strong> (<em>int</em><em>, </em><em>optional</em>) – Apigee Edge for Public Cloud only:
+Number of API products to return in the API call.
+The maximum limit is 1000. Use with the startkey to provide more
+targeted filtering.</p></li>
+<li><p><strong>startkey</strong> (<em>str</em><em>, </em><em>optional</em>) – Apigee Edge for Public Cloud only:
+Returns a list of API products starting with the specified
+API product.
+For example, if you’re returning 50 API products at a time
+(using the count query parameter), you can view products 50-99
+by entering the name of the 50th API product in the first API.
+The API product name is case sensitive.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apiproducts.Apiproducts.push_apiproducts">
+<code class="sig-name descname">push_apiproducts</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.push_apiproducts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push API product file to Apigee</p>
+<p>This will create an API product if it does not exist and update if it
+does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – The file path.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HTTPError</strong> – If response status code is not successful or 404.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apiproducts.Apiproducts.update_api_product">
+<code class="sig-name descname">update_api_product</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.update_api_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method updates an existing API product</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.apis">
+<span id="apigee-api-apis-module"></span><h2>apigee.api.apis module<a class="headerlink" href="#module-apigee.api.apis" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api-reference/content/api-proxies">https://apidocs.apigee.com/api-reference/content/api-proxies</a></p>
+<p>The proxy APIs let you perform operations on API proxies, such as create,
+delete, update, and deploy.</p>
+<p>You expose APIs on Apigee Edge by implementing API proxies.
+API proxies decouple the app-facing API from your backend services, shielding
+those apps from backend code changes.
+As you make backend changes to your services, apps continue to call the same API
+without any interruption.</p>
+<dl class="class">
+<dt id="apigee.api.apis.Apis">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.apis.</code><code class="sig-name descname">Apis</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.apis.IApis" title="apigee.abstract.api.apis.IApis"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apis.IApis</span></code></a>, <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.apis.IPull" title="apigee.abstract.api.apis.IPull"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apis.IPull</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.apis.Apis.delete_api_proxy_revision">
+<code class="sig-name descname">delete_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.delete_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a revision of an API proxy and all policies, resources,
+endpoints, and revisions associated with it.</p>
+<p>The API proxy revision must be undeployed before you can delete it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>revision_number</strong> (<em>int</em>) – The API proxy revision to delete.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.delete_undeployed_revisions">
+<code class="sig-name descname">delete_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">save_last=0</em>, <em class="sig-param">dry_run=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.delete_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes all undeployed revisions of an API proxy and all policies,
+resources, and endpoints associated with it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_last</strong> (<em>int</em><em>, </em><em>optional</em>) – Exclude <code class="docutils literal notranslate"><span class="pre">n</span></code> last revisions from
+deletion.
+Defaults to 0 (delete all undeployed revisions).</p></li>
+<li><p><strong>dry_run</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, only show revisions to be deleted
+(do not actually delete).
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of revisions deleted or to be deleted
+(if <code class="docutils literal notranslate"><span class="pre">dry_run</span></code> is True).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.deploy_api_proxy_revision">
+<code class="sig-name descname">deploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">environment</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">delay=0</em>, <em class="sig-param">override=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.deploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deploys a revision of an existing API proxy to an environment in an
+organization.</p>
+<p>API proxies cannot be invoked until they have been deployed to an
+environment.</p>
+<p>No body is required for this API call, because this simply executes a
+deploy command for an undeployed API proxy revision that already exists
+in your Edge organization.</p>
+<p>If you experience HTTP 500 errors during API proxy deployment,
+see Seamless deployment (zero downtime) for information on using the
+override and delay parameters. That topic also has more details on API
+proxy deployment.</p>
+<dl class="simple">
+<dt>About API proxies that use shared flows</dt><dd><ul class="simple">
+<li><p>Edge does not validate the dependencies between shared flows and
+API proxies at deploy time.</p></li>
+<li><p>For example, if the Flow Callout policy in an API proxy references a
+shared flow that either doesn’t exist or isn’t deployed,
+API proxy deployment still succeeds.</p></li>
+<li><p>When Edge checks the dependency at runtime and validation fails,
+Edge throws an API proxy error with a 500 HTTP status code.</p></li>
+</ul>
+</dd>
+<dt>Pass override as a form parameter</dt><dd><ul class="simple">
+<li><p>When set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, the <code class="docutils literal notranslate"><span class="pre">override</span></code> form parameter forces
+deployment of the new revision by overriding conflict checks between
+revisions.</p></li>
+<li><p>Set this parameter to <code class="docutils literal notranslate"><span class="pre">true</span></code> when using the <code class="docutils literal notranslate"><span class="pre">delay</span></code> parameter to
+minimize impact on in-flight transaction during deployment.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>revision_number</strong> (<em>int</em>) – The API proxy revision to deploy.</p></li>
+<li><p><strong>delay</strong> (<em>int</em><em>, </em><em>optional</em>) – Enforces a delay, measured in seconds,
+before the currently deployed API proxy revision is undeployed
+and replaced by the new revision that is being deployed.
+Use this setting to minimize the impact of deployment on
+in-flight transactions.
+The default value is 0.</p></li>
+<li><p><strong>override</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag that specifies whether to use
+seamless deployment to ensure zero downtime.
+Set this flag to “true” to instruct Edge to deploy the new
+revision fully before undeploying the existing revision.
+Use in conjunction with the <code class="docutils literal notranslate"><span class="pre">delay</span></code> parameter to control when
+the existing revision is undeployed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.export_api_proxy">
+<code class="sig-name descname">export_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">write=True</em>, <em class="sig-param">output_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_api_proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outputs an API proxy revision as a ZIP formatted bundle of code and
+config files.</p>
+<p>This enables local configuration and development, including attachment
+of policies and scripts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>revision_number</strong> (<em>int</em>) – The API Proxy revision to export.</p></li>
+<li><p><strong>write</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, write to ZIP file.
+Defaults to True.</p></li>
+<li><p><strong>output_file</strong> (<em>str</em><em>, </em><em>optional</em>) – Path of the output file.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.export_keyvaluemap_dependencies">
+<code class="sig-name descname">export_keyvaluemap_dependencies</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">keyvaluemaps</em>, <em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_keyvaluemap_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports KeyValueMaps from Apigee.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>keyvaluemaps</strong> (<em>list</em>) – List of KVMs to GET from Apigee.</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, overwrite existing files in the
+current working directory.
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.export_targetserver_dependencies">
+<code class="sig-name descname">export_targetserver_dependencies</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">targetservers</em>, <em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_targetserver_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports Targetservers from Apigee.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>targetservers</strong> (<em>list</em>) – List of target servers to GET from Apigee.</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, overwrite existing files in the
+current working directory.
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.force_undeploy_api_proxy_revision">
+<code class="sig-name descname">force_undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">environment</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.force_undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force the undeployment of the API proxy that is partially deployed.</p>
+<p>This can be necessary if the API proxy becomes partially deployed and
+must be undeployed, then redeployed.</p>
+<p>You must specify the revision number of the API proxy because multiple
+revisions of the same API Proxy can be deployed in the same environment
+if the proxy base path is different.</p>
+<p>See Undeploy API Proxy for the standard undeploy API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>revision_number</strong> (<em>int</em>) – The API proxy revision to undeploy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.gen_deployment_detail">
+<code class="sig-name descname">gen_deployment_detail</code><span class="sig-paren">(</span><em class="sig-param">deployment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.gen_deployment_detail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates deployment detail</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deployment</strong> (<em>dict</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_api_proxy">
+<code class="sig-name descname">get_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">api_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_api_proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an API proxy by name, including a list of existing revisions of
+the proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_apiproxy_basepath">
+<code class="sig-name descname">get_apiproxy_basepath</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_apiproxy_basepath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the basepath of an API Proxy by parsing an <code class="docutils literal notranslate"><span class="pre">apiproxy</span></code> bundle
+directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>directory</strong> (<em>str</em>) – Path of <code class="docutils literal notranslate"><span class="pre">apiproxy</span></code> bundle.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>basepath, file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str, str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>AttributeError</strong> – If no <code class="docutils literal notranslate"><span class="pre">BasePath</span></code> can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_apiproxy_files">
+<code class="sig-name descname">get_apiproxy_files</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_apiproxy_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the paths of all <code class="docutils literal notranslate"><span class="pre">apiproxy</span></code> bundle files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>directory</strong> (<em>str</em>) – Path of <code class="docutils literal notranslate"><span class="pre">apiproxy</span></code> bundle.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of <code class="docutils literal notranslate"><span class="pre">apiproxy</span></code> bundle files.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_deployed_revisions">
+<code class="sig-name descname">get_deployed_revisions</code><span class="sig-paren">(</span><em class="sig-param">details</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_deployed_revisions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets list of deployed revisions from deployment details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>details</strong> (<em>dict</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_deployment_details">
+<code class="sig-name descname">get_deployment_details</code><span class="sig-paren">(</span><em class="sig-param">details</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_deployment_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets deployment details</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>details</strong> (<em>dict</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_keyvaluemap_dependencies">
+<code class="sig-name descname">get_keyvaluemap_dependencies</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_keyvaluemap_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all <code class="docutils literal notranslate"><span class="pre">mapIdentifier</span></code> names for all <code class="docutils literal notranslate"><span class="pre">KeyValueMapOperations</span></code>
+XML files.</p>
+<p>This will automatically ignore files that are not
+<code class="docutils literal notranslate"><span class="pre">KeyValueMapOperations</span></code> files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>files</strong> (<em>list</em>) – List of <code class="docutils literal notranslate"><span class="pre">KeyValueMapOperations</span></code> XML files.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_targetserver_dependencies">
+<code class="sig-name descname">get_targetserver_dependencies</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_targetserver_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all <code class="docutils literal notranslate"><span class="pre">Server</span></code> values used in an API Proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>files</strong> (<em>list</em>) – List of API Proxy files.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_undeployed_revisions">
+<code class="sig-name descname">get_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param">revisions</em>, <em class="sig-param">deployed</em>, <em class="sig-param">save_last=0</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets list of undeployed revisions by comparing all API Proxy
+revisions with currently deployed revisons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>revisions</strong> (<em>list</em>) – List of all API Proxy revisions.</p></li>
+<li><p><strong>deployed</strong> (<em>list</em>) – List of currently deployed API Proxy revisions.</p></li>
+<li><p><strong>save_last</strong> (<em>int</em><em>, </em><em>optional</em>) – Exclude <code class="docutils literal notranslate"><span class="pre">n</span></code> last revisions from result.
+Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.list_api_proxies">
+<code class="sig-name descname">list_api_proxies</code><span class="sig-paren">(</span><em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.list_api_proxies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the names of all API proxies in an organization.</p>
+<p>The names correspond to the names defined in the configuration files for
+each API proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Path of the output file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.list_api_proxy_revisions">
+<code class="sig-name descname">list_api_proxy_revisions</code><span class="sig-paren">(</span><em class="sig-param">api_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.list_api_proxy_revisions" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all revisions for an API proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.prefix_dependencies_in_work_tree">
+<code class="sig-name descname">prefix_dependencies_in_work_tree</code><span class="sig-paren">(</span><em class="sig-param">dependencies</em>, <em class="sig-param">prefix</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.prefix_dependencies_in_work_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a prefix string to all instances of the specified strings within
+the current working directory (recursively).</p>
+<p>This will ignore paths with <code class="docutils literal notranslate"><span class="pre">.git</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dependencies</strong> (<em>list</em>) – List of strings to add a prefix to.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em>) – Prefix to add.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.pull">
+<code class="sig-name descname">pull</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">dependencies=[]</em>, <em class="sig-param">force=False</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">basepath=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pull API Proxy revision and its dependencies from Apigee.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dependencies</strong> (<em>list</em><em>, </em><em>optional</em>) – Initial list of dependencies to
+<code class="docutils literal notranslate"><span class="pre">pull</span></code> from Apigee.
+Defaults to <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, overwrite existing files.
+Defaults to False.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Prefix to add. Defaults to None.</p></li>
+<li><p><strong>basepath</strong> (<em>str</em><em>, </em><em>optional</em>) – New basepath to overwrite the existing
+one.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>exported API Proxy, KeyValueMaps,
+Targetservers</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response(), list, list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.replace_substring">
+<code class="sig-name descname">replace_substring</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">old</em>, <em class="sig-param">new</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.replace_substring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces old string in file with new string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – The file path.</p></li>
+<li><p><strong>old</strong> (<em>str</em>) – The old string to replace.</p></li>
+<li><p><strong>new</strong> (<em>str</em>) – The new string to replace the old string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.set_apiproxy_basepath">
+<code class="sig-name descname">set_apiproxy_basepath</code><span class="sig-paren">(</span><em class="sig-param">basepath</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.set_apiproxy_basepath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the basepath of an API Proxy file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>basepath</strong> (<em>str</em>) – New basepath to overwrite the existing one.</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – Path of the file with the <code class="docutils literal notranslate"><span class="pre">BasePath</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>AttributeError</strong> – If no <code class="docutils literal notranslate"><span class="pre">BasePath</span></code> can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.undeploy_api_proxy_revision">
+<code class="sig-name descname">undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">environment</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Undeploys an API proxy revision from an environment.</p>
+<p>You must specify the revision number of the API proxy because multiple
+revisions of the same API Proxy can be deployed in the same environment
+if the proxy base path is different.</p>
+<p>See Force Undeploy API Proxy for the API to force the undeployment of an
+API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>revision_number</strong> (<em>int</em>) – The API proxy revision to undeploy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.apps">
+<span id="apigee-api-apps-module"></span><h2>apigee.api.apps module<a class="headerlink" href="#module-apigee.api.apps" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/apps-developer">https://apidocs.apigee.com/api/apps-developer</a>,
+<a class="reference external" href="https://apidocs.apigee.com/api/developer-app-keys">https://apidocs.apigee.com/api/developer-app-keys</a></p>
+<p>Apps associated with developers (as developer apps).</p>
+<p>Apps are API consumers registered with an API provider’s organization.
+Apps are registered with an organization to obtain credentials that enable
+access to one or more API products (or, a set of URIs). The default app profile
+can be extended by using custom attributes.</p>
+<dl class="class">
+<dt id="apigee.api.apps.Apps">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.apps.</code><code class="sig-name descname">Apps</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.apps.IApps" title="apigee.abstract.api.apps.IApps"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apps.IApps</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.apps.Apps.add_api_product_to_key">
+<code class="sig-name descname">add_api_product_to_key</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">consumer_key</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.add_api_product_to_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an API product to a developer app key, enabling the app that
+holds the key to access the API resources bundled in the API product.</p>
+<p>You can also use this API to add attributes to the key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>consumer_key</strong> (<em>str</em><em>, </em><em>optional</em>) – Consumer key to add the API Product
+to.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apps.Apps.create_a_consumer_key_and_secret">
+<code class="sig-name descname">create_a_consumer_key_and_secret</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">consumer_key=None</em>, <em class="sig-param">consumer_secret=None</em>, <em class="sig-param">key_length=32</em>, <em class="sig-param">secret_length=32</em>, <em class="sig-param">key_suffix=None</em>, <em class="sig-param">key_delimiter='-'</em>, <em class="sig-param">products=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_a_consumer_key_and_secret" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a custom consumer key and secret for a developer app.</p>
+<p>This is particularly useful if you want to migrate existing consumer
+keys/secrets to Edge from another system.</p>
+<p>Consumer keys and secrets can contain letters, numbers, underscores,
+and hyphens. No other special characters are allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>consumer_key</strong> (<em>str</em><em>, </em><em>optional</em>) – Consumer key to create.</p></li>
+<li><p><strong>consumer_secret</strong> (<em>str</em><em>, </em><em>optional</em>) – Consumer secret to create.</p></li>
+<li><p><strong>key_length</strong> (<em>int</em><em>, </em><em>optional</em>) – Length of the consumer key to generate
+if <code class="docutils literal notranslate"><span class="pre">consumer_key</span></code> is not specified.
+Defaults to 32 characters.</p></li>
+<li><p><strong>secret_length</strong> (<em>int</em><em>, </em><em>optional</em>) – Length of the consumer secret to
+generate if <code class="docutils literal notranslate"><span class="pre">consumer_secret</span></code> is not specified.
+Defaults to 32 characters.</p></li>
+<li><p><strong>key_suffix</strong> (<em>str</em><em>, </em><em>optional</em>) – String to append to consumer key.
+Defaults to None.</p></li>
+<li><p><strong>key_delimiter</strong> (<em>str</em><em>, </em><em>optional</em>) – String to delimit <code class="docutils literal notranslate"><span class="pre">consumer_key</span></code>
+and <code class="docutils literal notranslate"><span class="pre">key_suffix</span></code>.
+Defaults to ‘-‘.</p></li>
+<li><p><strong>products</strong> (<em>list</em><em>, </em><em>optional</em>) – List of API Products to add to the
+consumer key and secret.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apps.Apps.create_developer_app">
+<code class="sig-name descname">create_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_developer_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an app associated with a developer, associates the app with
+an API product, and auto-generates an API key for the app to use in
+calls to API proxies inside the API product.</p>
+<p>The name is the unique ID of the app that you can use in management API
+calls.
+The DisplayName (set with an attribute) is what appears in the
+management UI.
+If you don’t provide a DisplayName, the name is used.</p>
+<p>The keyExpiresIn property sets the expiration on the API key.
+If you don’t set this, or set the value to -1, they API key never
+expires.</p>
+<p>Apigee recommends that you use the developer’s email address when
+calling this API.
+Developer IDs are generated internally by Apigee and are not guaranteed
+to stay the same over time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apps.Apps.create_empty_developer_app">
+<code class="sig-name descname">create_empty_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">display_name=''</em>, <em class="sig-param">callback_url=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_empty_developer_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an empty developer app.</p>
+<dl class="simple">
+<dt>This method combines three API calls to Apigee:</dt><dd><ol class="arabic simple">
+<li><p>Create a developer app with the option to specify display name and
+callback URL</p></li>
+<li><p>Delete default key created for the new developer app</p></li>
+<li><p>Get the developer details</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>display_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The <code class="docutils literal notranslate"><span class="pre">DisplayName</span></code> is what appears in
+the management UI. If you don’t provide a <code class="docutils literal notranslate"><span class="pre">DisplayName</span></code>, the
+<code class="docutils literal notranslate"><span class="pre">name</span></code> is used.</p></li>
+<li><p><strong>callback_url</strong> (<em>str</em><em>, </em><em>optional</em>) – The callbackUrl is used by OAuth 2.0
+authorization servers to communicate authorization codes back to
+apps.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apps.Apps.delete_developer_app">
+<code class="sig-name descname">delete_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.delete_developer_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a developer app.</p>
+<dl class="simple">
+<dt>Note the following:</dt><dd><ul class="simple">
+<li><p>With Apigee Edge for Public Cloud, deletion of the developer app and
+associated artifacts happens asynchronously.
+The developer app is deleted immediately, but the resources
+associated with that developer app, such as app keys or access
+tokens, may take anywhere from a few seconds to a few minutes to be
+automatically deleted.</p></li>
+<li><p>Apigee recommends that you use the developer’s email address when
+calling this API. Developer IDs are generated internally by Apigee
+and are not guaranteed to stay the same over time.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apps.Apps.delete_key_for_a_developer_app">
+<code class="sig-name descname">delete_key_for_a_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">consumer_key</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.delete_key_for_a_developer_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a consumer key that belongs to an app, and removes all API
+products associated with the app.</p>
+<p>Once deleted, the consumer key cannot be used to access any APIs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>consumer_key</strong> (<em>str</em>) – Consumer key to delete.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apps.Apps.get_developer_app_details">
+<code class="sig-name descname">get_developer_app_details</code><span class="sig-paren">(</span><em class="sig-param">developer</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.get_developer_app_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the profile of a specific developer app.</p>
+<p>All times in the response are UNIX times.</p>
+<p>Note that the response contains a top-level attribute named accessType
+that is no longer used by Apigee.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apps.Apps.list_developer_apps">
+<code class="sig-name descname">list_developer_apps</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">expand=False</em>, <em class="sig-param">count=100</em>, <em class="sig-param">startkey=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.list_developer_apps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists all apps created by a developer in an organization, and
+optionally provides an expanded view of the apps.</p>
+<p>All time values in the response are UNIX times.</p>
+<p>You can specify either the developer’s email address or Edge ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string.
+Defaults to None.</p></li>
+<li><p><strong>expand</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, show app details.
+Defaults to False.</p></li>
+<li><p><strong>count</strong> (<em>int</em><em>, </em><em>optional</em>) – This parameter can be used with Apigee Edge
+for Public Cloud only.
+Limits the list to the number you specify. The limit is 100.
+Use with the startKey parameter to provide more targeted
+filtering.</p></li>
+<li><p><strong>startkey</strong> (<em>str</em><em>, </em><em>optional</em>) – This parameter can be used with Apigee
+Edge for Public Cloud only.
+To filter the keys that are returned, enter the name of a
+company app that the list will start with.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apps.Apps.restore_app">
+<code class="sig-name descname">restore_app</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.restore_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore developer app file to Apigee.</p>
+<dl class="simple">
+<dt>This method combines four different types of API calls to Apigee:</dt><dd><ol class="arabic simple">
+<li><p>Create a developer app</p></li>
+<li><p>Delete default key created for the new developer app</p></li>
+<li><p>For each consumer key and secret pair, add (create) to the new app</p></li>
+<li><p>Get the developer details</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – The file path.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.caches">
+<span id="apigee-api-caches-module"></span><h2>apigee.api.caches module<a class="headerlink" href="#module-apigee.api.caches" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/caches">https://apidocs.apigee.com/api/caches</a></p>
+<p>API Platform Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
+<p>API Resource Path: /environments/{env_name}/caches</p>
+<p>A lightweight persistence store that can be used by policies or code executing
+on the Apigee Edge.</p>
+<p>To support data segregation, cache resources are scoped to environments.</p>
+<dl class="class">
+<dt id="apigee.api.caches.Caches">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.caches.</code><code class="sig-name descname">Caches</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.caches.ICaches" title="apigee.abstract.api.caches.ICaches"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.caches.ICaches</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.caches.Caches.clear_a_cache_entry">
+<code class="sig-name descname">clear_a_cache_entry</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.clear_a_cache_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears a cache entry, which is identified by the full CacheKey prefix
+and value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>entry</strong> (<em>str</em>) – The cache entry to clear.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.caches.Caches.clear_all_cache_entries">
+<code class="sig-name descname">clear_all_cache_entries</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.clear_all_cache_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears all entries from the specified cache.</p>
+<p>Entries to be cleared can be scoped by CacheKey prefix by using the
+‘prefix’ parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.caches.Caches.create_a_cache_in_an_environment">
+<code class="sig-name descname">create_a_cache_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.create_a_cache_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a cache in an environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.caches.Caches.delete_a_cache">
+<code class="sig-name descname">delete_a_cache</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.delete_a_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a cache.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.caches.Caches.get_information_about_a_cache">
+<code class="sig-name descname">get_information_about_a_cache</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.get_information_about_a_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets information about a cache.</p>
+<p>The response might contain a property named <code class="docutils literal notranslate"><span class="pre">persistent</span></code>.
+That property is no longer used by Edge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.caches.Caches.list_caches_in_an_environment">
+<code class="sig-name descname">list_caches_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.list_caches_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>List caches in an environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.caches.Caches.push_cache">
+<code class="sig-name descname">push_cache</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.push_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push cache file to Apigee</p>
+<p>This will create a cache if it does not exist and update if it does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – The file path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HTTPError</strong> – If response status code is not successful or 404.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.caches.Caches.update_a_cache_in_an_environment">
+<code class="sig-name descname">update_a_cache_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.update_a_cache_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates a cache in an environment.</p>
+<p>You must specify the complete definition of the cache,
+including the properties that you want to change and the ones that
+retain their current value.
+Any properties omitted from the request body are reset to their default
+value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.debugsessions">
+<span id="apigee-api-debugsessions-module"></span><h2>apigee.api.debugsessions module<a class="headerlink" href="#module-apigee.api.debugsessions" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/debug-sessions">https://apidocs.apigee.com/api/debug-sessions</a></p>
+<p>API Platform Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
+<p>API Resource Path: /debugsessions</p>
+<p>A session configured in Apigee Edge to record specified messages and associated
+pipeline processing metadata for debugging purposes</p>
+<dl class="class">
+<dt id="apigee.api.debugsessions.Debugsessions">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.debugsessions.</code><code class="sig-name descname">Debugsessions</code><span class="sig-paren">(</span><em class="sig-param">auth</em>, <em class="sig-param">org_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.debugsessions.IDebugsessions" title="apigee.abstract.api.debugsessions.IDebugsessions"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.debugsessions.IDebugsessions</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.debugsessions.Debugsessions.create_a_debug_session">
+<code class="sig-name descname">create_a_debug_session</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em>, <em class="sig-param">timeout=600</em>, <em class="sig-param">filter=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.create_a_debug_session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.debugsessions.Debugsessions.delete_debug_session">
+<code class="sig-name descname">delete_debug_session</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.delete_debug_session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.debugsessions.Debugsessions.get_debug_session_transaction_IDs">
+<code class="sig-name descname">get_debug_session_transaction_IDs</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.get_debug_session_transaction_IDs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.debugsessions.Debugsessions.get_debug_session_transaction_data">
+<code class="sig-name descname">get_debug_session_transaction_data</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em>, <em class="sig-param">transaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.get_debug_session_transaction_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.debugsessions.Debugsessions.list_debug_sessions">
+<code class="sig-name descname">list_debug_sessions</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.list_debug_sessions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.deploy">
+<span id="apigee-api-deploy-module"></span><h2>apigee.api.deploy module<a class="headerlink" href="#module-apigee.api.deploy" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="apigee.api.deploy.Struct">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">Struct</code><span class="sig-paren">(</span><em class="sig-param">**entries</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.Struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="apigee.api.deploy.deploy">
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">deploy</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.deploy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.api.deploy.getDeployments">
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">getDeployments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.getDeployments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.api.deploy.getElementText">
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">getElementText</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.getElementText" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.api.deploy.getElementVal">
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">getElementVal</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.getElementVal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.api.deploy.httpCall">
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">httpCall</code><span class="sig-paren">(</span><em class="sig-param">verb</em>, <em class="sig-param">uri</em>, <em class="sig-param">headers</em>, <em class="sig-param">body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.httpCall" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.api.deploy.main">
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.api.deploy.pathContainsDot">
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">pathContainsDot</code><span class="sig-paren">(</span><em class="sig-param">p</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.pathContainsDot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.api.deploy.printDeployments">
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">printDeployments</code><span class="sig-paren">(</span><em class="sig-param">dep</em>, <em class="sig-param">check_revision=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.printDeployments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.deployments">
+<span id="apigee-api-deployments-module"></span><h2>apigee.api.deployments module<a class="headerlink" href="#module-apigee.api.deployments" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/deployments">https://apidocs.apigee.com/api/deployments</a></p>
+<p>API Platform Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
+<p>API Resource Path: /apis/{api_name}/deployments</p>
+<p>API proxies that are actively deployed in environments on Apigee Edge.</p>
+<dl class="class">
+<dt id="apigee.api.deployments.Deployments">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.deployments.</code><code class="sig-name descname">Deployments</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deployments.Deployments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.deployments.IDeployments" title="apigee.abstract.api.deployments.IDeployments"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.deployments.IDeployments</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.deployments.Deployments.get_api_proxy_deployment_details">
+<code class="sig-name descname">get_api_proxy_deployment_details</code><span class="sig-paren">(</span><em class="sig-param">formatted=False</em>, <em class="sig-param">format='text'</em>, <em class="sig-param">showindex=False</em>, <em class="sig-param">tablefmt='plain'</em>, <em class="sig-param">revision_name_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deployments.Deployments.get_api_proxy_deployment_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets details for a specific API proxy deployed in a given environment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formatted</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, format <code class="docutils literal notranslate"><span class="pre">requests.Response()</span></code>.
+Defaults to False.</p></li>
+<li><p><strong>format</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify how to format response.
+Defaults to ‘text’.</p></li>
+<li><p><strong>showindex</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, show table index.
+Defaults to False.</p></li>
+<li><p><strong>tablefmt</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify table format. Defaults to ‘plain’.</p></li>
+<li><p><strong>revision_name_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, truncate response
+information.
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Response if <code class="docutils literal notranslate"><span class="pre">formatted</span></code> is False,
+else return a <code class="docutils literal notranslate"><span class="pre">formatted</span></code> value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.developers">
+<span id="apigee-api-developers-module"></span><h2>apigee.api.developers module<a class="headerlink" href="#module-apigee.api.developers" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/developers-0">https://apidocs.apigee.com/api/developers-0</a></p>
+<p>Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
+<p>API Resource Path: /developers</p>
+<p>Developers implement client/consumer apps and must be registered with an
+organization on Apigee Edge.</p>
+<dl class="class">
+<dt id="apigee.api.developers.Developers">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.developers.</code><code class="sig-name descname">Developers</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.developers.IDevelopers" title="apigee.abstract.api.developers.IDevelopers"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.developers.IDevelopers</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.developers.Developers.create_developer">
+<code class="sig-name descname">create_developer</code><span class="sig-paren">(</span><em class="sig-param">first_name</em>, <em class="sig-param">last_name</em>, <em class="sig-param">user_name</em>, <em class="sig-param">attributes='{&quot;attributes&quot; : [ ]}'</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.create_developer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a profile for a developer in an organization.</p>
+<p>Once created, the developer can register an app and receive an API key.</p>
+<p>The developer is always created with a status of active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>first_name</strong> (<em>str</em>) – The developer’s first name.</p></li>
+<li><p><strong>last_name</strong> (<em>str</em>) – The developer’s last name.</p></li>
+<li><p><strong>user_name</strong> (<em>str</em>) – The developer’s user name.</p></li>
+<li><p><strong>attributes</strong> (<em>str</em><em>, </em><em>optional</em>) – JSON string.
+Defaults to ‘{“attributes” : [ ]}’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.delete_developer">
+<code class="sig-name descname">delete_developer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.delete_developer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a developer from an organization.</p>
+<p>All apps and API keys associated with the developer are also removed
+from the organization.
+All times in the response are UNIX times.</p>
+<p>To avoid permanently deleting developers and their artifacts, consider
+deactivating developers instead.</p>
+<dl class="simple">
+<dt>Note the following:</dt><dd><ul class="simple">
+<li><p>With Apigee Edge for Public Cloud, deletion of the developer and
+associated artifacts happens asynchronously.
+The developer is deleted immediately, but the resources associated
+with that developer, such as apps, may take anywhere from a few
+seconds to a few minutes to be automatically deleted.</p></li>
+<li><p>Apigee recommends that you use the developer’s email address when
+calling this API.
+Developer IDs are generated internally by Apigee and are not
+guaranteed to stay the same over time.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.delete_developer_attribute">
+<code class="sig-name descname">delete_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param">attribute_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.delete_developer_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a developer attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>attribute_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The attribute name to delete.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.get_all_developer_attributes">
+<code class="sig-name descname">get_all_developer_attributes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_all_developer_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all developer attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.get_developer">
+<code class="sig-name descname">get_developer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the profile for a developer by email address or ID.</p>
+<p>All time values are UNIX time values.</p>
+<p>The profile includes the developer’s email address, ID, name, and other
+information.</p>
+<dl class="simple">
+<dt>Note the following:</dt><dd><ul class="simple">
+<li><p>With Apigee Edge for Public Cloud, the response includes only the
+first 100 apps.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.get_developer_attribute">
+<code class="sig-name descname">get_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param">attribute_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value of a developer attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>attribute_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The attribute name.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.get_developer_by_app">
+<code class="sig-name descname">get_developer_by_app</code><span class="sig-paren">(</span><em class="sig-param">app_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer_by_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the developer profile by app name.</p>
+<p>The profile retrieved is for the developer associated with the app in
+the organization.
+All time values are UNIX time values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_name</strong> (<em>str</em>) – The name of the app.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.list_developers">
+<code class="sig-name descname">list_developers</code><span class="sig-paren">(</span><em class="sig-param">prefix=None</em>, <em class="sig-param">expand=False</em>, <em class="sig-param">count=100</em>, <em class="sig-param">startkey=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.list_developers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists all developers in an organization by email address.</p>
+<p>This call does not list any company developers who are a part of the
+designated organization.</p>
+<dl class="simple">
+<dt>With Apigee Edge for Public Cloud:</dt><dd><ul class="simple">
+<li><p>A maximum of 1000 developers are returned per API call.</p></li>
+<li><p>You can paginate the list of companies returned using the
+<code class="docutils literal notranslate"><span class="pre">startKey</span></code> and <code class="docutils literal notranslate"><span class="pre">count</span></code> query parameters.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string.
+Defaults to None.</p></li>
+<li><p><strong>expand</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, list developers exanded with
+details. Defaults to False.</p></li>
+<li><p><strong>count</strong> (<em>int</em><em>, </em><em>optional</em>) – Note: This parameter can be used with
+Apigee Edge for Public Cloud only.
+Limits the list to the number you specify.
+Use with the startKey parameter to provide more targeted
+filtering.
+The limit is 1000.
+Defaults to 100.</p></li>
+<li><p><strong>startkey</strong> (<em>str</em><em>, </em><em>optional</em>) – Note: This parameter can be used with
+Apigee Edge for Public Cloud only.
+To filter the keys that are returned, enter the email of a
+developer that the list will start with.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.set_developer_status">
+<code class="sig-name descname">set_developer_status</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.set_developer_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a developer’s status to active or inactive for a specific
+organization.</p>
+<p>Run this API for each organization where you want to change the
+developer’s status.</p>
+<p>By default, the status of a developer is set to active.
+Admins with proper permissions (such as Organization Administrator) can
+change a developer’s status using this API call.</p>
+<p>If you set a developer’s status to inactive, the API keys assigned to
+the developer’s apps are no longer valid even though keys continue to
+show a status of “Approved”
+(in strikethrough text in the management UI).
+Inactive developers, however, can still log into the developer portal
+and create apps. The new keys that get created just won’t work.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>str</em>) – Set to <code class="docutils literal notranslate"><span class="pre">active</span></code> or <code class="docutils literal notranslate"><span class="pre">inactive</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.update_a_developer_attribute">
+<code class="sig-name descname">update_a_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param">attribute_name</em>, <em class="sig-param">updated_value</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_a_developer_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the value of a developer attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attribute_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The attribute name to update.</p></li>
+<li><p><strong>updated_value</strong> (<em>str</em><em>, </em><em>optional</em>) – The new attribute value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.update_all_developer_attributes">
+<code class="sig-name descname">update_all_developer_attributes</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_all_developer_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates or creates developer attributes.</p>
+<p>This API replaces the current list of attributes with the attributes
+specified in the request body.
+This lets you update existing attributes, add new attributes, or delete
+existing attributes by omitting them from the request body.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.developers.Developers.update_developer">
+<code class="sig-name descname">update_developer</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_developer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update an existing developer profile.</p>
+<p>To add new values or update existing values, submit the new or updated
+portion of the developer profile along with the rest of the developer
+profile, even if no values are changing.</p>
+<p>To delete attributes from a developer profile, submit the entire profile
+without the attributes that you want to delete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.keyvaluemaps">
+<span id="apigee-api-keyvaluemaps-module"></span><h2>apigee.api.keyvaluemaps module<a class="headerlink" href="#module-apigee.api.keyvaluemaps" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api-services/content/environment-keyvalue-maps">https://apidocs.apigee.com/api-services/content/environment-keyvalue-maps</a></p>
+<p>The Key/Value maps API lets you create and manage collections of arbitrary
+key/value pairs at the environment scope (for example, test or prod) for
+longer-term data persistence.</p>
+<dl class="class">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.keyvaluemaps.</code><code class="sig-name descname">Keyvaluemaps</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.keyvaluemaps.IKeyvaluemaps" title="apigee.abstract.api.keyvaluemaps.IKeyvaluemaps"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.keyvaluemaps.IKeyvaluemaps</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.create_an_entry_in_an_environment_scoped_kvm">
+<code class="sig-name descname">create_an_entry_in_an_environment_scoped_kvm</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry_name</em>, <em class="sig-param">entry_value</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.create_an_entry_in_an_environment_scoped_kvm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an entry in an existing KeyValueMap scoped to an environment.</p>
+<p>Note: This API is supported for Apigee Edge for the Public Cloud only.</p>
+<p>A key (name) cannot be larger than 2 KB. KVM names are case sensitive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>entry_name</strong> (<em>str</em>) – The entry name to create.</p></li>
+<li><p><strong>entry_value</strong> (<em>str</em>) – The entry value to create.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.create_keyvaluemap_in_an_environment">
+<code class="sig-name descname">create_keyvaluemap_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.create_keyvaluemap_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a key value map in an environment.</p>
+<p>A key value map is a simple structure for persistently storing
+name/value pairs as entries in a named map.
+The entries in a KVM can be retrieved at runtime by the Key Value Map
+Operations policy or code running on Apigee Edge.
+Use KVMs for use cases such as profile-based access control, storing
+environment-specific data, to control application-specific behavior,
+and so on.</p>
+<p>You can created an encrypted KVM by adding “encrypted” : “true” to the
+payload.</p>
+<p>KVM names are case sensitive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_entry_in_an_environment">
+<code class="sig-name descname">delete_keyvaluemap_entry_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_entry_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a specific key/value map entry in an environment by name,
+along with associated entries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>entry_name</strong> (<em>str</em>) – The entry to delete.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_from_an_environment">
+<code class="sig-name descname">delete_keyvaluemap_from_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_from_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a key/value map and all associated entries from an
+environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap">
+<code class="sig-name descname">get_a_keys_value_in_an_environment_scoped_keyvaluemap</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the value of a key in an environment-scoped KeyValueMap (KVM).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>entry_name</strong> (<em>str</em>) – The entry name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.get_keyvaluemap_in_an_environment">
+<code class="sig-name descname">get_keyvaluemap_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.get_keyvaluemap_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a KeyValueMap (KVM) in an environment by name, along with the
+keys and values.</p>
+<p>KVM names are case sensitive.</p>
+<p>With Apigee Edge for Public Cloud, this API returns only the first 100
+keys in a KVM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap">
+<code class="sig-name descname">list_keys_in_an_environment_scoped_keyvaluemap</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">startkey</em>, <em class="sig-param">count</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists keys in a KeyValueMap scoped to an environment.</p>
+<p>Note: This API is supported for Apigee Edge for the Public Cloud only.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>startkey</strong> (<em>str</em>) – To filter the keys that are returned, enter the name
+of a key that the list will start with.</p></li>
+<li><p><strong>count</strong> (<em>int</em>) – Limits the list of keys to the number you specify, up
+to a maximum of 100.
+Use with the startkey parameter to provide more targeted
+filtering.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.list_keyvaluemaps_in_an_environment">
+<code class="sig-name descname">list_keyvaluemaps_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.list_keyvaluemaps_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists the name of all key/value maps in an environment.</p>
+<p>Optionally returns an expanded view of all key/value maps for the
+environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.push_keyvaluemap">
+<code class="sig-name descname">push_keyvaluemap</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.push_keyvaluemap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push KeyValueMap file to Apigee</p>
+<p>This will create a KeyValueMap if it does not exist and update if it
+does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – The file path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HTTPError</strong> – If response status code is not successful or 404.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm">
+<code class="sig-name descname">update_an_entry_in_an_environment_scoped_kvm</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry_name</em>, <em class="sig-param">updated_value</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates an entry in a KeyValueMap scoped to an environment.</p>
+<p>Note: This API is supported for Apigee Edge for the Public Cloud only.</p>
+<p>A key cannot be larger than 2 KB. KVM names are case sensitive.</p>
+<p>Does not override the existing map.
+Instead, this method updates the entries if they exist or adds them if
+not.
+It can take several minutes before the new value is visible to runtime
+traffic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>entry_name</strong> (<em>str</em>) – The entry name to update.</p></li>
+<li><p><strong>updated_value</strong> (<em>str</em>) – The new entry value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.keyvaluemaps.Keyvaluemaps.update_keyvaluemap_in_an_environment">
+<code class="sig-name descname">update_keyvaluemap_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.update_keyvaluemap_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates an existing KeyValueMap in an environment.</p>
+<p>Note: This API is supported for Apigee Edge for Private Cloud only.
+For Apigee Edge for Public Cloud use Update an entry in an
+environment-scoped KVM.</p>
+<p>Does not override the existing map. Instead, this method updates the
+entries if they exist or adds them if not.</p>
+<p>It can take several minutes before the new value is visible to runtime
+traffic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.maskconfigs">
+<span id="apigee-api-maskconfigs-module"></span><h2>apigee.api.maskconfigs module<a class="headerlink" href="#module-apigee.api.maskconfigs" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api-reference/content/data-masks">https://apidocs.apigee.com/api-reference/content/data-masks</a></p>
+<p>Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
+<p>API Resource Path: /maskconfigs</p>
+<p>Specify data that will be filtered out of trace sessions</p>
+<p>Edge enables developers to capture message content to enable runtime debugging
+of APIs calls.
+In many cases, API traffic contains sensitive data, such credit cards or
+personally identifiable health information (PHI)
+that needs to filtered out of the captured message content.
+Mask configurations enable you to specify data that will be filtered out of
+trace sessions.
+Masking configurations can be set globally (at the organization-level) or
+locally (at the API proxy level).</p>
+<dl class="class">
+<dt id="apigee.api.maskconfigs.Maskconfigs">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.maskconfigs.</code><code class="sig-name descname">Maskconfigs</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.maskconfigs.IMaskconfigs" title="apigee.abstract.api.maskconfigs.IMaskconfigs"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.maskconfigs.IMaskconfigs</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.maskconfigs.Maskconfigs.create_data_masks_for_an_api_proxy">
+<code class="sig-name descname">create_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.create_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a data mask for an API proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.maskconfigs.Maskconfigs.delete_data_masks_for_an_api_proxy">
+<code class="sig-name descname">delete_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">maskconfig_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.delete_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a data mask for an API proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>maskconfig_name</strong> (<em>str</em>) – The data mask to delete.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.maskconfigs.Maskconfigs.get_data_mask_details_for_an_api_proxy">
+<code class="sig-name descname">get_data_mask_details_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">maskconfig_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.get_data_mask_details_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the details for a data mask for an API proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>maskconfig_name</strong> (<em>str</em>) – The data mask name.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_api_proxy">
+<code class="sig-name descname">list_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all data masks for an API proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_organization">
+<code class="sig-name descname">list_data_masks_for_an_organization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_organization" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all data masks for an organization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.maskconfigs.Maskconfigs.push_data_masks_for_an_api_proxy">
+<code class="sig-name descname">push_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.push_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push data mask file to Apigee</p>
+<p>This will create a data mask if it does not exist and update if it does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – The file path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HTTPError</strong> – If response status code is not successful or 404.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.permissions">
+<span id="apigee-api-permissions-module"></span><h2>apigee.api.permissions module<a class="headerlink" href="#module-apigee.api.permissions" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/permissions">https://docs.apigee.com/api-platform/system-administration/permissions</a></p>
+<p>Manage permissions that you can assign to a role by using the Edge API.</p>
+<dl class="class">
+<dt id="apigee.api.permissions.Permissions">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.permissions.</code><code class="sig-name descname">Permissions</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.permissions.IPermissions" title="apigee.abstract.api.permissions.IPermissions"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.permissions.IPermissions</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.permissions.Permissions.create_permissions">
+<code class="sig-name descname">create_permissions</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.create_permissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates permissions for a role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.permissions.Permissions.get_permissions">
+<code class="sig-name descname">get_permissions</code><span class="sig-paren">(</span><em class="sig-param">formatted=False</em>, <em class="sig-param">format='text'</em>, <em class="sig-param">showindex=False</em>, <em class="sig-param">tablefmt='plain'</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.get_permissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets permissions for a role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formatted</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, format <code class="docutils literal notranslate"><span class="pre">requests.Response()</span></code>.
+Defaults to False.</p></li>
+<li><p><strong>format</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify how to format response.
+Defaults to ‘text’.</p></li>
+<li><p><strong>showindex</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, show table index.
+Defaults to False.</p></li>
+<li><p><strong>tablefmt</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify table format. Defaults to ‘plain’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Response if <code class="docutils literal notranslate"><span class="pre">formatted</span></code> is False, else return
+a <code class="docutils literal notranslate"><span class="pre">formatted</span></code> value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.permissions.Permissions.team_permissions">
+<code class="sig-name descname">team_permissions</code><span class="sig-paren">(</span><em class="sig-param">template_file</em>, <em class="sig-param">placeholder_key=None</em>, <em class="sig-param">placeholder_value=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.team_permissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates permissions for a role using a template file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template_file</strong> (<em>str</em>) – The template file path.</p></li>
+<li><p><strong>placeholder_key</strong> (<em>str</em><em>, </em><em>optional</em>) – The placeholder key to replace with
+a placeholder value.
+Defaults to None.</p></li>
+<li><p><strong>placeholder_value</strong> (<em>str</em><em>, </em><em>optional</em>) – The placeholder value to replace
+placeholder key.
+Default to ‘’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.targetservers">
+<span id="apigee-api-targetservers-module"></span><h2>apigee.api.targetservers module<a class="headerlink" href="#module-apigee.api.targetservers" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/api_resources/51-targetservers">https://apidocs.apigee.com/api/api_resources/51-targetservers</a></p>
+<p>TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from
+concrete URLs for backend services.</p>
+<p>To do so, an HTTPConnection can be configured to use a LoadBalancer that lists
+one or more ‘named’ TargetSevers.
+Using TargetServers, you can create an HTTPTargetConnection that calls a
+different backend server based on the environment where the API proxy is
+deployed.</p>
+<dl class="class">
+<dt id="apigee.api.targetservers.Targetservers">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.targetservers.</code><code class="sig-name descname">Targetservers</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.targetservers.ITargetservers" title="apigee.abstract.api.targetservers.ITargetservers"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.targetservers.ITargetservers</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.targetservers.Targetservers.create_a_targetserver">
+<code class="sig-name descname">create_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.create_a_targetserver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a TargetServer in the specified environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.targetservers.Targetservers.delete_a_targetserver">
+<code class="sig-name descname">delete_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.delete_a_targetserver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a TargetServer configuration from an environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Information about the deleted TargetServer.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.targetservers.Targetservers.get_targetserver">
+<code class="sig-name descname">get_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.get_targetserver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a TargetServer definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.targetservers.Targetservers.list_targetservers_in_an_environment">
+<code class="sig-name descname">list_targetservers_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.list_targetservers_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all TargetServers in an environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string.
+Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.targetservers.Targetservers.push_targetserver">
+<code class="sig-name descname">push_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.push_targetserver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push TargetSever file to Apigee</p>
+<p>This will create a TargetSever if it does not exist and update if it
+does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – The file path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HTTPError</strong> – If response status code is not successful or 404.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.targetservers.Targetservers.update_a_targetserver">
+<code class="sig-name descname">update_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.update_a_targetserver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifies an existing TargetServer.</p>
+<p>Note: In the request body when Content-Type is set to application/json,
+use the element sSLInfo in the request body, not SSLInfo (note the
+case).
+You must use the case sSLInfo exactly.
+Using SSLInfo will cause an error when Content-Type is set to
+application/json.
+The case does not matter if Content-Type is application/xml.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.userroles">
+<span id="apigee-api-userroles-module"></span><h2>apigee.api.userroles module<a class="headerlink" href="#module-apigee.api.userroles" title="Permalink to this headline">¶</a></h2>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/user-roles">https://apidocs.apigee.com/api/user-roles</a></p>
+<p>API Platform Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
+<p>API Resource Path: /userroles</p>
+<p>Roles for users in an organization on Apigee Edge.</p>
+<p>User roles form the basis of role-based access in Apigee Edge.</p>
+<p>Users are associated with one or more userroles. Each userrole defines a set of
+permissions (GET, PUT, DELETE) on RBAC resources (defined by URI paths).</p>
+<p>A userrole is scoped to an organization.</p>
+<dl class="class">
+<dt id="apigee.api.userroles.Userroles">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.userroles.</code><code class="sig-name descname">Userroles</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.userroles.IUserroles" title="apigee.abstract.api.userroles.IUserroles"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.userroles.IUserroles</span></code></a></p>
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.add_a_user_to_a_role">
+<code class="sig-name descname">add_a_user_to_a_role</code><span class="sig-paren">(</span><em class="sig-param">user_email</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.add_a_user_to_a_role" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.add_permissions_for_a_resource_to_a_user_role">
+<code class="sig-name descname">add_permissions_for_a_resource_to_a_user_role</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.add_permissions_for_a_resource_to_a_user_role" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.add_permissions_for_multiple_resources_to_a_user_role">
+<code class="sig-name descname">add_permissions_for_multiple_resources_to_a_user_role</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.add_permissions_for_multiple_resources_to_a_user_role" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.create_a_user_role_in_an_organization">
+<code class="sig-name descname">create_a_user_role_in_an_organization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.create_a_user_role_in_an_organization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.delete_a_permission_for_a_resource">
+<code class="sig-name descname">delete_a_permission_for_a_resource</code><span class="sig-paren">(</span><em class="sig-param">permission</em>, <em class="sig-param">resource_path</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.delete_a_permission_for_a_resource" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.delete_a_user_role">
+<code class="sig-name descname">delete_a_user_role</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.delete_a_user_role" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.delete_resource_from_permissions">
+<code class="sig-name descname">delete_resource_from_permissions</code><span class="sig-paren">(</span><em class="sig-param">resource_path</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.delete_resource_from_permissions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.get_a_role">
+<code class="sig-name descname">get_a_role</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.get_a_role" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.get_resource_permissions_for_a_specific_role">
+<code class="sig-name descname">get_resource_permissions_for_a_specific_role</code><span class="sig-paren">(</span><em class="sig-param">resource_path=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.get_resource_permissions_for_a_specific_role" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.get_users_for_a_role">
+<code class="sig-name descname">get_users_for_a_role</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.get_users_for_a_role" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.list_permissions_for_a_resource">
+<code class="sig-name descname">list_permissions_for_a_resource</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.list_permissions_for_a_resource" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.list_user_roles">
+<code class="sig-name descname">list_user_roles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.list_user_roles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.remove_user_membership_in_role">
+<code class="sig-name descname">remove_user_membership_in_role</code><span class="sig-paren">(</span><em class="sig-param">user_email</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.remove_user_membership_in_role" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.verify_a_user_roles_permission_on_a_specific_RBAC_resource">
+<code class="sig-name descname">verify_a_user_roles_permission_on_a_specific_RBAC_resource</code><span class="sig-paren">(</span><em class="sig-param">permission</em>, <em class="sig-param">resource_path</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.verify_a_user_roles_permission_on_a_specific_RBAC_resource" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.userroles.Userroles.verify_user_role_membership">
+<code class="sig-name descname">verify_user_role_membership</code><span class="sig-paren">(</span><em class="sig-param">user_email</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.verify_user_role_membership" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apigee.api" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="apigee.abstract.api.html" class="btn btn-neutral float-right" title="apigee.abstract.api package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../auth.html" class="btn btn-neutral float-left" title="auth" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Matthew Delotavo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

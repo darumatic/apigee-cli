@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>apigee.util package &mdash; apigee-cli 0.31.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> apigee-cli
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auth.html">auth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apigee.api.html">apigee.api package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apigee.abstract.api.html">apigee.abstract.api package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="apigee.parsers.html">apigee.parsers package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Apache License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../disclaimer.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../help.html">Need Help</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">apigee-cli</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>apigee.util package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/apigee.util.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="apigee-util-package">
+<h1>apigee.util package<a class="headerlink" href="#apigee-util-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-apigee.util.authorization">
+<span id="apigee-util-authorization-module"></span><h2>apigee.util.authorization module<a class="headerlink" href="#module-apigee.util.authorization" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="apigee.util.authorization.get_credential">
+<code class="sig-prename descclassname">apigee.util.authorization.</code><code class="sig-name descname">get_credential</code><span class="sig-paren">(</span><em class="sig-param">section</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.authorization.get_credential" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.util.authorization.set_header">
+<code class="sig-prename descclassname">apigee.util.authorization.</code><code class="sig-name descname">set_header</code><span class="sig-paren">(</span><em class="sig-param">hdrs</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.authorization.set_header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.util.authorization.with_prefix">
+<code class="sig-prename descclassname">apigee.util.authorization.</code><code class="sig-name descname">with_prefix</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">args</em>, <em class="sig-param">attribute_name='team'</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.authorization.with_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-apigee.util.configure">
+<span id="apigee-util-configure-module"></span><h2>apigee.util.configure module<a class="headerlink" href="#module-apigee.util.configure" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="apigee.util.configure.Configure">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.util.configure.</code><code class="sig-name descname">Configure</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.configure.Configure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.util.console">
+<span id="apigee-util-console-module"></span><h2>apigee.util.console module<a class="headerlink" href="#module-apigee.util.console" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="apigee.util.console.log">
+<code class="sig-prename descclassname">apigee.util.console.</code><code class="sig-name descname">log</code><span class="sig-paren">(</span><em class="sig-param">*message</em>, <em class="sig-param">status=None</em>, <em class="sig-param">silent=False</em>, <em class="sig-param">curr_verbosity=0</em>, <em class="sig-param">expc_verbosity=0</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.console.log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-apigee.util.exceptions">
+<span id="apigee-util-exceptions-module"></span><h2>apigee.util.exceptions module<a class="headerlink" href="#module-apigee.util.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="apigee.util.exceptions.CustomError">
+<em class="property">exception </em><code class="sig-prename descclassname">apigee.util.exceptions.</code><code class="sig-name descname">CustomError</code><a class="headerlink" href="#apigee.util.exceptions.CustomError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="apigee.util.exceptions.exception_handler">
+<code class="sig-prename descclassname">apigee.util.exceptions.</code><code class="sig-name descname">exception_handler</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.exceptions.exception_handler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-apigee.util.mfa_with_pyotp">
+<span id="apigee-util-mfa-with-pyotp-module"></span><h2>apigee.util.mfa_with_pyotp module<a class="headerlink" href="#module-apigee.util.mfa_with_pyotp" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="apigee.util.mfa_with_pyotp.get_access_token">
+<code class="sig-prename descclassname">apigee.util.mfa_with_pyotp.</code><code class="sig-name descname">get_access_token</code><span class="sig-paren">(</span><em class="sig-param">args</em>, <em class="sig-param">retries=4</em>, <em class="sig-param">backoff_factor=0.3</em>, <em class="sig-param">status_forcelist=(500</em>, <em class="sig-param">502</em>, <em class="sig-param">504)</em>, <em class="sig-param">session=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.mfa_with_pyotp.get_access_token" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-apigee.util.os">
+<span id="apigee-util-os-module"></span><h2>apigee.util.os module<a class="headerlink" href="#module-apigee.util.os" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="apigee.util.os.extractzip">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">extractzip</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">dest</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.extractzip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.util.os.makedirs">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">makedirs</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.makedirs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.util.os.path_exists">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">path_exists</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.path_exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.util.os.paths_exist">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">paths_exist</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.paths_exist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.util.os.splitpath">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">splitpath</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">delimiter='[/\\\\]'</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.splitpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.util.os.touch">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">touch</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.touch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="apigee.util.os.writezip">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">writezip</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">content</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.writezip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-apigee.util.string">
+<span id="apigee-util-string-module"></span><h2>apigee.util.string module<a class="headerlink" href="#module-apigee.util.string" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="apigee.util.string.isempty">
+<code class="sig-prename descclassname">apigee.util.string.</code><code class="sig-name descname">isempty</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.string.isempty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-apigee.util.types">
+<span id="apigee-util-types-module"></span><h2>apigee.util.types module<a class="headerlink" href="#module-apigee.util.types" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="apigee.util.types.ArgumentType">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.util.types.</code><code class="sig-name descname">ArgumentType</code><a class="headerlink" href="#apigee.util.types.ArgumentType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="apigee.util.types.ArgumentType.isdir">
+<em class="property">static </em><code class="sig-name descname">isdir</code><span class="sig-paren">(</span><em class="sig-param">d</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.types.ArgumentType.isdir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.util.types.ArgumentType.isfile">
+<em class="property">static </em><code class="sig-name descname">isfile</code><span class="sig-paren">(</span><em class="sig-param">f</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.types.ArgumentType.isfile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.util">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apigee.util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="apigee.util.envvar_exists">
+<code class="sig-prename descclassname">apigee.util.</code><code class="sig-name descname">envvar_exists</code><span class="sig-paren">(</span><em class="sig-param">envvar</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.envvar_exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Matthew Delotavo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
