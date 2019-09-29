@@ -117,6 +117,12 @@ def main():
         help='Lists the name of all key/value maps in an environment and optionally returns an expanded view of all key/value maps for the environment.')
     list_keyvaluemaps_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.list_keyvaluemaps_in_an_environment(args).text))
 
+    update_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('update-keyvaluemap-in-an-environment', parents=[parent_parser, environment_parser],
+        help='Note: This API is supported for Apigee Edge for Private Cloud only. For Apigee Edge for Public Cloud use Update an entry in an environment-scoped KVM. Updates an existing KeyValueMap in an environment. Does not override the existing map. Instead, this method updates the entries if they exist or adds them if not. It can take several minutes before the new value is visible to runtime traffic.')
+    update_keyvaluemap_in_an_environment.add_argument('-n', '--name', help='name', required=True)
+    update_keyvaluemap_in_an_environment.add_argument('-b', '--body', help='request body', required=True)
+    update_keyvaluemap_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.update_keyvaluemap_in_an_environment(args).text))
+
     update_an_entry_in_an_environment_scoped_kvm = parser_keyvaluemaps.add_parser('update-an-entry-in-an-environment-scoped-kvm', parents=[parent_parser, environment_parser],
         help='Note: This API is supported for Apigee Edge for the Public Cloud only. Updates an entry in a KeyValueMap scoped to an environment. A key cannot be larger than 2 KB. KVM names are case sensitive. Does not override the existing map. It can take several minutes before the new value is visible to runtime traffic.')
     update_an_entry_in_an_environment_scoped_kvm.add_argument('-n', '--name', help='name', required=True)
