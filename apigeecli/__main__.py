@@ -85,6 +85,12 @@ def main():
     get_api_proxy_deployment_details.add_argument('-r', '--revision-name', action='store_true', help='get revisions only')
     get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details(args)))
 
+    create_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('create-keyvaluemap-in-an-environment', parents=[parent_parser, environment_parser],
+        help='Creates a key value map in an environment.')
+    create_keyvaluemap_in_an_environment.add_argument('-n', '--name', help='name', required=True)
+    create_keyvaluemap_in_an_environment.add_argument('-b', '--body', help='request body', required=True)
+    create_keyvaluemap_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.create_keyvaluemap_in_an_environment(args).text))
+
     get_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('get-keyvaluemap-in-an-environment', parents=[parent_parser, environment_parser],
         help='Gets a KeyValueMap (KVM) in an environment by name, along with the keys and values.')
     get_keyvaluemap_in_an_environment.add_argument('-n', '--name', help='name', required=True)
