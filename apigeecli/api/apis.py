@@ -13,7 +13,7 @@ def export_api_proxy(args):
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
-    print(resp.status_code)
+    # print(resp.status_code)
     zname = args.name + '.zip' if args.output_file is None else args.output_file
     with open(zname, 'wb') as zfile:
         zfile.write(resp.content)
@@ -25,7 +25,7 @@ def get_api_proxy(args):
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
-    print(resp.status_code)
+    # print(resp.status_code)
     return resp
 
 def list_api_proxies(args):
@@ -35,5 +35,5 @@ def list_api_proxies(args):
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
-    print(resp.status_code)
+    # print(resp.status_code)
     return resp

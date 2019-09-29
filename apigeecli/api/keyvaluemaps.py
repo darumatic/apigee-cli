@@ -13,7 +13,7 @@ def get_keyvaluemap_in_an_environment(args):
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
-    print(resp.status_code)
+    # print(resp.status_code)
     return resp
 
 def list_keyvaluemaps_in_an_environment(args):
@@ -23,7 +23,7 @@ def list_keyvaluemaps_in_an_environment(args):
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
-    print(resp.status_code)
+    # print(resp.status_code)
     return resp
 
 def update_an_entry_in_an_environment_scoped_kvm(args):
@@ -37,5 +37,5 @@ def update_an_entry_in_an_environment_scoped_kvm(args):
     }
     resp = requests.post(uri, headers=hdrs, json=body)
     resp.raise_for_status()
-    print(resp.status_code)
+    # print(resp.status_code)
     return resp
