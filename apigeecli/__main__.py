@@ -96,6 +96,12 @@ def main():
     delete_keyvaluemap_from_an_environment.add_argument('-n', '--name', help='name', required=True)
     delete_keyvaluemap_from_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.delete_keyvaluemap_from_an_environment(args).text))
 
+    delete_keyvaluemap_entry_in_an_environment = parser_keyvaluemaps.add_parser('delete-keyvaluemap-entry-in-an-environment', parents=[parent_parser, environment_parser],
+        help='Deletes a specific key/value map entry in an environment by name, along with associated entries.')
+    delete_keyvaluemap_entry_in_an_environment.add_argument('-n', '--name', help='name', required=True)
+    delete_keyvaluemap_entry_in_an_environment.add_argument('--entry-name', help='entry name', required=True)
+    delete_keyvaluemap_entry_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.delete_keyvaluemap_entry_in_an_environment(args).text))
+
     get_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('get-keyvaluemap-in-an-environment', parents=[parent_parser, environment_parser],
         help='Gets a KeyValueMap (KVM) in an environment by name, along with the keys and values.')
     get_keyvaluemap_in_an_environment.add_argument('-n', '--name', help='name', required=True)
