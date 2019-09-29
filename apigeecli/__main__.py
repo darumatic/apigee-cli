@@ -137,6 +137,15 @@ def main():
     update_an_entry_in_an_environment_scoped_kvm.add_argument('--updated-value', help='updated value', required=True)
     update_an_entry_in_an_environment_scoped_kvm.set_defaults(func=lambda args: print(keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm(args).text))
 
+    list_keys_in_an_environment_scoped_keyvaluemap = parser_keyvaluemaps.add_parser('list-keys-in-an-environment-scoped-keyvaluemap', parents=[parent_parser, environment_parser],
+        help='Note: This API is supported for Apigee Edge for the Public Cloud only. Lists keys in a KeyValueMap scoped to an environment. KVM names are case sensitive.')
+    list_keys_in_an_environment_scoped_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
+    list_keys_in_an_environment_scoped_keyvaluemap.add_argument('--startkey', default='',
+        help='To filter the keys that are returned, enter the name of a key that the list will start with.')
+    list_keys_in_an_environment_scoped_keyvaluemap.add_argument('--count', default=100,
+        help='Limits the list of keys to the number you specify, up to a maximum of 100. Use with the startkey parameter to provide more targeted filtering.')
+    list_keys_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap(args).text))
+
     args = parser.parse_args()
     try:
         func = args.func

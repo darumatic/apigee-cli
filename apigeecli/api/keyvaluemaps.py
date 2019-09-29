@@ -106,3 +106,13 @@ def update_an_entry_in_an_environment_scoped_kvm(args):
     resp.raise_for_status()
     # print(resp.status_code)
     return resp
+
+def list_keys_in_an_environment_scoped_keyvaluemap(args):
+    uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps/{}/keys?startkey={}&count={}'.format(
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name, args.startkey, args.count
+    )
+    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
+    resp = requests.get(uri, headers=hdrs)
+    resp.raise_for_status()
+    # print(resp.status_code)
+    return resp
