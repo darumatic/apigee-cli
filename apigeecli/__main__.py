@@ -79,10 +79,11 @@ def main():
         help='Gets the names of all API proxies in an organization. The names correspond to the names defined in the configuration files for each API proxy.')
     list_api_proxies.set_defaults(func=lambda args: print(apis.list_api_proxies(args).text))
 
-    get_api_proxy_deployment_details = parser_deployments.add_parser('get-api-proxy-deployment-details', parents=[parent_parser],
+    get_api_proxy_deployment_details = parser_deployments.add_parser('get-api-proxy-deployment-details', aliases=['get'], parents=[parent_parser],
         help='Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.')
     get_api_proxy_deployment_details.add_argument('-n', '--name', help='name', required=True)
-    get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details(args).text))
+    get_api_proxy_deployment_details.add_argument('-r', '--revision-name', action='store_true', help='get revisions only')
+    get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details(args)))
 
     get_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('get-keyvaluemap-in-an-environment', parents=[parent_parser, environment_parser],
         help='Gets a KeyValueMap (KVM) in an environment by name, along with the keys and values.')
