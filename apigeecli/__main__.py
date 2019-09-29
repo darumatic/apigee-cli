@@ -107,6 +107,12 @@ def main():
     get_keyvaluemap_in_an_environment.add_argument('-n', '--name', help='name', required=True)
     get_keyvaluemap_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.get_keyvaluemap_in_an_environment(args).text))
 
+    get_a_keys_value_in_an_environment_scoped_keyvaluemap = parser_keyvaluemaps.add_parser('get-a-keys-value-in-an-environment-scoped-keyvaluemap', parents=[parent_parser, environment_parser],
+        help='Gets the value of a key in an environment-scoped KeyValueMap (KVM).')
+    get_a_keys_value_in_an_environment_scoped_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
+    get_a_keys_value_in_an_environment_scoped_keyvaluemap.add_argument('--entry-name', help='entry name', required=True)
+    get_a_keys_value_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.delete_keyvaluemap_entry_in_an_environment(args).text))
+
     list_keyvaluemaps_in_an_environment = parser_keyvaluemaps.add_parser('list-keyvaluemaps-in-an-environment', parents=[parent_parser, environment_parser],
         help='Lists the name of all key/value maps in an environment and optionally returns an expanded view of all key/value maps for the environment.')
     list_keyvaluemaps_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.list_keyvaluemaps_in_an_environment(args).text))
