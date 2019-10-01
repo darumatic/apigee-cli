@@ -50,7 +50,7 @@ def main():
 
     parser_apis = subparsers.add_parser('apis', help='apis').add_subparsers()
     parser_deployments = subparsers.add_parser('deployments', help='see apis that are actively deployed').add_subparsers()
-    parser_keyvaluemaps = subparsers.add_parser('keyvaluemaps', help='keyvaluemaps').add_subparsers()
+    parser_keyvaluemaps = subparsers.add_parser('kvms', help='keyvaluemaps').add_subparsers()
 
     apis_deploy = parser_apis.add_parser('deploy', help='deploy apis', parents=[parent_parser, dir_parser, environment_parser])
     apis_deploy.add_argument('-n', '--name', help='name', required=True)
