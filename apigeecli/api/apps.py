@@ -6,6 +6,16 @@ import requests
 from apigeecli import APIGEE_ADMIN_API_URL
 from apigeecli.util import authorization
 
+def get_developer_app_details(args):
+    uri = '{}/v1/organizations/{}/developers/{}/apps/{}'.format(
+        APIGEE_ADMIN_API_URL, args.org, args.developer, args.name
+    )
+    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
+    resp = requests.get(uri, headers=hdrs)
+    resp.raise_for_status()
+    # print(resp.status_code)
+    return resp
+
 def list_developer_apps(args):
     if args.expand:
         uri = '{}/v1/organizations/{}/developers/{}/apps?expand={}'.format(

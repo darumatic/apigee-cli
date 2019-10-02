@@ -171,6 +171,12 @@ def main():
         help='To filter the keys that are returned, enter the name of a company app that the list will start with.')
     list_developer_apps.set_defaults(func=lambda args: print(apps.list_developer_apps(args).text))
 
+    get_developer_app_details = parser_apps.add_parser('get', aliases=['get-developer-app-details'], parents=[parent_parser],
+        help='Get the profile of a specific developer app. All times in the response are UNIX times. Note that the response contains a top-level attribute named accessType that is no longer used by Apigee.')
+    get_developer_app_details.add_argument('-d', '--developer', help='developer email or id', required=True)
+    get_developer_app_details.add_argument('-n', '--name', help='name', required=True)
+    get_developer_app_details.set_defaults(func=lambda args: print(apps.get_developer_app_details(args).text))
+
     args = parser.parse_args()
     try:
         func = args.func
