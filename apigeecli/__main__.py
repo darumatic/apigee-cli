@@ -68,8 +68,6 @@ def main():
     apis_deploy.add_argument('-s', '--seamless-deploy', action='store_true', help='seamless deploy the bundle')
     apis_deploy.set_defaults(func=deploy.deploy)
 
-    # apis_list = parser_apis.add_parser('list', help='list apis', parents=[parent_parser])
-
     export_api_proxy = parser_apis.add_parser('export', aliases=['export-api-proxy'], parents=[parent_parser],
         help='Outputs an API proxy revision as a ZIP formatted bundle of code and config files. This enables local configuration and development, including attachment of policies and scripts.')
     export_api_proxy.add_argument('-n', '--name', help='name', required=True)
