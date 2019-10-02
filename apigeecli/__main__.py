@@ -150,7 +150,7 @@ def main():
         help='Limits the list of keys to the number you specify, up to a maximum of 100. Use with the startkey parameter to provide more targeted filtering.')
     list_keys_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap(args).text))
 
-    list_developers = parser_developers.add_parser('list-devs', aliases=['list-developers'], parents=[parent_parser],
+    list_developers = parser_developers.add_parser('list', aliases=['list-developers'], parents=[parent_parser],
         help='Lists all developers in an organization by email address. This call does not list any company developers who are a part of the designated organization.')
     list_developers.add_argument('--expand', action='store_true',
         help='Set to true to list developers exanded with details.')
