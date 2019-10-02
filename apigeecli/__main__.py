@@ -7,6 +7,7 @@ import sys
 
 import apigeecli
 
+from apigeecli import APIGEE_CLI_PREFIX
 from apigeecli import APIGEE_ORG
 from apigeecli import APIGEE_USERNAME
 from apigeecli import APIGEE_PASSWORD
@@ -40,6 +41,9 @@ def main():
 
     environment_parser = argparse.ArgumentParser(add_help=False)
     environment_parser.add_argument('-e', '--environment', help='environment', required=True)
+
+    prefix_parser = argparse.ArgumentParser(add_help=False)
+    prefix_parser.add_argument('--prefix', help='prefix filter for apigee items', default=APIGEE_CLI_PREFIX)
 
     parser = argparse.ArgumentParser(prog=apigeecli.APP, description=apigeecli.description)
     parser.add_argument('--version', action='version', version=apigeecli.APP + ' ' + apigeecli.__version__)
@@ -79,9 +83,9 @@ def main():
     get_api_proxy.add_argument('-n', '--name', help='name', required=True)
     get_api_proxy.set_defaults(func=lambda args: print(apis.get_api_proxy(args).text))
 
-    list_api_proxies = parser_apis.add_parser('list', aliases=['list-api-proxies'], parents=[parent_parser],
+    list_api_proxies = parser_apis.add_parser('list', aliases=['list-api-proxies'], parents=[parent_parser, prefix_parser],
         help='Gets the names of all API proxies in an organization. The names correspond to the names defined in the configuration files for each API proxy.')
-    list_api_proxies.set_defaults(func=lambda args: print(apis.list_api_proxies(args).text))
+    list_api_proxies.set_defaults(func=lambda args: print(apis.list_api_proxies(args)))
 
     get_api_proxy_deployment_details = parser_deployments.add_parser('get', aliases=['get-api-proxy-deployment-details'], parents=[parent_parser],
         help='Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.')

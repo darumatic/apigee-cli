@@ -17,6 +17,7 @@ def strtobool(s):
     except:
         return None
 
+APIGEE_CLI_PREFIX = getenv('APIGEE_CLI_PREFIX')
 APIGEE_USERNAME = getenv('APIGEE_USERNAME')
 APIGEE_PASSWORD = getenv('APIGEE_PASSWORD')
 APIGEE_MFA_SECRET = getenv('APIGEE_MFA_SECRET')
