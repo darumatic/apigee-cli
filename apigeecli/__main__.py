@@ -46,7 +46,7 @@ def main():
     prefix_parser.add_argument('--prefix', help='prefix filter for apigee items', default=APIGEE_CLI_PREFIX)
 
     parser = argparse.ArgumentParser(prog=apigeecli.APP, description=apigeecli.description)
-    parser.add_argument('--version', action='version', version=apigeecli.APP + ' ' + apigeecli.__version__)
+    parser.add_argument('-V', '--version', action='version', version=apigeecli.APP + ' ' + apigeecli.__version__)
     subparsers = parser.add_subparsers()
 
     parser_test = subparsers.add_parser('test', help='test get access token', parents=[parent_parser])
