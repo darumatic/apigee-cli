@@ -51,6 +51,10 @@ def main():
     parser_apis = subparsers.add_parser('apis', help='apis').add_subparsers()
     parser_deployments = subparsers.add_parser('deployments', help='see apis that are actively deployed').add_subparsers()
     parser_keyvaluemaps = subparsers.add_parser('kvms', help='keyvaluemaps').add_subparsers()
+    parser_developers = subparsers.add_parser('developers', help='developers').add_subparsers()
+    parser_apps = subparsers.add_parser('apps', help='developer apps').add_subparsers()
+    parser_apiproducts = subparsers.add_parser('products', help='api products').add_subparsers()
+    parser_targetservers = subparsers.add_parser('ts', help='target servers').add_subparsers()
 
     apis_deploy = parser_apis.add_parser('deploy', help='deploy apis', parents=[parent_parser, dir_parser, environment_parser])
     apis_deploy.add_argument('-n', '--name', help='name', required=True)
@@ -142,9 +146,19 @@ def main():
     list_keys_in_an_environment_scoped_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     list_keys_in_an_environment_scoped_keyvaluemap.add_argument('--startkey', default='',
         help='To filter the keys that are returned, enter the name of a key that the list will start with.')
-    list_keys_in_an_environment_scoped_keyvaluemap.add_argument('--count', default=100,
+    list_keys_in_an_environment_scoped_keyvaluemap.add_argument('--count', default=100, type=int,
         help='Limits the list of keys to the number you specify, up to a maximum of 100. Use with the startkey parameter to provide more targeted filtering.')
     list_keys_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap(args).text))
+
+    list_developers = parser_developers.add_parser('list-devs', aliases=['list-developers'], parents=[parent_parser],
+        help='Lists all developers in an organization by email address. This call does not list any company developers who are a part of the designated organization.')
+    list_developers.add_argument('--expand', action='store_true',
+        help='Set to true to list developers exanded with details.')
+    list_developers.add_argument('--count', default=1000, type=int,
+        help='Limits the list to the number you specify. Use with the startKey parameter to provide more targeted filtering. The limit is 1000.')
+    list_developers.add_argument('--startkey', default='',
+        help='To filter the keys that are returned, enter the email of a developer that the list will start with.')
+    list_developers.set_defaults(func=lambda args: print(developers.list_developers(args).text))
 
     args = parser.parse_args()
     try:
