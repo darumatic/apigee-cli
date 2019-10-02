@@ -181,6 +181,11 @@ def main():
         help='List all TargetServers in an environment.')
     list_targetservers_in_an_environment.set_defaults(func=lambda args: print(targetservers.list_targetservers_in_an_environment(args).text))
 
+    get_targetserver = parser_targetservers.add_parser('get', aliases=['get-targetserver'], parents=[parent_parser, environment_parser],
+        help='Returns a TargetServer definition.')
+    get_targetserver.add_argument('-n', '--name', help='name', required=True)
+    get_targetserver.set_defaults(func=lambda args: print(targetservers.get_targetserver(args).text))
+
     args = parser.parse_args()
     try:
         func = args.func
