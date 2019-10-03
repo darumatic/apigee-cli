@@ -179,9 +179,9 @@ def main():
     get_developer_app_details.add_argument('-n', '--name', help='name', required=True)
     get_developer_app_details.set_defaults(func=lambda args: print(apps.get_developer_app_details(args).text))
 
-    list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser, environment_parser],
+    list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser, environment_parser, prefix_parser],
         help='List all TargetServers in an environment.')
-    list_targetservers_in_an_environment.set_defaults(func=lambda args: print(targetservers.list_targetservers_in_an_environment(args).text))
+    list_targetservers_in_an_environment.set_defaults(func=lambda args: print(targetservers.list_targetservers_in_an_environment(args)))
 
     get_targetserver = parser_targetservers.add_parser('get', aliases=['get-targetserver'], parents=[parent_parser, environment_parser],
         help='Returns a TargetServer definition.')
