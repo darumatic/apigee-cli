@@ -162,7 +162,7 @@ def main():
         help='To filter the keys that are returned, enter the email of a developer that the list will start with.')
     list_developers.set_defaults(func=lambda args: print(developers.list_developers(args).text))
 
-    list_developer_apps = parser_apps.add_parser('list', aliases=['list-developer-apps'], parents=[parent_parser],
+    list_developer_apps = parser_apps.add_parser('list', aliases=['list-developer-apps'], parents=[parent_parser, prefix_parser],
         help='Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps. All time values in the response are UNIX times. You can specify either the developer\'s email address or Edge ID.')
     list_developer_apps.add_argument('-d', '--developer', help='developer email or id', required=True)
     list_developer_apps.add_argument('--expand', action='store_true',
@@ -171,7 +171,7 @@ def main():
         help='Limits the list to the number you specify. The limit is 100. Use with the startKey parameter to provide more targeted filtering.')
     list_developer_apps.add_argument('--startkey', default='',
         help='To filter the keys that are returned, enter the name of a company app that the list will start with.')
-    list_developer_apps.set_defaults(func=lambda args: print(apps.list_developer_apps(args).text))
+    list_developer_apps.set_defaults(func=lambda args: print(apps.list_developer_apps(args)))
 
     get_developer_app_details = parser_apps.add_parser('get', aliases=['get-developer-app-details'], parents=[parent_parser],
         help='Get the profile of a specific developer app. All times in the response are UNIX times. Note that the response contains a top-level attribute named accessType that is no longer used by Apigee.')
