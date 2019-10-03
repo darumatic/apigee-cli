@@ -179,6 +179,16 @@ def main():
     get_developer_app_details.add_argument('-n', '--name', help='name', required=True)
     get_developer_app_details.set_defaults(func=lambda args: print(apps.get_developer_app_details(args).text))
 
+    list_api_products = parser_apiproducts.add_parser('list', aliases=['list-api-products'], parents=[parent_parser, prefix_parser],
+        help='Get a list of all API product names for an organization.')
+    list_api_products.add_argument('--expand', action='store_true',
+        help='Set to \'true\' to get expanded details about each product.')
+    list_api_products.add_argument('--count', default=1000, type=int,
+        help='Number of API products to return in the API call. The maximum limit is 1000. Use with the startkey to provide more targeted filtering.')
+    list_api_products.add_argument('--startkey', default='',
+        help='Returns a list of API products starting with the specified API product.')
+    list_api_products.set_defaults(func=lambda args: print(apiproducts.list_api_products(args)))
+
     list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser, environment_parser, prefix_parser],
         help='List all TargetServers in an environment.')
     list_targetservers_in_an_environment.set_defaults(func=lambda args: print(targetservers.list_targetservers_in_an_environment(args)))
