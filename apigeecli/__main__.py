@@ -119,9 +119,9 @@ def main():
     get_a_keys_value_in_an_environment_scoped_keyvaluemap.add_argument('--entry-name', help='entry name', required=True)
     get_a_keys_value_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap(args).text))
 
-    list_keyvaluemaps_in_an_environment = parser_keyvaluemaps.add_parser('list', aliases=['list-keyvaluemaps-in-an-environment'], parents=[parent_parser, environment_parser],
+    list_keyvaluemaps_in_an_environment = parser_keyvaluemaps.add_parser('list', aliases=['list-keyvaluemaps-in-an-environment'], parents=[parent_parser, environment_parser, prefix_parser],
         help='Lists the name of all key/value maps in an environment and optionally returns an expanded view of all key/value maps for the environment.')
-    list_keyvaluemaps_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.list_keyvaluemaps_in_an_environment(args).text))
+    list_keyvaluemaps_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.list_keyvaluemaps_in_an_environment(args)))
 
     update_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('update', aliases=['update-keyvaluemap-in-an-environment'], parents=[parent_parser, environment_parser],
         help='Note: This API is supported for Apigee Edge for Private Cloud only. For Apigee Edge for Public Cloud use Update an entry in an environment-scoped KVM. Updates an existing KeyValueMap in an environment. Does not override the existing map. Instead, this method updates the entries if they exist or adds them if not. It can take several minutes before the new value is visible to runtime traffic.')
@@ -143,14 +143,14 @@ def main():
     update_an_entry_in_an_environment_scoped_kvm.add_argument('--updated-value', help='updated value', required=True)
     update_an_entry_in_an_environment_scoped_kvm.set_defaults(func=lambda args: print(keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm(args).text))
 
-    list_keys_in_an_environment_scoped_keyvaluemap = parser_keyvaluemaps.add_parser('list-keys', aliases=['list-keys-in-an-environment-scoped-keyvaluemap'], parents=[parent_parser, environment_parser],
+    list_keys_in_an_environment_scoped_keyvaluemap = parser_keyvaluemaps.add_parser('list-keys', aliases=['list-keys-in-an-environment-scoped-keyvaluemap'], parents=[parent_parser, environment_parser, prefix_parser],
         help='Note: This API is supported for Apigee Edge for the Public Cloud only. Lists keys in a KeyValueMap scoped to an environment. KVM names are case sensitive.')
     list_keys_in_an_environment_scoped_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     list_keys_in_an_environment_scoped_keyvaluemap.add_argument('--startkey', default='',
         help='To filter the keys that are returned, enter the name of a key that the list will start with.')
     list_keys_in_an_environment_scoped_keyvaluemap.add_argument('--count', default=100, type=int,
         help='Limits the list of keys to the number you specify, up to a maximum of 100. Use with the startkey parameter to provide more targeted filtering.')
-    list_keys_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap(args).text))
+    list_keys_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap(args)))
 
     list_developers = parser_developers.add_parser('list', aliases=['list-developers'], parents=[parent_parser, prefix_parser],
         help='Lists all developers in an organization by email address. This call does not list any company developers who are a part of the designated organization.')
