@@ -2,6 +2,7 @@
 """https://apidocs.apigee.com/api/developers-0"""
 
 import requests
+import json
 
 from apigeecli import APIGEE_ADMIN_API_URL
 from apigeecli.util import authorization
@@ -13,4 +14,7 @@ def list_developers(args):
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
     # print(resp.status_code)
-    return resp
+    if args.prefix:
+        return json.dumps([i for i in resp.json() if i.startswith(args.prefix)])
+    else:
+        return resp.text

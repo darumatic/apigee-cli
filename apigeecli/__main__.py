@@ -152,7 +152,7 @@ def main():
         help='Limits the list of keys to the number you specify, up to a maximum of 100. Use with the startkey parameter to provide more targeted filtering.')
     list_keys_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap(args).text))
 
-    list_developers = parser_developers.add_parser('list', aliases=['list-developers'], parents=[parent_parser],
+    list_developers = parser_developers.add_parser('list', aliases=['list-developers'], parents=[parent_parser, prefix_parser],
         help='Lists all developers in an organization by email address. This call does not list any company developers who are a part of the designated organization.')
     list_developers.add_argument('--expand', action='store_true',
         help='Set to true to list developers exanded with details.')
@@ -160,7 +160,7 @@ def main():
         help='Limits the list to the number you specify. Use with the startKey parameter to provide more targeted filtering. The limit is 1000.')
     list_developers.add_argument('--startkey', default='',
         help='To filter the keys that are returned, enter the email of a developer that the list will start with.')
-    list_developers.set_defaults(func=lambda args: print(developers.list_developers(args).text))
+    list_developers.set_defaults(func=lambda args: print(developers.list_developers(args)))
 
     list_developer_apps = parser_apps.add_parser('list', aliases=['list-developer-apps'], parents=[parent_parser, prefix_parser],
         help='Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps. All time values in the response are UNIX times. You can specify either the developer\'s email address or Edge ID.')
