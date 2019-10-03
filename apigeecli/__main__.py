@@ -189,6 +189,11 @@ def main():
         help='Returns a list of API products starting with the specified API product.')
     list_api_products.set_defaults(func=lambda args: print(apiproducts.list_api_products(args)))
 
+    get_api_product = parser_apiproducts.add_parser('get', aliases=['get-api-product'], parents=[parent_parser],
+        help='Gets configuration data for an API product. The API product name required in the request URL is not the "Display Name" value displayed for the API product in the Edge UI. While they may be the same, they are not always the same depending on whether the API product was created via UI or API.')
+    get_api_product.add_argument('-n', '--name', help='name', required=True)
+    get_api_product.set_defaults(func=lambda args: print(apiproducts.get_api_product(args).text))
+
     list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser, environment_parser, prefix_parser],
         help='List all TargetServers in an environment.')
     list_targetservers_in_an_environment.set_defaults(func=lambda args: print(targetservers.list_targetservers_in_an_environment(args)))
