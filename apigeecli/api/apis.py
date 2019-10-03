@@ -27,9 +27,6 @@ def get_api_proxy(args):
     # print(resp.status_code)
     return resp
 
-def get_api_proxies_with_prefix(prefix, api_proxies):
-    return [i for i in api_proxies if i.startswith(prefix)]
-
 def list_api_proxies(args):
     uri = '{}/v1/organizations/{}/apis'.format(
         APIGEE_ADMIN_API_URL, args.org)
@@ -38,6 +35,6 @@ def list_api_proxies(args):
     resp.raise_for_status()
     # print(resp.status_code)
     if args.prefix:
-        return json.dumps(get_api_proxies_with_prefix(args.prefix, resp.json()))
+        return json.dumps([i for i in resp.json() if i.startswith(args.prefix)])
     else:
         return resp.text
