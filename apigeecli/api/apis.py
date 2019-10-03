@@ -4,7 +4,6 @@
 import requests
 import json
 
-from apigeecli import APIGEE_CLI_PREFIX
 from apigeecli import APIGEE_ADMIN_API_URL
 from apigeecli.util import authorization
 
