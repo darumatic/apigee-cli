@@ -8,8 +8,7 @@ from apigeecli.util import authorization
 
 def list_developers(args):
     uri = '{}/v1/organizations/{}/developers?expand={}&count={}&startKey={}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.expand, args.count, args.startkey
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.expand, args.count, args.startkey)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()

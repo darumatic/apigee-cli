@@ -8,8 +8,7 @@ from apigeecli.util import authorization
 
 def list_targetservers_in_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/targetservers'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
@@ -18,8 +17,7 @@ def list_targetservers_in_an_environment(args):
 
 def get_targetserver(args):
     uri = '{}/v1/organizations/{}/environments/{}/targetservers/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()

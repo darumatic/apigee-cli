@@ -9,8 +9,7 @@ from apigeecli.util import authorization
 
 def create_keyvaluemap_in_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
     hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
     body = json.loads(args.body)
     resp = requests.post(uri, headers=hdrs, json=body)
@@ -20,8 +19,7 @@ def create_keyvaluemap_in_an_environment(args):
 
 def delete_keyvaluemap_from_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.delete(uri, headers=hdrs)
     resp.raise_for_status()
@@ -30,8 +28,7 @@ def delete_keyvaluemap_from_an_environment(args):
 
 def delete_keyvaluemap_entry_in_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps/{}/entries/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name, args.entry_name
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name, args.entry_name)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.delete(uri, headers=hdrs)
     resp.raise_for_status()
@@ -40,8 +37,7 @@ def delete_keyvaluemap_entry_in_an_environment(args):
 
 def get_keyvaluemap_in_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
@@ -50,8 +46,7 @@ def get_keyvaluemap_in_an_environment(args):
 
 def get_a_keys_value_in_an_environment_scoped_keyvaluemap(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps/{}/entries/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name, args.entry_name
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name, args.entry_name)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
@@ -60,8 +55,7 @@ def get_a_keys_value_in_an_environment_scoped_keyvaluemap(args):
 
 def list_keyvaluemaps_in_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
@@ -70,8 +64,7 @@ def list_keyvaluemaps_in_an_environment(args):
 
 def update_keyvaluemap_in_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
     hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
     body = json.loads(args.body)
     resp = requests.post(uri, headers=hdrs, json=body)
@@ -81,8 +74,7 @@ def update_keyvaluemap_in_an_environment(args):
 
 def create_an_entry_in_an_environment_scoped_kvm(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps/{}/entries'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
     hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
     body = {
       'name' : args.entry_name,
@@ -95,8 +87,7 @@ def create_an_entry_in_an_environment_scoped_kvm(args):
 
 def update_an_entry_in_an_environment_scoped_kvm(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps/{}/entries/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name, args.entry_name
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name, args.entry_name)
     hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
     body = {
       'name' : args.entry_name,
@@ -109,8 +100,7 @@ def update_an_entry_in_an_environment_scoped_kvm(args):
 
 def list_keys_in_an_environment_scoped_keyvaluemap(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps/{}/keys?startkey={}&count={}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name, args.startkey, args.count
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name, args.startkey, args.count)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()

@@ -10,8 +10,7 @@ from apigeecli.util import authorization
 
 def export_api_proxy(args):
     uri = '{}/v1/organizations/{}/apis/{}/revisions/{}?format=bundle'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.name, args.revision_number
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.name, args.revision_number)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
@@ -22,8 +21,7 @@ def export_api_proxy(args):
 
 def get_api_proxy(args):
     uri = '{}/v1/organizations/{}/apis/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.name
-    )
+        APIGEE_ADMIN_API_URL, args.org, args.name)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
@@ -35,8 +33,7 @@ def get_api_proxies_with_prefix(prefix, api_proxies):
 
 def list_api_proxies(args):
     uri = '{}/v1/organizations/{}/apis'.format(
-        APIGEE_ADMIN_API_URL, args.org
-    )
+        APIGEE_ADMIN_API_URL, args.org)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
