@@ -33,4 +33,5 @@ def get_access_token(args):
     except KeyError as ke:
         print('retry http POST ' + APIGEE_OAUTH_URL)
         responsePost = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=postHeaders, data=postBody)
+        print(responsePost.json())
     return responsePost.json()['access_token']
