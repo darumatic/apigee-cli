@@ -1,5 +1,5 @@
 APP = 'apigeecli'
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 description = 'apigeecli'
 
 import json
