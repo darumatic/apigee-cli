@@ -8,5 +8,5 @@ def set_header(hdrs, args):
     if args.mfa_secret:
         hdrs['Authorization'] = 'Bearer ' + mfa_with_pyotp.get_access_token(args)
     else:
-        hdrs['Authorization'] = 'Basic ' + base64.b64encode(args.username + ':' + args.password)
+        hdrs['Authorization'] = 'Basic ' + base64.b64encode((args.username + ':' + args.password).encode()).decode()
     return hdrs
