@@ -8,7 +8,7 @@ import functools
 import os
 import sys
 
-import apigeecli
+import apigee
 
 def do_nothing():
     pass
@@ -17,7 +17,7 @@ def envvar_exists(envvar):
     def actual_decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            if getattr(apigeecli, envvar) is not None:
+            if getattr(apigee, envvar) is not None:
                 result = func(*args, **kwargs)
                 return result
             else:

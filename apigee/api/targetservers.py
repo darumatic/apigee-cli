@@ -4,8 +4,8 @@
 import requests
 import json
 
-from apigeecli import APIGEE_ADMIN_API_URL
-from apigeecli.util import authorization
+from apigee import APIGEE_ADMIN_API_URL
+from apigee.util import authorization
 
 def list_targetservers_in_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/targetservers'.format(

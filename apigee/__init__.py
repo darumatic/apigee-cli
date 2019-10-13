@@ -1,6 +1,6 @@
 APP = 'apigeecli'
-__version__ = '0.2.2'
-description = 'apigeecli'
+__version__ = '0.3.0'
+description = 'apigee cli'
 
 import json
 from os import getenv

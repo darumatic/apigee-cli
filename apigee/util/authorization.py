@@ -1,6 +1,6 @@
 import base64
 
-from apigeecli.util import mfa_with_pyotp
+from apigee.util import mfa_with_pyotp
 
 def set_header(hdrs, args):
     if hdrs is None:

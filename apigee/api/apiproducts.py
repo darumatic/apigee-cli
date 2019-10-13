@@ -4,8 +4,8 @@
 import requests
 import json
 
-from apigeecli import APIGEE_ADMIN_API_URL
-from apigeecli.util import authorization
+from apigee import APIGEE_ADMIN_API_URL
+from apigee.util import authorization
 
 def get_api_product(args):
     uri = '{}/v1/organizations/{}/apiproducts/{}'.format(

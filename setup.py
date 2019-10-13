@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-from apigeecli import APP, __version__, description
+from apigee import APP, __version__, description
 
 setup(name=APP,
       version=__version__,
@@ -13,7 +13,7 @@ setup(name=APP,
       packages=find_packages(),
       entry_points={
           'console_scripts': [
-              'apigeecli=apigeecli.__main__:main'
+              'apigee=apigee.__main__:main'
           ]
       },
       python_requires='>=3',

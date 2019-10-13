@@ -1,19 +1,19 @@
 #!/usr/bin/env python
-"""apigeecli"""
+"""apigee"""
 
 import argparse
 import os
 import sys
 
-import apigeecli
+import apigee
 
-from apigeecli import APIGEE_CLI_PREFIX
-from apigeecli import APIGEE_ORG
-from apigeecli import APIGEE_USERNAME
-from apigeecli import APIGEE_PASSWORD
-from apigeecli import APIGEE_MFA_SECRET
-from apigeecli.api import *
-from apigeecli.util import *
+from apigee import APIGEE_CLI_PREFIX
+from apigee import APIGEE_ORG
+from apigee import APIGEE_USERNAME
+from apigee import APIGEE_PASSWORD
+from apigee import APIGEE_MFA_SECRET
+from apigee.api import *
+from apigee.util import *
 
 @exception_handler
 def main():
@@ -45,8 +45,8 @@ def main():
     prefix_parser = argparse.ArgumentParser(add_help=False)
     prefix_parser.add_argument('--prefix', help='prefix filter for apigee items', default=APIGEE_CLI_PREFIX)
 
-    parser = argparse.ArgumentParser(prog=apigeecli.APP, description=apigeecli.description)
-    parser.add_argument('-V', '--version', action='version', version=apigeecli.APP + ' ' + apigeecli.__version__)
+    parser = argparse.ArgumentParser(prog=apigee.APP, description=apigee.description)
+    parser.add_argument('-V', '--version', action='version', version=apigee.APP + ' ' + apigee.__version__)
     subparsers = parser.add_subparsers()
 
     parser_test = subparsers.add_parser('test', help='test get access token', parents=[parent_parser])

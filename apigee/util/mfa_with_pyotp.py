@@ -4,9 +4,9 @@ import urllib.request, urllib.parse, urllib.error
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
 
-from apigeecli import APIGEE_ADMIN_API_URL
-from apigeecli import APIGEE_OAUTH_URL
-from apigeecli import HTTP_MAX_RETRIES
+from apigee import APIGEE_ADMIN_API_URL
+from apigee import APIGEE_OAUTH_URL
+from apigee import HTTP_MAX_RETRIES
 
 def get_access_token(args):
     if args.mfa_secret is None:

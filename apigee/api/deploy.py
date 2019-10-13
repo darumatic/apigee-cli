@@ -27,8 +27,8 @@ import urllib.parse
 import xml.dom.minidom
 import zipfile
 
-from apigeecli import APIGEE_ADMIN_API_URL
-from apigeecli.util import mfa_with_pyotp
+from apigee import APIGEE_ADMIN_API_URL
+from apigee.util import mfa_with_pyotp
 
 ApigeeHost = APIGEE_ADMIN_API_URL
 UserPW = None
