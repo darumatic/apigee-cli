@@ -62,8 +62,7 @@ def list_keyvaluemaps_in_an_environment(args):
     # print(resp.status_code)
     if args.prefix:
         return json.dumps([i for i in resp.json() if i.startswith(args.prefix)])
-    else:
-        return resp.text
+    return resp.text
 
 def update_keyvaluemap_in_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps/{}'.format(
@@ -110,5 +109,4 @@ def list_keys_in_an_environment_scoped_keyvaluemap(args):
     # print(resp.status_code)
     if args.prefix:
         return json.dumps([i for i in resp.json() if i.startswith(args.prefix)])
-    else:
-        return resp.text
+    return resp.text

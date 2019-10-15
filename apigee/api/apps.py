@@ -29,5 +29,4 @@ def list_developer_apps(args):
     # print(resp.status_code)
     if args.prefix:
         return json.dumps([i for i in resp.json() if i.startswith(args.prefix)])
-    else:
-        return resp.text
+    return resp.text

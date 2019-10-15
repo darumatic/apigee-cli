@@ -16,5 +16,4 @@ def get_api_proxy_deployment_details(args):
     # print(resp.status_code)
     if args.revision_name:
         return json.dumps([{i['name']:[j['name'] for j in i['revision']]} for i in resp.json()['environment']])
-    else:
-        return resp.text
+    return resp.text

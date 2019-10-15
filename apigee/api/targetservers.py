@@ -16,8 +16,7 @@ def list_targetservers_in_an_environment(args):
     # print(resp.status_code)
     if args.prefix:
         return json.dumps([i for i in resp.json() if i.startswith(args.prefix)])
-    else:
-        return resp.text
+    return resp.text
 
 def get_targetserver(args):
     uri = '{}/v1/organizations/{}/environments/{}/targetservers/{}'.format(
