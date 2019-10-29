@@ -53,12 +53,12 @@ def main():
     parser_test.set_defaults(func=test)
 
     parser_apis = subparsers.add_parser('apis', help='apis').add_subparsers()
-    parser_deployments = subparsers.add_parser('deployments', help='see apis that are actively deployed').add_subparsers()
-    parser_keyvaluemaps = subparsers.add_parser('kvms', help='keyvaluemaps').add_subparsers()
-    parser_developers = subparsers.add_parser('developers', help='developers').add_subparsers()
+    parser_deployments = subparsers.add_parser('deployments', aliases=['deps'], help='see apis that are actively deployed').add_subparsers()
+    parser_keyvaluemaps = subparsers.add_parser('kvms', aliases=['keyvaluemaps'], help='keyvaluemaps').add_subparsers()
+    parser_developers = subparsers.add_parser('developers', aliases=['devs'], help='developers').add_subparsers()
     parser_apps = subparsers.add_parser('apps', help='developer apps').add_subparsers()
-    parser_apiproducts = subparsers.add_parser('products', help='api products').add_subparsers()
-    parser_targetservers = subparsers.add_parser('ts', help='target servers').add_subparsers()
+    parser_apiproducts = subparsers.add_parser('products', aliases=['prods'], help='api products').add_subparsers()
+    parser_targetservers = subparsers.add_parser('ts', aliases=['targetservers'], help='target servers').add_subparsers()
 
     parser_prepend = subparsers.add_parser('prepend', aliases=['prefix'], help='prepend all matching strings with a prefix in all files in the specified directory (rudimentary stream editor). this is potentially VERY DANGEROUS. make sure you have version control such as Git to revert any changes in the target directory.', parents=[dir_parser])
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
