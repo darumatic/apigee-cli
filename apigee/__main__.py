@@ -7,6 +7,7 @@ import sys
 
 import apigee
 
+from apigee import APIGEE_CLI_CREDS
 from apigee import APIGEE_CLI_PREFIX
 from apigee import APIGEE_ORG
 from apigee import APIGEE_USERNAME
@@ -18,20 +19,38 @@ from apigee.util import *
 @exception_handler
 def main():
     parent_parser = argparse.ArgumentParser(add_help=False)
-    parent_parser.add_argument('--mfa-secret', action='store', help='apigee mfa secret', required=False, default=APIGEE_MFA_SECRET)
+    parent_parser.add_argument('-P', '--profile', action='store', help='name of credentials profile', default='default')
 
-    if APIGEE_ORG is None:
-        parent_parser.add_argument('-o', '--org', action='store', help='apigee org', required=True)
-    else:
+    profile = parent_parser.parse_known_args()[0].profile
+
+    mfa_secret = get_credential(profile, 'mfa_secret')
+    org = get_credential(profile, 'org')
+    username = get_credential(profile, 'username')
+    password = get_credential(profile, 'password')
+    prefix = get_credential(profile, 'prefix')
+
+    parent_parser.add_argument('--mfa-secret', action='store', help='apigee mfa secret', required=False, default=APIGEE_MFA_SECRET if mfa_secret is None else mfa_secret)
+
+    if org:
+        parent_parser.add_argument('-o', '--org', action='store', help='apigee org', required=False, default=org)
+    elif APIGEE_ORG:
         parent_parser.add_argument('-o', '--org', action='store', help='apigee org', required=False, default=APIGEE_ORG)
-    if APIGEE_USERNAME is None:
-        parent_parser.add_argument('-u', '--username', action='store', help='apigee username', required=True)
     else:
+        parent_parser.add_argument('-o', '--org', action='store', help='apigee org', required=True)
+
+    if username:
+        parent_parser.add_argument('-u', '--username', action='store', help='apigee username', required=False, default=username)
+    elif APIGEE_USERNAME:
         parent_parser.add_argument('-u', '--username', action='store', help='apigee username', required=False, default=APIGEE_USERNAME)
-    if APIGEE_PASSWORD is None:
-        parent_parser.add_argument('-p', '--password', action='store', help='apigee password', required=True)
     else:
+        parent_parser.add_argument('-u', '--username', action='store', help='apigee username', required=True)
+
+    if password:
+        parent_parser.add_argument('-p', '--password', action='store', help='apigee password', required=False, default=password)
+    elif APIGEE_PASSWORD:
         parent_parser.add_argument('-p', '--password', action='store', help='apigee password', required=False, default=APIGEE_PASSWORD)
+    else:
+        parent_parser.add_argument('-p', '--password', action='store', help='apigee password', required=True)
 
     file_parser = argparse.ArgumentParser(add_help=False)
     file_parser.add_argument('-f', '--file', action='store', help='file path', required=True, type=isfile)
@@ -43,7 +62,7 @@ def main():
     environment_parser.add_argument('-e', '--environment', help='environment', required=True)
 
     prefix_parser = argparse.ArgumentParser(add_help=False)
-    prefix_parser.add_argument('--prefix', help='prefix filter for apigee items', default=APIGEE_CLI_PREFIX)
+    prefix_parser.add_argument('--prefix', help='prefix filter for apigee items', default=APIGEE_CLI_PREFIX if prefix is None else prefix)
 
     parser = argparse.ArgumentParser(prog=apigee.CMD, description=apigee.description)
     parser.add_argument('-V', '--version', action='version', version=apigee.APP + ' ' + apigee.__version__)
@@ -51,6 +70,10 @@ def main():
 
     parser_test = subparsers.add_parser('test', help='test get access token', parents=[parent_parser])
     parser_test.set_defaults(func=test)
+
+    parser_configure = subparsers.add_parser('configure', help='configure credentials', parents=[parent_parser])
+    # parser_configure.add_argument('-P', '--profile', help='name of profile to create', default='default')
+    parser_configure.set_defaults(func=config.main)
 
     parser_apis = subparsers.add_parser('apis', help='apis').add_subparsers()
     parser_deployments = subparsers.add_parser('deployments', aliases=['deps'], help='see apis that are actively deployed').add_subparsers()

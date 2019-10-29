@@ -4,6 +4,7 @@ modules = glob.glob(join(dirname(__file__), "*.py"))
 __all__ = [basename(f)[:-3] for f in modules if isfile(f) and not f.endswith('__init__.py')]
 
 import argparse
+import configparser
 import functools
 import os
 import sys
@@ -35,7 +36,12 @@ def exception_handler(func):
             s = 'An exception of type {0} occurred. Arguments:\n{1}'
             # print(s.format(type(e).__name__, e.args))
             print(s.format(type(e).__name__, e))
-            exit(1)
+            sys.exit(1)
+        except KeyboardInterrupt as ki:
+            s = 'An exception of type {0} occurred. Arguments:\n{1}'
+            # print('\n', s.format(type(ki).__name__, ki))
+            print()
+            sys.exit(130)
     return wrapper
 
 def test(args):
@@ -56,4 +62,13 @@ def isdir(d):
     else:
         raise argparse.ArgumentTypeError('not a directory')
 
-__all__.extend(['do_nothing', 'envvar_exists', 'exception_handler', 'test', 'isempty', 'isfile', 'isdir'])
+def get_credential(section, key):
+    try:
+        config = configparser.ConfigParser()
+        config.read(apigee.APIGEE_CLI_CREDS)
+        if section in config:
+            return config[section][key]
+    except:
+        return None
+
+__all__.extend(['do_nothing', 'envvar_exists', 'exception_handler', 'test', 'isempty', 'isfile', 'isdir', 'get_credential'])

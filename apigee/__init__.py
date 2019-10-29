@@ -5,6 +5,7 @@ description = 'apigee cli'
 
 import json
 from os import getenv
+from pathlib import Path
 
 def getenv_else(a, b):
     try:
@@ -18,6 +19,8 @@ def strtobool(s):
     except:
         return None
 
+APIGEE_CLI_DIR = str(Path.home())+'/.apigee'
+APIGEE_CLI_CREDS = APIGEE_CLI_DIR+'/credentials'
 APIGEE_CLI_PREFIX = getenv('APIGEE_CLI_PREFIX')
 APIGEE_USERNAME = getenv('APIGEE_USERNAME')
 APIGEE_PASSWORD = getenv('APIGEE_PASSWORD')
