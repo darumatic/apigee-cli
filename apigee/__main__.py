@@ -71,8 +71,8 @@ def main():
     parser_test = subparsers.add_parser('test', help='test get access token', parents=[parent_parser])
     parser_test.set_defaults(func=test)
 
-    parser_configure = subparsers.add_parser('configure', help='configure credentials', parents=[parent_parser])
-    # parser_configure.add_argument('-P', '--profile', help='name of profile to create', default='default')
+    parser_configure = subparsers.add_parser('configure', help='configure credentials')
+    parser_configure.add_argument('-P', '--profile', help='name of profile to create', default='default')
     parser_configure.set_defaults(func=config.main)
 
     parser_apis = subparsers.add_parser('apis', help='apis').add_subparsers()
