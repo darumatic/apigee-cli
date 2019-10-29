@@ -7,18 +7,6 @@ import json
 from os import getenv
 from pathlib import Path
 
-def getenv_else(a, b):
-    try:
-        return getenv(a) if getenv(a) is not None else b
-    except:
-        return None
-
-def strtobool(s):
-    try:
-        return json.loads(s.lower()) if s is not None else None
-    except:
-        return None
-
 APIGEE_CLI_DIR = str(Path.home())+'/.apigee'
 APIGEE_CLI_CREDS = APIGEE_CLI_DIR+'/credentials'
 APIGEE_CLI_PREFIX = getenv('APIGEE_CLI_PREFIX')

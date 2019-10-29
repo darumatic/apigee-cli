@@ -71,4 +71,13 @@ def get_credential(section, key):
     except:
         return None
 
-__all__.extend(['do_nothing', 'envvar_exists', 'exception_handler', 'test', 'isempty', 'isfile', 'isdir', 'get_credential'])
+__all__.extend([
+    'do_nothing',
+    'envvar_exists',
+    'exception_handler',
+    'test',
+    'isempty',
+    'isfile',
+    'isdir',
+    'get_credential'
+])
