@@ -16,17 +16,14 @@ setup(name=APP,
               'apigee=apigee.__main__:main'
           ]
       },
-      python_requires='>=3',
+      python_requires='>=3.5',
       install_requires=['pyotp', 'requests'],
       license='Apache license 2.0',
       classifiers=[
         'Development Status :: 3 - Alpha',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
         'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
         'Topic :: Utilities',
         'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
       ])
