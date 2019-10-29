@@ -1,6 +1,6 @@
 APP = 'apigeecli'
 CMD = 'apigee'
-__version__ = '0.3.2'
+__version__ = '0.4.0'
 description = 'apigee cli'
 
 import json
