@@ -60,6 +60,11 @@ def main():
     parser_apiproducts = subparsers.add_parser('products', help='api products').add_subparsers()
     parser_targetservers = subparsers.add_parser('ts', help='target servers').add_subparsers()
 
+    parser_prepend = subparsers.add_parser('prepend', aliases=['prefix'], help='prepend all matching strings with a prefix in all files in the specified directory (rudimentary stream editor). this is potentially VERY DANGEROUS. make sure you have version control such as Git to revert any changes in the target directory.', parents=[dir_parser])
+    parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
+    parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
+    parser_prepend.set_defaults(func=prepend.main)
+
     apis_deploy = parser_apis.add_parser('deploy', help='deploy apis', parents=[parent_parser, dir_parser, environment_parser])
     apis_deploy.add_argument('-n', '--name', help='name', required=True)
     # apis_deploy.add_argument('-d', '--directory', help='directory name')
