@@ -4,6 +4,9 @@
 import requests
 import json
 
+import pandas as pd
+from pandas.io.json import json_normalize
+
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.util import authorization
 
@@ -15,5 +18,8 @@ def get_api_proxy_deployment_details(args):
     resp.raise_for_status()
     # print(resp.status_code)
     if args.revision_name:
-        return json.dumps([{i['name']:[j['name'] for j in i['revision']]} for i in resp.json()['environment']])
+        revisions = [{'name':i['name'],'revision':[j['name'] for j in i['revision']]} for i in resp.json()['environment']]
+        if args.no_table:
+            return json.dumps(revisions)
+        return pd.DataFrame.from_dict(json_normalize(revisions), orient='columns')
     return resp.text

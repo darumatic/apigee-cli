@@ -4,6 +4,9 @@
 import requests
 import json
 
+import pandas as pd
+from pandas.io.json import json_normalize
+
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.util import authorization
 
@@ -24,4 +27,6 @@ def get_permissions(args):
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
     # print(resp.status_code)
-    return resp
+    if args.no_table:
+        return resp.text
+    return pd.DataFrame.from_dict(json_normalize(resp.json()['resourcePermission']), orient='columns')

@@ -58,6 +58,9 @@ def main():
     dir_parser = argparse.ArgumentParser(add_help=False)
     dir_parser.add_argument('-d', '--directory', action='store', help='directory path', required=True, type=isdir)
 
+    format_parser = argparse.ArgumentParser(add_help=False)
+    format_parser.add_argument('-F', '--format', action='store', help='output format type', required=False)
+
     environment_parser = argparse.ArgumentParser(add_help=False)
     environment_parser.add_argument('-e', '--environment', help='environment', required=True)
 
@@ -119,6 +122,7 @@ def main():
         help='Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.')
     get_api_proxy_deployment_details.add_argument('-n', '--name', help='name', required=True)
     get_api_proxy_deployment_details.add_argument('-r', '--revision-name', action='store_true', help='get revisions only')
+    get_api_proxy_deployment_details.add_argument('-Tn', '--no-table', action='store_true', help='disable table output when used with -r/--revision-name')
     get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details(args)))
 
     create_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('create', aliases=['create-keyvaluemap-in-an-environment'], parents=[parent_parser, environment_parser],
@@ -263,7 +267,8 @@ def main():
     get_permissions = parser_permissions.add_parser('get', aliases=['get-permissions'], parents=[parent_parser],
         help='Get permissions for a role.')
     get_permissions.add_argument('-n', '--name', help='name', required=True)
-    get_permissions.set_defaults(func=lambda args: print(permissions.get_permissions(args).text))
+    get_permissions.add_argument('-Tn', '--no-table', action='store_true', help='disable table output')
+    get_permissions.set_defaults(func=lambda args: print(permissions.get_permissions(args)))
 
     args = parser.parse_args()
     try:
