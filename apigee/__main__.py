@@ -254,6 +254,12 @@ def main():
         help='List all data masks for an organization.')
     list_data_masks_for_an_organization.set_defaults(func=lambda args: print(maskconfigs.list_data_masks_for_an_organization(args).text))
 
+    create_permissions = parser_permissions.add_parser('create', aliases=['create-permissions'], parents=[parent_parser],
+        help='Create permissions for a role.')
+    create_permissions.add_argument('-n', '--name', help='name', required=True)
+    create_permissions.add_argument('-b', '--body', help='request body', required=True)
+    create_permissions.set_defaults(func=lambda args: print(permissions.create_permissions(args).text))
+
     get_permissions = parser_permissions.add_parser('get', aliases=['get-permissions'], parents=[parent_parser],
         help='Get permissions for a role.')
     get_permissions.add_argument('-n', '--name', help='name', required=True)
