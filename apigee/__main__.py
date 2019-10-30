@@ -82,6 +82,7 @@ def main():
     parser_apps = subparsers.add_parser('apps', help='developer apps').add_subparsers()
     parser_apiproducts = subparsers.add_parser('products', aliases=['prods'], help='api products').add_subparsers()
     parser_targetservers = subparsers.add_parser('ts', aliases=['targetservers'], help='target servers').add_subparsers()
+    parser_maskconfigs = subparsers.add_parser('mask', aliases=['maskconfigs'], help='data masks').add_subparsers()
 
     parser_prepend = subparsers.add_parser('prepend', aliases=['prefix'], help='prepend all matching strings with a prefix in all files in the specified directory (rudimentary stream editor). this is potentially VERY DANGEROUS. make sure you have version control such as Git to revert any changes in the target directory.', parents=[dir_parser])
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
@@ -230,6 +231,21 @@ def main():
         help='Returns a TargetServer definition.')
     get_targetserver.add_argument('-n', '--name', help='name', required=True)
     get_targetserver.set_defaults(func=lambda args: print(targetservers.get_targetserver(args).text))
+
+    get_data_mask_details_for_an_api_proxy = parser_maskconfigs.add_parser('get-apis', aliases=['get-data-mask-details-for-an-api-proxy'], parents=[parent_parser],
+        help='Get the details for a data mask for an API proxy.')
+    get_data_mask_details_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
+    get_data_mask_details_for_an_api_proxy.add_argument('--maskconfig-name', help='data mask name')
+    get_data_mask_details_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.get_data_mask_details_for_an_api_proxy(args).text))
+
+    list_data_masks_for_an_api_proxy = parser_maskconfigs.add_parser('list-apis', aliases=['list-data-masks-for-an-api-proxy'], parents=[parent_parser],
+        help='List all data masks for an API proxy.')
+    list_data_masks_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
+    list_data_masks_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.list_data_masks_for_an_api_proxy(args).text))
+
+    list_data_masks_for_an_organization = parser_maskconfigs.add_parser('list', aliases=['list-data-masks-for-an-organization'], parents=[parent_parser],
+        help='List all data masks for an organization.')
+    list_data_masks_for_an_organization.set_defaults(func=lambda args: print(maskconfigs.list_data_masks_for_an_organization(args).text))
 
     args = parser.parse_args()
     try:
