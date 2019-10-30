@@ -60,15 +60,10 @@ def main(fargs, *args, **kwargs):
     config = configparser.ConfigParser()
     config[profile_name] = {k: v for k, v in creds.items() if v}
 
-    if os.path.isfile(APIGEE_CLI_CREDS):
-        append_write = 'a'
-    else:
-        append_write = 'w'
-
     if not os.path.exists(APIGEE_CLI_DIR):
         os.makedirs(APIGEE_CLI_DIR)
 
-    with open(APIGEE_CLI_CREDS, append_write) as configfile:
+    with open(APIGEE_CLI_CREDS, 'a+') as configfile:
         config.write(configfile)
 
 if __name__ == '__main__':
