@@ -232,13 +232,19 @@ def main():
     get_targetserver.add_argument('-n', '--name', help='name', required=True)
     get_targetserver.set_defaults(func=lambda args: print(targetservers.get_targetserver(args).text))
 
-    get_data_mask_details_for_an_api_proxy = parser_maskconfigs.add_parser('get-apis', aliases=['get-data-mask-details-for-an-api-proxy'], parents=[parent_parser],
+    create_data_masks_for_an_api_proxy = parser_maskconfigs.add_parser('create-api', aliases=['create-data-masks-for-an-api-proxy'], parents=[parent_parser],
+        help='Create a data mask for an API proxy. You can capture message content to assist in runtime debugging of APIs calls. In many cases, API traffic contains sensitive data, such credit cards or personally identifiable health information (PHI) that needs to filtered out of the captured message content. Data masks enable you to specify data that will be filtered out of trace sessions. Data masking is only enabled when a trace session (also called a \'debug\' session) is enabled for an API proxy. If no trace session are enabled on an API proxy, then the data will not be masked.')
+    create_data_masks_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
+    create_data_masks_for_an_api_proxy.add_argument('-b', '--body', help='request body', required=True)
+    create_data_masks_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.create_data_masks_for_an_api_proxy(args).text))
+
+    get_data_mask_details_for_an_api_proxy = parser_maskconfigs.add_parser('get-api', aliases=['get-data-mask-details-for-an-api-proxy'], parents=[parent_parser],
         help='Get the details for a data mask for an API proxy.')
     get_data_mask_details_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
-    get_data_mask_details_for_an_api_proxy.add_argument('--maskconfig-name', help='data mask name')
+    get_data_mask_details_for_an_api_proxy.add_argument('--maskconfig-name', help='data mask name', required=True)
     get_data_mask_details_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.get_data_mask_details_for_an_api_proxy(args).text))
 
-    list_data_masks_for_an_api_proxy = parser_maskconfigs.add_parser('list-apis', aliases=['list-data-masks-for-an-api-proxy'], parents=[parent_parser],
+    list_data_masks_for_an_api_proxy = parser_maskconfigs.add_parser('list-api', aliases=['list-data-masks-for-an-api-proxy'], parents=[parent_parser],
         help='List all data masks for an API proxy.')
     list_data_masks_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
     list_data_masks_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.list_data_masks_for_an_api_proxy(args).text))
