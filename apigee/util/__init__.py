@@ -5,6 +5,7 @@ __all__ = [basename(f)[:-3] for f in modules if isfile(f) and not f.endswith('__
 
 import argparse
 import functools
+import inspect
 import os
 import sys
 
@@ -61,12 +62,10 @@ def isdir(d):
     else:
         raise argparse.ArgumentTypeError('not a directory')
 
-__all__.extend([
-    'do_nothing',
-    'envvar_exists',
-    'exception_handler',
-    'test',
-    'isempty',
-    'isfile',
-    'isdir'
-])
+# https://stackoverflow.com/a/15813469
+module = sys.modules[__name__]
+name_func_tuples = inspect.getmembers(module, inspect.isfunction)
+name_func_tuples = [t for t in name_func_tuples if inspect.getmodule(t[1]) == module]
+functions = dict(name_func_tuples)
+
+__all__.extend(list(functions))
