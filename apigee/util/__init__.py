@@ -4,7 +4,6 @@ modules = glob.glob(join(dirname(__file__), "*.py"))
 __all__ = [basename(f)[:-3] for f in modules if isfile(f) and not f.endswith('__init__.py')]
 
 import argparse
-import configparser
 import functools
 import os
 import sys
@@ -62,15 +61,6 @@ def isdir(d):
     else:
         raise argparse.ArgumentTypeError('not a directory')
 
-def get_credential(section, key):
-    try:
-        config = configparser.ConfigParser()
-        config.read(apigee.APIGEE_CLI_CREDS)
-        if section in config:
-            return config[section][key]
-    except:
-        return None
-
 __all__.extend([
     'do_nothing',
     'envvar_exists',
@@ -78,6 +68,5 @@ __all__.extend([
     'test',
     'isempty',
     'isfile',
-    'isdir',
-    'get_credential'
+    'isdir'
 ])

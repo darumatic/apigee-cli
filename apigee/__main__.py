@@ -23,11 +23,11 @@ def main():
 
     profile = parent_parser.parse_known_args()[0].profile
 
-    mfa_secret = get_credential(profile, 'mfa_secret')
-    org = get_credential(profile, 'org')
-    username = get_credential(profile, 'username')
-    password = get_credential(profile, 'password')
-    prefix = get_credential(profile, 'prefix')
+    mfa_secret = authorization.get_credential(profile, 'mfa_secret')
+    org = authorization.get_credential(profile, 'org')
+    username = authorization.get_credential(profile, 'username')
+    password = authorization.get_credential(profile, 'password')
+    prefix = authorization.get_credential(profile, 'prefix')
 
     parent_parser.add_argument('--mfa-secret', action='store', help='apigee mfa secret', required=False, default=APIGEE_MFA_SECRET if mfa_secret is None else mfa_secret)
 
