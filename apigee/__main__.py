@@ -83,6 +83,7 @@ def main():
     parser_apiproducts = subparsers.add_parser('products', aliases=['prods'], help='api products').add_subparsers()
     parser_targetservers = subparsers.add_parser('ts', aliases=['targetservers'], help='target servers').add_subparsers()
     parser_maskconfigs = subparsers.add_parser('mask', aliases=['maskconfigs'], help='data masks').add_subparsers()
+    parser_permissions = subparsers.add_parser('perms', aliases=['permissions'], help='set a permission for a role').add_subparsers()
 
     parser_prepend = subparsers.add_parser('prepend', aliases=['prefix'], help='prepend all matching strings with a prefix in all files in the specified directory (rudimentary stream editor). this is potentially VERY DANGEROUS. make sure you have version control such as Git to revert any changes in the target directory.', parents=[dir_parser])
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
@@ -252,6 +253,11 @@ def main():
     list_data_masks_for_an_organization = parser_maskconfigs.add_parser('list', aliases=['list-data-masks-for-an-organization'], parents=[parent_parser],
         help='List all data masks for an organization.')
     list_data_masks_for_an_organization.set_defaults(func=lambda args: print(maskconfigs.list_data_masks_for_an_organization(args).text))
+
+    get_permissions = parser_permissions.add_parser('get', aliases=['get-permissions'], parents=[parent_parser],
+        help='Get permissions for a role.')
+    get_permissions.add_argument('-n', '--name', help='name', required=True)
+    get_permissions.set_defaults(func=lambda args: print(permissions.get_permissions(args).text))
 
     args = parser.parse_args()
     try:
