@@ -17,6 +17,15 @@ def create_data_masks_for_an_api_proxy(args):
     # print(resp.status_code)
     return resp
 
+def delete_data_masks_for_an_api_proxy(args):
+    uri = '{}/v1/organizations/{}/apis/{}/maskconfigs/{}'.format(
+        APIGEE_ADMIN_API_URL, args.org, args.name, args.maskconfig_name)
+    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
+    resp = requests.delete(uri, headers=hdrs)
+    resp.raise_for_status()
+    # print(resp.status_code)
+    return resp
+
 def get_data_mask_details_for_an_api_proxy(args):
     uri = '{}/v1/organizations/{}/apis/{}/maskconfigs/{}'.format(
         APIGEE_ADMIN_API_URL, args.org, args.name, args.maskconfig_name)

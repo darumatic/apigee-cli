@@ -243,6 +243,12 @@ def main():
     create_data_masks_for_an_api_proxy.add_argument('-b', '--body', help='request body', required=True)
     create_data_masks_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.create_data_masks_for_an_api_proxy(args).text))
 
+    delete_data_masks_for_an_api_proxy = parser_maskconfigs.add_parser('delete-api', aliases=['delete-data-masks-for-an-api-proxy'], parents=[parent_parser],
+        help='Delete a data mask for an API proxy.')
+    delete_data_masks_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
+    delete_data_masks_for_an_api_proxy.add_argument('--maskconfig-name', help='data mask name', required=True)
+    delete_data_masks_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.delete_data_masks_for_an_api_proxy(args).text))
+
     get_data_mask_details_for_an_api_proxy = parser_maskconfigs.add_parser('get-api', aliases=['get-data-mask-details-for-an-api-proxy'], parents=[parent_parser],
         help='Get the details for a data mask for an API proxy.')
     get_data_mask_details_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
