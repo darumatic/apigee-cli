@@ -29,4 +29,5 @@ def get_permissions(args):
     # print(resp.status_code)
     if args.no_table:
         return resp.text
+    pd.set_option('display.max_colwidth', args.max_colwidth)
     return pd.DataFrame.from_dict(json_normalize(resp.json()['resourcePermission']), orient='columns')

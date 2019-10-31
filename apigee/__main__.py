@@ -123,6 +123,7 @@ def main():
     get_api_proxy_deployment_details.add_argument('-n', '--name', help='name', required=True)
     get_api_proxy_deployment_details.add_argument('-r', '--revision-name', action='store_true', help='get revisions only')
     get_api_proxy_deployment_details.add_argument('-Tn', '--no-table', action='store_true', help='disable table output when used with -r/--revision-name')
+    get_api_proxy_deployment_details.add_argument('--max-colwidth', help='max column width', type=int, default=40)
     get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details(args)))
 
     create_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('create', aliases=['create-keyvaluemap-in-an-environment'], parents=[parent_parser, environment_parser],
@@ -274,6 +275,7 @@ def main():
         help='Get permissions for a role.')
     get_permissions.add_argument('-n', '--name', help='name', required=True)
     get_permissions.add_argument('-Tn', '--no-table', action='store_true', help='disable table output')
+    get_permissions.add_argument('--max-colwidth', help='max column width', type=int, default=40)
     get_permissions.set_defaults(func=lambda args: print(permissions.get_permissions(args)))
 
     args = parser.parse_args()
