@@ -271,6 +271,12 @@ def main():
     create_permissions.add_argument('-b', '--body', help='request body', required=True)
     create_permissions.set_defaults(func=lambda args: print(permissions.create_permissions(args).text))
 
+    team_permissions = parser_permissions.add_parser('team', aliases=['team-permissions'], parents=[parent_parser],
+        help='Create default permissions for a team role based on a template.')
+    team_permissions.add_argument('-n', '--name', help='name of user role', required=True)
+    team_permissions.add_argument('-t', '--team', help='team prefix/code', required=True)
+    team_permissions.set_defaults(func=lambda args: print(permissions.team_permissions(args).text))
+
     get_permissions = parser_permissions.add_parser('get', aliases=['get-permissions'], parents=[parent_parser],
         help='Get permissions for a role.')
     get_permissions.add_argument('-n', '--name', help='name', required=True)
