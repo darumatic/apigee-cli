@@ -34,13 +34,11 @@ def team_permissions(args):
         "organization" : args.org,
         "path" : "/*",
         "permissions" : [ ]
-      },
-      {
+      }, {
         "organization" : args.org,
         "path" : "/environments/*/targetservers",
         "permissions" : [ "get" ]
-      },
-      {
+      }, {
         "organization" : args.org,
         "path" : "/developers",
         "permissions" : [ "get" ]
