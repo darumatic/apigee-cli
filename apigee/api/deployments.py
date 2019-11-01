@@ -19,7 +19,7 @@ def get_api_proxy_deployment_details(args):
     # print(resp.status_code)
     if args.revision_name:
         revisions = [{'name':i['name'],'revision':[j['name'] for j in i['revision']]} for i in resp.json()['environment']]
-        if args.no_table:
+        if args.json:
             return json.dumps(revisions)
         pd.set_option('display.max_colwidth', args.max_colwidth)
         return pd.DataFrame.from_dict(json_normalize(revisions), orient='columns')

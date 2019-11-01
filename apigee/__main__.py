@@ -122,7 +122,7 @@ def main():
         help='Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.')
     get_api_proxy_deployment_details.add_argument('-n', '--name', help='name', required=True)
     get_api_proxy_deployment_details.add_argument('-r', '--revision-name', action='store_true', help='get revisions only')
-    get_api_proxy_deployment_details.add_argument('-Tn', '--no-table', action='store_true', help='disable table output when used with -r/--revision-name')
+    get_api_proxy_deployment_details.add_argument('-j', '--json', action='store_true', help='use json output')
     get_api_proxy_deployment_details.add_argument('--max-colwidth', help='max column width', type=int, default=40)
     get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details(args)))
 
@@ -280,7 +280,7 @@ def main():
     get_permissions = parser_permissions.add_parser('get', aliases=['get-permissions'], parents=[parent_parser],
         help='Get permissions for a role.')
     get_permissions.add_argument('-n', '--name', help='name', required=True)
-    get_permissions.add_argument('-Tn', '--no-table', action='store_true', help='disable table output')
+    get_permissions.add_argument('-j', '--json', action='store_true', help='use json output')
     get_permissions.add_argument('--max-colwidth', help='max column width', type=int, default=40)
     get_permissions.set_defaults(func=lambda args: print(permissions.get_permissions(args)))
 
