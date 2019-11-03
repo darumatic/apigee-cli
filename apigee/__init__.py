@@ -1,7 +1,7 @@
 APP = 'apigeecli'
 CMD = 'apigee'
 __version__ = '0.7.1'
-description = 'apigee cli'
+description = 'Apigee Management API command-line interface'
 
 import json
 from os import getenv
