@@ -1,7 +1,7 @@
 APP = 'apigeecli'
 CMD = 'apigee'
 __version__ = '0.7.1'
-description = 'Apigee Management API command-line interface easy-to-use OAuth2 authentication'
+description = 'Apigee Management API command-line interface with easy-to-use OAuth2 authentication'
 
 import json
 from os import getenv
