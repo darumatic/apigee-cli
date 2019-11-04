@@ -7,6 +7,16 @@ import json
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.util import authorization
 
+def create_a_targetserver(args):
+    uri = '{}/v1/organizations/{}/environments/{}/targetservers'.format(
+        APIGEE_ADMIN_API_URL, args.org, args.environment)
+    hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
+    body = json.loads(args.body)
+    resp = requests.post(uri, headers=hdrs, json=body)
+    resp.raise_for_status()
+    # print(resp.status_code)
+    return resp
+
 def list_targetservers_in_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/targetservers'.format(
         APIGEE_ADMIN_API_URL, args.org, args.environment)

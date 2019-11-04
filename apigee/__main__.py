@@ -197,6 +197,11 @@ def main():
     get_api_product.add_argument('-n', '--name', help='name', required=True)
     get_api_product.set_defaults(func=lambda args: print(apiproducts.get_api_product(args).text))
 
+    create_a_targetserver = parser_targetservers.add_parser('create', aliases=['create-a-targetserver'], parents=[parent_parser(), environment_parser],
+        help='Create a TargetServer in the specified environment. TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services.')
+    create_a_targetserver.add_argument('-b', '--body', help='request body', required=True)
+    create_a_targetserver.set_defaults(func=lambda args: print(targetservers.create_a_targetserver(args).text))
+
     list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser(), environment_parser, prefix_parser],
         help='List all TargetServers in an environment.')
     list_targetservers_in_an_environment.set_defaults(func=lambda args: print(targetservers.list_targetservers_in_an_environment(args)))
