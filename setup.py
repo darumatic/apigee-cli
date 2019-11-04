@@ -2,13 +2,21 @@ from setuptools import setup, find_packages
 
 from apigee import APP, __version__, description
 
+# read the contents of your README file
+from os import path
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
+
 setup(name=APP,
       version=__version__,
       description=description,
+      long_description=long_description,
+      long_description_content_type='text/x-rst',
       author='Matthew Delotavo',
       author_email='matthew.t.delotavo@gmail.com',
       url='https://github.com/mdelotavo/apigee-cli',
-      download_url='https://github.com/mdelotavo/apigee-cli/archive/v' + __version__ + '.tar.gz',
+      download_url='https://github.com/mdelotavo/apigee-cli/archive/v'+__version__+'.tar.gz',
       keywords=['apigee', 'management', 'api', 'oauth'],
       packages=find_packages(),
       entry_points={
