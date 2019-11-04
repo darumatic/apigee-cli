@@ -11,7 +11,7 @@ from apigee.util import authorization
 
 def create_keyvaluemap_in_an_environment(args):
     uri = '{}/v1/organizations/{}/environments/{}/keyvaluemaps'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
+        APIGEE_ADMIN_API_URL, args.org, args.environment)
     hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
     body = json.loads(args.body)
     resp = requests.post(uri, headers=hdrs, json=body)

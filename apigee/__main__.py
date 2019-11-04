@@ -91,7 +91,6 @@ def main():
 
     create_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('create', aliases=['create-keyvaluemap-in-an-environment'], parents=[parent_parser(), environment_parser],
         help='Creates a key value map in an environment.')
-    create_keyvaluemap_in_an_environment.add_argument('-n', '--name', help='name', required=True)
     create_keyvaluemap_in_an_environment.add_argument('-b', '--body', help='request body', required=True)
     create_keyvaluemap_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.create_keyvaluemap_in_an_environment(args).text))
 

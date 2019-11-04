@@ -278,7 +278,7 @@ For example, to create a key value map in an environment, create the request bod
 
 Then run::
 
-    $ apigee kvms create -e [env] -n Map_name -b "$body"
+    $ apigee kvms create -e [env] -b "$body"
 
 To magically ``push`` a key value map in a file to Apigee Edge, run::
 
