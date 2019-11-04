@@ -122,7 +122,7 @@ def push_keyvaluemap(args):
 
     args.name = kvm['name']
 
-    # create kvm on apigee
+    # update kvm on apigee if it exists
     try:
         get_keyvaluemap_in_an_environment(args)
 
@@ -159,6 +159,8 @@ def push_keyvaluemap(args):
                 delete_keyvaluemap_entry_in_an_environment(args)
                 bar.update(idx)
         bar.finish()
+
+    # create kvm on apigee
     except requests.exceptions.HTTPError:
         args.body = body
         print('Creating', args.name)
