@@ -259,9 +259,9 @@ The following commands are supported::
 Examples
 ^^^^^^^^
 
-For example, to create a key value map in an environment, run::
+For example, to create a key value map in an environment, create the request body::
 
-    body='{
+    $ body='{
      "name" : "Map_name",
      "encrypted" : "true",
      "entry" : [
@@ -275,12 +275,15 @@ For example, to create a key value map in an environment, run::
       }
      ]
     }'
+
+Then run::
+
     $ apigee kvms create -e [env] -n Map_name -b "$body"
 
-To magically `push` a key value map in a file, run::
+To magically ``push`` a key value map in a file to Apigee Edge, run::
 
     $ apigee kvms push -e dev -f test_kvm.json
-    
+
 This will display a loading bar output like so::
 
     Updating existing entries in test-kvm                                                              |
