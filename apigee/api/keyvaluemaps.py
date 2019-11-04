@@ -134,19 +134,19 @@ def push_keyvaluemap(args):
         print('Updating existing entries in', args.name)
 
         # update each kvm entry on apigee
-        for i, item in enumerate(kvm['entry']):
+        for idx, entry in enumerate(kvm['entry']):
 
-            args.entry_name = item['name']
+            args.entry_name = entry['name']
 
             try:
                 get_a_keys_value_in_an_environment_scoped_keyvaluemap(args)
-                args.updated_value = item['value']
+                args.updated_value = entry['value']
                 update_an_entry_in_an_environment_scoped_kvm(args)
             except requests.exceptions.HTTPError:
-                args.entry_value = item['value']
+                args.entry_value = entry['value']
                 create_an_entry_in_an_environment_scoped_kvm(args)
 
-            bar.update(i)
+            bar.update(idx)
 
         bar.finish()
 
@@ -154,12 +154,10 @@ def push_keyvaluemap(args):
         if deleted_entries:
             bar = progressbar.ProgressBar(maxval=len(deleted_entries)).start()
             print('Updating deleted entries in', args.name)
-            i = 0
-            for entry in deleted_entries:
+            for idx, entry in enumerate(deleted_entries):
                 args.entry_name = entry['name']
                 delete_keyvaluemap_entry_in_an_environment(args)
-                bar.update(i)
-                i += 1
+                bar.update(idx)
         bar.finish()
     except requests.exceptions.HTTPError:
         args.body = body
