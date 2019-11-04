@@ -196,11 +196,11 @@ Managing Key value maps (KVMs)
 The following commands are supported::
 
     usage: apigee kvms [-h]
-                       {create,create-keyvaluemap-in-an-environment,delete,delete-keyvaluemap-from-an-environment,delete-entry,delete-keyvaluemap-entry-in-an-environment,get,get-keyvaluemap-in-an-environment,get-value,get-a-keys-value-in-an-environment-scoped-keyvaluemap,list,list-keyvaluemaps-in-an-environment,update,update-keyvaluemap-in-an-environment,create-entry,create-an-entry-in-an-environment-scoped-kvm,update-entry,update-an-entry-in-an-environment-scoped-kvm,list-keys,list-keys-in-an-environment-scoped-keyvaluemap}
+                       {create,create-keyvaluemap-in-an-environment,delete,delete-keyvaluemap-from-an-environment,delete-entry,delete-keyvaluemap-entry-in-an-environment,get,get-keyvaluemap-in-an-environment,get-value,get-a-keys-value-in-an-environment-scoped-keyvaluemap,list,list-keyvaluemaps-in-an-environment,update,update-keyvaluemap-in-an-environment,create-entry,create-an-entry-in-an-environment-scoped-kvm,update-entry,update-an-entry-in-an-environment-scoped-kvm,list-keys,list-keys-in-an-environment-scoped-keyvaluemap,push,push-keyvaluemap}
                        ...
 
     positional arguments:
-      {create,create-keyvaluemap-in-an-environment,delete,delete-keyvaluemap-from-an-environment,delete-entry,delete-keyvaluemap-entry-in-an-environment,get,get-keyvaluemap-in-an-environment,get-value,get-a-keys-value-in-an-environment-scoped-keyvaluemap,list,list-keyvaluemaps-in-an-environment,update,update-keyvaluemap-in-an-environment,create-entry,create-an-entry-in-an-environment-scoped-kvm,update-entry,update-an-entry-in-an-environment-scoped-kvm,list-keys,list-keys-in-an-environment-scoped-keyvaluemap}
+      {create,create-keyvaluemap-in-an-environment,delete,delete-keyvaluemap-from-an-environment,delete-entry,delete-keyvaluemap-entry-in-an-environment,get,get-keyvaluemap-in-an-environment,get-value,get-a-keys-value-in-an-environment-scoped-keyvaluemap,list,list-keyvaluemaps-in-an-environment,update,update-keyvaluemap-in-an-environment,create-entry,create-an-entry-in-an-environment-scoped-kvm,update-entry,update-an-entry-in-an-environment-scoped-kvm,list-keys,list-keys-in-an-environment-scoped-keyvaluemap,push,push-keyvaluemap}
         create (create-keyvaluemap-in-an-environment)
                             Creates a key value map in an environment.
         delete (delete-keyvaluemap-from-an-environment)
@@ -212,8 +212,8 @@ The following commands are supported::
         get (get-keyvaluemap-in-an-environment)
                             Gets a KeyValueMap (KVM) in an environment by name,
                             along with the keys and values.
-        get-value (get-a-keys-value-in-an-environment-scopedmd-keyvaluemap)
-                            Gets the value of a key in an As you can see, you can have multiple profiles defined in the configuenvironment-scoped
+        get-value (get-a-keys-value-in-an-environment-scoped-keyvaluemap)
+                            Gets the value of a key in an environment-scoped
                             KeyValueMap (KVM).
         list (list-keyvaluemaps-in-an-environment)
                             Lists the name of all key/value maps in an environment
@@ -245,6 +245,11 @@ The following commands are supported::
                             Note: This API is supported for Apigee Edge for the
                             Public Cloud only. Lists keys in a KeyValueMap scoped
                             to an environment. KVM names are case sensitive.
+        push (push-keyvaluemap)
+                            Magically Push KeyValueMap to Apigee. This will create
+                            KeyValueMap/entries if they do not exist, update
+                            existing KeyValueMap/entries, and delete entries on
+                            Apigee that are not present in the request body.
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -271,6 +276,20 @@ For example, to create a key value map in an environment, run::
      ]
     }'
     $ apigee kvms create -e [env] -n Map_name -b "$body"
+
+To magically `push` a key value map in a file, run::
+
+    $ apigee kvms push -e dev -f test_kvm.json
+    
+This will display a loading bar output like so::
+
+    Updating existing entries in test-kvm                                                              |
+    100% |#############################################################################################|
+    Updating deleted entries in test-kvm                                                               |
+    100% |#############################################################################################|
+
+As you can see, this command will update existing entries and delete those that are not present in the request body.
+If the key value map or entry does not exist, a new one will be created.
 
 ------------------------------
 Getting permissions for a role
