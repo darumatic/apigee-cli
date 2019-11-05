@@ -180,6 +180,18 @@ def main():
     create_empty_developer_app.add_argument('--callback-url', help='The callbackUrl is used by OAuth 2.0 authorization servers to communicate authorization codes back to apps. CallbackUrl must match the value of redirect_uri in some OAuth 2.0 See the documentation on OAuth 2.0 for more details.', required=False, default=None)
     create_empty_developer_app.set_defaults(func=lambda args: print(apps.create_empty_developer_app(args).text))
 
+    create_a_consumer_key_and_secret = parser_apps.add_parser('create-creds', aliases=['create-a-consumer-key-and-secret', 'create-credentials'], parents=[parent_parser()],
+        help='Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys/secrets to Edge from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed.')
+    create_a_consumer_key_and_secret.add_argument('-d', '--developer', help='developer email or id', required=True)
+    create_a_consumer_key_and_secret.add_argument('-n', '--name', help='Name of the app. The name is the unique ID of the app for this organization and developer.', required=True)
+    create_a_consumer_key_and_secret.add_argument('--consumer-key', help='', required=False, default=None)
+    create_a_consumer_key_and_secret.add_argument('--consumer-secret', help='', required=False, default=None)
+    create_a_consumer_key_and_secret.add_argument('--key-length', help='length of consumer key', required=False, default=32)
+    create_a_consumer_key_and_secret.add_argument('--secret-length', help='length of consumer secret', required=False, default=32)
+    create_a_consumer_key_and_secret.add_argument('--key-suffix', help='', required=False, default=None)
+    create_a_consumer_key_and_secret.add_argument('--products', help='A list of API products to be associated with the app\'s credentials', nargs='+', required=False, default=[])
+    create_a_consumer_key_and_secret.set_defaults(func=lambda args: print(apps.create_a_consumer_key_and_secret(args).text))
+
     list_developer_apps = parser_apps.add_parser('list', aliases=['list-developer-apps'], parents=[parent_parser(), prefix_parser],
         help='Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps. All time values in the response are UNIX times. You can specify either the developer\'s email address or Edge ID.')
     list_developer_apps.add_argument('-d', '--developer', help='developer email or id', required=True)
