@@ -189,6 +189,7 @@ def main():
     create_a_consumer_key_and_secret.add_argument('--key-length', help='length of consumer key', required=False, default=32)
     create_a_consumer_key_and_secret.add_argument('--secret-length', help='length of consumer secret', required=False, default=32)
     create_a_consumer_key_and_secret.add_argument('--key-suffix', help='', required=False, default=None)
+    create_a_consumer_key_and_secret.add_argument('--key-delimiter', help="separates consumerKey and key suffix with a delimiter. the default is '-'.", required=False, default='-')
     create_a_consumer_key_and_secret.add_argument('--products', help='A list of API products to be associated with the app\'s credentials', nargs='+', required=False, default=[])
     create_a_consumer_key_and_secret.set_defaults(func=lambda args: print(apps.create_a_consumer_key_and_secret(args).text))
 

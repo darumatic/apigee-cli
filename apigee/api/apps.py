@@ -93,7 +93,7 @@ def create_a_consumer_key_and_secret(args):
     if not args.consumer_secret:
         args.consumer_secret = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(args.secret_length))
     if args.key_suffix:
-        args.consumer_key += '-'
+        args.consumer_key += args.key_delimiter
         args.consumer_key += args.key_suffix
     body = {
       "consumerKey": args.consumer_key,
