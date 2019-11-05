@@ -45,3 +45,13 @@ def get_targetserver(args):
     resp.raise_for_status()
     # print(resp.status_code)
     return resp
+
+def update_a_targetserver(args):
+    uri = '{}/v1/organizations/{}/environments/{}/targetservers/{}'.format(
+        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
+    hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
+    body = json.loads(args.body)
+    resp = requests.put(uri, headers=hdrs, json=body)
+    resp.raise_for_status()
+    # print(resp.status_code)
+    return resp
