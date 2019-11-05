@@ -57,13 +57,15 @@ def main(fargs, *args, **kwargs):
              'org': org,
              'prefix': prefix}
 
-    config = configparser.ConfigParser()
+    # config = configparser.ConfigParser()
+    # config[profile_name] = {k: v for k, v in creds.items() if v}
+    config = existing_config
     config[profile_name] = {k: v for k, v in creds.items() if v}
 
     if not os.path.exists(APIGEE_CLI_DIR):
         os.makedirs(APIGEE_CLI_DIR)
 
-    with open(APIGEE_CLI_CREDS, 'a+') as configfile:
+    with open(APIGEE_CLI_CREDS, 'w') as configfile:
         config.write(configfile)
 
 if __name__ == '__main__':
