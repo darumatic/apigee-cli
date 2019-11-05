@@ -150,7 +150,7 @@ def main():
     list_keys_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap(args)))
 
     push_keyvaluemap = parser_keyvaluemaps.add_parser('push', aliases=['push-keyvaluemap'], parents=[parent_parser(), environment_parser, file_parser],
-        help='Magically Push KeyValueMap to Apigee. This will create KeyValueMap/entries if they do not exist, update existing KeyValueMap/entries, and delete entries on Apigee that are not present in the request body.')
+        help='Push KeyValueMap to Apigee. This will create KeyValueMap/entries if they do not exist, update existing KeyValueMap/entries, and delete entries on Apigee that are not present in the request body.')
     # push_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     push_keyvaluemap.set_defaults(func=lambda args: keyvaluemaps.push_keyvaluemap(args))
 

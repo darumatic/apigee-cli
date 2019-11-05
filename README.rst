@@ -246,7 +246,7 @@ The following commands are supported::
                             Public Cloud only. Lists keys in a KeyValueMap scoped
                             to an environment. KVM names are case sensitive.
         push (push-keyvaluemap)
-                            Magically Push KeyValueMap to Apigee. This will create
+                            Push KeyValueMap to Apigee. This will create
                             KeyValueMap/entries if they do not exist, update
                             existing KeyValueMap/entries, and delete entries on
                             Apigee that are not present in the request body.
@@ -280,7 +280,7 @@ Then run::
 
     $ apigee kvms create -e [env] -b "$body"
 
-To magically ``push`` a key value map in a file to Apigee Edge, run::
+To ``push`` a key value map in a file to Apigee Edge, run::
 
     $ apigee kvms push -e dev -f test_kvm.json
 
