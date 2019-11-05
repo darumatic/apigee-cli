@@ -25,7 +25,7 @@ This package provides a command-line interface for the Apigee Management API wit
         ts (targetservers)  target servers
         mask (maskconfigs)  data masks
         perms (permissions)
-                            set a permission for a role
+                            manage permissions for a role
         prepend (prefix)    prepend all matching strings with a prefix in all
                             files in the specified directory (rudimentary stream
                             editor). this is potentially VERY DANGEROUS. make sure
