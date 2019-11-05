@@ -164,6 +164,22 @@ def main():
         help='To filter the keys that are returned, enter the email of a developer that the list will start with.')
     list_developers.set_defaults(func=lambda args: print(developers.list_developers(args)))
 
+    create_developer_app = parser_apps.add_parser('create', aliases=['create-developer-app'], parents=[parent_parser()],
+        help='Creates an app associated with a developer, associates the app with an API product, and auto-generates an API key for the app to use in calls to API proxies inside the API product.')
+    create_developer_app.add_argument('-d', '--developer', help='developer email or id', required=True)
+    create_developer_app.add_argument('-b', '--body', help='request body', required=True)
+    create_developer_app.set_defaults(func=lambda args: print(apps.create_developer_app(args).text))
+
+    create_empty_developer_app = parser_apps.add_parser('create-empty', aliases=['create-empty-developer-app'], parents=[parent_parser()],
+        help='Creates an empty developer app.')
+    create_empty_developer_app.add_argument('-d', '--developer', help='developer email or id', required=True)
+    create_empty_developer_app.add_argument('-n', '--name', help='Name of the app. The name is the unique ID of the app for this organization and developer.', required=True)
+    # create_empty_developer_app.add_argument('--products', help='A list of API products associated with the app\'s credentials', nargs='+', required=False, default=[])
+    create_empty_developer_app.add_argument('--display-name', help='The DisplayName (set with an attribute) is what appears in the management UI. If you don\'t provide a DisplayName, the name is used.', required=False, default=None)
+    # create_empty_developer_app.add_argument('--scopes', help='Sets the scopes element under the apiProducts element in the attributes of the app. The specified scopes must already exist on the API products associated with the app.', nargs='+', required=False, default=[])
+    create_empty_developer_app.add_argument('--callback-url', help='The callbackUrl is used by OAuth 2.0 authorization servers to communicate authorization codes back to apps. CallbackUrl must match the value of redirect_uri in some OAuth 2.0 See the documentation on OAuth 2.0 for more details.', required=False, default=None)
+    create_empty_developer_app.set_defaults(func=lambda args: print(apps.create_empty_developer_app(args).text))
+
     list_developer_apps = parser_apps.add_parser('list', aliases=['list-developer-apps'], parents=[parent_parser(), prefix_parser],
         help='Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps. All time values in the response are UNIX times. You can specify either the developer\'s email address or Edge ID.')
     list_developer_apps.add_argument('-d', '--developer', help='developer email or id', required=True)
