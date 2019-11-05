@@ -55,3 +55,20 @@ def update_a_targetserver(args):
     resp.raise_for_status()
     # print(resp.status_code)
     return resp
+
+def push_targetserver(args):
+    with open(args.file) as file:
+        body = file.read()
+    targetserver = json.loads(body)
+
+    args.name = targetserver['name']
+    args.body = body
+
+    try:
+        get_targetserver(args)
+        print('Updating', args.name)
+        print(update_a_targetserver(args).text)
+    except requests.exceptions.HTTPError:
+        args.body = body
+        print('Creating', args.name)
+        print(create_a_targetserver(args).text)
