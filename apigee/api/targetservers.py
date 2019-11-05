@@ -69,6 +69,5 @@ def push_targetserver(args):
         print('Updating', args.name)
         print(update_a_targetserver(args).text)
     except requests.exceptions.HTTPError:
-        args.body = body
         print('Creating', args.name)
         print(create_a_targetserver(args).text)
