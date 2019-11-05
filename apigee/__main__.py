@@ -201,6 +201,11 @@ def main():
     create_a_targetserver.add_argument('-b', '--body', help='request body', required=True)
     create_a_targetserver.set_defaults(func=lambda args: print(targetservers.create_a_targetserver(args).text))
 
+    delete_a_targetserver = parser_targetservers.add_parser('delete', aliases=['delete-a-targetserver'], parents=[parent_parser(), environment_parser],
+        help='Delete a TargetServer configuration from an environment. Returns information about the deleted TargetServer.')
+    delete_a_targetserver.add_argument('-n', '--name', help='name', required=True)
+    delete_a_targetserver.set_defaults(func=lambda args: print(targetservers.delete_a_targetserver(args).text))
+
     list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser(), environment_parser, prefix_parser],
         help='List all TargetServers in an environment.')
     list_targetservers_in_an_environment.set_defaults(func=lambda args: print(targetservers.list_targetservers_in_an_environment(args)))
