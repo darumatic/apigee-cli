@@ -89,9 +89,9 @@ def create_a_consumer_key_and_secret(args):
     hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
     app = get_developer_app_details(args)
     if not args.consumer_key:
-        args.consumer_key = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(args.key_length))
+        args.consumer_key = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(args.key_length))
     if not args.consumer_secret:
-        args.consumer_secret = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(args.secret_length))
+        args.consumer_secret = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(args.secret_length))
     if args.key_suffix:
         args.consumer_key += args.key_delimiter
         args.consumer_key += args.key_suffix
