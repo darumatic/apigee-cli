@@ -5,15 +5,16 @@ apigee-cli
 This package provides a command-line interface for the Apigee Management API with easy-to-use OAuth2 authentication. ::
 
     usage: apigee [-h] [-V]
-                  {test,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,prepend,prefix}
+                  {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,prepend,prefix}
                   ...
 
     Apigee Management API command-line interface with easy-to-use OAuth2
     authentication
 
     positional arguments:
-      {test,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,prepend,prefix}
-        test                test get access token
+      {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,prepend,prefix}
+        test (get-access-token)
+                            test get access token
         configure           configure credentials
         apis                apis
         deployments (deps)  see apis that are actively deployed
