@@ -6,12 +6,16 @@ import argparse
 import apigee
 
 from apigee.api import *
+
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.dir_parser import DirParser
 from apigee.parsers.format_parser import FormatParser
 from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
+
+from apigee.parsers.parser_apis import ParserApis
+
 from apigee.util import *
 
 @exception_handler
@@ -34,7 +38,9 @@ def main():
     parser_configure.add_argument('-P', '--profile', help='name of profile to create', default='default')
     parser_configure.set_defaults(func=config.main)
 
-    parser_apis = subparsers.add_parser('apis', help='apis').add_subparsers()
+    # parser_apis = subparsers.add_parser('apis', help='apis').add_subparsers()
+    subparsers = ParserApis(subparsers, parent_parser=parent_parser, dir_parser=dir_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
+
     parser_deployments = subparsers.add_parser('deployments', aliases=['deps'], help='see apis that are actively deployed').add_subparsers()
     parser_keyvaluemaps = subparsers.add_parser('kvms', aliases=['keyvaluemaps'], help='keyvaluemaps').add_subparsers()
     parser_developers = subparsers.add_parser('developers', aliases=['devs'], help='developers').add_subparsers()
@@ -48,31 +54,6 @@ def main():
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
     parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
     parser_prepend.set_defaults(func=prepend.main)
-
-    apis_deploy = parser_apis.add_parser('deploy', help='deploy apis', parents=[parent_parser(), dir_parser(), environment_parser()])
-    apis_deploy.add_argument('-n', '--name', help='name', required=True)
-    # apis_deploy.add_argument('-d', '--directory', help='directory name')
-    # apis_deploy.add_argument('-p', '--path', help='base path')
-    apis_deploy.add_argument('-i', '--import-only', action='store_true', help='denotes to import only and not actually deploy')
-    apis_deploy.add_argument('-s', '--seamless-deploy', action='store_true', help='seamless deploy the bundle')
-    apis_deploy.set_defaults(func=deploy.deploy)
-
-    export_api_proxy = parser_apis.add_parser('export', aliases=['export-api-proxy'], parents=[parent_parser()],
-        help='Outputs an API proxy revision as a ZIP formatted bundle of code and config files. This enables local configuration and development, including attachment of policies and scripts.')
-    export_api_proxy.add_argument('-n', '--name', help='name', required=True)
-    export_api_proxy.add_argument('-r', '--revision-number', help='revision number', required=True)
-    export_api_proxy.add_argument('-O', '--output-file', help='output file')
-    # export_api_proxy.set_defaults(func=lambda args: print(apis.export_api_proxy(args).text))
-    export_api_proxy.set_defaults(func=apis.export_api_proxy)
-
-    get_api_proxy = parser_apis.add_parser('get', aliases=['get-api-proxy'], parents=[parent_parser()],
-        help='Gets an API proxy by name, including a list of existing revisions of the proxy.')
-    get_api_proxy.add_argument('-n', '--name', help='name', required=True)
-    get_api_proxy.set_defaults(func=lambda args: print(apis.get_api_proxy(args).text))
-
-    list_api_proxies = parser_apis.add_parser('list', aliases=['list-api-proxies'], parents=[parent_parser(), prefix_parser()],
-        help='Gets the names of all API proxies in an organization. The names correspond to the names defined in the configuration files for each API proxy.')
-    list_api_proxies.set_defaults(func=lambda args: print(apis.list_api_proxies(args)))
 
     get_api_proxy_deployment_details = parser_deployments.add_parser('get', aliases=['get-api-proxy-deployment-details'], parents=[parent_parser()],
         help='Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.')
