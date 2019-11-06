@@ -15,6 +15,7 @@ from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
 
 from apigee.parsers.parser_apis import ParserApis
+from apigee.parsers.parser_deployments import ParserDeployments
 
 from apigee.util import *
 
@@ -42,7 +43,9 @@ def main():
     subparsers = ParserApis(subparsers, parent_parser=parent_parser, dir_parser=dir_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
     # subparsers = ParserApis(subparsers).parser
 
-    parser_deployments = subparsers.add_parser('deployments', aliases=['deps'], help='see apis that are actively deployed').add_subparsers()
+    # parser_deployments = subparsers.add_parser('deployments', aliases=['deps'], help='see apis that are actively deployed').add_subparsers()
+    subparsers = ParserDeployments(subparsers, parent_parser=parent_parser).parser
+
     parser_keyvaluemaps = subparsers.add_parser('kvms', aliases=['keyvaluemaps'], help='keyvaluemaps').add_subparsers()
     parser_developers = subparsers.add_parser('developers', aliases=['devs'], help='developers').add_subparsers()
     parser_apps = subparsers.add_parser('apps', help='developer apps').add_subparsers()
@@ -55,14 +58,6 @@ def main():
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
     parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
     parser_prepend.set_defaults(func=prepend.main)
-
-    get_api_proxy_deployment_details = parser_deployments.add_parser('get', aliases=['get-api-proxy-deployment-details'], parents=[parent_parser()],
-        help='Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.')
-    get_api_proxy_deployment_details.add_argument('-n', '--name', help='name', required=True)
-    get_api_proxy_deployment_details.add_argument('-r', '--revision-name', action='store_true', help='get revisions only')
-    get_api_proxy_deployment_details.add_argument('-j', '--json', action='store_true', help='use json output')
-    get_api_proxy_deployment_details.add_argument('--max-colwidth', help='max column width', type=int, default=40)
-    get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details(args)))
 
     create_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('create', aliases=['create-keyvaluemap-in-an-environment'], parents=[parent_parser(), environment_parser()],
         help='Creates a key value map in an environment.')

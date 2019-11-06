@@ -1,0 +1,52 @@
+import argparse
+
+from apigee.api import deployments
+
+from apigee.parsers.parent_parser import ParentParser
+
+class ParserDeployments:
+
+    def __init__(self, parser, **kwargs):
+        self._parser = parser
+        self._parser_deployments = self._parser.add_parser('deployments', aliases=['deps'], help='see apis that are actively deployed').add_subparsers()
+        self._parent_parser = kwargs.get('parent_parser', ParentParser())
+        self._create_parser()
+
+    @property
+    def parser(self):
+        return self._parser
+
+    @parser.setter
+    def parser(self, value):
+        self._parser = value
+
+    @property
+    def parser_deployments(self):
+        return self._parser_deployments
+
+    @parser_deployments.setter
+    def parser_deployments(self, value):
+        self._parser_deployments = value
+
+    @property
+    def parent_parser(self):
+        return self._parent_parser
+
+    @parent_parser.setter
+    def parent_parser(self, value):
+        self._parent_parser = value
+
+    def __call__(self):
+        return self._parser
+
+    def _build_get_api_proxy_deployment_details_argument(self):
+        get_api_proxy_deployment_details = self._parser_deployments.add_parser('get', aliases=['get-api-proxy-deployment-details'], parents=[self._parent_parser()],
+            help='Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.')
+        get_api_proxy_deployment_details.add_argument('-n', '--name', help='name', required=True)
+        get_api_proxy_deployment_details.add_argument('-r', '--revision-name', action='store_true', help='get revisions only')
+        get_api_proxy_deployment_details.add_argument('-j', '--json', action='store_true', help='use json output')
+        get_api_proxy_deployment_details.add_argument('--max-colwidth', help='max column width', type=int, default=40)
+        get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details(args)))
+
+    def _create_parser(self):
+        self._build_get_api_proxy_deployment_details_argument()
