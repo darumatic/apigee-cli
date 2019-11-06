@@ -11,7 +11,7 @@ from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.dir_parser import DirParser
 from apigee.parsers.format_parser import FormatParser
-# from apigee.parsers.environment_parser import EnvironmentParser
+from apigee.parsers.environment_parser import EnvironmentParser
 # from apigee.parsers.prefix_parser import PrefixParser
 from apigee.util import *
 
@@ -32,8 +32,9 @@ def main():
     # format_parser.add_argument('-F', '--format', action='store', help='output format type', required=False)
     format_parser = FormatParser()
 
-    environment_parser = argparse.ArgumentParser(add_help=False)
-    environment_parser.add_argument('-e', '--environment', help='environment', required=True)
+    # environment_parser = argparse.ArgumentParser(add_help=False)
+    # environment_parser.add_argument('-e', '--environment', help='environment', required=True)
+    environment_parser = EnvironmentParser()
 
     prefix_parser = argparse.ArgumentParser(add_help=False)
     prefix_parser.add_argument('--prefix', help='prefix filter for apigee items', default=APIGEE_CLI_PREFIX if prefix is None else prefix)
@@ -64,7 +65,7 @@ def main():
     parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
     parser_prepend.set_defaults(func=prepend.main)
 
-    apis_deploy = parser_apis.add_parser('deploy', help='deploy apis', parents=[parent_parser(), dir_parser(), environment_parser])
+    apis_deploy = parser_apis.add_parser('deploy', help='deploy apis', parents=[parent_parser(), dir_parser(), environment_parser()])
     apis_deploy.add_argument('-n', '--name', help='name', required=True)
     # apis_deploy.add_argument('-d', '--directory', help='directory name')
     # apis_deploy.add_argument('-p', '--path', help='base path')
@@ -97,58 +98,58 @@ def main():
     get_api_proxy_deployment_details.add_argument('--max-colwidth', help='max column width', type=int, default=40)
     get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details(args)))
 
-    create_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('create', aliases=['create-keyvaluemap-in-an-environment'], parents=[parent_parser(), environment_parser],
+    create_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('create', aliases=['create-keyvaluemap-in-an-environment'], parents=[parent_parser(), environment_parser()],
         help='Creates a key value map in an environment.')
     create_keyvaluemap_in_an_environment.add_argument('-b', '--body', help='request body', required=True)
     create_keyvaluemap_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.create_keyvaluemap_in_an_environment(args).text))
 
-    delete_keyvaluemap_from_an_environment = parser_keyvaluemaps.add_parser('delete', aliases=['delete-keyvaluemap-from-an-environment'], parents=[parent_parser(), environment_parser],
+    delete_keyvaluemap_from_an_environment = parser_keyvaluemaps.add_parser('delete', aliases=['delete-keyvaluemap-from-an-environment'], parents=[parent_parser(), environment_parser()],
         help='Deletes a key/value map and all associated entries from an environment.')
     delete_keyvaluemap_from_an_environment.add_argument('-n', '--name', help='name', required=True)
     delete_keyvaluemap_from_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.delete_keyvaluemap_from_an_environment(args).text))
 
-    delete_keyvaluemap_entry_in_an_environment = parser_keyvaluemaps.add_parser('delete-entry', aliases=['delete-keyvaluemap-entry-in-an-environment'], parents=[parent_parser(), environment_parser],
+    delete_keyvaluemap_entry_in_an_environment = parser_keyvaluemaps.add_parser('delete-entry', aliases=['delete-keyvaluemap-entry-in-an-environment'], parents=[parent_parser(), environment_parser()],
         help='Deletes a specific key/value map entry in an environment by name, along with associated entries.')
     delete_keyvaluemap_entry_in_an_environment.add_argument('-n', '--name', help='name', required=True)
     delete_keyvaluemap_entry_in_an_environment.add_argument('--entry-name', help='entry name', required=True)
     delete_keyvaluemap_entry_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.delete_keyvaluemap_entry_in_an_environment(args).text))
 
-    get_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('get', aliases=['get-keyvaluemap-in-an-environment'], parents=[parent_parser(), environment_parser],
+    get_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('get', aliases=['get-keyvaluemap-in-an-environment'], parents=[parent_parser(), environment_parser()],
         help='Gets a KeyValueMap (KVM) in an environment by name, along with the keys and values.')
     get_keyvaluemap_in_an_environment.add_argument('-n', '--name', help='name', required=True)
     get_keyvaluemap_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.get_keyvaluemap_in_an_environment(args).text))
 
-    get_a_keys_value_in_an_environment_scoped_keyvaluemap = parser_keyvaluemaps.add_parser('get-value', aliases=['get-a-keys-value-in-an-environment-scoped-keyvaluemap'], parents=[parent_parser(), environment_parser],
+    get_a_keys_value_in_an_environment_scoped_keyvaluemap = parser_keyvaluemaps.add_parser('get-value', aliases=['get-a-keys-value-in-an-environment-scoped-keyvaluemap'], parents=[parent_parser(), environment_parser()],
         help='Gets the value of a key in an environment-scoped KeyValueMap (KVM).')
     get_a_keys_value_in_an_environment_scoped_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     get_a_keys_value_in_an_environment_scoped_keyvaluemap.add_argument('--entry-name', help='entry name', required=True)
     get_a_keys_value_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap(args).text))
 
-    list_keyvaluemaps_in_an_environment = parser_keyvaluemaps.add_parser('list', aliases=['list-keyvaluemaps-in-an-environment'], parents=[parent_parser(), environment_parser, prefix_parser],
+    list_keyvaluemaps_in_an_environment = parser_keyvaluemaps.add_parser('list', aliases=['list-keyvaluemaps-in-an-environment'], parents=[parent_parser(), environment_parser(), prefix_parser],
         help='Lists the name of all key/value maps in an environment and optionally returns an expanded view of all key/value maps for the environment.')
     list_keyvaluemaps_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.list_keyvaluemaps_in_an_environment(args)))
 
-    update_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('update', aliases=['update-keyvaluemap-in-an-environment'], parents=[parent_parser(), environment_parser],
+    update_keyvaluemap_in_an_environment = parser_keyvaluemaps.add_parser('update', aliases=['update-keyvaluemap-in-an-environment'], parents=[parent_parser(), environment_parser()],
         help='Note: This API is supported for Apigee Edge for Private Cloud only. For Apigee Edge for Public Cloud use Update an entry in an environment-scoped KVM. Updates an existing KeyValueMap in an environment. Does not override the existing map. Instead, this method updates the entries if they exist or adds them if not. It can take several minutes before the new value is visible to runtime traffic.')
     update_keyvaluemap_in_an_environment.add_argument('-n', '--name', help='name', required=True)
     update_keyvaluemap_in_an_environment.add_argument('-b', '--body', help='request body', required=True)
     update_keyvaluemap_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.update_keyvaluemap_in_an_environment(args).text))
 
-    create_an_entry_in_an_environment_scoped_kvm = parser_keyvaluemaps.add_parser('create-entry', aliases=['create-an-entry-in-an-environment-scoped-kvm'], parents=[parent_parser(), environment_parser],
+    create_an_entry_in_an_environment_scoped_kvm = parser_keyvaluemaps.add_parser('create-entry', aliases=['create-an-entry-in-an-environment-scoped-kvm'], parents=[parent_parser(), environment_parser()],
         help='Note: This API is supported for Apigee Edge for the Public Cloud only. Creates an entry in an existing KeyValueMap scoped to an environment. A key (name) cannot be larger than 2 KB. KVM names are case sensitive.')
     create_an_entry_in_an_environment_scoped_kvm.add_argument('-n', '--name', help='name', required=True)
     create_an_entry_in_an_environment_scoped_kvm.add_argument('--entry-name', help='entry name', required=True)
     create_an_entry_in_an_environment_scoped_kvm.add_argument('--entry-value', help='entry value', required=True)
     create_an_entry_in_an_environment_scoped_kvm.set_defaults(func=lambda args: print(keyvaluemaps.create_an_entry_in_an_environment_scoped_kvm(args).text))
 
-    update_an_entry_in_an_environment_scoped_kvm = parser_keyvaluemaps.add_parser('update-entry', aliases=['update-an-entry-in-an-environment-scoped-kvm'], parents=[parent_parser(), environment_parser],
+    update_an_entry_in_an_environment_scoped_kvm = parser_keyvaluemaps.add_parser('update-entry', aliases=['update-an-entry-in-an-environment-scoped-kvm'], parents=[parent_parser(), environment_parser()],
         help='Note: This API is supported for Apigee Edge for the Public Cloud only. Updates an entry in a KeyValueMap scoped to an environment. A key cannot be larger than 2 KB. KVM names are case sensitive. Does not override the existing map. It can take several minutes before the new value is visible to runtime traffic.')
     update_an_entry_in_an_environment_scoped_kvm.add_argument('-n', '--name', help='name', required=True)
     update_an_entry_in_an_environment_scoped_kvm.add_argument('--entry-name', help='entry name', required=True)
     update_an_entry_in_an_environment_scoped_kvm.add_argument('--updated-value', help='updated value', required=True)
     update_an_entry_in_an_environment_scoped_kvm.set_defaults(func=lambda args: print(keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm(args).text))
 
-    list_keys_in_an_environment_scoped_keyvaluemap = parser_keyvaluemaps.add_parser('list-keys', aliases=['list-keys-in-an-environment-scoped-keyvaluemap'], parents=[parent_parser(), environment_parser, prefix_parser],
+    list_keys_in_an_environment_scoped_keyvaluemap = parser_keyvaluemaps.add_parser('list-keys', aliases=['list-keys-in-an-environment-scoped-keyvaluemap'], parents=[parent_parser(), environment_parser(), prefix_parser],
         help='Note: This API is supported for Apigee Edge for the Public Cloud only. Lists keys in a KeyValueMap scoped to an environment. KVM names are case sensitive.')
     list_keys_in_an_environment_scoped_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     list_keys_in_an_environment_scoped_keyvaluemap.add_argument('--startkey', default='',
@@ -157,7 +158,7 @@ def main():
         help='Limits the list of keys to the number you specify, up to a maximum of 100. Use with the startkey parameter to provide more targeted filtering.')
     list_keys_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap(args)))
 
-    push_keyvaluemap = parser_keyvaluemaps.add_parser('push', aliases=['push-keyvaluemap'], parents=[parent_parser(), environment_parser, file_parser()],
+    push_keyvaluemap = parser_keyvaluemaps.add_parser('push', aliases=['push-keyvaluemap'], parents=[parent_parser(), environment_parser(), file_parser()],
         help='Push KeyValueMap to Apigee. This will create KeyValueMap/entries if they do not exist, update existing KeyValueMap/entries, and delete entries on Apigee that are not present in the request body.')
     # push_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     push_keyvaluemap.set_defaults(func=lambda args: keyvaluemaps.push_keyvaluemap(args))
@@ -233,32 +234,32 @@ def main():
     get_api_product.add_argument('-n', '--name', help='name', required=True)
     get_api_product.set_defaults(func=lambda args: print(apiproducts.get_api_product(args).text))
 
-    create_a_targetserver = parser_targetservers.add_parser('create', aliases=['create-a-targetserver'], parents=[parent_parser(), environment_parser],
+    create_a_targetserver = parser_targetservers.add_parser('create', aliases=['create-a-targetserver'], parents=[parent_parser(), environment_parser()],
         help='Create a TargetServer in the specified environment. TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services.')
     create_a_targetserver.add_argument('-b', '--body', help='request body', required=True)
     create_a_targetserver.set_defaults(func=lambda args: print(targetservers.create_a_targetserver(args).text))
 
-    delete_a_targetserver = parser_targetservers.add_parser('delete', aliases=['delete-a-targetserver'], parents=[parent_parser(), environment_parser],
+    delete_a_targetserver = parser_targetservers.add_parser('delete', aliases=['delete-a-targetserver'], parents=[parent_parser(), environment_parser()],
         help='Delete a TargetServer configuration from an environment. Returns information about the deleted TargetServer.')
     delete_a_targetserver.add_argument('-n', '--name', help='name', required=True)
     delete_a_targetserver.set_defaults(func=lambda args: print(targetservers.delete_a_targetserver(args).text))
 
-    list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser(), environment_parser, prefix_parser],
+    list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser(), environment_parser(), prefix_parser],
         help='List all TargetServers in an environment.')
     list_targetservers_in_an_environment.set_defaults(func=lambda args: print(targetservers.list_targetservers_in_an_environment(args)))
 
-    get_targetserver = parser_targetservers.add_parser('get', aliases=['get-targetserver'], parents=[parent_parser(), environment_parser],
+    get_targetserver = parser_targetservers.add_parser('get', aliases=['get-targetserver'], parents=[parent_parser(), environment_parser()],
         help='Returns a TargetServer definition.')
     get_targetserver.add_argument('-n', '--name', help='name', required=True)
     get_targetserver.set_defaults(func=lambda args: print(targetservers.get_targetserver(args).text))
 
-    update_a_targetserver = parser_targetservers.add_parser('update', aliases=['update-a-targetserver'], parents=[parent_parser(), environment_parser],
+    update_a_targetserver = parser_targetservers.add_parser('update', aliases=['update-a-targetserver'], parents=[parent_parser(), environment_parser()],
         help='Modifies an existing TargetServer.')
     update_a_targetserver.add_argument('-n', '--name', help='name', required=True)
     update_a_targetserver.add_argument('-b', '--body', help='request body', required=True)
     update_a_targetserver.set_defaults(func=lambda args: print(targetservers.update_a_targetserver(args).text))
 
-    push_targetserver = parser_targetservers.add_parser('push', aliases=['push-targetserver'], parents=[parent_parser(), environment_parser, file_parser()],
+    push_targetserver = parser_targetservers.add_parser('push', aliases=['push-targetserver'], parents=[parent_parser(), environment_parser(), file_parser()],
         help='Push TargetServer to Apigee. This will create/update a TargetServer.')
     # push_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     push_targetserver.set_defaults(func=lambda args: targetservers.push_targetserver(args))
