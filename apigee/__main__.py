@@ -19,6 +19,7 @@ from apigee.parsers.parser_deployments import ParserDeployments
 from apigee.parsers.parser_keyvaluemaps import ParserKeyvaluemaps
 from apigee.parsers.parser_developers import ParserDevelopers
 from apigee.parsers.parser_apps import ParserApps
+from apigee.parsers.parser_apiproducts import ParserApiproducts
 
 from apigee.util import *
 
@@ -58,7 +59,9 @@ def main():
     # parser_apps = subparsers.add_parser('apps', help='developer apps').add_subparsers()
     subparsers = ParserApps(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
 
-    parser_apiproducts = subparsers.add_parser('products', aliases=['prods'], help='api products').add_subparsers()
+    # parser_apiproducts = subparsers.add_parser('products', aliases=['prods'], help='api products').add_subparsers()
+    subparsers = ParserApiproducts(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
+
     parser_targetservers = subparsers.add_parser('ts', aliases=['targetservers'], help='target servers').add_subparsers()
     parser_maskconfigs = subparsers.add_parser('mask', aliases=['maskconfigs'], help='data masks').add_subparsers()
     parser_permissions = subparsers.add_parser('perms', aliases=['permissions'], help='manage permissions for a role').add_subparsers()
@@ -67,21 +70,6 @@ def main():
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
     parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
     parser_prepend.set_defaults(func=prepend.main)
-
-    list_api_products = parser_apiproducts.add_parser('list', aliases=['list-api-products'], parents=[parent_parser(), prefix_parser()],
-        help='Get a list of all API product names for an organization.')
-    list_api_products.add_argument('--expand', action='store_true',
-        help='Set to \'true\' to get expanded details about each product.')
-    list_api_products.add_argument('--count', default=1000, type=int,
-        help='Number of API products to return in the API call. The maximum limit is 1000. Use with the startkey to provide more targeted filtering.')
-    list_api_products.add_argument('--startkey', default='',
-        help='Returns a list of API products starting with the specified API product.')
-    list_api_products.set_defaults(func=lambda args: print(apiproducts.list_api_products(args)))
-
-    get_api_product = parser_apiproducts.add_parser('get', aliases=['get-api-product'], parents=[parent_parser()],
-        help='Gets configuration data for an API product. The API product name required in the request URL is not the "Display Name" value displayed for the API product in the Edge UI. While they may be the same, they are not always the same depending on whether the API product was created via UI or API.')
-    get_api_product.add_argument('-n', '--name', help='name', required=True)
-    get_api_product.set_defaults(func=lambda args: print(apiproducts.get_api_product(args).text))
 
     create_a_targetserver = parser_targetservers.add_parser('create', aliases=['create-a-targetserver'], parents=[parent_parser(), environment_parser()],
         help='Create a TargetServer in the specified environment. TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services.')
