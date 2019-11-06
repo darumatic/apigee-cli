@@ -18,6 +18,7 @@ from apigee.parsers.parser_apis import ParserApis
 from apigee.parsers.parser_deployments import ParserDeployments
 from apigee.parsers.parser_keyvaluemaps import ParserKeyvaluemaps
 from apigee.parsers.parser_developers import ParserDevelopers
+from apigee.parsers.parser_apps import ParserApps
 
 from apigee.util import *
 
@@ -54,7 +55,9 @@ def main():
     # parser_developers = subparsers.add_parser('developers', aliases=['devs'], help='developers').add_subparsers()
     subparsers = ParserDevelopers(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
 
-    parser_apps = subparsers.add_parser('apps', help='developer apps').add_subparsers()
+    # parser_apps = subparsers.add_parser('apps', help='developer apps').add_subparsers()
+    subparsers = ParserApps(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
+
     parser_apiproducts = subparsers.add_parser('products', aliases=['prods'], help='api products').add_subparsers()
     parser_targetservers = subparsers.add_parser('ts', aliases=['targetservers'], help='target servers').add_subparsers()
     parser_maskconfigs = subparsers.add_parser('mask', aliases=['maskconfigs'], help='data masks').add_subparsers()
@@ -64,52 +67,6 @@ def main():
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
     parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
     parser_prepend.set_defaults(func=prepend.main)
-
-    create_developer_app = parser_apps.add_parser('create', aliases=['create-developer-app'], parents=[parent_parser()],
-        help='Creates an app associated with a developer, associates the app with an API product, and auto-generates an API key for the app to use in calls to API proxies inside the API product.')
-    create_developer_app.add_argument('-d', '--developer', help='developer email or id', required=True)
-    create_developer_app.add_argument('-b', '--body', help='request body', required=True)
-    create_developer_app.set_defaults(func=lambda args: print(apps.create_developer_app(args).text))
-
-    create_empty_developer_app = parser_apps.add_parser('create-empty', aliases=['create-empty-developer-app'], parents=[parent_parser()],
-        help='Creates an empty developer app.')
-    create_empty_developer_app.add_argument('-d', '--developer', help='developer email or id', required=True)
-    create_empty_developer_app.add_argument('-n', '--name', help='Name of the app. The name is the unique ID of the app for this organization and developer.', required=True)
-    # create_empty_developer_app.add_argument('--products', help='A list of API products associated with the app\'s credentials', nargs='+', required=False, default=[])
-    create_empty_developer_app.add_argument('--display-name', help='The DisplayName (set with an attribute) is what appears in the management UI. If you don\'t provide a DisplayName, the name is used.', required=False, default=None)
-    # create_empty_developer_app.add_argument('--scopes', help='Sets the scopes element under the apiProducts element in the attributes of the app. The specified scopes must already exist on the API products associated with the app.', nargs='+', required=False, default=[])
-    create_empty_developer_app.add_argument('--callback-url', help='The callbackUrl is used by OAuth 2.0 authorization servers to communicate authorization codes back to apps. CallbackUrl must match the value of redirect_uri in some OAuth 2.0 See the documentation on OAuth 2.0 for more details.', required=False, default=None)
-    create_empty_developer_app.set_defaults(func=lambda args: print(apps.create_empty_developer_app(args).text))
-
-    create_a_consumer_key_and_secret = parser_apps.add_parser('create-creds', aliases=['create-a-consumer-key-and-secret', 'create-credentials'], parents=[parent_parser()],
-        help='Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys/secrets to Edge from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed.')
-    create_a_consumer_key_and_secret.add_argument('-d', '--developer', help='developer email or id', required=True)
-    create_a_consumer_key_and_secret.add_argument('-n', '--name', help='Name of the app. The name is the unique ID of the app for this organization and developer.', required=True)
-    create_a_consumer_key_and_secret.add_argument('--consumer-key', help='', required=False, default=None)
-    create_a_consumer_key_and_secret.add_argument('--consumer-secret', help='', required=False, default=None)
-    create_a_consumer_key_and_secret.add_argument('--key-length', help='length of consumer key', required=False, default=32)
-    create_a_consumer_key_and_secret.add_argument('--secret-length', help='length of consumer secret', required=False, default=32)
-    create_a_consumer_key_and_secret.add_argument('--key-suffix', help='', required=False, default=None)
-    create_a_consumer_key_and_secret.add_argument('--key-delimiter', help="separates consumerKey and key suffix with a delimiter. the default is '-'.", required=False, default='-')
-    create_a_consumer_key_and_secret.add_argument('--products', help='A list of API products to be associated with the app\'s credentials', nargs='+', required=False, default=[])
-    create_a_consumer_key_and_secret.set_defaults(func=lambda args: print(apps.create_a_consumer_key_and_secret(args).text))
-
-    list_developer_apps = parser_apps.add_parser('list', aliases=['list-developer-apps'], parents=[parent_parser(), prefix_parser()],
-        help='Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps. All time values in the response are UNIX times. You can specify either the developer\'s email address or Edge ID.')
-    list_developer_apps.add_argument('-d', '--developer', help='developer email or id', required=True)
-    list_developer_apps.add_argument('--expand', action='store_true',
-        help='Set to true to expand the results. This query parameter does not work if you use the count or startKey query parameters.')
-    list_developer_apps.add_argument('--count', default=100, type=int,
-        help='Limits the list to the number you specify. The limit is 100. Use with the startKey parameter to provide more targeted filtering.')
-    list_developer_apps.add_argument('--startkey', default='',
-        help='To filter the keys that are returned, enter the name of a company app that the list will start with.')
-    list_developer_apps.set_defaults(func=lambda args: print(apps.list_developer_apps(args)))
-
-    get_developer_app_details = parser_apps.add_parser('get', aliases=['get-developer-app-details'], parents=[parent_parser()],
-        help='Get the profile of a specific developer app. All times in the response are UNIX times. Note that the response contains a top-level attribute named accessType that is no longer used by Apigee.')
-    get_developer_app_details.add_argument('-d', '--developer', help='developer email or id', required=True)
-    get_developer_app_details.add_argument('-n', '--name', help='name', required=True)
-    get_developer_app_details.set_defaults(func=lambda args: print(apps.get_developer_app_details(args).text))
 
     list_api_products = parser_apiproducts.add_parser('list', aliases=['list-api-products'], parents=[parent_parser(), prefix_parser()],
         help='Get a list of all API product names for an organization.')
