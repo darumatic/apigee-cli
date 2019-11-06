@@ -20,6 +20,7 @@ from apigee.parsers.parser_keyvaluemaps import ParserKeyvaluemaps
 from apigee.parsers.parser_developers import ParserDevelopers
 from apigee.parsers.parser_apps import ParserApps
 from apigee.parsers.parser_apiproducts import ParserApiproducts
+from apigee.parsers.parser_targetservers import ParserTargetservers
 
 from apigee.util import *
 
@@ -62,7 +63,9 @@ def main():
     # parser_apiproducts = subparsers.add_parser('products', aliases=['prods'], help='api products').add_subparsers()
     subparsers = ParserApiproducts(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
 
-    parser_targetservers = subparsers.add_parser('ts', aliases=['targetservers'], help='target servers').add_subparsers()
+    # parser_targetservers = subparsers.add_parser('ts', aliases=['targetservers'], help='target servers').add_subparsers()
+    subparsers = ParserTargetservers(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
+
     parser_maskconfigs = subparsers.add_parser('mask', aliases=['maskconfigs'], help='data masks').add_subparsers()
     parser_permissions = subparsers.add_parser('perms', aliases=['permissions'], help='manage permissions for a role').add_subparsers()
 
@@ -70,36 +73,6 @@ def main():
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
     parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
     parser_prepend.set_defaults(func=prepend.main)
-
-    create_a_targetserver = parser_targetservers.add_parser('create', aliases=['create-a-targetserver'], parents=[parent_parser(), environment_parser()],
-        help='Create a TargetServer in the specified environment. TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services.')
-    create_a_targetserver.add_argument('-b', '--body', help='request body', required=True)
-    create_a_targetserver.set_defaults(func=lambda args: print(targetservers.create_a_targetserver(args).text))
-
-    delete_a_targetserver = parser_targetservers.add_parser('delete', aliases=['delete-a-targetserver'], parents=[parent_parser(), environment_parser()],
-        help='Delete a TargetServer configuration from an environment. Returns information about the deleted TargetServer.')
-    delete_a_targetserver.add_argument('-n', '--name', help='name', required=True)
-    delete_a_targetserver.set_defaults(func=lambda args: print(targetservers.delete_a_targetserver(args).text))
-
-    list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser(), environment_parser(), prefix_parser()],
-        help='List all TargetServers in an environment.')
-    list_targetservers_in_an_environment.set_defaults(func=lambda args: print(targetservers.list_targetservers_in_an_environment(args)))
-
-    get_targetserver = parser_targetservers.add_parser('get', aliases=['get-targetserver'], parents=[parent_parser(), environment_parser()],
-        help='Returns a TargetServer definition.')
-    get_targetserver.add_argument('-n', '--name', help='name', required=True)
-    get_targetserver.set_defaults(func=lambda args: print(targetservers.get_targetserver(args).text))
-
-    update_a_targetserver = parser_targetservers.add_parser('update', aliases=['update-a-targetserver'], parents=[parent_parser(), environment_parser()],
-        help='Modifies an existing TargetServer.')
-    update_a_targetserver.add_argument('-n', '--name', help='name', required=True)
-    update_a_targetserver.add_argument('-b', '--body', help='request body', required=True)
-    update_a_targetserver.set_defaults(func=lambda args: print(targetservers.update_a_targetserver(args).text))
-
-    push_targetserver = parser_targetservers.add_parser('push', aliases=['push-targetserver'], parents=[parent_parser(), environment_parser(), file_parser()],
-        help='Push TargetServer to Apigee. This will create/update a TargetServer.')
-    # push_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
-    push_targetserver.set_defaults(func=lambda args: targetservers.push_targetserver(args))
 
     create_data_masks_for_an_api_proxy = parser_maskconfigs.add_parser('create-api', aliases=['create-data-masks-for-an-api-proxy'], parents=[parent_parser()],
         help='Create a data mask for an API proxy. You can capture message content to assist in runtime debugging of APIs calls. In many cases, API traffic contains sensitive data, such credit cards or personally identifiable health information (PHI) that needs to filtered out of the captured message content. Data masks enable you to specify data that will be filtered out of trace sessions. Data masking is only enabled when a trace session (also called a \'debug\' session) is enabled for an API proxy. If no trace session are enabled on an API proxy, then the data will not be masked.')
