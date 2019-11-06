@@ -5,7 +5,6 @@ import argparse
 
 import apigee
 
-# from apigee import APIGEE_CLI_PREFIX
 from apigee.api import *
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
@@ -18,28 +17,11 @@ from apigee.util import *
 @exception_handler
 def main():
     parent_parser = ParentParser()
-    # prefix = authorization.get_credential(parent_parser.profile, 'prefix')
-
-    # file_parser = argparse.ArgumentParser(add_help=False)
-    # file_parser.add_argument('-f', '--file', action='store', help='file path', required=True, type=isfile)
     file_parser = FileParser()
-
-    # dir_parser = argparse.ArgumentParser(add_help=False)
-    # dir_parser.add_argument('-d', '--directory', action='store', help='directory path', required=True, type=isdir)
     dir_parser = DirParser()
-
-    # format_parser = argparse.ArgumentParser(add_help=False)
-    # format_parser.add_argument('-F', '--format', action='store', help='output format type', required=False)
     format_parser = FormatParser()
-
-    # environment_parser = argparse.ArgumentParser(add_help=False)
-    # environment_parser.add_argument('-e', '--environment', help='environment', required=True)
     environment_parser = EnvironmentParser()
-
-    # prefix_parser = argparse.ArgumentParser(add_help=False)
-    # prefix_parser.add_argument('--prefix', help='prefix filter for apigee items', default=APIGEE_CLI_PREFIX if prefix is None else prefix)
     prefix_parser = PrefixParser(profile=parent_parser.profile)
-    # prefix_parser = PrefixParser()
 
     parser = argparse.ArgumentParser(prog=apigee.CMD, description=apigee.description)
     parser.add_argument('-V', '--version', action='version', version=apigee.APP + ' ' + apigee.__version__)
