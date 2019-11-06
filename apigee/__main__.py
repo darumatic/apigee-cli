@@ -10,7 +10,7 @@ from apigee.api import *
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.dir_parser import DirParser
-# from apigee.parsers.format_parser import FormatParser
+from apigee.parsers.format_parser import FormatParser
 # from apigee.parsers.environment_parser import EnvironmentParser
 # from apigee.parsers.prefix_parser import PrefixParser
 from apigee.util import *
@@ -28,8 +28,9 @@ def main():
     # dir_parser.add_argument('-d', '--directory', action='store', help='directory path', required=True, type=isdir)
     dir_parser = DirParser()
 
-    format_parser = argparse.ArgumentParser(add_help=False)
-    format_parser.add_argument('-F', '--format', action='store', help='output format type', required=False)
+    # format_parser = argparse.ArgumentParser(add_help=False)
+    # format_parser.add_argument('-F', '--format', action='store', help='output format type', required=False)
+    format_parser = FormatParser()
 
     environment_parser = argparse.ArgumentParser(add_help=False)
     environment_parser.add_argument('-e', '--environment', help='environment', required=True)
