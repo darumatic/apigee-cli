@@ -5,20 +5,20 @@ import argparse
 
 import apigee
 
-from apigee import APIGEE_CLI_PREFIX
+# from apigee import APIGEE_CLI_PREFIX
 from apigee.api import *
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.dir_parser import DirParser
 from apigee.parsers.format_parser import FormatParser
 from apigee.parsers.environment_parser import EnvironmentParser
-# from apigee.parsers.prefix_parser import PrefixParser
+from apigee.parsers.prefix_parser import PrefixParser
 from apigee.util import *
 
 @exception_handler
 def main():
     parent_parser = ParentParser()
-    prefix = authorization.get_credential(parent_parser.profile, 'prefix')
+    # prefix = authorization.get_credential(parent_parser.profile, 'prefix')
 
     # file_parser = argparse.ArgumentParser(add_help=False)
     # file_parser.add_argument('-f', '--file', action='store', help='file path', required=True, type=isfile)
@@ -36,8 +36,10 @@ def main():
     # environment_parser.add_argument('-e', '--environment', help='environment', required=True)
     environment_parser = EnvironmentParser()
 
-    prefix_parser = argparse.ArgumentParser(add_help=False)
-    prefix_parser.add_argument('--prefix', help='prefix filter for apigee items', default=APIGEE_CLI_PREFIX if prefix is None else prefix)
+    # prefix_parser = argparse.ArgumentParser(add_help=False)
+    # prefix_parser.add_argument('--prefix', help='prefix filter for apigee items', default=APIGEE_CLI_PREFIX if prefix is None else prefix)
+    prefix_parser = PrefixParser(profile=parent_parser.profile)
+    # prefix_parser = PrefixParser()
 
     parser = argparse.ArgumentParser(prog=apigee.CMD, description=apigee.description)
     parser.add_argument('-V', '--version', action='version', version=apigee.APP + ' ' + apigee.__version__)
@@ -86,7 +88,7 @@ def main():
     get_api_proxy.add_argument('-n', '--name', help='name', required=True)
     get_api_proxy.set_defaults(func=lambda args: print(apis.get_api_proxy(args).text))
 
-    list_api_proxies = parser_apis.add_parser('list', aliases=['list-api-proxies'], parents=[parent_parser(), prefix_parser],
+    list_api_proxies = parser_apis.add_parser('list', aliases=['list-api-proxies'], parents=[parent_parser(), prefix_parser()],
         help='Gets the names of all API proxies in an organization. The names correspond to the names defined in the configuration files for each API proxy.')
     list_api_proxies.set_defaults(func=lambda args: print(apis.list_api_proxies(args)))
 
@@ -125,7 +127,7 @@ def main():
     get_a_keys_value_in_an_environment_scoped_keyvaluemap.add_argument('--entry-name', help='entry name', required=True)
     get_a_keys_value_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap(args).text))
 
-    list_keyvaluemaps_in_an_environment = parser_keyvaluemaps.add_parser('list', aliases=['list-keyvaluemaps-in-an-environment'], parents=[parent_parser(), environment_parser(), prefix_parser],
+    list_keyvaluemaps_in_an_environment = parser_keyvaluemaps.add_parser('list', aliases=['list-keyvaluemaps-in-an-environment'], parents=[parent_parser(), environment_parser(), prefix_parser()],
         help='Lists the name of all key/value maps in an environment and optionally returns an expanded view of all key/value maps for the environment.')
     list_keyvaluemaps_in_an_environment.set_defaults(func=lambda args: print(keyvaluemaps.list_keyvaluemaps_in_an_environment(args)))
 
@@ -149,7 +151,7 @@ def main():
     update_an_entry_in_an_environment_scoped_kvm.add_argument('--updated-value', help='updated value', required=True)
     update_an_entry_in_an_environment_scoped_kvm.set_defaults(func=lambda args: print(keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm(args).text))
 
-    list_keys_in_an_environment_scoped_keyvaluemap = parser_keyvaluemaps.add_parser('list-keys', aliases=['list-keys-in-an-environment-scoped-keyvaluemap'], parents=[parent_parser(), environment_parser(), prefix_parser],
+    list_keys_in_an_environment_scoped_keyvaluemap = parser_keyvaluemaps.add_parser('list-keys', aliases=['list-keys-in-an-environment-scoped-keyvaluemap'], parents=[parent_parser(), environment_parser(), prefix_parser()],
         help='Note: This API is supported for Apigee Edge for the Public Cloud only. Lists keys in a KeyValueMap scoped to an environment. KVM names are case sensitive.')
     list_keys_in_an_environment_scoped_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     list_keys_in_an_environment_scoped_keyvaluemap.add_argument('--startkey', default='',
@@ -163,7 +165,7 @@ def main():
     # push_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     push_keyvaluemap.set_defaults(func=lambda args: keyvaluemaps.push_keyvaluemap(args))
 
-    list_developers = parser_developers.add_parser('list', aliases=['list-developers'], parents=[parent_parser(), prefix_parser],
+    list_developers = parser_developers.add_parser('list', aliases=['list-developers'], parents=[parent_parser(), prefix_parser()],
         help='Lists all developers in an organization by email address. This call does not list any company developers who are a part of the designated organization.')
     list_developers.add_argument('--expand', action='store_true',
         help='Set to true to list developers exanded with details.')
@@ -202,7 +204,7 @@ def main():
     create_a_consumer_key_and_secret.add_argument('--products', help='A list of API products to be associated with the app\'s credentials', nargs='+', required=False, default=[])
     create_a_consumer_key_and_secret.set_defaults(func=lambda args: print(apps.create_a_consumer_key_and_secret(args).text))
 
-    list_developer_apps = parser_apps.add_parser('list', aliases=['list-developer-apps'], parents=[parent_parser(), prefix_parser],
+    list_developer_apps = parser_apps.add_parser('list', aliases=['list-developer-apps'], parents=[parent_parser(), prefix_parser()],
         help='Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps. All time values in the response are UNIX times. You can specify either the developer\'s email address or Edge ID.')
     list_developer_apps.add_argument('-d', '--developer', help='developer email or id', required=True)
     list_developer_apps.add_argument('--expand', action='store_true',
@@ -219,7 +221,7 @@ def main():
     get_developer_app_details.add_argument('-n', '--name', help='name', required=True)
     get_developer_app_details.set_defaults(func=lambda args: print(apps.get_developer_app_details(args).text))
 
-    list_api_products = parser_apiproducts.add_parser('list', aliases=['list-api-products'], parents=[parent_parser(), prefix_parser],
+    list_api_products = parser_apiproducts.add_parser('list', aliases=['list-api-products'], parents=[parent_parser(), prefix_parser()],
         help='Get a list of all API product names for an organization.')
     list_api_products.add_argument('--expand', action='store_true',
         help='Set to \'true\' to get expanded details about each product.')
@@ -244,7 +246,7 @@ def main():
     delete_a_targetserver.add_argument('-n', '--name', help='name', required=True)
     delete_a_targetserver.set_defaults(func=lambda args: print(targetservers.delete_a_targetserver(args).text))
 
-    list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser(), environment_parser(), prefix_parser],
+    list_targetservers_in_an_environment = parser_targetservers.add_parser('list', aliases=['list-targetservers-in-an-environment'], parents=[parent_parser(), environment_parser(), prefix_parser()],
         help='List all TargetServers in an environment.')
     list_targetservers_in_an_environment.set_defaults(func=lambda args: print(targetservers.list_targetservers_in_an_environment(args)))
 
