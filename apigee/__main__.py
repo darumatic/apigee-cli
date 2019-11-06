@@ -23,6 +23,7 @@ from apigee.parsers.parser_apiproducts import ParserApiproducts
 from apigee.parsers.parser_targetservers import ParserTargetservers
 from apigee.parsers.parser_maskconfigs import ParserMaskconfigs
 from apigee.parsers.parser_permissions import ParserPermissions
+from apigee.parsers.parser_prepend import ParserPrepend
 
 from apigee.util import *
 
@@ -74,10 +75,11 @@ def main():
     # parser_permissions = subparsers.add_parser('perms', aliases=['permissions'], help='manage permissions for a role').add_subparsers()
     subparsers = ParserPermissions(subparsers, parent_parser=parent_parser).parser
 
-    parser_prepend = subparsers.add_parser('prepend', aliases=['prefix'], help='prepend all matching strings with a prefix in all files in the specified directory (rudimentary stream editor). this is potentially VERY DANGEROUS. make sure you have version control such as Git to revert any changes in the target directory.', parents=[dir_parser()])
-    parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
-    parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
-    parser_prepend.set_defaults(func=prepend.main)
+    # parser_prepend = subparsers.add_parser('prepend', aliases=['prefix'], help='prepend all matching strings with a prefix in all files in the specified directory (rudimentary stream editor). this is potentially VERY DANGEROUS. make sure you have version control such as Git to revert any changes in the target directory.', parents=[dir_parser()])
+    # parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
+    # parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
+    # parser_prepend.set_defaults(func=prepend.main)
+    subparsers = ParserPrepend(subparsers, dir_parser=dir_parser).parser
 
     args = parser.parse_args()
     try:
