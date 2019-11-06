@@ -3,15 +3,20 @@ import argparse
 from apigee.api import apis
 from apigee.api import deploy
 
+from apigee.parsers.parent_parser import ParentParser
+from apigee.parsers.dir_parser import DirParser
+from apigee.parsers.environment_parser import EnvironmentParser
+from apigee.parsers.prefix_parser import PrefixParser
+
 class ParserApis:
 
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_apis = self._parser.add_parser('apis', help='apis').add_subparsers()
-        self._parent_parser = kwargs.get('parent_parser')
-        self._dir_parser = kwargs.get('dir_parser')
-        self._environment_parser = kwargs.get('environment_parser')
-        self._prefix_parser = kwargs.get('prefix_parser')
+        self._parent_parser = kwargs.get('parent_parser', ParentParser())
+        self._dir_parser = kwargs.get('dir_parser', DirParser())
+        self._environment_parser = kwargs.get('environment_parser', EnvironmentParser())
+        self._prefix_parser = kwargs.get('prefix_parser', PrefixParser(profile='default'))
         self._create_parser()
 
     @property
