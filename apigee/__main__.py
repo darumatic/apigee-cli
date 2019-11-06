@@ -21,6 +21,7 @@ from apigee.parsers.parser_developers import ParserDevelopers
 from apigee.parsers.parser_apps import ParserApps
 from apigee.parsers.parser_apiproducts import ParserApiproducts
 from apigee.parsers.parser_targetservers import ParserTargetservers
+from apigee.parsers.parser_maskconfigs import ParserMaskconfigs
 
 from apigee.util import *
 
@@ -66,40 +67,15 @@ def main():
     # parser_targetservers = subparsers.add_parser('ts', aliases=['targetservers'], help='target servers').add_subparsers()
     subparsers = ParserTargetservers(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
 
-    parser_maskconfigs = subparsers.add_parser('mask', aliases=['maskconfigs'], help='data masks').add_subparsers()
+    # parser_maskconfigs = subparsers.add_parser('mask', aliases=['maskconfigs'], help='data masks').add_subparsers()
+    subparsers = ParserMaskconfigs(subparsers, parent_parser=parent_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
+
     parser_permissions = subparsers.add_parser('perms', aliases=['permissions'], help='manage permissions for a role').add_subparsers()
 
     parser_prepend = subparsers.add_parser('prepend', aliases=['prefix'], help='prepend all matching strings with a prefix in all files in the specified directory (rudimentary stream editor). this is potentially VERY DANGEROUS. make sure you have version control such as Git to revert any changes in the target directory.', parents=[dir_parser()])
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
     parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
     parser_prepend.set_defaults(func=prepend.main)
-
-    create_data_masks_for_an_api_proxy = parser_maskconfigs.add_parser('create-api', aliases=['create-data-masks-for-an-api-proxy'], parents=[parent_parser()],
-        help='Create a data mask for an API proxy. You can capture message content to assist in runtime debugging of APIs calls. In many cases, API traffic contains sensitive data, such credit cards or personally identifiable health information (PHI) that needs to filtered out of the captured message content. Data masks enable you to specify data that will be filtered out of trace sessions. Data masking is only enabled when a trace session (also called a \'debug\' session) is enabled for an API proxy. If no trace session are enabled on an API proxy, then the data will not be masked.')
-    create_data_masks_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
-    create_data_masks_for_an_api_proxy.add_argument('-b', '--body', help='request body', required=True)
-    create_data_masks_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.create_data_masks_for_an_api_proxy(args).text))
-
-    delete_data_masks_for_an_api_proxy = parser_maskconfigs.add_parser('delete-api', aliases=['delete-data-masks-for-an-api-proxy'], parents=[parent_parser()],
-        help='Delete a data mask for an API proxy.')
-    delete_data_masks_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
-    delete_data_masks_for_an_api_proxy.add_argument('--maskconfig-name', help='data mask name', required=True)
-    delete_data_masks_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.delete_data_masks_for_an_api_proxy(args).text))
-
-    get_data_mask_details_for_an_api_proxy = parser_maskconfigs.add_parser('get-api', aliases=['get-data-mask-details-for-an-api-proxy'], parents=[parent_parser()],
-        help='Get the details for a data mask for an API proxy.')
-    get_data_mask_details_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
-    get_data_mask_details_for_an_api_proxy.add_argument('--maskconfig-name', help='data mask name', required=True)
-    get_data_mask_details_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.get_data_mask_details_for_an_api_proxy(args).text))
-
-    list_data_masks_for_an_api_proxy = parser_maskconfigs.add_parser('list-api', aliases=['list-data-masks-for-an-api-proxy'], parents=[parent_parser()],
-        help='List all data masks for an API proxy.')
-    list_data_masks_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
-    list_data_masks_for_an_api_proxy.set_defaults(func=lambda args: print(maskconfigs.list_data_masks_for_an_api_proxy(args).text))
-
-    list_data_masks_for_an_organization = parser_maskconfigs.add_parser('list', aliases=['list-data-masks-for-an-organization'], parents=[parent_parser()],
-        help='List all data masks for an organization.')
-    list_data_masks_for_an_organization.set_defaults(func=lambda args: print(maskconfigs.list_data_masks_for_an_organization(args).text))
 
     create_permissions = parser_permissions.add_parser('create', aliases=['create-permissions'], parents=[parent_parser()],
         help='Create permissions for a role.')
