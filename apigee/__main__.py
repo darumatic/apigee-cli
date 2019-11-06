@@ -8,6 +8,11 @@ import apigee
 from apigee import APIGEE_CLI_PREFIX
 from apigee.api import *
 from apigee.parsers.parent_parser import ParentParser
+# from apigee.parsers.file_parser import FileParser
+from apigee.parsers.dir_parser import DirParser
+# from apigee.parsers.format_parser import FormatParser
+# from apigee.parsers.environment_parser import EnvironmentParser
+# from apigee.parsers.prefix_parser import PrefixParser
 from apigee.util import *
 
 @exception_handler
@@ -18,8 +23,9 @@ def main():
     file_parser = argparse.ArgumentParser(add_help=False)
     file_parser.add_argument('-f', '--file', action='store', help='file path', required=True, type=isfile)
 
-    dir_parser = argparse.ArgumentParser(add_help=False)
-    dir_parser.add_argument('-d', '--directory', action='store', help='directory path', required=True, type=isdir)
+    # dir_parser = argparse.ArgumentParser(add_help=False)
+    # dir_parser.add_argument('-d', '--directory', action='store', help='directory path', required=True, type=isdir)
+    dir_parser = DirParser()
 
     format_parser = argparse.ArgumentParser(add_help=False)
     format_parser.add_argument('-F', '--format', action='store', help='output format type', required=False)
@@ -51,12 +57,12 @@ def main():
     parser_maskconfigs = subparsers.add_parser('mask', aliases=['maskconfigs'], help='data masks').add_subparsers()
     parser_permissions = subparsers.add_parser('perms', aliases=['permissions'], help='manage permissions for a role').add_subparsers()
 
-    parser_prepend = subparsers.add_parser('prepend', aliases=['prefix'], help='prepend all matching strings with a prefix in all files in the specified directory (rudimentary stream editor). this is potentially VERY DANGEROUS. make sure you have version control such as Git to revert any changes in the target directory.', parents=[dir_parser])
+    parser_prepend = subparsers.add_parser('prepend', aliases=['prefix'], help='prepend all matching strings with a prefix in all files in the specified directory (rudimentary stream editor). this is potentially VERY DANGEROUS. make sure you have version control such as Git to revert any changes in the target directory.', parents=[dir_parser()])
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
     parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
     parser_prepend.set_defaults(func=prepend.main)
 
-    apis_deploy = parser_apis.add_parser('deploy', help='deploy apis', parents=[parent_parser(), dir_parser, environment_parser])
+    apis_deploy = parser_apis.add_parser('deploy', help='deploy apis', parents=[parent_parser(), dir_parser(), environment_parser])
     apis_deploy.add_argument('-n', '--name', help='name', required=True)
     # apis_deploy.add_argument('-d', '--directory', help='directory name')
     # apis_deploy.add_argument('-p', '--path', help='base path')
