@@ -17,6 +17,7 @@ from apigee.parsers.prefix_parser import PrefixParser
 from apigee.parsers.parser_apis import ParserApis
 from apigee.parsers.parser_deployments import ParserDeployments
 from apigee.parsers.parser_keyvaluemaps import ParserKeyvaluemaps
+from apigee.parsers.parser_developers import ParserDevelopers
 
 from apigee.util import *
 
@@ -50,7 +51,9 @@ def main():
     # parser_keyvaluemaps = subparsers.add_parser('kvms', aliases=['keyvaluemaps'], help='keyvaluemaps').add_subparsers()
     subparsers = ParserKeyvaluemaps(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
 
-    parser_developers = subparsers.add_parser('developers', aliases=['devs'], help='developers').add_subparsers()
+    # parser_developers = subparsers.add_parser('developers', aliases=['devs'], help='developers').add_subparsers()
+    subparsers = ParserDevelopers(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
+
     parser_apps = subparsers.add_parser('apps', help='developer apps').add_subparsers()
     parser_apiproducts = subparsers.add_parser('products', aliases=['prods'], help='api products').add_subparsers()
     parser_targetservers = subparsers.add_parser('ts', aliases=['targetservers'], help='target servers').add_subparsers()
@@ -61,16 +64,6 @@ def main():
     parser_prepend.add_argument('-P', '--prefix', help='prefix to prepend', required=True)
     parser_prepend.add_argument('-r', '--resource', help='apigee resource to be prepended', required=True)
     parser_prepend.set_defaults(func=prepend.main)
-
-    list_developers = parser_developers.add_parser('list', aliases=['list-developers'], parents=[parent_parser(), prefix_parser()],
-        help='Lists all developers in an organization by email address. This call does not list any company developers who are a part of the designated organization.')
-    list_developers.add_argument('--expand', action='store_true',
-        help='Set to true to list developers exanded with details.')
-    list_developers.add_argument('--count', default=1000, type=int,
-        help='Limits the list to the number you specify. Use with the startKey parameter to provide more targeted filtering. The limit is 1000.')
-    list_developers.add_argument('--startkey', default='',
-        help='To filter the keys that are returned, enter the email of a developer that the list will start with.')
-    list_developers.set_defaults(func=lambda args: print(developers.list_developers(args)))
 
     create_developer_app = parser_apps.add_parser('create', aliases=['create-developer-app'], parents=[parent_parser()],
         help='Creates an app associated with a developer, associates the app with an API product, and auto-generates an API key for the app to use in calls to API proxies inside the API product.')
