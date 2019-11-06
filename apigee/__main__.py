@@ -8,7 +8,7 @@ import apigee
 from apigee import APIGEE_CLI_PREFIX
 from apigee.api import *
 from apigee.parsers.parent_parser import ParentParser
-# from apigee.parsers.file_parser import FileParser
+from apigee.parsers.file_parser import FileParser
 from apigee.parsers.dir_parser import DirParser
 # from apigee.parsers.format_parser import FormatParser
 # from apigee.parsers.environment_parser import EnvironmentParser
@@ -20,8 +20,9 @@ def main():
     parent_parser = ParentParser()
     prefix = authorization.get_credential(parent_parser.profile, 'prefix')
 
-    file_parser = argparse.ArgumentParser(add_help=False)
-    file_parser.add_argument('-f', '--file', action='store', help='file path', required=True, type=isfile)
+    # file_parser = argparse.ArgumentParser(add_help=False)
+    # file_parser.add_argument('-f', '--file', action='store', help='file path', required=True, type=isfile)
+    file_parser = FileParser()
 
     # dir_parser = argparse.ArgumentParser(add_help=False)
     # dir_parser.add_argument('-d', '--directory', action='store', help='directory path', required=True, type=isdir)
@@ -155,7 +156,7 @@ def main():
         help='Limits the list of keys to the number you specify, up to a maximum of 100. Use with the startkey parameter to provide more targeted filtering.')
     list_keys_in_an_environment_scoped_keyvaluemap.set_defaults(func=lambda args: print(keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap(args)))
 
-    push_keyvaluemap = parser_keyvaluemaps.add_parser('push', aliases=['push-keyvaluemap'], parents=[parent_parser(), environment_parser, file_parser],
+    push_keyvaluemap = parser_keyvaluemaps.add_parser('push', aliases=['push-keyvaluemap'], parents=[parent_parser(), environment_parser, file_parser()],
         help='Push KeyValueMap to Apigee. This will create KeyValueMap/entries if they do not exist, update existing KeyValueMap/entries, and delete entries on Apigee that are not present in the request body.')
     # push_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     push_keyvaluemap.set_defaults(func=lambda args: keyvaluemaps.push_keyvaluemap(args))
@@ -256,7 +257,7 @@ def main():
     update_a_targetserver.add_argument('-b', '--body', help='request body', required=True)
     update_a_targetserver.set_defaults(func=lambda args: print(targetservers.update_a_targetserver(args).text))
 
-    push_targetserver = parser_targetservers.add_parser('push', aliases=['push-targetserver'], parents=[parent_parser(), environment_parser, file_parser],
+    push_targetserver = parser_targetservers.add_parser('push', aliases=['push-targetserver'], parents=[parent_parser(), environment_parser, file_parser()],
         help='Push TargetServer to Apigee. This will create/update a TargetServer.')
     # push_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
     push_targetserver.set_defaults(func=lambda args: targetservers.push_targetserver(args))
