@@ -5,7 +5,7 @@ import argparse
 
 import apigee
 
-from apigee.api import *
+from apigee.util import *
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
@@ -25,8 +25,6 @@ from apigee.parsers.parser_targetservers import ParserTargetservers
 from apigee.parsers.parser_maskconfigs import ParserMaskconfigs
 from apigee.parsers.parser_permissions import ParserPermissions
 from apigee.parsers.parser_prepend import ParserPrepend
-
-from apigee.util import *
 
 @exception_handler
 def main():
