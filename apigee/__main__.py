@@ -14,6 +14,7 @@ from apigee.parsers.format_parser import FormatParser
 from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
 
+from apigee.parsers.parser_configure import ParserConfigure
 from apigee.parsers.parser_apis import ParserApis
 from apigee.parsers.parser_deployments import ParserDeployments
 from apigee.parsers.parser_keyvaluemaps import ParserKeyvaluemaps
@@ -43,9 +44,7 @@ def main():
     parser_test = subparsers.add_parser('test', aliases=['get-access-token'], help='test get access token', parents=[parent_parser()])
     parser_test.set_defaults(func=test)
 
-    parser_configure = subparsers.add_parser('configure', help='configure credentials')
-    parser_configure.add_argument('-P', '--profile', help='name of profile to create', default='default')
-    parser_configure.set_defaults(func=config.main)
+    subparsers = ParserConfigure(subparsers).parser
 
     subparsers = ParserApis(subparsers, parent_parser=parent_parser, dir_parser=dir_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
 
