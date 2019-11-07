@@ -53,14 +53,12 @@ def isempty(s):
 def isfile(f):
     if os.path.isfile(f):
         return f
-    else:
-        raise argparse.ArgumentTypeError('not a file')
+    raise argparse.ArgumentTypeError('not a file')
 
 def isdir(d):
     if os.path.isdir(d):
         return d
-    else:
-        raise argparse.ArgumentTypeError('not a directory')
+    raise argparse.ArgumentTypeError('not a directory')
 
 # https://stackoverflow.com/a/15813469
 module = sys.modules[__name__]
