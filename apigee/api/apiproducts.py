@@ -17,6 +17,15 @@ def create_api_product(args):
     # print(resp.status_code)
     return resp
 
+def delete_api_product(args):
+    uri = '{}/v1/organizations/{}/apiproducts/{}'.format(
+        APIGEE_ADMIN_API_URL, args.org, args.name)
+    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
+    resp = requests.delete(uri, headers=hdrs)
+    resp.raise_for_status()
+    # print(resp.status_code)
+    return resp
+
 def get_api_product(args):
     uri = '{}/v1/organizations/{}/apiproducts/{}'.format(
         APIGEE_ADMIN_API_URL, args.org, args.name)
