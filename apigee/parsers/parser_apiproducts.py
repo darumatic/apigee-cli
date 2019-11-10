@@ -3,6 +3,7 @@ import argparse
 from apigee.api import apiproducts
 
 from apigee.parsers.parent_parser import ParentParser
+from apigee.parsers.file_parser import FileParser
 from apigee.parsers.prefix_parser import PrefixParser
 
 class ParserApiproducts:
@@ -11,6 +12,7 @@ class ParserApiproducts:
         self._parser = parser
         self._parser_apiproducts = self._parser.add_parser('products', aliases=['prods'], help='api products').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
+        self._file_parser = kwargs.get('file_parser', FileParser())
         self._prefix_parser = kwargs.get('prefix_parser', PrefixParser(profile='default'))
         self._create_parser()
 
@@ -37,6 +39,14 @@ class ParserApiproducts:
     @parent_parser.setter
     def parent_parser(self, value):
         self._parent_parser = value
+
+    @property
+    def file_parser(self):
+        return self._file_parser
+
+    @file_parser.setter
+    def file_parser(self, value):
+        self._file_parser = value
 
     @property
     def prefix_parser(self):
@@ -85,9 +95,15 @@ class ParserApiproducts:
         update_api_product.add_argument('-b', '--body', help='request body', required=True)
         update_api_product.set_defaults(func=lambda args: print(apiproducts.update_api_product(args).text))
 
+    def _build_push_apiproducts_argument(self):
+        push_apiproducts = self._parser_apiproducts.add_parser('push', aliases=['push-apiproducts'], parents=[self._parent_parser(), self._file_parser()],
+            help='Push API product to Apigee. This will create/update an API product.')
+        push_apiproducts.set_defaults(func=lambda args: apiproducts.push_apiproducts(args))
+
     def _create_parser(self):
         self._build_create_api_product_argument()
         self._build_delete_api_product_argument()
         self._build_list_api_products_argument()
         self._build_get_api_product_argument()
         self._build_update_api_product_argument()
+        self._build_push_apiproducts_argument()

@@ -55,3 +55,19 @@ def update_api_product(args):
     resp.raise_for_status()
     # print(resp.status_code)
     return resp
+
+def push_apiproducts(args):
+    with open(args.file) as file:
+        body = file.read()
+    apiproduct = json.loads(body)
+
+    args.name = apiproduct['name']
+    args.body = body
+
+    try:
+        get_api_product(args)
+        print('Updating', args.name)
+        print(update_api_product(args).text)
+    except requests.exceptions.HTTPError:
+        print('Creating', args.name)
+        print(create_api_product(args).text)
