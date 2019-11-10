@@ -99,10 +99,9 @@ class ParserTargetservers:
         update_a_targetserver.add_argument('-b', '--body', help='request body', required=True)
         update_a_targetserver.set_defaults(func=lambda args: print(targetservers.update_a_targetserver(args).text))
 
-    def _push_targetserver_argument(self):
+    def _build_push_targetserver_argument(self):
         push_targetserver = self._parser_targetservers.add_parser('push', aliases=['push-targetserver'], parents=[self._parent_parser(), self._environment_parser(), self._file_parser()],
             help='Push TargetServer to Apigee. This will create/update a TargetServer.')
-        # push_keyvaluemap.add_argument('-n', '--name', help='name', required=True)
         push_targetserver.set_defaults(func=lambda args: targetservers.push_targetserver(args))
 
     def _create_parser(self):
@@ -111,4 +110,4 @@ class ParserTargetservers:
         self._build_list_targetservers_in_an_environment_argument()
         self._build_get_targetserver_argument()
         self._build_update_a_targetserver_argument()
-        self._push_targetserver_argument()
+        self._build_push_targetserver_argument()
