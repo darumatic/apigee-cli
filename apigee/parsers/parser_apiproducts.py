@@ -72,7 +72,15 @@ class ParserApiproducts:
         get_api_product.add_argument('-n', '--name', help='name', required=True)
         get_api_product.set_defaults(func=lambda args: print(apiproducts.get_api_product(args).text))
 
+    def _build_update_api_product_argument(self):
+        update_api_product = self._parser_apiproducts.add_parser('update', aliases=['update-api-product'], parents=[self._parent_parser()],
+            help='Updates an existing API product. You must include all required values, whether or not you are updating them, as well as any optional values that you are updating.')
+        update_api_product.add_argument('-n', '--name', help='name', required=True)
+        update_api_product.add_argument('-b', '--body', help='request body', required=True)
+        update_api_product.set_defaults(func=lambda args: print(apiproducts.update_api_product(args).text))
+
     def _create_parser(self):
         self._build_create_api_product_argument()
         self._build_list_api_products_argument()
         self._build_get_api_product_argument()
+        self._build_update_api_product_argument()
