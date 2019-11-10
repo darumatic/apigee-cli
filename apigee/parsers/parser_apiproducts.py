@@ -49,6 +49,12 @@ class ParserApiproducts:
     def __call__(self):
         return self._parser
 
+    def _build_create_api_product_argument(self):
+        create_api_product = self._parser_apiproducts.add_parser('create', aliases=['create-api-product'], parents=[self._parent_parser()],
+            help='Creates an API product in an organization.')
+        create_api_product.add_argument('-b', '--body', help='request body', required=True)
+        create_api_product.set_defaults(func=lambda args: print(apiproducts.create_api_product(args).text))
+
     def _build_list_api_products_argument(self):
         list_api_products = self._parser_apiproducts.add_parser('list', aliases=['list-api-products'], parents=[self._parent_parser(), self._prefix_parser()],
             help='Get a list of all API product names for an organization.')
@@ -67,5 +73,6 @@ class ParserApiproducts:
         get_api_product.set_defaults(func=lambda args: print(apiproducts.get_api_product(args).text))
 
     def _create_parser(self):
+        self._build_create_api_product_argument()
         self._build_list_api_products_argument()
         self._build_get_api_product_argument()

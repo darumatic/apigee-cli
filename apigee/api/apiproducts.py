@@ -7,6 +7,16 @@ import json
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.util import authorization
 
+def create_api_product(args):
+    uri = '{}/v1/organizations/{}/apiproducts'.format(
+        APIGEE_ADMIN_API_URL, args.org)
+    hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
+    body = json.loads(args.body)
+    resp = requests.post(uri, headers=hdrs, json=body)
+    resp.raise_for_status()
+    # print(resp.status_code)
+    return resp
+
 def get_api_product(args):
     uri = '{}/v1/organizations/{}/apiproducts/{}'.format(
         APIGEE_ADMIN_API_URL, args.org, args.name)
