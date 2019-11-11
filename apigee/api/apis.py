@@ -31,11 +31,15 @@ def delete_undeployed_revisions(args):
         deployed.extend(dep['revision'])
     deployed = list(set(deployed))
     undeployed = [rev for rev in revisions if rev not in deployed]
+    undeployed = [int(x) for x in undeployed]
+    undeployed.sort()
+    undeployed = undeployed[:len(undeployed)-args.save_last]
     print('Undeployed revisions:', undeployed)
-    for rev in undeployed:
-        args.revision_number = rev
-        print('Deleting revison', rev)
-        delete_api_proxy_revision(args)
+    if not args.dry_run:
+        for rev in undeployed:
+            args.revision_number = rev
+            print('Deleting revison', rev)
+            # delete_api_proxy_revision(args)
 
 def export_api_proxy(args):
     uri = '{}/v1/organizations/{}/apis/{}/revisions/{}?format=bundle'.format(
