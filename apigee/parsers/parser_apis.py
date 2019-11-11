@@ -90,7 +90,7 @@ class ParserApis:
         delete_undeployed_revisions = self._parser_apis.add_parser('clean', aliases=['delete-undeployed-revisions'], parents=[self._parent_parser()],
             help='Deletes all undeployed revisions of an API proxy and all policies, resources, endpoints, and revisions associated with it.')
         delete_undeployed_revisions.add_argument('-n', '--name', help='name', required=True)
-        delete_undeployed_revisions.add_argument('--save-last', type=int, default=0, help='denotes not to delete the N most recent revisions', required=False)
+        delete_undeployed_revisions.add_argument('--save-last', metavar='N', type=int, default=0, help='denotes not to delete the N most recent revisions', required=False)
         delete_undeployed_revisions.add_argument('--dry-run', action='store_true', help='show revisions to be deleted but do not delete', required=False)
         delete_undeployed_revisions.set_defaults(func=apis.delete_undeployed_revisions)
 
