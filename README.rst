@@ -14,17 +14,17 @@ This package provides a command-line interface for the Apigee Management API wit
     positional arguments:
       {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,prepend,prefix}
         test (get-access-token)
-                            test get access token
+                            get access token
         configure           configure credentials
-        apis                apis
+        apis                manage apis
         deployments (deps)  see apis that are actively deployed
         kvms (keyvaluemaps)
-                            keyvaluemaps
-        developers (devs)   developers
-        apps                developer apps
-        products (prods)    api products
-        ts (targetservers)  target servers
-        mask (maskconfigs)  data masks
+                            manage keyvaluemaps
+        developers (devs)   see developers
+        apps                manage developer apps
+        products (prods)    manage api products
+        ts (targetservers)  manage target servers
+        mask (maskconfigs)  manage data masks
         perms (permissions)
                             manage permissions for a role
         prepend (prefix)    prepend all matching strings with a prefix in all
@@ -189,6 +189,14 @@ To output as JSON, specify the ``-j/--json`` argument::
 This will output the table like so::
 
     [{"name": "dev", "revision": ["3", "5"]}, {"name": "test", "revision": ["3"]}]
+
+-------------------------------------------------
+Deleting all undeployed revisions of an API proxy
+-------------------------------------------------
+
+To delete all undeployed revisions for an API Proxy, run::
+
+    $ apigee apis clean -n [name]
 
 ------------------------------
 Managing Key value maps (KVMs)
