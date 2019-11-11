@@ -80,14 +80,14 @@ class ParserApis:
         apis_deploy.set_defaults(func=deploy.deploy)
 
     def _build_delete_api_proxy_revision_argument(self):
-        delete_api_proxy_revision = self._parser_apis.add_parser('delete-revision', aliases=['delete-api-proxy-revision'], parents=[self._parent_parser()],
+        delete_api_proxy_revision = self._parser_apis.add_parser('delete-rev', aliases=['delete-api-proxy-revision', 'delete-revision'], parents=[self._parent_parser()],
             help='Deletes a revision of an API proxy and all policies, resources, endpoints, and revisions associated with it. The API proxy revision must be undeployed before you can delete it.')
         delete_api_proxy_revision.add_argument('-n', '--name', help='name', required=True)
         delete_api_proxy_revision.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
         delete_api_proxy_revision.set_defaults(func=apis.delete_api_proxy_revision)
 
     def _build_delete_undeployed_revisions_argument(self):
-        delete_undeployed_revisions = self._parser_apis.add_parser('clean', aliases=['delete-undeployed-revisions', 'clean'], parents=[self._parent_parser()],
+        delete_undeployed_revisions = self._parser_apis.add_parser('clean', aliases=['delete-undeployed-revisions'], parents=[self._parent_parser()],
             help='Deletes all undeployed revisions of an API proxy and all policies, resources, endpoints, and revisions associated with it.')
         delete_undeployed_revisions.add_argument('-n', '--name', help='name', required=True)
         delete_undeployed_revisions.set_defaults(func=apis.delete_undeployed_revisions)
@@ -112,6 +112,12 @@ class ParserApis:
             help='Gets the names of all API proxies in an organization. The names correspond to the names defined in the configuration files for each API proxy.')
         list_api_proxies.set_defaults(func=lambda args: print(apis.list_api_proxies(args)))
 
+    def _build_list_api_proxy_revisions_argument(self):
+        list_api_proxies = self._parser_apis.add_parser('list-revs', aliases=['list-api-proxy-revisions', 'list-revisions'], parents=[self._parent_parser()],
+            help='List all revisions for an API proxy.')
+        list_api_proxies.add_argument('-n', '--name', help='name', required=True)
+        list_api_proxies.set_defaults(func=lambda args: print(apis.list_api_proxy_revisions(args).text))
+
     def _create_parser(self):
         self._build_apis_deploy_argument()
         self._build_delete_api_proxy_revision_argument()
@@ -119,3 +125,4 @@ class ParserApis:
         self._build_export_api_proxy_argument()
         self._build_get_api_proxy_argument()
         self._build_list_api_proxies_argument()
+        self._build_list_api_proxy_revisions_argument()
