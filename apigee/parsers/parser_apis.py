@@ -79,11 +79,18 @@ class ParserApis:
         apis_deploy.add_argument('-s', '--seamless-deploy', action='store_true', help='seamless deploy the bundle')
         apis_deploy.set_defaults(func=deploy.deploy)
 
+    def _build_delete_api_proxy_revision_argument(self):
+        delete_api_proxy_revision = self._parser_apis.add_parser('delete-revision', aliases=['delete-api-proxy-revision'], parents=[self._parent_parser()],
+            help='Deletes a revision of an API proxy and all policies, resources, endpoints, and revisions associated with it. The API proxy revision must be undeployed before you can delete it.')
+        delete_api_proxy_revision.add_argument('-n', '--name', help='name', required=True)
+        delete_api_proxy_revision.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
+        delete_api_proxy_revision.set_defaults(func=apis.delete_api_proxy_revision)
+
     def _build_export_api_proxy_argument(self):
         export_api_proxy = self._parser_apis.add_parser('export', aliases=['export-api-proxy'], parents=[self._parent_parser()],
             help='Outputs an API proxy revision as a ZIP formatted bundle of code and config files. This enables local configuration and development, including attachment of policies and scripts.')
         export_api_proxy.add_argument('-n', '--name', help='name', required=True)
-        export_api_proxy.add_argument('-r', '--revision-number', help='revision number', required=True)
+        export_api_proxy.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
         export_api_proxy.add_argument('-O', '--output-file', help='output file')
         # export_api_proxy.set_defaults(func=lambda args: print(apis.export_api_proxy(args).text))
         export_api_proxy.set_defaults(func=apis.export_api_proxy)
@@ -101,6 +108,7 @@ class ParserApis:
 
     def _create_parser(self):
         self._build_apis_deploy_argument()
+        self._build_delete_api_proxy_revision_argument()
         self._build_export_api_proxy_argument()
         self._build_get_api_proxy_argument()
         self._build_list_api_proxies_argument()

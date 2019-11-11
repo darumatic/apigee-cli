@@ -7,6 +7,15 @@ import json
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.util import authorization
 
+def delete_api_proxy_revision(args):
+    uri = '{}/v1/organizations/{}/apis/{}/revisions/{}'.format(
+        APIGEE_ADMIN_API_URL, args.org, args.name, args.revision_number)
+    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
+    resp = requests.delete(uri, headers=hdrs)
+    resp.raise_for_status()
+    # print(resp.status_code)
+    return resp
+
 def export_api_proxy(args):
     uri = '{}/v1/organizations/{}/apis/{}/revisions/{}?format=bundle'.format(
         APIGEE_ADMIN_API_URL, args.org, args.name, args.revision_number)
