@@ -39,7 +39,7 @@ def main():
     parser.add_argument('-V', '--version', action='version', version=apigee.APP + ' ' + apigee.__version__)
     subparsers = parser.add_subparsers()
 
-    parser_test = subparsers.add_parser('test', aliases=['get-access-token'], help='test get access token', parents=[parent_parser()])
+    parser_test = subparsers.add_parser('test', aliases=['get-access-token'], help='get access token', parents=[parent_parser()])
     parser_test.set_defaults(func=test)
 
     subparsers = ParserConfigure(subparsers).parser

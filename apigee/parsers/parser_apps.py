@@ -9,7 +9,7 @@ class ParserApps:
 
     def __init__(self, parser, **kwargs):
         self._parser = parser
-        self._parser_apps = self._parser.add_parser('apps', help='developer apps').add_subparsers()
+        self._parser_apps = self._parser.add_parser('apps', help='manage developer apps').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
         self._prefix_parser = kwargs.get('prefix_parser', PrefixParser(profile='default'))
         self._create_parser()

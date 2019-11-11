@@ -10,7 +10,7 @@ class ParserApiproducts:
 
     def __init__(self, parser, **kwargs):
         self._parser = parser
-        self._parser_apiproducts = self._parser.add_parser('products', aliases=['prods'], help='api products').add_subparsers()
+        self._parser_apiproducts = self._parser.add_parser('products', aliases=['prods'], help='manage api products').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
         self._file_parser = kwargs.get('file_parser', FileParser())
         self._prefix_parser = kwargs.get('prefix_parser', PrefixParser(profile='default'))
