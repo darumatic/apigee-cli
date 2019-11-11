@@ -39,7 +39,7 @@ def delete_undeployed_revisions(args):
         for rev in undeployed:
             args.revision_number = rev
             print('Deleting revison', rev)
-            # delete_api_proxy_revision(args)
+            delete_api_proxy_revision(args)
 
 def export_api_proxy(args):
     uri = '{}/v1/organizations/{}/apis/{}/revisions/{}?format=bundle'.format(
