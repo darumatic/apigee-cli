@@ -46,7 +46,7 @@ class ParserDeployments:
         get_api_proxy_deployment_details.add_argument('-r', '--revision-name', action='store_true', help='get revisions only')
         get_api_proxy_deployment_details.add_argument('-j', '--json', action='store_true', help='use json output')
         get_api_proxy_deployment_details.add_argument('--max-colwidth', help='max column width', type=int, default=40)
-        get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details(args)))
+        get_api_proxy_deployment_details.set_defaults(func=lambda args: print(deployments.get_api_proxy_deployment_details_formatted(args)))
 
     def _create_parser(self):
         self._build_get_api_proxy_deployment_details_argument()

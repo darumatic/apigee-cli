@@ -10,7 +10,7 @@ from pandas.io.json import json_normalize
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.util import authorization
 
-def get_api_proxy_deployment_details(args):
+def get_api_proxy_deployment_details_formatted(args):
     uri = '{}/v1/organizations/{}/apis/{}/deployments'.format(
         APIGEE_ADMIN_API_URL, args.org, args.name)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
@@ -24,3 +24,12 @@ def get_api_proxy_deployment_details(args):
         pd.set_option('display.max_colwidth', args.max_colwidth)
         return pd.DataFrame.from_dict(json_normalize(revisions), orient='columns')
     return resp.text
+
+def get_api_proxy_deployment_details(args):
+    uri = '{}/v1/organizations/{}/apis/{}/deployments'.format(
+        APIGEE_ADMIN_API_URL, args.org, args.name)
+    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
+    resp = requests.get(uri, headers=hdrs)
+    resp.raise_for_status()
+    # print(resp.status_code)
+    return resp

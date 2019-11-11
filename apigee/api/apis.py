@@ -5,6 +5,7 @@ import requests
 import json
 
 from apigee import APIGEE_ADMIN_API_URL
+from apigee.api.deployments import get_api_proxy_deployment_details
 from apigee.util import authorization
 
 def delete_api_proxy_revision(args):
@@ -15,6 +16,26 @@ def delete_api_proxy_revision(args):
     resp.raise_for_status()
     # print(resp.status_code)
     return resp
+
+def delete_undeployed_revisions(args):
+    revisions = list_api_proxy_revisions(args).json()
+    deployment_details = []
+    for i in get_api_proxy_deployment_details(args).json()['environment']:
+        deployment_details.append({
+            'name':i['name'],'revision':[
+                j['name'] for j in i['revision']
+            ]
+        })
+    deployed = []
+    for dep in deployment_details:
+        deployed.extend(dep['revision'])
+    deployed = list(set(deployed))
+    undeployed = [rev for rev in revisions if rev not in deployed]
+    print('Undeployed revisions:', undeployed)
+    for rev in undeployed:
+        args.revision_number = rev
+        print('Deleting revison', rev)
+        delete_api_proxy_revision(args)
 
 def export_api_proxy(args):
     uri = '{}/v1/organizations/{}/apis/{}/revisions/{}?format=bundle'.format(
@@ -46,3 +67,12 @@ def list_api_proxies(args):
     if args.prefix:
         return json.dumps([i for i in resp.json() if i.startswith(args.prefix)])
     return resp.text
+
+def list_api_proxy_revisions(args):
+    uri = '{}/v1/organizations/{}/apis/{}/revisions'.format(
+        APIGEE_ADMIN_API_URL, args.org, args.name)
+    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
+    resp = requests.get(uri, headers=hdrs)
+    resp.raise_for_status()
+    # print(resp.status_code)
+    return resp
