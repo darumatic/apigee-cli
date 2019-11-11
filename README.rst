@@ -198,6 +198,14 @@ To delete all undeployed revisions for an API Proxy, run::
 
     $ apigee apis clean -n [name]
 
+To preserve the ``N`` most recent revisions, run::
+
+    $ apigee apis clean -n [name] --save-last [N]
+
+To see which revisions will be deleted but not delete anything, run::
+
+    $ apigee apis clean -n [name] --dry-run
+
 ------------------------------
 Managing Key value maps (KVMs)
 ------------------------------
