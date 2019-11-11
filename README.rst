@@ -2,13 +2,13 @@
 apigee-cli
 ==========
 
-This package provides a command-line interface for the Apigee Management API with easy-to-use OAuth2 authentication. ::
+This package provides a command-line interface for the Apigee Management API with easy-to-use MFA authentication. ::
 
     usage: apigee [-h] [-V]
                   {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,prepend,prefix}
                   ...
 
-    Apigee Management API command-line interface with easy-to-use OAuth2
+    Apigee Management API command-line interface with easy-to-use MFA
     authentication
 
     positional arguments:
