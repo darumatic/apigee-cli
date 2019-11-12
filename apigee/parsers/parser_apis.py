@@ -103,6 +103,15 @@ class ParserApis:
         # export_api_proxy.set_defaults(func=lambda args: print(apis.export_api_proxy(args).text))
         export_api_proxy.set_defaults(func=apis.export_api_proxy)
 
+    def _build_pull_argument(self):
+        pull = self._parser_apis.add_parser('pull', parents=[self._parent_parser(), self._environment_parser()],
+            help='Pull API proxy revision as a ZIP formatted bundle along with KeyValueMap and TargetServer dependencies into the current working directory.')
+        pull.add_argument('-n', '--name', help='name', required=True)
+        pull.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
+        pull.add_argument('-f', '--force', action='store_true', help='force write files')
+        pull.add_argument('--work-tree', help='set the path to the working tree')
+        pull.set_defaults(func=apis.pull)
+
     def _build_get_api_proxy_argument(self):
         get_api_proxy = self._parser_apis.add_parser('get', aliases=['get-api-proxy'], parents=[self._parent_parser()],
             help='Gets an API proxy by name, including a list of existing revisions of the proxy.')
@@ -125,6 +134,7 @@ class ParserApis:
         self._build_delete_api_proxy_revision_argument()
         self._build_delete_undeployed_revisions_argument()
         self._build_export_api_proxy_argument()
+        self._build_pull_argument()
         self._build_get_api_proxy_argument()
         self._build_list_api_proxies_argument()
         self._build_list_api_proxy_revisions_argument()
