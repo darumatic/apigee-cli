@@ -38,11 +38,89 @@ def prefix_files(string_list, prefix, directory):
                             new_f.write(body.replace(string, prefix+string))
                         print('M  ', file)
 
-def get_keyvaluemap_dependencies(args):
-    pass
+def create_work_tree(work_tree):
+    if not os.path.exists(work_tree):
+        os.makedirs(work_tree)
 
-def get_targetserver_dependencies(args):
-    pass
+def check_files_exist(files):
+    for file in files:
+        if os.path.exists(file):
+            print('error:', file, 'already exists')
+            sys.exit(1)
+
+def write_zip_file(file, content):
+    with open(file, 'wb') as zfile:
+        print('Writing ZIP to', file)
+        zfile.write(content)
+
+def create_directory(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+def extract_zip_file(source, dest):
+    with zipfile.ZipFile(source, 'r') as zip_ref:
+        print('Extracting ZIP in', dest)
+        zip_ref.extractall(dest)
+
+def get_apiproxy_files(directory):
+    files = []
+    for filename in Path(directory+'/apiproxy/').resolve().rglob('*'):
+        files.append(str(filename))
+    return files
+
+def get_keyvaluemap_dependencies(files):
+    kvms = []
+    for f in files:
+        try:
+            root = et.parse(f).getroot()
+            if root.tag == 'KeyValueMapOperations':
+                kvms.append(root.attrib['mapIdentifier'])
+        except:
+            pass
+    return kvms
+
+def export_keyvaluemap_dependencies(args, kvms, kvms_dir, force=False):
+    if not os.path.exists(kvms_dir):
+        os.makedirs(kvms_dir)
+    for kvm in kvms:
+        kvm_file = kvms_dir+'/'+kvm
+        if not force:
+            if os.path.exists(kvm_file):
+                print('error:', kvm_file, 'already exists')
+                sys.exit(1)
+        print('Pulling', kvm, 'and writing to', kvm_file)
+        args.name = kvm
+        resp = get_keyvaluemap_in_an_environment(args).text
+        print(resp)
+        with open(kvm_file, 'w') as f:
+            f.write(resp)
+
+def get_targetserver_dependencies(files):
+    target_servers = []
+    for f in files:
+        try:
+            root = et.parse(f).getroot()
+            for child in root.iter('Server'):
+                target_servers.append(child.attrib['name'])
+        except:
+            pass
+    return target_servers
+
+def export_targetserver_dependencies(args, target_servers, target_servers_dir, force=False):
+    if not os.path.exists(target_servers_dir):
+        os.makedirs(target_servers_dir)
+    for ts in target_servers:
+        ts_file = target_servers_dir+'/'+ts
+        if not force:
+            if os.path.exists(ts_file):
+                print('error:', ts_file, 'already exists')
+                sys.exit(1)
+        print('Pulling', ts, 'and writing to', ts_file)
+        args.name = ts
+        resp = get_targetserver(args).text
+        print(resp)
+        with open(ts_file, 'w') as f:
+            f.write(resp)
 
 def pull(args):
 
@@ -58,97 +136,40 @@ def pull(args):
     cwd = os.getcwd()
 
     if args.work_tree:
-        if not os.path.exists(args.work_tree):
-            os.makedirs(args.work_tree)
+        create_work_tree(args.work_tree)
         os.chdir(args.work_tree)
 
     dname = args.name
     zname = dname + '.zip'
 
     if not args.force:
-        if os.path.exists(zname):
-            print('error:', zname, 'already exists')
-            sys.exit(1)
-        if os.path.exists(dname):
-            print('error:', dname, 'already exists')
-            sys.exit(1)
+        check_files_exist([zname, dname])
 
-    with open(zname, 'wb') as zfile:
-        print('Writing ZIP to', zname)
-        zfile.write(resp.content)
+    write_zip_file(zname, resp.content)
 
-    if not os.path.exists(dname):
-        os.makedirs(dname)
+    create_directory(dname)
 
-    with zipfile.ZipFile(zname, 'r') as zip_ref:
-        print('Extracting ZIP in', dname)
-        zip_ref.extractall(dname)
+    extract_zip_file(zname, dname)
 
     os.remove(zname)
 
-    files = []
-    for filename in Path(dname+'/apiproxy/').resolve().rglob('*'):
-        files.append(str(filename))
+    files = get_apiproxy_files(dname)
 
-    kvms = []
-    for f in files:
-        try:
-            root = et.parse(f).getroot()
-            if root.tag == 'KeyValueMapOperations':
-                kvms.append(root.attrib['mapIdentifier'])
-        except:
-            pass
+    kvms = get_keyvaluemap_dependencies(files)
 
     print('KeyValueMap dependencies found:', kvms)
     dependencies.extend(kvms)
 
-    kvms_dir = 'keyvaluemaps/'+args.environment
-    if not os.path.exists(kvms_dir):
-        os.makedirs(kvms_dir)
+    export_keyvaluemap_dependencies(args, kvms, 'keyvaluemaps/'+args.environment, args.force)
 
-    for kvm in kvms:
-        kvm_file = kvms_dir+'/'+kvm
-        if not args.force:
-            if os.path.exists(kvm_file):
-                print('error:', kvm_file, 'already exists')
-                sys.exit(1)
-        print('Pulling', kvm, 'and writing to', kvm_file)
-        args.name = kvm
-        resp = get_keyvaluemap_in_an_environment(args).text
-        print(resp)
-        with open(kvm_file, 'w') as f:
-            f.write(resp)
-
-    target_servers = []
-    for f in files:
-        try:
-            root = et.parse(f).getroot()
-            for child in root.iter('Server'):
-                target_servers.append(child.attrib['name'])
-        except:
-            pass
+    target_servers = get_targetserver_dependencies(files)
 
     print('TargetServer dependencies found:', target_servers)
     dependencies.extend(target_servers)
 
-    target_servers_dir = 'targetservers/'+args.environment
-    if not os.path.exists(target_servers_dir):
-        os.makedirs(target_servers_dir)
-
-    for ts in target_servers:
-        ts_file = target_servers_dir+'/'+ts
-        if not args.force:
-            if os.path.exists(ts_file):
-                print('error:', ts_file, 'already exists')
-                sys.exit(1)
-        print('Pulling', ts, 'and writing to', ts_file)
-        args.name = ts
-        resp = get_targetserver(args).text
-        print(resp)
-        with open(ts_file, 'w') as f:
-            f.write(resp)
+    export_targetserver_dependencies(args, target_servers, 'targetservers/'+args.environment, args.force)
 
     if args.prefix:
-        prefix_files(dependencies, args.prefix, os.getcwd())
+        prefix_files(list(set(dependencies)), args.prefix, os.getcwd())
 
     os.chdir(cwd)
