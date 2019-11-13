@@ -5,14 +5,14 @@ apigee-cli
 This package provides a command-line interface for the Apigee Management API with easy-to-use MFA authentication. ::
 
     usage: apigee [-h] [-V]
-                  {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,prepend,prefix}
+                  {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions}
                   ...
 
     Apigee Management API command-line interface with easy-to-use MFA
     authentication
 
     positional arguments:
-      {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,prepend,prefix}
+      {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions}
         test (get-access-token)
                             get access token
         configure           configure credentials
@@ -27,11 +27,6 @@ This package provides a command-line interface for the Apigee Management API wit
         mask (maskconfigs)  manage data masks
         perms (permissions)
                             manage permissions for a role
-        prepend (prefix)    prepend all matching strings with a prefix in all
-                            files in the specified directory (rudimentary stream
-                            editor). this is potentially VERY DANGEROUS. make sure
-                            you have version control such as Git to revert any
-                            changes in the target directory.
 
     optional arguments:
       -h, --help            show this help message and exit
