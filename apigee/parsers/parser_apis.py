@@ -2,6 +2,7 @@ import argparse
 
 from apigee.api import apis
 from apigee.api import deploy
+from apigee.api.pull.apis import pull
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.dir_parser import DirParser
@@ -104,13 +105,14 @@ class ParserApis:
         export_api_proxy.set_defaults(func=apis.export_api_proxy)
 
     def _build_pull_argument(self):
-        pull = self._parser_apis.add_parser('pull', parents=[self._parent_parser(), self._environment_parser()],
+        pull_api = self._parser_apis.add_parser('pull', parents=[self._parent_parser(), self._environment_parser()],
             help='Pull API proxy revision as a ZIP formatted bundle along with KeyValueMap and TargetServer dependencies into the current working directory.')
-        pull.add_argument('-n', '--name', help='name', required=True)
-        pull.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
-        pull.add_argument('-f', '--force', action='store_true', help='force write files')
-        pull.add_argument('--work-tree', help='set the path to the working tree')
-        pull.set_defaults(func=apis.pull)
+        pull_api.add_argument('-n', '--name', help='name', required=True)
+        pull_api.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
+        pull_api.add_argument('-f', '--force', action='store_true', help='force write files')
+        pull_api.add_argument('--work-tree', help='set the path to the working tree')
+        pull_api.add_argument('--prefix', help='prefix to prepend. WARNING: this is not foolproof. make sure to review the changes.')
+        pull_api.set_defaults(func=pull)
 
     def _build_get_api_proxy_argument(self):
         get_api_proxy = self._parser_apis.add_parser('get', aliases=['get-api-proxy'], parents=[self._parent_parser()],

@@ -62,7 +62,7 @@ def main():
 
     subparsers = ParserPermissions(subparsers, parent_parser=parent_parser).parser
 
-    subparsers = ParserPrepend(subparsers, dir_parser=dir_parser).parser
+    # subparsers = ParserPrepend(subparsers, dir_parser=dir_parser).parser
 
     args = parser.parse_args()
     try:
