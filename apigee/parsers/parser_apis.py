@@ -112,6 +112,7 @@ class ParserApis:
         pull_api.add_argument('-f', '--force', action='store_true', help='force write files')
         pull_api.add_argument('--work-tree', help='set the path to the working tree')
         pull_api.add_argument('--prefix', help='prefix to prepend. WARNING: this is not foolproof. make sure to review the changes.')
+        pull_api.add_argument('-b', '--basepath', help='set default basepath in apiproxy/proxies/default.xml')
         pull_api.set_defaults(func=pull)
 
     def _build_get_api_proxy_argument(self):

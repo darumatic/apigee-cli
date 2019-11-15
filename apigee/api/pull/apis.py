@@ -16,6 +16,9 @@ from apigee.api.keyvaluemaps import get_keyvaluemap_in_an_environment
 from apigee.api.targetservers import get_targetserver
 from apigee.util import authorization
 
+def resolve_file(file):
+    return str(Path(file).resolve())
+
 def prefix_files(string_list, prefix, directory):
     string_list = [i for i in string_list if not i.startswith(prefix)]
     files = []
@@ -45,12 +48,12 @@ def create_work_tree(work_tree):
 def check_files_exist(files):
     for file in files:
         if os.path.exists(file):
-            print('error:', file, 'already exists')
+            print('error:', resolve_file(file), 'already exists')
             sys.exit(1)
 
 def write_zip_file(file, content):
     with open(file, 'wb') as zfile:
-        print('Writing ZIP to', file)
+        print('Writing ZIP to', resolve_file(file))
         zfile.write(content)
 
 def create_directory(path):
@@ -59,7 +62,7 @@ def create_directory(path):
 
 def extract_zip_file(source, dest):
     with zipfile.ZipFile(source, 'r') as zip_ref:
-        print('Extracting ZIP in', dest)
+        print('Extracting ZIP in', resolve_file(dest))
         zip_ref.extractall(dest)
 
 def get_apiproxy_files(directory):
@@ -86,9 +89,9 @@ def export_keyvaluemap_dependencies(args, kvms, kvms_dir, force=False):
         kvm_file = kvms_dir+'/'+kvm
         if not force:
             if os.path.exists(kvm_file):
-                print('error:', kvm_file, 'already exists')
+                print('error:', resolve_file(kvm_file), 'already exists')
                 sys.exit(1)
-        print('Pulling', kvm, 'and writing to', kvm_file)
+        print('Pulling', kvm, 'and writing to', resolve_file(kvm_file))
         args.name = kvm
         resp = get_keyvaluemap_in_an_environment(args).text
         print(resp)
@@ -106,6 +109,32 @@ def get_targetserver_dependencies(files):
             pass
     return target_servers
 
+def get_apiproxy_basepath(directory):
+    default_file = resolve_file(directory+'/apiproxy/proxies/default.xml')
+    tree = et.parse(default_file)
+    try:
+        return tree.find('.//BasePath').text, default_file
+    except AttributeError as ae:
+        print('No BasePath found in', default_file)
+        sys.exit(1)
+
+def set_apiproxy_basepath(basepath, file):
+    default_file = resolve_file(file)
+    tree = et.parse(default_file)
+    current_basepath = None
+    try:
+        current_basepath = tree.find('.//BasePath').text
+    except AttributeError as ae:
+        print('No BasePath found in', default_file)
+        sys.exit(1)
+    with open(default_file, 'r+') as f:
+        body = f.read().replace(current_basepath, basepath)
+        f.seek(0)
+        f.write(body)
+        f.truncate()
+    print(current_basepath, '->', basepath)
+    print('M  ', default_file)
+
 def export_targetserver_dependencies(args, target_servers, target_servers_dir, force=False):
     if not os.path.exists(target_servers_dir):
         os.makedirs(target_servers_dir)
@@ -113,9 +142,9 @@ def export_targetserver_dependencies(args, target_servers, target_servers_dir, f
         ts_file = target_servers_dir+'/'+ts
         if not force:
             if os.path.exists(ts_file):
-                print('error:', ts_file, 'already exists')
+                print('error:', resolve_file(ts_file), 'already exists')
                 sys.exit(1)
-        print('Pulling', ts, 'and writing to', ts_file)
+        print('Pulling', ts, 'and writing to', resolve_file(ts_file))
         args.name = ts
         resp = get_targetserver(args).text
         print(resp)
@@ -139,21 +168,21 @@ def pull(args):
         create_work_tree(args.work_tree)
         os.chdir(args.work_tree)
 
-    dname = args.name
-    zname = dname + '.zip'
+    directory = args.name
+    zip_file = directory + '.zip'
 
     if not args.force:
-        check_files_exist([zname, dname])
+        check_files_exist([zip_file, directory])
 
-    write_zip_file(zname, resp.content)
+    write_zip_file(zip_file, resp.content)
 
-    create_directory(dname)
+    create_directory(directory)
 
-    extract_zip_file(zname, dname)
+    extract_zip_file(zip_file, directory)
 
-    os.remove(zname)
+    os.remove(zip_file)
 
-    files = get_apiproxy_files(dname)
+    files = get_apiproxy_files(directory)
 
     kvms = get_keyvaluemap_dependencies(files)
 
@@ -171,5 +200,9 @@ def pull(args):
 
     if args.prefix:
         prefix_files(list(set(dependencies)), args.prefix, os.getcwd())
+
+    if args.basepath:
+        basepath, file = get_apiproxy_basepath(directory)
+        set_apiproxy_basepath(args.basepath, file)
 
     os.chdir(cwd)
