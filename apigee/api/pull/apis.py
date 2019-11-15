@@ -109,6 +109,22 @@ def get_targetserver_dependencies(files):
             pass
     return target_servers
 
+def export_targetserver_dependencies(args, target_servers, target_servers_dir, force=False):
+    if not os.path.exists(target_servers_dir):
+        os.makedirs(target_servers_dir)
+    for ts in target_servers:
+        ts_file = target_servers_dir+'/'+ts
+        if not force:
+            if os.path.exists(ts_file):
+                print('error:', resolve_file(ts_file), 'already exists')
+                sys.exit(1)
+        print('Pulling', ts, 'and writing to', resolve_file(ts_file))
+        args.name = ts
+        resp = get_targetserver(args).text
+        print(resp)
+        with open(ts_file, 'w') as f:
+            f.write(resp)
+
 def get_apiproxy_basepath(directory):
     default_file = resolve_file(directory+'/apiproxy/proxies/default.xml')
     tree = et.parse(default_file)
@@ -134,22 +150,6 @@ def set_apiproxy_basepath(basepath, file):
         f.truncate()
     print(current_basepath, '->', basepath)
     print('M  ', default_file)
-
-def export_targetserver_dependencies(args, target_servers, target_servers_dir, force=False):
-    if not os.path.exists(target_servers_dir):
-        os.makedirs(target_servers_dir)
-    for ts in target_servers:
-        ts_file = target_servers_dir+'/'+ts
-        if not force:
-            if os.path.exists(ts_file):
-                print('error:', resolve_file(ts_file), 'already exists')
-                sys.exit(1)
-        print('Pulling', ts, 'and writing to', resolve_file(ts_file))
-        args.name = ts
-        resp = get_targetserver(args).text
-        print(resp)
-        with open(ts_file, 'w') as f:
-            f.write(resp)
 
 def pull(args):
 
