@@ -17,7 +17,10 @@ from apigee.api.targetservers import get_targetserver
 from apigee.util import authorization
 
 def resolve_file(file):
-    return str(Path(file).resolve())
+    try:
+        return str(Path(file).resolve())
+    except:
+        return file
 
 def prefix_files(string_list, prefix, directory):
     string_list = [i for i in string_list if not i.startswith(prefix)]
