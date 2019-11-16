@@ -13,12 +13,7 @@ from apigee import APIGEE_ADMIN_API_URL
 from apigee.api.keyvaluemaps import get_keyvaluemap_in_an_environment
 from apigee.api.targetservers import get_targetserver
 from apigee.util import authorization
-
-def resolve_file(file):
-    try:
-        return str(Path(file).resolve())
-    except:
-        return os.getcwd()+'/'+file
+from apigee.util import resolve_file
 
 def prefix_files(string_list, prefix, directory):
     string_list = [i for i in string_list if not i.startswith(prefix)]
@@ -127,7 +122,7 @@ def export_targetserver_dependencies(args, target_servers, target_servers_dir, f
             f.write(resp)
 
 def get_apiproxy_basepath(directory):
-    default_file = resolve_file(directory+'/apiproxy/proxies/default.xml')
+    default_file = directory+'/apiproxy/proxies/default.xml'
     tree = et.parse(default_file)
     try:
         return tree.find('.//BasePath').text, default_file

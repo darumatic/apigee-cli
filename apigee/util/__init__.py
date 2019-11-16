@@ -60,6 +60,9 @@ def isdir(d):
         return d
     raise argparse.ArgumentTypeError('not a directory')
 
+def resolve_file(file):
+    return os.getcwd()+'/'+file
+
 # https://stackoverflow.com/a/15813469
 module = sys.modules[__name__]
 name_func_tuples = inspect.getmembers(module, inspect.isfunction)
