@@ -9,6 +9,7 @@ from pandas.io.json import json_normalize
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.util import authorization
+from apigee.wrappers.deployments import get_api_proxy_deployment_details
 
 def get_api_proxy_deployment_details_formatted(args):
     uri = '{}/v1/organizations/{}/apis/{}/deployments'.format(
@@ -25,6 +26,7 @@ def get_api_proxy_deployment_details_formatted(args):
         return pd.DataFrame.from_dict(json_normalize(revisions), orient='columns')
     return resp.text
 
+@get_api_proxy_deployment_details
 def get_api_proxy_deployment_details(args):
     uri = '{}/v1/organizations/{}/apis/{}/deployments'.format(
         APIGEE_ADMIN_API_URL, args.org, args.name)
