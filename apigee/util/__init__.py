@@ -61,7 +61,7 @@ def isdir(d):
     raise argparse.ArgumentTypeError('not a directory')
 
 def resolve_file(file):
-    return os.getcwd()+'/'+file
+    return os.path.abspath(file)
 
 # https://stackoverflow.com/a/15813469
 module = sys.modules[__name__]
