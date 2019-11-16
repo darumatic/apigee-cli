@@ -15,190 +15,217 @@ from apigee.api.targetservers import get_targetserver
 from apigee.util import authorization
 from apigee.util import resolve_file
 
-def prefix_files(string_list, prefix, directory):
-    string_list = [i for i in string_list if not i.startswith(prefix)]
-    files = []
-    for filename in Path(directory).resolve().rglob('*'):
-        if not os.path.isdir(str(filename)) and '/.git/' not in str(filename):
-            files.append(str(filename))
-    print('Prefixing', string_list, 'with', prefix)
-    for string in string_list:
+class Pull:
+
+    def __init__(self, args):
+        self._args = args
+        if args.work_tree:
+            if not os.path.exists(args.work_tree):
+                os.makedirs(args.work_tree)
+            self._work_tree = str(Path(args.work_tree).resolve())
+        else:
+            self._work_tree = os.getcwd()
+
+    @property
+    def args(self):
+        return self._args
+
+    @args.setter
+    def args(self, value):
+        self._args = value
+
+    @property
+    def work_tree(self):
+        return self._work_tree
+
+    @work_tree.setter
+    def work_tree(self, value):
+        self._work_tree = value
+
+    def __call__(self):
+        self._pull()
+
+    def _prefix_files(self, string_list, prefix, directory):
+        string_list = [i for i in string_list if not i.startswith(prefix)]
+        files = []
+        for filename in Path(directory).resolve().rglob('*'):
+            if not os.path.isdir(str(filename)) and '/.git/' not in str(filename):
+                files.append(str(filename))
+        print('Prefixing', string_list, 'with', prefix)
+        for string in string_list:
+            for file in files:
+                with open(file, 'r') as f:
+                    body = None
+                    try:
+                        body = f.read()
+                    except Exception as e:
+                        print(type(e).__name__, e)
+                        print('Ignoring', file)
+                    if body:
+                        if string in body:
+                            with open(file, 'w') as new_f:
+                                new_f.write(body.replace(string, prefix+string))
+                            print('M  ', resolve_file(file))
+
+    def _create_work_tree(self, work_tree):
+        if not os.path.exists(work_tree):
+            os.makedirs(work_tree)
+
+    def _check_files_exist(self, files):
         for file in files:
-            with open(file, 'r') as f:
-                body = None
-                try:
-                    body = f.read()
-                except Exception as e:
-                    print(type(e).__name__, e)
-                    print('Ignoring', file)
-                if body:
-                    if string in body:
-                        with open(file, 'w') as new_f:
-                            new_f.write(body.replace(string, prefix+string))
-                        print('M  ', resolve_file(file))
+            if os.path.exists(file):
+                print('error:', resolve_file(file), 'already exists')
+                sys.exit(1)
 
-def create_work_tree(work_tree):
-    if not os.path.exists(work_tree):
-        os.makedirs(work_tree)
+    def _write_zip_file(self, file, content):
+        print('Writing ZIP to', resolve_file(file))
+        with open(file, 'wb') as zfile:
+            zfile.write(content)
 
-def check_files_exist(files):
-    for file in files:
-        if os.path.exists(file):
-            print('error:', resolve_file(file), 'already exists')
+    def _create_directory(self, path):
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+    def _extract_zip_file(self, source, dest):
+        print('Extracting ZIP in', resolve_file(dest))
+        with zipfile.ZipFile(source, 'r') as zip_ref:
+            zip_ref.extractall(dest)
+
+    def _get_apiproxy_files(self, directory):
+        files = []
+        for filename in Path(directory+'/apiproxy/').resolve().rglob('*'):
+            files.append(str(filename))
+        return files
+
+    def _get_keyvaluemap_dependencies(self, files):
+        kvms = []
+        for f in files:
+            try:
+                root = et.parse(f).getroot()
+                if root.tag == 'KeyValueMapOperations':
+                    kvms.append(root.attrib['mapIdentifier'])
+            except:
+                pass
+        return kvms
+
+    def _export_keyvaluemap_dependencies(self, args, kvms, kvms_dir, force=False):
+        if not os.path.exists(kvms_dir):
+            os.makedirs(kvms_dir)
+        for kvm in kvms:
+            kvm_file = kvms_dir+'/'+kvm
+            if not force:
+                if os.path.exists(kvm_file):
+                    print('error:', resolve_file(kvm_file), 'already exists')
+                    sys.exit(1)
+            print('Pulling', kvm, 'and writing to', resolve_file(kvm_file))
+            args.name = kvm
+            resp = get_keyvaluemap_in_an_environment(args).text
+            print(resp)
+            with open(kvm_file, 'w') as f:
+                f.write(resp)
+
+    def _get_targetserver_dependencies(self, files):
+        target_servers = []
+        for f in files:
+            try:
+                root = et.parse(f).getroot()
+                for child in root.iter('Server'):
+                    target_servers.append(child.attrib['name'])
+            except:
+                pass
+        return target_servers
+
+    def _export_targetserver_dependencies(self, args, target_servers, target_servers_dir, force=False):
+        if not os.path.exists(target_servers_dir):
+            os.makedirs(target_servers_dir)
+        for ts in target_servers:
+            ts_file = target_servers_dir+'/'+ts
+            if not force:
+                if os.path.exists(ts_file):
+                    print('error:', resolve_file(ts_file), 'already exists')
+                    sys.exit(1)
+            print('Pulling', ts, 'and writing to', resolve_file(ts_file))
+            args.name = ts
+            resp = get_targetserver(args).text
+            print(resp)
+            with open(ts_file, 'w') as f:
+                f.write(resp)
+
+    def _get_apiproxy_basepath(self, directory):
+        default_file = directory+'/apiproxy/proxies/default.xml'
+        tree = et.parse(default_file)
+        try:
+            return tree.find('.//BasePath').text, default_file
+        except AttributeError as ae:
+            print('No BasePath found in', default_file)
             sys.exit(1)
 
-def write_zip_file(file, content):
-    print('Writing ZIP to', resolve_file(file))
-    with open(file, 'wb') as zfile:
-        zfile.write(content)
-
-def create_directory(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-def extract_zip_file(source, dest):
-    print('Extracting ZIP in', resolve_file(dest))
-    with zipfile.ZipFile(source, 'r') as zip_ref:
-        zip_ref.extractall(dest)
-
-def get_apiproxy_files(directory):
-    files = []
-    for filename in Path(directory+'/apiproxy/').resolve().rglob('*'):
-        files.append(str(filename))
-    return files
-
-def get_keyvaluemap_dependencies(files):
-    kvms = []
-    for f in files:
+    def _set_apiproxy_basepath(self, basepath, file):
+        default_file = resolve_file(file)
+        tree = et.parse(default_file)
+        current_basepath = None
         try:
-            root = et.parse(f).getroot()
-            if root.tag == 'KeyValueMapOperations':
-                kvms.append(root.attrib['mapIdentifier'])
-        except:
-            pass
-    return kvms
+            current_basepath = tree.find('.//BasePath').text
+        except AttributeError as ae:
+            print('No BasePath found in', default_file)
+            sys.exit(1)
+        with open(default_file, 'r+') as f:
+            body = f.read().replace(current_basepath, basepath)
+            f.seek(0)
+            f.write(body)
+            f.truncate()
+        print(current_basepath, '->', basepath)
+        print('M  ', default_file)
 
-def export_keyvaluemap_dependencies(args, kvms, kvms_dir, force=False):
-    if not os.path.exists(kvms_dir):
-        os.makedirs(kvms_dir)
-    for kvm in kvms:
-        kvm_file = kvms_dir+'/'+kvm
-        if not force:
-            if os.path.exists(kvm_file):
-                print('error:', resolve_file(kvm_file), 'already exists')
-                sys.exit(1)
-        print('Pulling', kvm, 'and writing to', resolve_file(kvm_file))
-        args.name = kvm
-        resp = get_keyvaluemap_in_an_environment(args).text
-        print(resp)
-        with open(kvm_file, 'w') as f:
-            f.write(resp)
+    def _pull(self):
 
-def get_targetserver_dependencies(files):
-    target_servers = []
-    for f in files:
-        try:
-            root = et.parse(f).getroot()
-            for child in root.iter('Server'):
-                target_servers.append(child.attrib['name'])
-        except:
-            pass
-    return target_servers
+        args = self._args
 
-def export_targetserver_dependencies(args, target_servers, target_servers_dir, force=False):
-    if not os.path.exists(target_servers_dir):
-        os.makedirs(target_servers_dir)
-    for ts in target_servers:
-        ts_file = target_servers_dir+'/'+ts
-        if not force:
-            if os.path.exists(ts_file):
-                print('error:', resolve_file(ts_file), 'already exists')
-                sys.exit(1)
-        print('Pulling', ts, 'and writing to', resolve_file(ts_file))
-        args.name = ts
-        resp = get_targetserver(args).text
-        print(resp)
-        with open(ts_file, 'w') as f:
-            f.write(resp)
+        dependencies = []
+        dependencies.append(args.name)
 
-def get_apiproxy_basepath(directory):
-    default_file = directory+'/apiproxy/proxies/default.xml'
-    tree = et.parse(default_file)
-    try:
-        return tree.find('.//BasePath').text, default_file
-    except AttributeError as ae:
-        print('No BasePath found in', default_file)
-        sys.exit(1)
+        uri = '{}/v1/organizations/{}/apis/{}/revisions/{}?format=bundle'.format(
+            APIGEE_ADMIN_API_URL, args.org, args.name, args.revision_number)
+        hdrs = authorization.set_header({'Accept': 'application/json'}, args)
+        resp = requests.get(uri, headers=hdrs)
+        resp.raise_for_status()
 
-def set_apiproxy_basepath(basepath, file):
-    default_file = resolve_file(file)
-    tree = et.parse(default_file)
-    current_basepath = None
-    try:
-        current_basepath = tree.find('.//BasePath').text
-    except AttributeError as ae:
-        print('No BasePath found in', default_file)
-        sys.exit(1)
-    with open(default_file, 'r+') as f:
-        body = f.read().replace(current_basepath, basepath)
-        f.seek(0)
-        f.write(body)
-        f.truncate()
-    print(current_basepath, '->', basepath)
-    print('M  ', default_file)
+        if self._work_tree:
+            self._create_work_tree(self._work_tree)
 
-def pull(args):
+        directory = self._work_tree+'/'+args.name
+        zip_file = directory + '.zip'
 
-    dependencies = []
-    dependencies.append(args.name)
+        if not args.force:
+            self._check_files_exist([zip_file, directory])
 
-    uri = '{}/v1/organizations/{}/apis/{}/revisions/{}?format=bundle'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.name, args.revision_number)
-    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
-    resp = requests.get(uri, headers=hdrs)
-    resp.raise_for_status()
+        self._write_zip_file(zip_file, resp.content)
 
-    cwd = os.getcwd()
+        self._create_directory(directory)
 
-    if args.work_tree:
-        create_work_tree(args.work_tree)
-        os.chdir(args.work_tree)
+        self._extract_zip_file(zip_file, directory)
 
-    directory = args.name
-    zip_file = directory + '.zip'
+        os.remove(zip_file)
 
-    if not args.force:
-        check_files_exist([zip_file, directory])
+        files = self._get_apiproxy_files(directory)
 
-    write_zip_file(zip_file, resp.content)
+        kvms = self._get_keyvaluemap_dependencies(files)
 
-    create_directory(directory)
+        print('KeyValueMap dependencies found:', kvms)
+        dependencies.extend(kvms)
 
-    extract_zip_file(zip_file, directory)
+        self._export_keyvaluemap_dependencies(args, kvms, self._work_tree+'/keyvaluemaps/'+args.environment, args.force)
 
-    os.remove(zip_file)
+        target_servers = self._get_targetserver_dependencies(files)
 
-    files = get_apiproxy_files(directory)
+        print('TargetServer dependencies found:', target_servers)
+        dependencies.extend(target_servers)
 
-    kvms = get_keyvaluemap_dependencies(files)
+        self._export_targetserver_dependencies(args, target_servers, self._work_tree+'/targetservers/'+args.environment, args.force)
 
-    print('KeyValueMap dependencies found:', kvms)
-    dependencies.extend(kvms)
+        if args.prefix:
+            self._prefix_files(list(set(dependencies)), args.prefix, self._work_tree)
 
-    export_keyvaluemap_dependencies(args, kvms, 'keyvaluemaps/'+args.environment, args.force)
-
-    target_servers = get_targetserver_dependencies(files)
-
-    print('TargetServer dependencies found:', target_servers)
-    dependencies.extend(target_servers)
-
-    export_targetserver_dependencies(args, target_servers, 'targetservers/'+args.environment, args.force)
-
-    if args.prefix:
-        prefix_files(list(set(dependencies)), args.prefix, os.getcwd())
-
-    if args.basepath:
-        basepath, file = get_apiproxy_basepath(directory)
-        set_apiproxy_basepath(args.basepath, file)
-
-    os.chdir(cwd)
+        if args.basepath:
+            basepath, file = self._get_apiproxy_basepath(directory)
+            self._set_apiproxy_basepath(args.basepath, file)
