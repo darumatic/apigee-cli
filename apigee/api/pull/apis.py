@@ -10,8 +10,6 @@ import zipfile
 from pathlib import Path
 
 from apigee import APIGEE_ADMIN_API_URL
-from apigee.api.apis import delete_api_proxy_revision
-from apigee.api.deployments import get_api_proxy_deployment_details
 from apigee.api.keyvaluemaps import get_keyvaluemap_in_an_environment
 from apigee.api.targetservers import get_targetserver
 from apigee.util import authorization
@@ -42,7 +40,7 @@ def prefix_files(string_list, prefix, directory):
                     if string in body:
                         with open(file, 'w') as new_f:
                             new_f.write(body.replace(string, prefix+string))
-                        print('M  ', file)
+                        print('M  ', resolve_file(file))
 
 def create_work_tree(work_tree):
     if not os.path.exists(work_tree):
@@ -55,8 +53,8 @@ def check_files_exist(files):
             sys.exit(1)
 
 def write_zip_file(file, content):
+    print('Writing ZIP to', resolve_file(file))
     with open(file, 'wb') as zfile:
-        print('Writing ZIP to', resolve_file(file))
         zfile.write(content)
 
 def create_directory(path):
@@ -64,8 +62,8 @@ def create_directory(path):
         os.makedirs(path)
 
 def extract_zip_file(source, dest):
+    print('Extracting ZIP in', resolve_file(dest))
     with zipfile.ZipFile(source, 'r') as zip_ref:
-        print('Extracting ZIP in', resolve_file(dest))
         zip_ref.extractall(dest)
 
 def get_apiproxy_files(directory):
