@@ -18,7 +18,7 @@ def resolve_file(file):
     try:
         return str(Path(file).resolve())
     except:
-        return file
+        return os.getcwd()+'/'+file
 
 def prefix_files(string_list, prefix, directory):
     string_list = [i for i in string_list if not i.startswith(prefix)]
