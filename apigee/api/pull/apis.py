@@ -30,6 +30,7 @@ class Pull:
         self._prefix = args.prefix
         self._keyvaluemaps_dir = self._work_tree+'/keyvaluemaps/'+args.environment
         self._targetservers_dir = self._work_tree+'/targetservers/'+args.environment
+        self._apiproxy_dir = self._work_tree+'/'+args.name
 
     @property
     def args(self):
@@ -135,8 +136,8 @@ class Pull:
                 f.write(resp)
 
     def _prefix_dependencies_in_work_tree(self):
-        dependencies = [i for i in self._dependencies if not i.startswith(prefix)]
         prefix = self._prefix
+        dependencies = [i for i in self._dependencies if not i.startswith(prefix)]
         directory = self._work_tree
         files = []
         for filename in Path(directory).resolve().rglob('*'):
@@ -152,11 +153,10 @@ class Pull:
                     except Exception as e:
                         print(type(e).__name__, e)
                         print('Ignoring', file)
-                    if body:
-                        if dep in body:
-                            with open(file, 'w') as new_f:
-                                new_f.write(body.replace(dep, prefix+dep))
-                            print('M  ', resolve_file(file))
+                    if dep in body:
+                        with open(file, 'w') as new_f:
+                            new_f.write(body.replace(dep, prefix+dep))
+                        print('M  ', resolve_file(file))
 
     def _get_apiproxy_basepath(self, directory):
         default_file = directory+'/apiproxy/proxies/default.xml'
@@ -198,7 +198,7 @@ class Pull:
         if self._work_tree:
             self._create_work_tree(self._work_tree)
 
-        directory = self._work_tree+'/'+args.name
+        directory = self._apiproxy_dir
         zip_file = directory + '.zip'
 
         if not args.force:
