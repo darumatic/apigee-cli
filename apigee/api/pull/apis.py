@@ -25,6 +25,11 @@ class Pull:
             self._work_tree = str(Path(args.work_tree).resolve())
         else:
             self._work_tree = os.getcwd()
+        self._dependencies = []
+        self._dependencies.append(args.name)
+        self._prefix = args.prefix
+        self._keyvaluemaps_dir = self._work_tree+'/keyvaluemaps/'+args.environment
+        self._targetservers_dir = self._work_tree+'/targetservers/'+args.environment
 
     @property
     def args(self):
@@ -129,14 +134,16 @@ class Pull:
             with open(ts_file, 'w') as f:
                 f.write(resp)
 
-    def _prefix_files(self, string_list, prefix, directory):
-        string_list = [i for i in string_list if not i.startswith(prefix)]
+    def _prefix_dependencies_in_work_tree(self):
+        dependencies = [i for i in self._dependencies if not i.startswith(prefix)]
+        prefix = self._prefix
+        directory = self._work_tree
         files = []
         for filename in Path(directory).resolve().rglob('*'):
             if not os.path.isdir(str(filename)) and '/.git/' not in str(filename):
                 files.append(str(filename))
-        print('Prefixing', string_list, 'with', prefix)
-        for string in string_list:
+        print('Prefixing', dependencies, 'with', prefix)
+        for dep in dependencies:
             for file in files:
                 with open(file, 'r') as f:
                     body = None
@@ -146,9 +153,9 @@ class Pull:
                         print(type(e).__name__, e)
                         print('Ignoring', file)
                     if body:
-                        if string in body:
+                        if dep in body:
                             with open(file, 'w') as new_f:
-                                new_f.write(body.replace(string, prefix+string))
+                                new_f.write(body.replace(dep, prefix+dep))
                             print('M  ', resolve_file(file))
 
     def _get_apiproxy_basepath(self, directory):
@@ -180,9 +187,7 @@ class Pull:
     def _pull(self):
 
         args = self._args
-
         dependencies = []
-        dependencies.append(args.name)
 
         uri = '{}/v1/organizations/{}/apis/{}/revisions/{}?format=bundle'.format(
             APIGEE_ADMIN_API_URL, args.org, args.name, args.revision_number)
@@ -214,17 +219,20 @@ class Pull:
         print('KeyValueMap dependencies found:', kvms)
         dependencies.extend(kvms)
 
-        self._export_keyvaluemap_dependencies(args, kvms, self._work_tree+'/keyvaluemaps/'+args.environment, args.force)
+        self._export_keyvaluemap_dependencies(args, kvms, self._keyvaluemaps_dir, args.force)
 
         target_servers = self._get_targetserver_dependencies(files)
 
         print('TargetServer dependencies found:', target_servers)
         dependencies.extend(target_servers)
 
-        self._export_targetserver_dependencies(args, target_servers, self._work_tree+'/targetservers/'+args.environment, args.force)
+        self._export_targetserver_dependencies(args, target_servers, self._targetservers_dir, args.force)
+
+        self._dependencies.extend(dependencies)
+        self._dependencies = list(set(self._dependencies))
 
         if args.prefix:
-            self._prefix_files(list(set(dependencies)), args.prefix, self._work_tree)
+            self._prefix_dependencies_in_work_tree()
 
         if args.basepath:
             basepath, file = self._get_apiproxy_basepath(directory)
