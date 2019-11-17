@@ -45,28 +45,6 @@ class Pull:
     def __call__(self):
         self._pull()
 
-    def _prefix_files(self, string_list, prefix, directory):
-        string_list = [i for i in string_list if not i.startswith(prefix)]
-        files = []
-        for filename in Path(directory).resolve().rglob('*'):
-            if not os.path.isdir(str(filename)) and '/.git/' not in str(filename):
-                files.append(str(filename))
-        print('Prefixing', string_list, 'with', prefix)
-        for string in string_list:
-            for file in files:
-                with open(file, 'r') as f:
-                    body = None
-                    try:
-                        body = f.read()
-                    except Exception as e:
-                        print(type(e).__name__, e)
-                        print('Ignoring', file)
-                    if body:
-                        if string in body:
-                            with open(file, 'w') as new_f:
-                                new_f.write(body.replace(string, prefix+string))
-                            print('M  ', resolve_file(file))
-
     def _create_work_tree(self, work_tree):
         if not os.path.exists(work_tree):
             os.makedirs(work_tree)
@@ -176,6 +154,28 @@ class Pull:
             f.truncate()
         print(current_basepath, '->', basepath)
         print('M  ', default_file)
+
+    def _prefix_files(self, string_list, prefix, directory):
+        string_list = [i for i in string_list if not i.startswith(prefix)]
+        files = []
+        for filename in Path(directory).resolve().rglob('*'):
+            if not os.path.isdir(str(filename)) and '/.git/' not in str(filename):
+                files.append(str(filename))
+        print('Prefixing', string_list, 'with', prefix)
+        for string in string_list:
+            for file in files:
+                with open(file, 'r') as f:
+                    body = None
+                    try:
+                        body = f.read()
+                    except Exception as e:
+                        print(type(e).__name__, e)
+                        print('Ignoring', file)
+                    if body:
+                        if string in body:
+                            with open(file, 'w') as new_f:
+                                new_f.write(body.replace(string, prefix+string))
+                            print('M  ', resolve_file(file))
 
     def _pull(self):
 
