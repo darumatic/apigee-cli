@@ -42,25 +42,16 @@ def main():
     parser_test = subparsers.add_parser('test', aliases=['get-access-token'], help='get access token', parents=[parent_parser()])
     parser_test.set_defaults(func=test)
 
-    subparsers = ParserConfigure(subparsers).parser
-
-    subparsers = ParserApis(subparsers, parent_parser=parent_parser, dir_parser=dir_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
-
-    subparsers = ParserDeployments(subparsers, parent_parser=parent_parser).parser
-
-    subparsers = ParserKeyvaluemaps(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
-
-    subparsers = ParserDevelopers(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
-
-    subparsers = ParserApps(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
-
-    subparsers = ParserApiproducts(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
-
-    subparsers = ParserTargetservers(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
-
-    subparsers = ParserMaskconfigs(subparsers, parent_parser=parent_parser).parser
-
-    subparsers = ParserPermissions(subparsers, parent_parser=parent_parser).parser
+    ParserConfigure(subparsers).parser
+    ParserApis(subparsers, parent_parser=parent_parser, dir_parser=dir_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
+    ParserDeployments(subparsers, parent_parser=parent_parser).parser
+    ParserKeyvaluemaps(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
+    ParserDevelopers(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
+    ParserApps(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
+    ParserApiproducts(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
+    ParserTargetservers(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
+    ParserMaskconfigs(subparsers, parent_parser=parent_parser).parser
+    ParserPermissions(subparsers, parent_parser=parent_parser).parser
 
     # subparsers = ParserPrepend(subparsers, dir_parser=dir_parser).parser
 
