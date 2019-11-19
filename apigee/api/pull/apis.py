@@ -141,7 +141,7 @@ class Pull:
         directory = self._work_tree
         files = []
         for filename in Path(directory).resolve().rglob('*'):
-            if not os.path.isdir(str(filename)) and '/.git/' not in str(filename):
+            if not os.path.isdir(str(filename)) and '.git' not in str(filename):
                 files.append(str(filename))
         print('Prefixing', dependencies, 'with', prefix)
         for dep in dependencies:
