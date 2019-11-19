@@ -37,7 +37,7 @@ def team_permissions(args):
       }, {
         "organization" : args.org,
         "path" : "/environments/*/targetservers",
-        "permissions" : [ "get" ]
+        "permissions" : [ "put", "get" ]
       }, {
         "organization" : args.org,
         "path" : "/environments/*/targetservers/"+args.team+"*",
@@ -85,7 +85,7 @@ def team_permissions(args):
       }, {
         "organization" : args.org,
         "path" : "/environments/*/keyvaluemaps",
-        "permissions" : [ "get" ]
+        "permissions" : [ "put", "get" ]
       }, {
         "organization" : args.org,
         "path" : "/environments/*/caches/"+args.team+"*",
