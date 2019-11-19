@@ -55,11 +55,13 @@ class Pull:
         if not os.path.exists(work_tree):
             os.makedirs(work_tree)
 
+    def _check_file_exists(self, file):
+        if os.path.exists(file):
+            sys.exit('error: ' + resolve_file(file) + ' already exists')
+
     def _check_files_exist(self, files):
         for file in files:
-            if os.path.exists(file):
-                print('error:', resolve_file(file), 'already exists')
-                sys.exit(1)
+            self._check_file_exists(file)
 
     def _write_zip_file(self, file, content):
         print('Writing ZIP to', resolve_file(file))
@@ -98,9 +100,7 @@ class Pull:
         for kvm in kvms:
             kvm_file = kvms_dir+'/'+kvm
             if not force:
-                if os.path.exists(kvm_file):
-                    print('error:', resolve_file(kvm_file), 'already exists')
-                    sys.exit(1)
+                self._check_file_exists(kvm_file)
             print('Pulling', kvm, 'and writing to', resolve_file(kvm_file))
             args.name = kvm
             resp = get_keyvaluemap_in_an_environment(args).text
@@ -125,9 +125,7 @@ class Pull:
         for ts in target_servers:
             ts_file = target_servers_dir+'/'+ts
             if not force:
-                if os.path.exists(ts_file):
-                    print('error:', resolve_file(ts_file), 'already exists')
-                    sys.exit(1)
+                self._check_file_exists(ts_file)
             print('Pulling', ts, 'and writing to', resolve_file(ts_file))
             args.name = ts
             resp = get_targetserver(args).text
@@ -164,8 +162,7 @@ class Pull:
         try:
             return tree.find('.//BasePath').text, default_file
         except AttributeError as ae:
-            print('No BasePath found in', default_file)
-            sys.exit(1)
+            sys.exit('No BasePath found in ' + default_file)
 
     def _set_apiproxy_basepath(self, basepath, file):
         default_file = resolve_file(file)
@@ -174,8 +171,7 @@ class Pull:
         try:
             current_basepath = tree.find('.//BasePath').text
         except AttributeError as ae:
-            print('No BasePath found in', default_file)
-            sys.exit(1)
+            sys.exit('No BasePath found in ' + default_file)
         with open(default_file, 'r+') as f:
             body = f.read().replace(current_basepath, basepath)
             f.seek(0)

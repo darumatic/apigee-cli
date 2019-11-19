@@ -35,8 +35,7 @@ def exception_handler(func):
         except Exception as e:
             s = 'An exception of type {0} occurred. Arguments:\n{1}'
             # print(s.format(type(e).__name__, e.args))
-            print(s.format(type(e).__name__, e))
-            sys.exit(1)
+            sys.exit(s.format(type(e).__name__, e))
         except KeyboardInterrupt as ki:
             s = 'An exception of type {0} occurred. Arguments:\n{1}'
             # print('\n', s.format(type(ki).__name__, ki))
