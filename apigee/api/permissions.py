@@ -98,6 +98,10 @@ def team_permissions(args):
         "organization" : args.org,
         "path" : "/environments/*/applications/"+args.team+"*/revisions/*/debugsessions",
         "permissions" : [ "put", "get", "delete" ]
+      }, {
+        "organization" : args.org,
+        "path": "/environments/*/applications/"+args.team+"*/revisions/*/deployments",
+        "permissions": [ "put", "get", "delete" ]
       } ]
     }
     resp = requests.post(uri, headers=hdrs, json=body)
