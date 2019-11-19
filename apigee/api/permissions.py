@@ -40,6 +40,10 @@ def team_permissions(args):
         "permissions" : [ "get" ]
       }, {
         "organization" : args.org,
+        "path" : "/environments/*/targetservers/"+args.team+"*",
+        "permissions" : [ "put", "get", "delete" ]
+      }, {
+        "organization" : args.org,
         "path" : "/developers",
         "permissions" : [ "get" ]
       }, {
