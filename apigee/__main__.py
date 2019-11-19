@@ -24,7 +24,6 @@ from apigee.parsers.parser_apiproducts import ParserApiproducts
 from apigee.parsers.parser_targetservers import ParserTargetservers
 from apigee.parsers.parser_maskconfigs import ParserMaskconfigs
 from apigee.parsers.parser_permissions import ParserPermissions
-from apigee.parsers.parser_prepend import ParserPrepend
 
 @exception_handler
 def main():
@@ -52,8 +51,6 @@ def main():
     ParserTargetservers(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
     ParserMaskconfigs(subparsers, parent_parser=parent_parser).parser
     ParserPermissions(subparsers, parent_parser=parent_parser).parser
-
-    # subparsers = ParserPrepend(subparsers, dir_parser=dir_parser).parser
 
     args = parser.parse_args()
     try:
