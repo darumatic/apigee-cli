@@ -1,6 +1,6 @@
 import argparse
 
-from apigee.util import config
+from apigee.util import configure
 
 class ParserConfigure:
 
@@ -22,7 +22,7 @@ class ParserConfigure:
     def _build_parser_configure_argument(self):
         parser_configure = self._parser.add_parser('configure', help='configure credentials')
         parser_configure.add_argument('-P', '--profile', help='name of profile to create', default='default')
-        parser_configure.set_defaults(func=config.main)
+        parser_configure.set_defaults(func=configure.main)
 
     def _create_parser(self):
         self._build_parser_configure_argument()

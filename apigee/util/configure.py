@@ -69,4 +69,4 @@ def main(fargs, *args, **kwargs):
         config.write(configfile)
 
 if __name__ == '__main__':
-    main()
+    pass
