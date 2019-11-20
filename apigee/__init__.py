@@ -7,8 +7,8 @@ import json
 from os import getenv
 from pathlib import Path
 
-APIGEE_CLI_DIR = str(Path.home())+'/.apigee'
-APIGEE_CLI_CREDS = APIGEE_CLI_DIR+'/credentials'
+APIGEE_CLI_DIRECTORY = str(Path.home())+'/.apigee'
+APIGEE_CLI_CREDENTIALS_FILE = APIGEE_CLI_DIRECTORY+'/credentials'
 APIGEE_CLI_PREFIX = getenv('APIGEE_CLI_PREFIX')
 APIGEE_USERNAME = getenv('APIGEE_USERNAME')
 APIGEE_PASSWORD = getenv('APIGEE_PASSWORD')

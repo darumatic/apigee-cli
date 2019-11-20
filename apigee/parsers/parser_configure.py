@@ -22,7 +22,7 @@ class ParserConfigure:
     def _build_parser_configure_argument(self):
         parser_configure = self._parser.add_parser('configure', help='configure credentials')
         parser_configure.add_argument('-P', '--profile', help='name of profile to create', default='default')
-        parser_configure.set_defaults(func=configure.main)
+        parser_configure.set_defaults(func=lambda args: configure.Configure(args).__call__())
 
     def _create_parser(self):
         self._build_parser_configure_argument()

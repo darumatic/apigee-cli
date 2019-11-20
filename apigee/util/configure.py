@@ -4,69 +4,77 @@ import os
 import configparser
 from pathlib import Path
 
-from apigee import APIGEE_CLI_DIR
-from apigee import APIGEE_CLI_CREDS
+from apigee import APIGEE_CLI_DIRECTORY
+from apigee import APIGEE_CLI_CREDENTIALS_FILE
 
-def main(fargs, *args, **kwargs):
+class Configure:
 
-    profile_name = fargs.profile
+    def __init__(self, args):
+        self._args = args
+        self._profile = args.profile
+        self._config = configparser.ConfigParser()
+        self._config.read(APIGEE_CLI_CREDENTIALS_FILE)
+        self._username = None
+        self._password = None
+        self._mfa_secret = None
+        self._org = None
+        self._prefix = None
 
-    username = 'None'
-    password = 'None'
-    mfa_secret = 'None'
-    org = 'None'
-    prefix = 'None'
+    @property
+    def args(self):
+        return self._args
 
-    existing_config = configparser.ConfigParser()
-    existing_config.read(APIGEE_CLI_CREDS)
+    @args.setter
+    def args(self, value):
+        self._args = value
 
-    if os.path.isfile(APIGEE_CLI_CREDS):
-        existing_config = configparser.ConfigParser()
-        existing_config.read(APIGEE_CLI_CREDS)
-        if profile_name in existing_config:
-            try:
-                username = existing_config[profile_name]['username']
-            except:
-                username = None
-            try:
-                password = '*'*16 if existing_config[profile_name]['password'] else None
-            except:
-                password = None
-            try:
-                mfa_secret = '*'*16 if existing_config[profile_name]['mfa_secret'] else None
-            except:
-                mfa_secret = None
-            try:
-                org = existing_config[profile_name]['org']
-            except:
-                org = None
-            try:
-                prefix = existing_config[profile_name]['prefix']
-            except:
-                prefix = None
+    @property
+    def profile(self):
+        return self._profile
 
-    username = input('Apigee username (email) [{}]: '.format(username))
-    password = input('Apigee password [{}]: '.format(password))
-    mfa_secret = input('Apigee MFA key (recommended) [{}]: '.format(mfa_secret))
-    org = input('Default Apigee organization (recommended) [{}]: '.format(org))
-    prefix = input('Default team/resource prefix (recommended) [{}]: '.format(prefix))
+    @profile.setter
+    def profile(self, value):
+        self._profile = value
 
-    creds = {'username': username,
-             'password': password,
-             'mfa_secret': mfa_secret,
-             'org': org,
-             'prefix': prefix}
+    def _get_config(self, section, key):
+        try:
+            return self._config[section][key]
+        except:
+            pass
 
-    # config = configparser.ConfigParser()
-    # config[profile_name] = {k: v for k, v in creds.items() if v}
-    config = existing_config
-    config[profile_name] = {k: v for k, v in creds.items() if v}
+    def __call__(self):
+        self._main()
 
-    if not os.path.exists(APIGEE_CLI_DIR):
-        os.makedirs(APIGEE_CLI_DIR)
+    def _main(self):
 
-    with open(APIGEE_CLI_CREDS, 'w') as configfile:
-        config.write(configfile)
+        args = self._args
+        profile_name = self._profile
+        config = self._config
 
-if __name__ == '__main__':
-    pass
+        if os.path.isfile(APIGEE_CLI_CREDENTIALS_FILE):
+            if profile_name in config:
+                self._username = self._get_config(profile_name, 'username')
+                self._password = self._get_config(profile_name, 'password')
+                self._mfa_secret = self._get_config(profile_name, 'mfa_secret')
+                self._org = self._get_config(profile_name, 'org')
+                self._prefix = self._get_config(profile_name, 'prefix')
+
+        self._username = input('Apigee username (email) [{}]: '.format(self._username))
+        self._password = input('Apigee password [{}]: '.format(self._password))
+        self._mfa_secret = input('Apigee MFA key (recommended) [{}]: '.format(self._mfa_secret))
+        self._org = input('Default Apigee organization (recommended) [{}]: '.format(self._org))
+        self._prefix = input('Default team/resource prefix (recommended) [{}]: '.format(self._prefix))
+
+        creds = {'username': self._username,
+                 'password': self._password,
+                 'mfa_secret': self._mfa_secret,
+                 'org': self._org,
+                 'prefix': self._prefix}
+
+        config[profile_name] = {k: v for k, v in creds.items() if v}
+
+        if not os.path.exists(APIGEE_CLI_DIRECTORY):
+            os.makedirs(APIGEE_CLI_DIRECTORY)
+
+        with open(APIGEE_CLI_CREDENTIALS_FILE, 'w') as configfile:
+            config.write(configfile)

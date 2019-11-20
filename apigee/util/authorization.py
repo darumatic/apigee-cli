@@ -1,7 +1,7 @@
 import configparser
 import base64
 
-from apigee import APIGEE_CLI_CREDS
+from apigee import APIGEE_CLI_CREDENTIALS_FILE
 from apigee.util import mfa_with_pyotp
 
 def set_header(hdrs, args):
@@ -16,7 +16,7 @@ def set_header(hdrs, args):
 def get_credential(section, key):
     try:
         config = configparser.ConfigParser()
-        config.read(APIGEE_CLI_CREDS)
+        config.read(APIGEE_CLI_CREDENTIALS_FILE)
         if section in config:
             return config[section][key]
     except:
