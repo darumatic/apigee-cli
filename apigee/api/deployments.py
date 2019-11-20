@@ -22,6 +22,8 @@ class Deployments(IDeployments):
             APIGEE_ADMIN_API_URL, args.org, args.name)
         hdrs = authorization.set_header({'Accept': 'application/json'}, args)
         resp = requests.get(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
         if self._isformat:
             if args.revision_name:
                 revisions = []
@@ -36,6 +38,4 @@ class Deployments(IDeployments):
                 pd.set_option('display.max_colwidth', args.max_colwidth)
                 return pd.DataFrame.from_dict(json_normalize(revisions), orient='columns')
             return resp.text
-        resp.raise_for_status()
-        # print(resp.status_code)
         return resp
