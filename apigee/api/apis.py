@@ -5,7 +5,7 @@ import requests
 import json
 
 from apigee import APIGEE_ADMIN_API_URL
-from apigee.api.deployments import get_api_proxy_deployment_details
+from apigee.api.deployments import Deployments
 from apigee.util import authorization
 
 def delete_api_proxy_revision(args):
@@ -20,7 +20,7 @@ def delete_api_proxy_revision(args):
 def delete_undeployed_revisions(args):
     revisions = list_api_proxy_revisions(args).json()
     deployment_details = []
-    for i in get_api_proxy_deployment_details(args).json()['environment']:
+    for i in Deployments(args).get_api_proxy_deployment_details().json()['environment']:
         deployment_details.append({
             'name':i['name'],'revision':[
                 j['name'] for j in i['revision']
