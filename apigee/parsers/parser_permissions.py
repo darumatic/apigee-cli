@@ -1,6 +1,6 @@
 import argparse
 
-from apigee.api import permissions
+from apigee.api.permissions import Permissions
 
 from apigee.parsers.parent_parser import ParentParser
 
@@ -44,14 +44,14 @@ class ParserPermissions:
             help='Create permissions for a role.')
         create_permissions.add_argument('-n', '--name', help='name', required=True)
         create_permissions.add_argument('-b', '--body', help='request body', required=True)
-        create_permissions.set_defaults(func=lambda args: print(permissions.create_permissions(args).text))
+        create_permissions.set_defaults(func=lambda args: print(Permissions(args).create_permissions().text))
 
     def _build_team_permissions_argument(self):
         team_permissions = self._parser_permissions.add_parser('team', aliases=['team-permissions'], parents=[self._parent_parser()],
             help='Create default permissions for a team role based on a template.')
         team_permissions.add_argument('-n', '--name', help='name of user role', required=True)
         team_permissions.add_argument('-t', '--team', help='team prefix/code', required=True)
-        team_permissions.set_defaults(func=lambda args: print(permissions.team_permissions(args).text))
+        team_permissions.set_defaults(func=lambda args: print(Permissions(args).team_permissions().text))
 
     def _build_get_permissions_argument(self):
         get_permissions = self._parser_permissions.add_parser('get', aliases=['get-permissions'], parents=[self._parent_parser()],
@@ -59,7 +59,7 @@ class ParserPermissions:
         get_permissions.add_argument('-n', '--name', help='name', required=True)
         get_permissions.add_argument('-j', '--json', action='store_true', help='use json output')
         get_permissions.add_argument('--max-colwidth', help='max column width', type=int, default=40)
-        get_permissions.set_defaults(func=lambda args: print(permissions.get_permissions(args)))
+        get_permissions.set_defaults(func=lambda args: print(Permissions(args, isformat=True).get_permissions()))
 
     def _create_parser(self):
         self._build_create_permissions_argument()
