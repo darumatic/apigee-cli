@@ -90,13 +90,13 @@ class IPull(IO):
     def apiproxy_dir(self, value):
         self._apiproxy_dir = value
 
-    def _get_apiproxy_files(self, directory):
+    def get_apiproxy_files(self, directory):
         files = []
         for filename in Path(directory+'/apiproxy/').resolve().rglob('*'):
             files.append(str(filename))
         return files
 
-    def _get_keyvaluemap_dependencies(self, files):
+    def get_keyvaluemap_dependencies(self, files):
         kvms = []
         for f in files:
             try:
@@ -107,7 +107,7 @@ class IPull(IO):
                 pass
         return kvms
 
-    def _export_keyvaluemap_dependencies(self, args, kvms, kvms_dir, force=False):
+    def export_keyvaluemap_dependencies(self, args, kvms, kvms_dir, force=False):
         if not os.path.exists(kvms_dir):
             os.makedirs(kvms_dir)
         for kvm in kvms:
@@ -121,7 +121,7 @@ class IPull(IO):
             with open(kvm_file, 'w') as f:
                 f.write(resp)
 
-    def _get_targetserver_dependencies(self, files):
+    def get_targetserver_dependencies(self, files):
         target_servers = []
         for f in files:
             try:
@@ -132,7 +132,7 @@ class IPull(IO):
                 pass
         return target_servers
 
-    def _export_targetserver_dependencies(self, args, target_servers, target_servers_dir, force=False):
+    def export_targetserver_dependencies(self, args, target_servers, target_servers_dir, force=False):
         if not os.path.exists(target_servers_dir):
             os.makedirs(target_servers_dir)
         for ts in target_servers:
@@ -146,7 +146,7 @@ class IPull(IO):
             with open(ts_file, 'w') as f:
                 f.write(resp)
 
-    def _prefix_dependencies_in_work_tree(self):
+    def prefix_dependencies_in_work_tree(self):
         prefix = self._prefix
         dependencies = [i for i in self._dependencies if not i.startswith(prefix)]
         directory = self._work_tree
@@ -169,7 +169,7 @@ class IPull(IO):
                             new_f.write(body.replace(dep, prefix+dep))
                         print('M  ', self.resolve_file(file))
 
-    def _get_apiproxy_basepath(self, directory):
+    def get_apiproxy_basepath(self, directory):
         default_file = directory+'/apiproxy/proxies/default.xml'
         tree = et.parse(default_file)
         try:
@@ -177,7 +177,7 @@ class IPull(IO):
         except AttributeError as ae:
             sys.exit('No BasePath found in ' + default_file)
 
-    def _set_apiproxy_basepath(self, basepath, file):
+    def set_apiproxy_basepath(self, basepath, file):
         default_file = self.resolve_file(file)
         tree = et.parse(default_file)
         current_basepath = None

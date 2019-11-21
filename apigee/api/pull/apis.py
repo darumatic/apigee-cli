@@ -40,28 +40,28 @@ class Pull(IPull):
 
         os.remove(zip_file)
 
-        files = self._get_apiproxy_files(directory)
+        files = self.get_apiproxy_files(directory)
 
-        kvms = self._get_keyvaluemap_dependencies(files)
+        kvms = self.get_keyvaluemap_dependencies(files)
 
         print('KeyValueMap dependencies found:', kvms)
         dependencies.extend(kvms)
 
-        self._export_keyvaluemap_dependencies(args, kvms, self._keyvaluemaps_dir, args.force)
+        self.export_keyvaluemap_dependencies(args, kvms, self._keyvaluemaps_dir, args.force)
 
-        target_servers = self._get_targetserver_dependencies(files)
+        target_servers = self.get_targetserver_dependencies(files)
 
         print('TargetServer dependencies found:', target_servers)
         dependencies.extend(target_servers)
 
-        self._export_targetserver_dependencies(args, target_servers, self._targetservers_dir, args.force)
+        self.export_targetserver_dependencies(args, target_servers, self._targetservers_dir, args.force)
 
         self._dependencies.extend(dependencies)
         self._dependencies = list(set(self._dependencies))
 
         if args.prefix:
-            self._prefix_dependencies_in_work_tree()
+            self.prefix_dependencies_in_work_tree()
 
         if args.basepath:
-            basepath, file = self._get_apiproxy_basepath(directory)
-            self._set_apiproxy_basepath(args.basepath, file)
+            basepath, file = self.get_apiproxy_basepath(directory)
+            self.set_apiproxy_basepath(args.basepath, file)
