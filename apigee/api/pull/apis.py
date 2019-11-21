@@ -22,19 +22,21 @@ class Pull(IPull):
         dependencies = []
 
         if self._work_tree:
-            self._create_work_tree(self._work_tree)
+            self.create_directory(self._work_tree)
 
         directory = self._apiproxy_dir
         zip_file = directory + '.zip'
 
         if not args.force:
-            self._check_files_exist([zip_file, directory])
+            self.check_files_exist([zip_file, directory])
 
-        self._write_zip_file(zip_file, export_api_proxy(args, write_zip=False).content)
+        print('Writing ZIP to', self.resolve_file(zip_file))
+        self.write_zip_file(zip_file, export_api_proxy(args, write_zip=False).content)
 
-        self._create_directory(directory)
+        self.create_directory(directory)
 
-        self._extract_zip_file(zip_file, directory)
+        print('Extracting', zip_file, 'in', self.resolve_file(directory))
+        self.extract_zip_file(zip_file, directory)
 
         os.remove(zip_file)
 

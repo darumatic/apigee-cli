@@ -10,11 +10,11 @@ import zipfile
 from abc import ABC, abstractmethod
 from pathlib import Path
 
+from apigee.util.io import IO
 from apigee.api.keyvaluemaps import get_keyvaluemap_in_an_environment
 from apigee.api.targetservers import get_targetserver
-from apigee.util import resolve_file
 
-class IPull:
+class IPull(IO):
 
     def __init__(self, args):
         self._args = args
@@ -50,32 +50,6 @@ class IPull:
     def work_tree(self, value):
         self._work_tree = value
 
-    def _create_work_tree(self, work_tree):
-        if not os.path.exists(work_tree):
-            os.makedirs(work_tree)
-
-    def _check_file_exists(self, file):
-        if os.path.exists(file):
-            sys.exit('error: ' + resolve_file(file) + ' already exists')
-
-    def _check_files_exist(self, files):
-        for file in files:
-            self._check_file_exists(file)
-
-    def _write_zip_file(self, file, content):
-        print('Writing ZIP to', resolve_file(file))
-        with open(file, 'wb') as zfile:
-            zfile.write(content)
-
-    def _create_directory(self, path):
-        if not os.path.exists(path):
-            os.makedirs(path)
-
-    def _extract_zip_file(self, source, dest):
-        print('Extracting ZIP in', resolve_file(dest))
-        with zipfile.ZipFile(source, 'r') as zip_ref:
-            zip_ref.extractall(dest)
-
     def _get_apiproxy_files(self, directory):
         files = []
         for filename in Path(directory+'/apiproxy/').resolve().rglob('*'):
@@ -99,8 +73,8 @@ class IPull:
         for kvm in kvms:
             kvm_file = kvms_dir+'/'+kvm
             if not force:
-                self._check_file_exists(kvm_file)
-            print('Pulling', kvm, 'and writing to', resolve_file(kvm_file))
+                self.check_file_exists(kvm_file)
+            print('Pulling', kvm, 'and writing to', self.resolve_file(kvm_file))
             args.name = kvm
             resp = get_keyvaluemap_in_an_environment(args).text
             print(resp)
@@ -124,8 +98,8 @@ class IPull:
         for ts in target_servers:
             ts_file = target_servers_dir+'/'+ts
             if not force:
-                self._check_file_exists(ts_file)
-            print('Pulling', ts, 'and writing to', resolve_file(ts_file))
+                self.check_file_exists(ts_file)
+            print('Pulling', ts, 'and writing to', self.resolve_file(ts_file))
             args.name = ts
             resp = get_targetserver(args).text
             print(resp)
@@ -153,7 +127,7 @@ class IPull:
                     if dep in body:
                         with open(file, 'w') as new_f:
                             new_f.write(body.replace(dep, prefix+dep))
-                        print('M  ', resolve_file(file))
+                        print('M  ', self.resolve_file(file))
 
     def _get_apiproxy_basepath(self, directory):
         default_file = directory+'/apiproxy/proxies/default.xml'
@@ -164,7 +138,7 @@ class IPull:
             sys.exit('No BasePath found in ' + default_file)
 
     def _set_apiproxy_basepath(self, basepath, file):
-        default_file = resolve_file(file)
+        default_file = self.resolve_file(file)
         tree = et.parse(default_file)
         current_basepath = None
         try:
