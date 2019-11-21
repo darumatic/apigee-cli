@@ -41,16 +41,18 @@ def delete_undeployed_revisions(args):
             print('Deleting revison', rev)
             delete_api_proxy_revision(args)
 
-def export_api_proxy(args):
+def export_api_proxy(args, write_zip=True):
     uri = '{}/v1/organizations/{}/apis/{}/revisions/{}?format=bundle'.format(
         APIGEE_ADMIN_API_URL, args.org, args.name, args.revision_number)
     hdrs = authorization.set_header({'Accept': 'application/json'}, args)
     resp = requests.get(uri, headers=hdrs)
     resp.raise_for_status()
     # print(resp.status_code)
-    zname = args.name + '.zip' if args.output_file is None else args.output_file
-    with open(zname, 'wb') as zfile:
-        zfile.write(resp.content)
+    if write_zip:
+        zname = args.name + '.zip' if args.output_file is None else args.output_file
+        with open(zname, 'wb') as zfile:
+            zfile.write(resp.content)
+    return resp
 
 def get_api_proxy(args):
     uri = '{}/v1/organizations/{}/apis/{}'.format(
