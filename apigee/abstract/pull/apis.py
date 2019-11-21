@@ -50,6 +50,46 @@ class IPull(IO):
     def work_tree(self, value):
         self._work_tree = value
 
+    @property
+    def dependencies(self):
+        return self._dependencies
+
+    @dependencies.setter
+    def dependencies(self, value):
+        self._dependencies = value
+
+    @property
+    def prefix(self):
+        return self._prefix
+
+    @prefix.setter
+    def prefix(self, value):
+        self._prefix = value
+
+    @property
+    def keyvaluemaps_dir(self):
+        return self._keyvaluemaps_dir
+
+    @keyvaluemaps_dir.setter
+    def keyvaluemaps_dir(self, value):
+        self._keyvaluemaps_dir = value
+
+    @property
+    def targetservers_dir(self):
+        return self._targetservers_dir
+
+    @targetservers_dir.setter
+    def targetservers_dir(self, value):
+        self._targetservers_dir = value
+
+    @property
+    def apiproxy_dir(self):
+        return self._apiproxy_dir
+
+    @apiproxy_dir.setter
+    def apiproxy_dir(self, value):
+        self._apiproxy_dir = value
+
     def _get_apiproxy_files(self, directory):
         files = []
         for filename in Path(directory+'/apiproxy/').resolve().rglob('*'):
