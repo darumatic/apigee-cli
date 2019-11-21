@@ -5,9 +5,9 @@ from abc import ABC, abstractmethod
 
 class IPermissions:
 
-    def __init__(self, args, isformat=False):
+    def __init__(self, args, format=False):
         self._args = args
-        self._isformat = isformat
+        self._format = format
 
     def __call__(self):
         pass
@@ -21,12 +21,12 @@ class IPermissions:
         self._args = value
 
     @property
-    def isformat(self):
-        return self._isformat
+    def format(self):
+        return self._format
 
-    @isformat.setter
-    def isformat(self, value):
-        self._isformat = value
+    @format.setter
+    def format(self, value):
+        self._format = value
 
     @abstractmethod
     def create_permissions(self):

@@ -125,7 +125,7 @@ class Permissions(IPermissions):
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         # print(resp.status_code)
-        if self._isformat:
+        if self._format:
             if args.json:
                 return resp.text
             pd.set_option('display.max_colwidth', args.max_colwidth)
