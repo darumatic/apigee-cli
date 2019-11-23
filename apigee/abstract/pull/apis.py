@@ -113,8 +113,8 @@ class IPull(IO):
         for kvm in kvms:
             kvm_file = kvms_dir+'/'+kvm
             if not force:
-                self.check_file_exists(kvm_file)
-            print('Pulling', kvm, 'and writing to', self.resolve_file(kvm_file))
+                self.path_exists(kvm_file)
+            print('Pulling', kvm, 'and writing to', os.path.abspath(kvm_file))
             args.name = kvm
             resp = get_keyvaluemap_in_an_environment(args).text
             print(resp)
@@ -138,8 +138,8 @@ class IPull(IO):
         for ts in target_servers:
             ts_file = target_servers_dir+'/'+ts
             if not force:
-                self.check_file_exists(ts_file)
-            print('Pulling', ts, 'and writing to', self.resolve_file(ts_file))
+                self.path_exists(ts_file)
+            print('Pulling', ts, 'and writing to', os.path.abspath(ts_file))
             args.name = ts
             resp = get_targetserver(args).text
             print(resp)
@@ -167,7 +167,7 @@ class IPull(IO):
                     if dep in body:
                         with open(file, 'w') as new_f:
                             new_f.write(body.replace(dep, prefix+dep))
-                        print('M  ', self.resolve_file(file))
+                        print('M  ', os.path.abspath(file))
 
     def get_apiproxy_basepath(self, directory):
         default_file = directory+'/apiproxy/proxies/default.xml'
@@ -178,7 +178,7 @@ class IPull(IO):
             sys.exit('No BasePath found in ' + default_file)
 
     def set_apiproxy_basepath(self, basepath, file):
-        default_file = self.resolve_file(file)
+        default_file = os.path.abspath(file)
         tree = et.parse(default_file)
         current_basepath = None
         try:
