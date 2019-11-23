@@ -4,26 +4,6 @@ import zipfile
 
 class IO:
 
-    def __init__(self, *args, **kwargs):
-        self._args = args
-        self._kwargs = kwargs
-
-    @property
-    def args(self):
-        return self._args
-
-    @args.setter
-    def args(self, value):
-        self._args = value
-
-    @property
-    def kwargs(self):
-        return self._kwargs
-
-    @kwargs.setter
-    def kwargs(self, value):
-        self._kwargs = value
-
     def makedirs(self, path):
         if not os.path.exists(path):
             os.makedirs(path)
