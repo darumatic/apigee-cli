@@ -51,6 +51,14 @@ class ParserUserroles:
         parser.add_argument('-n', '--name', nargs='+', help='list of role names', required=True)
         parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).create_a_user_role_in_an_organization().text))
 
+    def _build_delete_a_permission_for_a_resource_argument(self):
+        parser = self._parser_userroles.add_parser('delete-permission', aliases=['delete-a-permission-for-a-resource'], help='Removes a permission from a resource for the role specified. Permissions are case sensitive. Specify the permission as get, put, or delete.', parents=[self._parent_parser()])
+        parser.add_argument('-n', '--name', help='list of role names', required=True)
+        parser.add_argument('--permission', help='get, put, or delete', required=True)
+        parser.add_argument('--resource-path', help='the resource path', required=True)
+        parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).delete_a_permission_for_a_resource(args.permission, args.resource_path).text))
+
     def _create_parser(self):
         self._build_add_a_user_to_a_role_argument()
         self._build_create_a_user_role_in_an_organization_argument()
+        self._build_delete_a_permission_for_a_resource_argument()
