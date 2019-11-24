@@ -30,6 +30,10 @@ class Configure:
         except:
             return None
 
+    def _save_config(self, file):
+        with open(file, 'w') as configfile:
+            self._config.write(configfile)
+
     def _main(self):
         self._username   = input('Apigee username (email) [{}]: '                    .format(self._username))
         self._password   = input('Apigee password [{}]: '                            .format(self._password))
@@ -46,6 +50,4 @@ class Configure:
         self._config[self._profile] = {k: v for k, v in creds.items() if v}
 
         IO().makedirs(APIGEE_CLI_DIRECTORY)
-
-        with open(APIGEE_CLI_CREDENTIALS_FILE, 'w') as configfile:
-            self._config.write(configfile)
+        self._save_config(APIGEE_CLI_CREDENTIALS_FILE)
