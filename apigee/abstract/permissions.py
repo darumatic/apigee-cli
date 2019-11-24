@@ -39,3 +39,6 @@ class IPermissions:
     @abstractmethod
     def get_permissions(self):
         pass
+
+class PermissionsSerializer:
+    pass

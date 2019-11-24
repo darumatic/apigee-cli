@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 """https://apidocs.apigee.com/api/deployments"""
 
+import json
 from abc import ABC, abstractmethod
+
+import pandas as pd
+from pandas.io.json import json_normalize
 
 class IDeployments:
 
@@ -31,3 +35,23 @@ class IDeployments:
     @abstractmethod
     def get_api_proxy_deployment_details(self):
         pass
+
+class DeploymentsSerializer:
+    def serialize_details(self, deployment_details, format, max_colwidth=40):
+        # if format == 'text':
+        #     return deployment_details.text
+        revisions = []
+        for i in deployment_details.json()['environment']:
+            revisions.append({
+                'name':i['name'],'revision':[
+                    j['name'] for j in i['revision']
+                ]
+            })
+        if format == 'json':
+            return json.dumps(revisions)
+        elif format == 'table':
+            pd.set_option('display.max_colwidth', max_colwidth)
+            return pd.DataFrame.from_dict(json_normalize(revisions), orient='columns')
+        # else:
+        #     raise ValueError(format)
+        return deployment_details.text
