@@ -44,7 +44,7 @@ class ParserUserroles:
         parser = self._parser_userroles.add_parser('add-user', aliases=['add-a-user-to-a-role'], help='Add a user to a role.', parents=[self._parent_parser()])
         parser.add_argument('-n', '--name', help='the role name', required=True)
         parser.add_argument('--user-email', help='the email address of the user', required=True)
-        parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).add_a_user_to_a_role(args.user_email)))
+        parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).add_a_user_to_a_role(args.user_email).text))
 
     def _build_create_a_user_role_in_an_organization_argument(self):
         parser = self._parser_userroles.add_parser('create', aliases=['create-a-user-role-in-an-organization'], help='Creates one ore more user roles in an organization.', parents=[self._parent_parser()])
@@ -63,8 +63,15 @@ class ParserUserroles:
         parser.add_argument('-n', '--name', help='the role name', required=True)
         parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).delete_a_user_role().text))
 
+    def _build_remove_user_membership_in_role_argument(self):
+        parser = self._parser_userroles.add_parser('remove-user', aliases=['remove-user-membership-in-role'], help='Remove user membership in role.', parents=[self._parent_parser()])
+        parser.add_argument('-n', '--name', help='the role name', required=True)
+        parser.add_argument('--user-email', help='the email address of the user', required=True)
+        parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).remove_user_membership_in_role(args.user_email).text))
+
     def _create_parser(self):
         self._build_add_a_user_to_a_role_argument()
         self._build_create_a_user_role_in_an_organization_argument()
         self._build_delete_a_permission_for_a_resource_argument()
         self._build_delete_a_user_role_argument()
+        self._build_remove_user_membership_in_role_argument()

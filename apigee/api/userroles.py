@@ -72,8 +72,13 @@ class Userroles(IUserroles):
     def list_user_roles(self):
         pass
 
-    def remove_user_membership_in_role(self):
-        pass
+    def remove_user_membership_in_role(self, user_email):
+        uri = '{0}/v1/organizations/{1}/userroles/{2}/users/{3}'.format(APIGEE_ADMIN_API_URL, self._org_name, self._role_name, user_email)
+        hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, self._auth)
+        resp = requests.delete(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
 
     def verify_a_user_roles_permission_on_a_specific_RBAC_resource(self):
         pass
