@@ -38,8 +38,8 @@ class IDeployments:
 
 class DeploymentsSerializer:
     def serialize_details(self, deployment_details, format, max_colwidth=40):
-        # if format == 'text':
-        #     return deployment_details.text
+        if format == 'text':
+            return deployment_details.text
         revisions = []
         for i in deployment_details.json()['environment']:
             revisions.append({
@@ -54,4 +54,4 @@ class DeploymentsSerializer:
             return pd.DataFrame.from_dict(json_normalize(revisions), orient='columns')
         # else:
         #     raise ValueError(format)
-        return deployment_details.text
+        return deployment_details

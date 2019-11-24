@@ -8,7 +8,7 @@ import pandas as pd
 from pandas.io.json import json_normalize
 
 from apigee import APIGEE_ADMIN_API_URL
-from apigee.abstract.permissions import IPermissions
+from apigee.abstract.permissions import IPermissions, PermissionsSerializer
 from apigee.util import authorization
 
 class Permissions(IPermissions):
@@ -127,7 +127,6 @@ class Permissions(IPermissions):
         # print(resp.status_code)
         if self._format:
             if args.json:
-                return resp.text
-            pd.set_option('display.max_colwidth', args.max_colwidth)
-            return pd.DataFrame.from_dict(json_normalize(resp.json()['resourcePermission']), orient='columns')
+                return PermissionsSerializer().serialize_details(resp, 'text')
+            return PermissionsSerializer().serialize_details(resp, 'table', max_colwidth=args.max_colwidth)
         return resp

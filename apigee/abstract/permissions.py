@@ -3,6 +3,9 @@
 
 from abc import ABC, abstractmethod
 
+import pandas as pd
+from pandas.io.json import json_normalize
+
 class IPermissions:
 
     def __init__(self, args, format=False):
@@ -41,4 +44,12 @@ class IPermissions:
         pass
 
 class PermissionsSerializer:
-    pass
+    def serialize_details(self, permission_details, format, max_colwidth=40):
+        if format == 'text':
+            return permission_details.text
+        elif format == 'table':
+            pd.set_option('display.max_colwidth', max_colwidth)
+            return pd.DataFrame.from_dict(json_normalize(permission_details.json()['resourcePermission']), orient='columns')
+        # else:
+        #     raise ValueError(format)
+        return permission_details

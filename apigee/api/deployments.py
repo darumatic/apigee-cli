@@ -27,6 +27,6 @@ class Deployments(IDeployments):
             if args.revision_name:
                 if args.json:
                     return DeploymentsSerializer().serialize_details(resp, 'json')
-                return DeploymentsSerializer().serialize_details(resp, 'table')
-            return DeploymentsSerializer().serialize_details(resp, 'text', max_colwidth=args.max_colwidth)
+                return DeploymentsSerializer().serialize_details(resp, 'table', max_colwidth=args.max_colwidth)
+            return DeploymentsSerializer().serialize_details(resp, 'text')
         return resp
