@@ -82,7 +82,7 @@ class IUserroles:
         pass
 
     @abstractmethod
-    def remove_user_membership_in_role(self):
+    def remove_user_membership_in_role(self, user_email):
         pass
 
     @abstractmethod
