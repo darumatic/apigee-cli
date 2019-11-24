@@ -28,7 +28,18 @@ class Userroles(IUserroles):
         pass
 
     def create_a_user_role_in_an_organization(self):
-        pass
+        uri = '{0}/v1/organizations/{1}/userroles'.format(APIGEE_ADMIN_API_URL, self._org_name)
+        hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, self._auth)
+        roles = []
+        for role in self._role_name:
+            roles.append({
+                'name': role
+            })
+        body = {"role" : roles}
+        resp = requests.post(uri, headers=hdrs, json=body)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
 
     def delete_a_permission_for_a_resource(self):
         pass
