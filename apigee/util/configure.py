@@ -30,7 +30,7 @@ class Configure:
         except:
             return None
 
-    def _gen_credentials_dict(self):
+    def _gen_profile_dict(self):
         return {
             'username': self._username,
             'password': self._password,
@@ -54,5 +54,5 @@ class Configure:
         self._org        = input('Default Apigee organization (recommended) [{}]: '  .format(self._org))
         self._prefix     = input('Default team/resource prefix (recommended) [{}]: ' .format(self._prefix))
 
-        self._config[self._profile] = self._remove_empty_keys(self._gen_credentials_dict())
+        self._config[self._profile] = self._remove_empty_keys(self._gen_profile_dict())
         self._save_config(APIGEE_CLI_CREDENTIALS_FILE)
