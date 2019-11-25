@@ -30,7 +30,20 @@ class Configure:
         except:
             return None
 
+    def _gen_credentials_dict(self):
+        return {
+            'username': self._username,
+            'password': self._password,
+            'mfa_secret': self._mfa_secret,
+            'org': self._org,
+            'prefix': self._prefix
+        }
+
+    def _remove_empty_keys(self, dict):
+        return {k: v for k, v in dict.items() if v}
+
     def _save_config(self, file):
+        IO().makedirs(APIGEE_CLI_DIRECTORY)
         with open(file, 'w') as configfile:
             self._config.write(configfile)
 
@@ -41,13 +54,5 @@ class Configure:
         self._org        = input('Default Apigee organization (recommended) [{}]: '  .format(self._org))
         self._prefix     = input('Default team/resource prefix (recommended) [{}]: ' .format(self._prefix))
 
-        creds = {'username': self._username,
-                 'password': self._password,
-                 'mfa_secret': self._mfa_secret,
-                 'org': self._org,
-                 'prefix': self._prefix}
-
-        self._config[self._profile] = {k: v for k, v in creds.items() if v}
-
-        IO().makedirs(APIGEE_CLI_DIRECTORY)
+        self._config[self._profile] = self._remove_empty_keys(self._gen_credentials_dict())
         self._save_config(APIGEE_CLI_CREDENTIALS_FILE)
