@@ -16,8 +16,8 @@ from apigee.api.targetservers import get_targetserver
 
 class Pull(IPull):
 
-    def __init__(self, args):
-        super().__init__(args)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def get_apiproxy_files(self, directory):
         files = []
@@ -26,28 +26,28 @@ class Pull(IPull):
         return files
 
     def get_keyvaluemap_dependencies(self, files):
-        kvms = []
+        keyvaluemaps = []
         for f in files:
             try:
                 root = et.parse(f).getroot()
                 if root.tag == 'KeyValueMapOperations':
-                    kvms.append(root.attrib['mapIdentifier'])
+                    keyvaluemaps.append(root.attrib['mapIdentifier'])
             except:
                 pass
-        return kvms
+        return keyvaluemaps
 
-    def export_keyvaluemap_dependencies(self, args, kvms, kvms_dir, force=False):
-        if not os.path.exists(kvms_dir):
-            os.makedirs(kvms_dir)
-        for kvm in kvms:
-            kvm_file = kvms_dir+'/'+kvm
+    def export_keyvaluemap_dependencies(self, args, keyvaluemaps, force=False):
+        if not os.path.exists(self._keyvaluemaps_dir):
+            os.makedirs(self._keyvaluemaps_dir)
+        for keyvaluemap in keyvaluemaps:
+            keyvaluemap_file = self._keyvaluemaps_dir+'/'+keyvaluemap
             if not force:
-                self.path_exists(kvm_file)
-            print('Pulling', kvm, 'and writing to', os.path.abspath(kvm_file))
-            args.name = kvm
+                self.path_exists(keyvaluemap_file)
+            print('Pulling', keyvaluemap, 'and writing to', os.path.abspath(keyvaluemap_file))
+            args.name = keyvaluemap
             resp = get_keyvaluemap_in_an_environment(args).text
             print(resp)
-            with open(kvm_file, 'w') as f:
+            with open(keyvaluemap_file, 'w') as f:
                 f.write(resp)
 
     def get_targetserver_dependencies(self, files):
@@ -61,11 +61,11 @@ class Pull(IPull):
                 pass
         return target_servers
 
-    def export_targetserver_dependencies(self, args, target_servers, target_servers_dir, force=False):
-        if not os.path.exists(target_servers_dir):
-            os.makedirs(target_servers_dir)
+    def export_targetserver_dependencies(self, args, target_servers, force=False):
+        if not os.path.exists(self._targetservers_dir):
+            os.makedirs(self._targetservers_dir)
         for ts in target_servers:
-            ts_file = target_servers_dir+'/'+ts
+            ts_file = self._targetservers_dir+'/'+ts
             if not force:
                 self.path_exists(ts_file)
             print('Pulling', ts, 'and writing to', os.path.abspath(ts_file))
@@ -75,9 +75,8 @@ class Pull(IPull):
             with open(ts_file, 'w') as f:
                 f.write(resp)
 
-    def prefix_dependencies_in_work_tree(self):
-        prefix = self._prefix
-        dependencies = [i for i in self._dependencies if not i.startswith(prefix)]
+    def prefix_dependencies_in_work_tree(self, dependencies, prefix):
+        dependencies = [i for i in dependencies if not i.startswith(prefix)]
         directory = self._work_tree
         files = []
         for filename in Path(directory).resolve().rglob('*'):
@@ -122,51 +121,44 @@ class Pull(IPull):
         print(current_basepath, '->', basepath)
         print('M  ', default_file)
 
-    def pull(self):
-        args = self._args
-        dependencies = []
+    def pull(self, dependencies=[], force=False, prefix=None, basepath=None):
+        dependencies.append(self._api_name)
 
         if self._work_tree:
             self.makedirs(self._work_tree)
 
-        directory = self._apiproxy_dir
-        zip_file = directory + '.zip'
+        if not force:
+            self.paths_exist([self._zip_file, self._apiproxy_dir])
 
-        if not args.force:
-            self.paths_exist([zip_file, directory])
+        print('Writing ZIP to', os.path.abspath(self._zip_file))
+        self.writezip(self._zip_file, export_api_proxy(self._args, write_zip=False).content)
 
-        print('Writing ZIP to', os.path.abspath(zip_file))
-        self.writezip(zip_file, export_api_proxy(args, write_zip=False).content)
+        self.makedirs(self._apiproxy_dir)
 
-        self.makedirs(directory)
+        print('Extracting', self._zip_file, 'in', os.path.abspath(self._apiproxy_dir))
+        self.extractzip(self._zip_file, self._apiproxy_dir)
 
-        print('Extracting', zip_file, 'in', os.path.abspath(directory))
-        self.extractzip(zip_file, directory)
+        os.remove(self._zip_file)
 
-        os.remove(zip_file)
+        files = self.get_apiproxy_files(self._apiproxy_dir)
 
-        files = self.get_apiproxy_files(directory)
+        keyvaluemaps = self.get_keyvaluemap_dependencies(files)
 
-        kvms = self.get_keyvaluemap_dependencies(files)
+        print('KeyValueMap dependencies found:', keyvaluemaps)
+        dependencies.extend(keyvaluemaps)
 
-        print('KeyValueMap dependencies found:', kvms)
-        dependencies.extend(kvms)
-
-        self.export_keyvaluemap_dependencies(args, kvms, self._keyvaluemaps_dir, args.force)
+        self.export_keyvaluemap_dependencies(self._args, keyvaluemaps, force=force)
 
         target_servers = self.get_targetserver_dependencies(files)
 
         print('TargetServer dependencies found:', target_servers)
         dependencies.extend(target_servers)
 
-        self.export_targetserver_dependencies(args, target_servers, self._targetservers_dir, args.force)
+        self.export_targetserver_dependencies(self._args, target_servers, force=force)
 
-        self._dependencies.extend(dependencies)
-        self._dependencies = list(set(self._dependencies))
+        if prefix:
+            self.prefix_dependencies_in_work_tree(list(set(dependencies)), prefix)
 
-        if args.prefix:
-            self.prefix_dependencies_in_work_tree()
-
-        if args.basepath:
-            basepath, file = self.get_apiproxy_basepath(directory)
-            self.set_apiproxy_basepath(args.basepath, file)
+        if basepath:
+            basepath, file = self.get_apiproxy_basepath(self._apiproxy_dir)
+            self.set_apiproxy_basepath(basepath, file)
