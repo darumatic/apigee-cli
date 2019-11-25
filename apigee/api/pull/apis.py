@@ -86,7 +86,7 @@ class Pull(IPull):
         for dep in dependencies:
             for file in files:
                 with open(file, 'r') as f:
-                    body = None
+                    body = str()
                     try:
                         body = f.read()
                     except Exception as e:
