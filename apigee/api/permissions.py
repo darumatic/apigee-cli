@@ -117,7 +117,7 @@ class Permissions(IPermissions):
         # print(resp.status_code)
         return resp
 
-    def get_permissions(self):
+    def get_permissions(self, formatted=False):
         args = self._args
         uri = '{}/v1/o/{}/userroles/{}/permissions'.format(
             APIGEE_ADMIN_API_URL, args.org, args.name)
@@ -125,7 +125,7 @@ class Permissions(IPermissions):
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         # print(resp.status_code)
-        if self._format:
+        if formatted:
             if args.json:
                 return PermissionsSerializer().serialize_details(resp, 'text')
             return PermissionsSerializer().serialize_details(resp, 'table', max_colwidth=args.max_colwidth)

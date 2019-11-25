@@ -8,9 +8,8 @@ from pandas.io.json import json_normalize
 
 class IPermissions:
 
-    def __init__(self, args, format=False):
+    def __init__(self, args):
         self._args = args
-        self._format = format
 
     def __call__(self):
         pass
@@ -23,14 +22,6 @@ class IPermissions:
     def args(self, value):
         self._args = value
 
-    @property
-    def format(self):
-        return self._format
-
-    @format.setter
-    def format(self, value):
-        self._format = value
-
     @abstractmethod
     def create_permissions(self):
         pass
@@ -40,7 +31,7 @@ class IPermissions:
         pass
 
     @abstractmethod
-    def get_permissions(self):
+    def get_permissions(self, formatted=False):
         pass
 
 class PermissionsSerializer:

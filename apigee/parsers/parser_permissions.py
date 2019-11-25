@@ -59,7 +59,7 @@ class ParserPermissions:
         get_permissions.add_argument('-n', '--name', help='name', required=True)
         get_permissions.add_argument('-j', '--json', action='store_true', help='use json output')
         get_permissions.add_argument('--max-colwidth', help='max column width', type=int, default=40)
-        get_permissions.set_defaults(func=lambda args: print(Permissions(args, format=True).get_permissions()))
+        get_permissions.set_defaults(func=lambda args: print(Permissions(args).get_permissions(formatted=True)))
 
     def _create_parser(self):
         self._build_create_permissions_argument()
