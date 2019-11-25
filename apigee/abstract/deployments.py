@@ -9,9 +9,8 @@ from pandas.io.json import json_normalize
 
 class IDeployments:
 
-    def __init__(self, args, format=False):
+    def __init__(self, args):
         self._args = args
-        self._format = format
 
     def __call__(self):
         pass
@@ -24,16 +23,8 @@ class IDeployments:
     def args(self, value):
         self._args = value
 
-    @property
-    def format(self):
-        return self._format
-
-    @format.setter
-    def format(self, value):
-        self._format = value
-
     @abstractmethod
-    def get_api_proxy_deployment_details(self):
+    def get_api_proxy_deployment_details(self, formatted=False):
         pass
 
 class DeploymentsSerializer:
