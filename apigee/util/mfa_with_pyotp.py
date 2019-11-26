@@ -1,5 +1,7 @@
+import binascii
 import pyotp
 import requests
+import sys
 import urllib.request, urllib.parse, urllib.error
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
@@ -15,6 +17,10 @@ def get_access_token(args):
     APIGEE_PASSWORD = args.password
     APIGEE_MFA_SECRET = args.mfa_secret
     TOTP = pyotp.TOTP(APIGEE_MFA_SECRET)
+    try:
+        TOTP.now()
+    except binascii.Error as e:
+        sys.exit('{0}: {1}: {2}'.format(type(e).__name__, e, 'Not a valid MFA key'))
     adapter = HTTPAdapter(max_retries=HTTP_MAX_RETRIES)
     session = requests.Session()
     session.mount('https://', adapter)
