@@ -13,6 +13,13 @@ from apigee.abstract.pull.apis import IPull
 from apigee.api.apis import export_api_proxy
 from apigee.api.keyvaluemaps import get_keyvaluemap_in_an_environment
 from apigee.api.targetservers import get_targetserver
+from apigee.util.os import (
+    makedirs,
+    path_exists,
+    paths_exist,
+    extractzip,
+    writezip
+)
 
 class Pull(IPull):
 
@@ -42,7 +49,7 @@ class Pull(IPull):
         for keyvaluemap in keyvaluemaps:
             keyvaluemap_file = self._keyvaluemaps_dir+'/'+keyvaluemap
             if not force:
-                self.path_exists(keyvaluemap_file)
+                path_exists(keyvaluemap_file)
             print('Pulling', keyvaluemap, 'and writing to', os.path.abspath(keyvaluemap_file))
             args.name = keyvaluemap
             resp = get_keyvaluemap_in_an_environment(args).text
@@ -67,7 +74,7 @@ class Pull(IPull):
         for ts in target_servers:
             ts_file = self._targetservers_dir+'/'+ts
             if not force:
-                self.path_exists(ts_file)
+                path_exists(ts_file)
             print('Pulling', ts, 'and writing to', os.path.abspath(ts_file))
             args.name = ts
             resp = get_targetserver(args).text
@@ -125,18 +132,18 @@ class Pull(IPull):
         dependencies.append(self._api_name)
 
         if self._work_tree:
-            self.makedirs(self._work_tree)
+            makedirs(self._work_tree)
 
         if not force:
-            self.paths_exist([self._zip_file, self._apiproxy_dir])
+            paths_exist([self._zip_file, self._apiproxy_dir])
 
         print('Writing ZIP to', os.path.abspath(self._zip_file))
-        self.writezip(self._zip_file, export_api_proxy(self._args, write_zip=False).content)
+        writezip(self._zip_file, export_api_proxy(self._args, write_zip=False).content)
 
-        self.makedirs(self._apiproxy_dir)
+        makedirs(self._apiproxy_dir)
 
         print('Extracting', self._zip_file, 'in', os.path.abspath(self._apiproxy_dir))
-        self.extractzip(self._zip_file, self._apiproxy_dir)
+        extractzip(self._zip_file, self._apiproxy_dir)
 
         os.remove(self._zip_file)
 

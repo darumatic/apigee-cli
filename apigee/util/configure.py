@@ -6,7 +6,7 @@ from pathlib import Path
 
 from apigee import APIGEE_CLI_DIRECTORY
 from apigee import APIGEE_CLI_CREDENTIALS_FILE
-from apigee.util.io import IO
+from apigee.util.os import makedirs
 
 class Configure:
 
@@ -38,7 +38,7 @@ class Configure:
         return {k: v for k, v in dict.items() if v}
 
     def _save_config(self, file):
-        IO().makedirs(APIGEE_CLI_DIRECTORY)
+        makedirs(APIGEE_CLI_DIRECTORY)
         with open(file, 'w') as configfile:
             self._config.write(configfile)
 

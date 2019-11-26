@@ -5,9 +5,7 @@ import os
 from abc import ABC, abstractmethod
 from pathlib import Path
 
-from apigee.util.io import IO
-
-class IPull(IO):
+class IPull:
 
     def __init__(self, args, api_name, revision_number, work_tree=None):
         self._args = args
