@@ -19,5 +19,5 @@ def extractzip(source, dest):
         zip_ref.extractall(dest)
 
 def writezip(file, content):
-    with open(file, 'wb') as file:
-        file.write(content)
+    with open(file, 'wb') as f:
+        f.write(content)
