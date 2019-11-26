@@ -5,14 +5,14 @@ apigee-cli
 This package provides a command-line interface for the Apigee Management API with easy-to-use MFA authentication. ::
 
     usage: apigee [-h] [-V]
-                  {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions}
+                  {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,userroles}
                   ...
 
     Apigee Management API command-line interface with easy-to-use MFA
     authentication
 
     positional arguments:
-      {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions}
+      {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,userroles}
         test (get-access-token)
                             get access token
         configure           configure credentials
@@ -27,6 +27,7 @@ This package provides a command-line interface for the Apigee Management API wit
         mask (maskconfigs)  manage data masks
         perms (permissions)
                             manage permissions for a role
+        userroles           manage user roles
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -169,13 +170,15 @@ Getting API proxy revisions that are actively deployed
 
 To get actively deployed revisions for an API Proxy, run::
 
-    $ apigee deps get -r -n [name]
+    $ apigee deps get -r -n [name] --tab fancy_grid --showindex
 
 This will output a table like so::
 
-       name revision
-    0   dev   [3, 5]
-    1  test      [3]
+    ╒══════╤════════╤════════════╕
+    │   id │ name   │ revision   │
+    ╞══════╪════════╪════════════╡
+    │    0 │ dev    │ ['32']     │
+    ╘══════╧════════╧════════════╛
 
 To output as JSON, specify the ``-j/--json`` argument::
 
@@ -312,31 +315,21 @@ Getting permissions for a role
 
 To get permissions for a role, run::
 
-    $ apigee perms get -n testing --max-colwidth 80
+    $ apigee perms get -n [role] --showindex --tab fancy_grid
 
 This will output a table like so::
 
-        organization                                                         path         permissions
-    0          myorg                                                            /               [get]
-    1          myorg                                                           /*                  []
-    2          myorg                                                  /developers               [get]
-    3          myorg                                                 /apiproducts               [get]
-    4          myorg                                                /applications          [get, put]
-    5          myorg                                            /apiproducts/apt*  [get, put, delete]
-    6          myorg                                           /applications/apt*  [get, put, delete]
-    7          myorg                                           /developers/*/apps               [get]
-    8          myorg                                       /environments/*/caches               [get]
-    9          myorg                                    /apiproxies/*/maskconfigs               [get]
-    10         myorg                                      /developers/*/apps/apt*  [get, put, delete]
-    11         myorg                                 /apiproxies/apt*/maskconfigs  [get, put, delete]
-    12         myorg                                 /environments/*/keyvaluemaps          [get, put]
-    13         myorg                                 /environments/*/virtualhosts               [get]
-    14         myorg                                  /environments/*/caches/apt*  [get, put, delete]
-    15         myorg                                /environments/*/targetservers          [get, put]
-    16         myorg                            /environments/*/keyvaluemaps/apt*  [get, put, delete]
-    17         myorg                           /environments/*/targetservers/apt*  [get, put, delete]
-    18         myorg    /environments/*/applications/apt*/revisions/*/deployments  [get, put, delete]
-    19         myorg  /environments/*/applications/apt*/revisions/*/debugsessions  [get, put, delete]
+    ╒══════╤════════════════╤═════════════════╤══════════════════════════╕
+    │   id │ organization   │ path            │ permissions              │
+    ╞══════╪════════════════╪═════════════════╪══════════════════════════╡
+    │    0 │ snsw           │ /               │ ['get', 'delete', 'put'] │
+    ├──────┼────────────────┼─────────────────┼──────────────────────────┤
+    │    1 │ snsw           │ /environments   │ ['get']                  │
+    ├──────┼────────────────┼─────────────────┼──────────────────────────┤
+    │    2 │ snsw           │ /environments/* │ ['get']                  │
+    ├──────┼────────────────┼─────────────────┼──────────────────────────┤
+    │    3 │ snsw           │ /apimonitoring  │ ['get', 'delete', 'put'] │
+    ╘══════╧════════════════╧═════════════════╧══════════════════════════╛
 
 To output as JSON, specify the ``-j/--json`` argument.
 
@@ -355,34 +348,10 @@ To see how the ``[request_body]`` is constructed, see:
 
 There is also the ``apigee perms team`` command, which sets default permissions for a team role based on a template::
 
-    $ apigee permissions team -n [role] --team apt
+    $ apigee permissions team -n [role] --team [team_prefix]
 
-This will set the following permissions::
-
-        organization                                                         path         permissions
-    0          myorg                                                            /               [get]
-    1          myorg                                                           /*                  []
-    2          myorg                                                  /developers               [get]
-    3          myorg                                                 /apiproducts               [get]
-    4          myorg                                                /applications          [get, put]
-    5          myorg                                            /apiproducts/apt*  [get, put, delete]
-    6          myorg                                           /applications/apt*  [get, put, delete]
-    7          myorg                                           /developers/*/apps               [get]
-    8          myorg                                       /environments/*/caches               [get]
-    9          myorg                                    /apiproxies/*/maskconfigs               [get]
-    10         myorg                                      /developers/*/apps/apt*  [get, put, delete]
-    11         myorg                                 /apiproxies/apt*/maskconfigs  [get, put, delete]
-    12         myorg                                 /environments/*/keyvaluemaps          [get, put]
-    13         myorg                                 /environments/*/virtualhosts               [get]
-    14         myorg                                  /environments/*/caches/apt*  [get, put, delete]
-    15         myorg                                /environments/*/targetservers          [get, put]
-    16         myorg                            /environments/*/keyvaluemaps/apt*  [get, put, delete]
-    17         myorg                           /environments/*/targetservers/apt*  [get, put, delete]
-    18         myorg    /environments/*/applications/apt*/revisions/*/deployments  [get, put, delete]
-    19         myorg  /environments/*/applications/apt*/revisions/*/debugsessions  [get, put, delete]
-
-The important thing to note here is that some resources start with ``apt*``. This means that
-users with the role ``[role]`` will only be able to access those resources which start with ``apt``.
+The important thing to note here is that some resources will start with ``[team_prefix]*``. This means that
+users with the role ``[role]`` will only be able to access those resources which start with ``[team_prefix]``.
 This is useful for the use case where many teams are working together on the same platform.
 
 
