@@ -44,8 +44,7 @@ class Pull(IPull):
         return keyvaluemaps
 
     def export_keyvaluemap_dependencies(self, args, keyvaluemaps, force=False):
-        if not os.path.exists(self._keyvaluemaps_dir):
-            os.makedirs(self._keyvaluemaps_dir)
+        makedirs(self._keyvaluemaps_dir)
         for keyvaluemap in keyvaluemaps:
             keyvaluemap_file = self._keyvaluemaps_dir+'/'+keyvaluemap
             if not force:
@@ -69,8 +68,7 @@ class Pull(IPull):
         return target_servers
 
     def export_targetserver_dependencies(self, args, target_servers, force=False):
-        if not os.path.exists(self._targetservers_dir):
-            os.makedirs(self._targetservers_dir)
+        makedirs(self._targetservers_dir)
         for ts in target_servers:
             ts_file = self._targetservers_dir+'/'+ts
             if not force:
