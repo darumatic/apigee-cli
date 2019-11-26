@@ -4,9 +4,6 @@
 import json
 import requests
 
-import pandas as pd
-from pandas.io.json import json_normalize
-
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.permissions import IPermissions, PermissionsSerializer
 from apigee.util import authorization
@@ -117,7 +114,7 @@ class Permissions(IPermissions):
         # print(resp.status_code)
         return resp
 
-    def get_permissions(self, formatted=False):
+    def get_permissions(self, formatted=False, showindex=False, tablefmt='plain'):
         args = self._args
         uri = '{}/v1/o/{}/userroles/{}/permissions'.format(
             APIGEE_ADMIN_API_URL, args.org, args.name)
@@ -128,5 +125,5 @@ class Permissions(IPermissions):
         if formatted:
             if args.json:
                 return PermissionsSerializer().serialize_details(resp, 'text')
-            return PermissionsSerializer().serialize_details(resp, 'table', max_colwidth=args.max_colwidth)
+            return PermissionsSerializer().serialize_details(resp, 'table', showindex=showindex, tablefmt=tablefmt)
         return resp

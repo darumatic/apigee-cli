@@ -58,8 +58,33 @@ class ParserPermissions:
             help='Get permissions for a role.')
         get_permissions.add_argument('-n', '--name', help='name', required=True)
         get_permissions.add_argument('-j', '--json', action='store_true', help='use json output')
-        get_permissions.add_argument('--max-colwidth', help='max column width', type=int, default=40)
-        get_permissions.set_defaults(func=lambda args: print(Permissions(args).get_permissions(formatted=True)))
+        # get_permissions.add_argument('--max-colwidth', help='max column width', type=int, default=40)
+        get_permissions.add_argument('--showindex', action='store_true', help='add row indices')
+        get_permissions.add_argument('--tablefmt', help='defines how the table is formatted', default='plain',
+            choices=(
+                "plain",
+                "simple",
+                "github",
+                "grid",
+                "fancy_grid",
+                "pipe",
+                "orgtbl",
+                "jira",
+                "presto",
+                "psql",
+                "rst",
+                "mediawiki",
+                "moinmoin",
+                "youtrack",
+                "html",
+                "latex",
+                "latex_raw",
+                "latex_booktabs",
+                "textile"
+            ),
+            type=str
+        )
+        get_permissions.set_defaults(func=lambda args: print(Permissions(args).get_permissions(formatted=True, showindex=args.showindex, tablefmt=args.tablefmt)))
 
     def _create_parser(self):
         self._build_create_permissions_argument()
