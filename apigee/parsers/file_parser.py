@@ -1,6 +1,6 @@
 import argparse
 
-from apigee.util import isfile
+from apigee.util.types import ArgumentType
 
 class FileParser:
 
@@ -20,7 +20,7 @@ class FileParser:
         return self._parent_parser
 
     def _build_file_argument(self):
-        self._parent_parser.add_argument('-f', '--file', action='store', help='file path', required=True, type=isfile)
+        self._parent_parser.add_argument('-f', '--file', action='store', help='file path', required=True, type=ArgumentType.isfile)
 
     def _create_parser(self):
         self._build_file_argument()

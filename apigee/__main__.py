@@ -26,6 +26,9 @@ from apigee.parsers.parser_maskconfigs import ParserMaskconfigs
 from apigee.parsers.parser_permissions import ParserPermissions
 from apigee.parsers.parser_userroles import ParserUserroles
 
+from apigee.util import mfa_with_pyotp
+from apigee.util.exceptions import exception_handler
+
 @exception_handler
 def main():
     parent_parser = ParentParser()
@@ -40,7 +43,7 @@ def main():
     subparsers = parser.add_subparsers()
 
     parser_test = subparsers.add_parser('test', aliases=['get-access-token'], help='get access token', parents=[parent_parser()])
-    parser_test.set_defaults(func=test)
+    parser_test.set_defaults(func=lambda args: print(mfa_with_pyotp.get_access_token(args)))
 
     ParserConfigure(subparsers).parser
     ParserApis(subparsers, parent_parser=parent_parser, dir_parser=dir_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
