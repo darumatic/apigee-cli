@@ -12,7 +12,7 @@ def path_exists(file):
 
 def paths_exist(files):
     for file in files:
-        self.path_exists(file)
+        path_exists(file)
 
 def extractzip(source, dest):
     with zipfile.ZipFile(source, 'r') as zip_ref:
