@@ -170,7 +170,7 @@ Getting API proxy revisions that are actively deployed
 
 To get actively deployed revisions for an API Proxy, run::
 
-    $ apigee deps get -r -n [name] --tab fancy_grid --showindex
+    $ apigee deps get -r -n [name] --tablefmt fancy_grid --showindex
 
 This will output a table like so::
 
@@ -315,7 +315,7 @@ Getting permissions for a role
 
 To get permissions for a role, run::
 
-    $ apigee perms get -n [role] --showindex --tab fancy_grid
+    $ apigee perms get -n [role] --showindex --tablefmt fancy_grid
 
 This will output a table like so::
 
