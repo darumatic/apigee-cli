@@ -26,7 +26,7 @@ class Apis(IApis):
     def delete_undeployed_revisions(self, save_last=0, dry_run=False):
         revisions = self.list_api_proxy_revisions().json()
         deployment_details = []
-        for i in Deployments(self._auth).get_api_proxy_deployment_details().json()['environment']:
+        for i in Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json()['environment']:
             deployment_details.append({
                 'name':i['name'],'revision':[
                     j['name'] for j in i['revision']

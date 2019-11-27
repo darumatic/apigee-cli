@@ -44,7 +44,7 @@ class ParserDeployments:
             help='Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.')
         get_api_proxy_deployment_details.add_argument('-n', '--name', help='name', required=True)
         get_api_proxy_deployment_details.add_argument('-r', '--revision-name', action='store_true', help='get revisions only')
-        get_api_proxy_deployment_details.add_argument('-j', '--json', action='store_true', help='use json output')
+        get_api_proxy_deployment_details.add_argument('-j', '--json', action='store_const', const='json', help='use json output', default='table')
         # get_api_proxy_deployment_details.add_argument('--max-colwidth', help='max column width', type=int, default=40)
         get_api_proxy_deployment_details.add_argument('--showindex', action='store_true', help='add row indices')
         get_api_proxy_deployment_details.add_argument('--tablefmt', help='defines how the table is formatted', default='plain',
@@ -71,7 +71,7 @@ class ParserDeployments:
             ),
             type=str
         )
-        get_api_proxy_deployment_details.set_defaults(func=lambda args: print(Deployments(args).get_api_proxy_deployment_details(formatted=True, showindex=args.showindex, tablefmt=args.tablefmt)))
+        get_api_proxy_deployment_details.set_defaults(func=lambda args: print(Deployments(args, args.org, args.name).get_api_proxy_deployment_details(formatted=True, format=args.json, showindex=args.showindex, tablefmt=args.tablefmt, revision_name_only=args.revision_name)))
 
     def _create_parser(self):
         self._build_get_api_proxy_deployment_details_argument()
