@@ -14,7 +14,7 @@ class Deployments(IDeployments):
         super().__init__(*args, **kwargs)
 
     def get_api_proxy_deployment_details(self, formatted=False, format='text', showindex=False, tablefmt='plain', revision_name_only=False):
-        uri = '{}/v1/organizations/{}/apis/{}/deployments'.format(APIGEE_ADMIN_API_URL, self._org_name, self._api_name)
+        uri = '{0}/v1/organizations/{1}/apis/{2}/deployments'.format(APIGEE_ADMIN_API_URL, self._org_name, self._api_name)
         hdrs = authorization.set_header({'Accept': 'application/json'}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
