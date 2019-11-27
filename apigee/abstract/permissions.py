@@ -9,30 +9,48 @@ from tabulate import tabulate
 
 class IPermissions:
 
-    def __init__(self, args):
-        self._args = args
+    def __init__(self, auth, org_name, role_name):
+        self._auth = auth
+        self._org_name = org_name
+        self._role_name = role_name
 
     def __call__(self):
         pass
 
     @property
-    def args(self):
-        return self._args
+    def auth(self):
+        return self._auth
 
-    @args.setter
-    def args(self, value):
-        self._args = value
+    @auth.setter
+    def auth(self, value):
+        self._auth = value
+
+    @property
+    def org_name(self):
+        return self._org_name
+
+    @org_name.setter
+    def org_name(self, value):
+        self._org_name = value
+
+    @property
+    def role_name(self):
+        return self._role_name
+
+    @role_name.setter
+    def role_name(self, value):
+        self._role_name = value
 
     @abstractmethod
-    def create_permissions(self):
+    def create_permissions(self, request_body):
         pass
 
     @abstractmethod
-    def team_permissions(self):
+    def team_permissions(self, team_prefix):
         pass
 
     @abstractmethod
-    def get_permissions(self, formatted=False, showindex=False, tablefmt='plain'):
+    def get_permissions(self, formatted=False, format='text', showindex=False, tablefmt='plain'):
         pass
 
 class PermissionsSerializer:
