@@ -5,7 +5,7 @@ import json
 import requests
 
 from apigee import APIGEE_ADMIN_API_URL
-from apigee.abstract.deployments import IDeployments, DeploymentsSerializer
+from apigee.abstract.api.deployments import IDeployments, DeploymentsSerializer
 from apigee.util import authorization
 
 class Deployments(IDeployments):

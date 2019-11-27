@@ -5,7 +5,7 @@ import json
 import requests
 
 from apigee import APIGEE_ADMIN_API_URL
-from apigee.abstract.apis import IApis, ApisSerializer
+from apigee.abstract.api.apis import IApis, ApisSerializer
 from apigee.api.deployments import Deployments
 from apigee.util import authorization
 from apigee.util.os import writezip as wzip

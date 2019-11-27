@@ -5,7 +5,7 @@ import json
 import requests
 
 from apigee import APIGEE_ADMIN_API_URL
-from apigee.abstract.permissions import IPermissions, PermissionsSerializer
+from apigee.abstract.api.permissions import IPermissions, PermissionsSerializer
 from apigee.util import authorization
 
 class Permissions(IPermissions):

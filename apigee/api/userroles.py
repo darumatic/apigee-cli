@@ -5,7 +5,7 @@ import json
 import requests
 
 from apigee import APIGEE_ADMIN_API_URL
-from apigee.abstract.userroles import IUserroles
+from apigee.abstract.api.userroles import IUserroles
 from apigee.util import authorization
 
 class Userroles(IUserroles):
