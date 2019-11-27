@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """https://apidocs.apigee.com/api-reference/content/api-proxies"""
 
-import requests
 import json
+import requests
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.apis import IApis, ApisSerializer
