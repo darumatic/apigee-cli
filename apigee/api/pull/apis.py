@@ -10,7 +10,8 @@ import zipfile
 from pathlib import Path
 
 from apigee.abstract.pull.apis import IPull
-from apigee.api.apis import export_api_proxy
+# from apigee.api.apis import export_api_proxy
+from apigee.api.apis import Apis
 from apigee.api.keyvaluemaps import get_keyvaluemap_in_an_environment
 from apigee.api.targetservers import get_targetserver
 from apigee.util.os import (
@@ -136,7 +137,7 @@ class Pull(IPull):
             paths_exist([self._zip_file, self._apiproxy_dir])
 
         print('Writing ZIP to', os.path.abspath(self._zip_file))
-        writezip(self._zip_file, export_api_proxy(self._args, write_zip=False).content)
+        writezip(self._zip_file, Apis(self._args, self._args.org, self._api_name).export_api_proxy(self._revision_number, writezip=False).content)
 
         makedirs(self._apiproxy_dir)
 
