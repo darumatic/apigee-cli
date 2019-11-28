@@ -54,11 +54,7 @@ class Apis(IApis):
         resp.raise_for_status()
         # print(resp.status_code)
         if writezip:
-            if output_file:
-                zip_file = output_file
-            else:
-                zip_file = self._api_name + '.zip'
-            wzip(zip_file, resp.content)
+            wzip(output_file, resp.content)
         return resp
 
     def get_api_proxy(self):
