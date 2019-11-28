@@ -60,28 +60,43 @@ class Pull(IPull):
                 f.write(resp)
 
     def get_targetserver_dependencies(self, files):
-        target_servers = []
+        targetservers = []
         for f in files:
             try:
                 root = et.parse(f).getroot()
                 for child in root.iter('Server'):
-                    target_servers.append(child.attrib['name'])
+                    targetservers.append(child.attrib['name'])
             except:
                 pass
-        return target_servers
+        return targetservers
 
-    def export_targetserver_dependencies(self, args, target_servers, force=False):
+    def export_targetserver_dependencies(self, args, targetservers, force=False):
         makedirs(self._targetservers_dir)
-        for ts in target_servers:
-            ts_file = serializepath([self._targetservers_dir, ts])
+        for targetserver in targetservers:
+            targetserver_file = serializepath([self._targetservers_dir, targetserver])
             if not force:
-                path_exists(ts_file)
-            print('Pulling', ts, 'and writing to', os.path.abspath(ts_file))
-            args.name = ts
+                path_exists(targetserver_file)
+            print('Pulling', targetserver, 'and writing to', os.path.abspath(targetserver_file))
+            args.name = targetserver
             resp = get_targetserver(args).text
             print(resp)
-            with open(ts_file, 'w') as f:
+            with open(targetserver_file, 'w') as f:
                 f.write(resp)
+
+    def replace_strings_in_files(self, files, strings, replacement):
+        for string in strings:
+            for file in files:
+                with open(file, 'r') as f:
+                    body = str()
+                    try:
+                        body = f.read()
+                    except Exception as e:
+                        print(type(e).__name__, e)
+                        print('Ignoring', file)
+                    if string in body:
+                        with open(file, 'w') as new_f:
+                            new_f.write(body.replace(string, str().join([replacement, string])))
+                        print('M  ', os.path.abspath(file))
 
     def prefix_dependencies_in_work_tree(self, dependencies, prefix):
         dependencies = [i for i in dependencies if not i.startswith(prefix)]
@@ -91,19 +106,7 @@ class Pull(IPull):
             if not os.path.isdir(str(filename)) and '.git' not in deserializepath(str(filename)):
                 files.append(str(filename))
         print('Prefixing', dependencies, 'with', prefix)
-        for dep in dependencies:
-            for file in files:
-                with open(file, 'r') as f:
-                    body = str()
-                    try:
-                        body = f.read()
-                    except Exception as e:
-                        print(type(e).__name__, e)
-                        print('Ignoring', file)
-                    if dep in body:
-                        with open(file, 'w') as new_f:
-                            new_f.write(body.replace(dep, str().join([prefix, dep])))
-                        print('M  ', os.path.abspath(file))
+        self.replace_strings_in_files(files, dependencies, prefix)
 
     def get_apiproxy_basepath(self, directory):
         default_file = serializepath([directory, 'apiproxy/proxies/default.xml'])
@@ -132,8 +135,7 @@ class Pull(IPull):
     def pull(self, dependencies=[], force=False, prefix=None, basepath=None):
         dependencies.append(self._api_name)
 
-        if self._work_tree:
-            makedirs(self._work_tree)
+        makedirs(self._work_tree)
 
         if not force:
             paths_exist([self._zip_file, self._apiproxy_dir])
@@ -157,12 +159,12 @@ class Pull(IPull):
 
         self.export_keyvaluemap_dependencies(self._args, keyvaluemaps, force=force)
 
-        target_servers = self.get_targetserver_dependencies(files)
+        targetservers = self.get_targetserver_dependencies(files)
 
-        print('TargetServer dependencies found:', target_servers)
-        dependencies.extend(target_servers)
+        print('TargetServer dependencies found:', targetservers)
+        dependencies.extend(targetservers)
 
-        self.export_targetserver_dependencies(self._args, target_servers, force=force)
+        self.export_targetserver_dependencies(self._args, targetservers, force=force)
 
         if prefix:
             self.prefix_dependencies_in_work_tree(list(set(dependencies)), prefix)

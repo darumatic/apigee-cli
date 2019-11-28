@@ -81,6 +81,10 @@ class IPull:
         pass
 
     @abstractmethod
+    def replace_strings_in_files(self, files, strings, replacement):
+        pass
+
+    @abstractmethod
     def prefix_dependencies_in_work_tree(self, dependencies, prefix):
         pass
 
