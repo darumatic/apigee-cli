@@ -83,7 +83,7 @@ class Pull(IPull):
             with open(targetserver_file, 'w') as f:
                 f.write(resp)
 
-    def replace_strings_in_files(self, files, strings, replacement):
+    def prefix_strings_in_files(self, files, strings, prefix):
         for string in strings:
             for file in files:
                 with open(file, 'r') as f:
@@ -95,7 +95,7 @@ class Pull(IPull):
                         print('Ignoring', file)
                     if string in body:
                         with open(file, 'w') as new_f:
-                            new_f.write(body.replace(string, str().join([replacement, string])))
+                            new_f.write(body.replace(string, str().join([prefix, string])))
                         print('M  ', os.path.abspath(file))
 
     def prefix_dependencies_in_work_tree(self, dependencies, prefix):
@@ -106,7 +106,7 @@ class Pull(IPull):
             if not os.path.isdir(str(filename)) and '.git' not in deserializepath(str(filename)):
                 files.append(str(filename))
         print('Prefixing', dependencies, 'with', prefix)
-        self.replace_strings_in_files(files, dependencies, prefix)
+        self.prefix_strings_in_files(files, dependencies, prefix)
 
     def get_apiproxy_basepath(self, directory):
         default_file = serializepath([directory, 'apiproxy/proxies/default.xml'])

@@ -117,6 +117,10 @@ class IPull:
         pass
 
     @abstractmethod
+    def prefix_strings_in_files(self, files, strings, prefix):
+        pass
+
+    @abstractmethod
     def prefix_dependencies_in_work_tree(self, dependencies, prefix):
         pass
 
