@@ -19,7 +19,9 @@ from apigee.util.os import (
     path_exists,
     paths_exist,
     extractzip,
-    writezip
+    writezip,
+    serializepath,
+    deserializepath
 )
 
 class Pull(IPull):
@@ -29,7 +31,7 @@ class Pull(IPull):
 
     def get_apiproxy_files(self, directory):
         files = []
-        for filename in Path(directory+'/apiproxy/').resolve().rglob('*'):
+        for filename in Path(serializepath([serializepath(deserializepath(directory)), 'apiproxy'])).resolve().rglob('*'):
             files.append(str(filename))
         return files
 
@@ -47,7 +49,7 @@ class Pull(IPull):
     def export_keyvaluemap_dependencies(self, args, keyvaluemaps, force=False):
         makedirs(self._keyvaluemaps_dir)
         for keyvaluemap in keyvaluemaps:
-            keyvaluemap_file = self._keyvaluemaps_dir+'/'+keyvaluemap
+            keyvaluemap_file = serializepath([self._keyvaluemaps_dir, keyvaluemap])
             if not force:
                 path_exists(keyvaluemap_file)
             print('Pulling', keyvaluemap, 'and writing to', os.path.abspath(keyvaluemap_file))
@@ -71,7 +73,7 @@ class Pull(IPull):
     def export_targetserver_dependencies(self, args, target_servers, force=False):
         makedirs(self._targetservers_dir)
         for ts in target_servers:
-            ts_file = self._targetservers_dir+'/'+ts
+            ts_file = serializepath([self._targetservers_dir, ts])
             if not force:
                 path_exists(ts_file)
             print('Pulling', ts, 'and writing to', os.path.abspath(ts_file))
@@ -86,7 +88,7 @@ class Pull(IPull):
         directory = self._work_tree
         files = []
         for filename in Path(directory).resolve().rglob('*'):
-            if not os.path.isdir(str(filename)) and '.git' not in str(filename):
+            if not os.path.isdir(str(filename)) and '.git' not in deserializepath(str(filename)):
                 files.append(str(filename))
         print('Prefixing', dependencies, 'with', prefix)
         for dep in dependencies:
@@ -100,11 +102,11 @@ class Pull(IPull):
                         print('Ignoring', file)
                     if dep in body:
                         with open(file, 'w') as new_f:
-                            new_f.write(body.replace(dep, prefix+dep))
+                            new_f.write(body.replace(dep, str().join([prefix, dep])))
                         print('M  ', os.path.abspath(file))
 
     def get_apiproxy_basepath(self, directory):
-        default_file = directory+'/apiproxy/proxies/default.xml'
+        default_file = serializepath([directory, 'apiproxy/proxies/default.xml'])
         tree = et.parse(default_file)
         try:
             return tree.find('.//BasePath').text, default_file
@@ -166,5 +168,5 @@ class Pull(IPull):
             self.prefix_dependencies_in_work_tree(list(set(dependencies)), prefix)
 
         if basepath:
-            basepath, file = self.get_apiproxy_basepath(self._apiproxy_dir)
+            current_basepath, file = self.get_apiproxy_basepath(self._apiproxy_dir)
             self.set_apiproxy_basepath(basepath, file)

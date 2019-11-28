@@ -5,6 +5,8 @@ import os
 from abc import ABC, abstractmethod
 from pathlib import Path
 
+from apigee.util.os import serializepath, deserializepath
+
 class IPull:
 
     def __init__(self, args, api_name, revision_number, work_tree=None):
@@ -15,12 +17,13 @@ class IPull:
             self._work_tree = str(Path(work_tree).resolve())
         else:
             self._work_tree = os.getcwd()
+        self._work_tree = serializepath(deserializepath(self._work_tree))
         self._api_name = api_name
         self._revision_number = revision_number
-        self._keyvaluemaps_dir = self._work_tree+'/keyvaluemaps/'+args.environment
-        self._targetservers_dir = self._work_tree+'/targetservers/'+args.environment
-        self._apiproxy_dir = self._work_tree+'/'+args.name
-        self._zip_file = self._apiproxy_dir+'.zip'
+        self._keyvaluemaps_dir = serializepath([self._work_tree, 'keyvaluemaps', args.environment])
+        self._targetservers_dir = serializepath([self._work_tree, 'targetservers', args.environment])
+        self._apiproxy_dir = serializepath([self._work_tree, args.name])
+        self._zip_file = str().join([self._apiproxy_dir, '.zip'])
 
     def __call__(self, *args, **kwargs):
         self.pull(*args, **kwargs)
@@ -49,13 +52,13 @@ class IPull:
     def revision_number(self, value):
         self._revision_number = value
 
-    @property
-    def work_tree(self):
-        return self._work_tree
-
-    @work_tree.setter
-    def work_tree(self, value):
-        self._work_tree = value
+    # @property
+    # def work_tree(self):
+    #     return self._work_tree
+    #
+    # @work_tree.setter
+    # def work_tree(self, value):
+    #     self._work_tree = value
 
     @abstractmethod
     def get_apiproxy_files(self, directory):

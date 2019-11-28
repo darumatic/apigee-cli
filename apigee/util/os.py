@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 import zipfile
 
@@ -21,3 +22,11 @@ def extractzip(source, dest):
 def writezip(file, content):
     with open(file, 'wb') as f:
         f.write(content)
+
+def serializepath(path_items, separator='/'):
+    if path_items[0] == '':
+        return '/' + separator.join(list(filter(None, path_items)))
+    return separator.join(list(filter(None, path_items)))
+
+def deserializepath(path, delimiter='[/\\\\]'):
+    return re.split(delimiter, path)
