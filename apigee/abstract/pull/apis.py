@@ -58,7 +58,39 @@ class IPull:
     #
     # @work_tree.setter
     # def work_tree(self, value):
-    #     self._work_tree = value
+    #     self.__init__(self._args, self._api_name, self._revision_number, work_tree=value)
+
+    @property
+    def keyvaluemaps_dir(self):
+        return self._keyvaluemaps_dir
+
+    @keyvaluemaps_dir.setter
+    def keyvaluemaps_dir(self, value):
+        self._keyvaluemaps_dir = serializepath([self._work_tree, value, args.environment])
+
+    @property
+    def targetservers_dir(self):
+        return self._targetservers_dir
+
+    @targetservers_dir.setter
+    def targetservers_dir(self, value):
+        self._targetservers_dir = serializepath([self._work_tree, value, args.environment])
+
+    @property
+    def apiproxy_dir(self):
+        return self._apiproxy_dir
+
+    @apiproxy_dir.setter
+    def apiproxy_dir(self, value):
+        self._apiproxy_dir = serializepath([self._work_tree, value])
+
+    @property
+    def zip_file(self):
+        return self._zip_file
+
+    @zip_file.setter
+    def zip_file(self, value):
+        self._zip_file = serializepath([self._work_tree, value])
 
     @abstractmethod
     def get_apiproxy_files(self, directory):
