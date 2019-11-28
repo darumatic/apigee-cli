@@ -66,7 +66,7 @@ class IPull:
 
     @keyvaluemaps_dir.setter
     def keyvaluemaps_dir(self, value):
-        self._keyvaluemaps_dir = serializepath([self._work_tree, value, args.environment])
+        self._keyvaluemaps_dir = serializepath([self._work_tree, value, self._args.environment])
 
     @property
     def targetservers_dir(self):
@@ -74,7 +74,7 @@ class IPull:
 
     @targetservers_dir.setter
     def targetservers_dir(self, value):
-        self._targetservers_dir = serializepath([self._work_tree, value, args.environment])
+        self._targetservers_dir = serializepath([self._work_tree, value, self._args.environment])
 
     @property
     def apiproxy_dir(self):
