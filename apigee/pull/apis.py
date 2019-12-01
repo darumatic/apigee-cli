@@ -14,7 +14,8 @@ from apigee.abstract.pull.apis import IPull
 from apigee.api.apis import Apis
 # from apigee.api.keyvaluemaps import get_keyvaluemap_in_an_environment
 from apigee.api.keyvaluemaps import Keyvaluemaps
-from apigee.api.targetservers import get_targetserver
+# from apigee.api.targetservers import get_targetserver
+from apigee.api.targetservers import Targetservers
 from apigee.util.os import (
     makedirs,
     path_exists,
@@ -70,15 +71,14 @@ class Pull(IPull):
                 pass
         return targetservers
 
-    def export_targetserver_dependencies(self, args, targetservers, force=False):
+    def export_targetserver_dependencies(self, environment, targetservers, force=False):
         makedirs(self._targetservers_dir)
         for targetserver in targetservers:
             targetserver_file = serializepath([self._targetservers_dir, targetserver])
             if not force:
                 path_exists(targetserver_file)
             print('Pulling', targetserver, 'and writing to', os.path.abspath(targetserver_file))
-            args.name = targetserver
-            resp = get_targetserver(args).text
+            resp = Targetservers(self._auth, self._org_name, targetserver).get_targetserver(environment).text
             print(resp)
             with open(targetserver_file, 'w') as f:
                 f.write(resp)
@@ -164,7 +164,7 @@ class Pull(IPull):
         print('TargetServer dependencies found:', targetservers)
         dependencies.extend(targetservers)
 
-        self.export_targetserver_dependencies(self._auth, targetservers, force=force)
+        self.export_targetserver_dependencies(self._environment, targetservers, force=force)
 
         if prefix:
             self.prefix_dependencies_in_work_tree(list(set(dependencies)), prefix)

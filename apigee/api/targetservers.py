@@ -1,73 +1,71 @@
 #!/usr/bin/env python
 """https://apidocs.apigee.com/api/api_resources/51-targetservers"""
 
-import requests
 import json
+import requests
 
 from apigee import APIGEE_ADMIN_API_URL
+from apigee.abstract.api.targetservers import ITargetservers, TargetserversSerializer
 from apigee.util import authorization
 
-def create_a_targetserver(args):
-    uri = '{}/v1/organizations/{}/environments/{}/targetservers'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment)
-    hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
-    body = json.loads(args.body)
-    resp = requests.post(uri, headers=hdrs, json=body)
-    resp.raise_for_status()
-    # print(resp.status_code)
-    return resp
+class Targetservers(ITargetservers):
 
-def delete_a_targetserver(args):
-    uri = '{}/v1/organizations/{}/environments/{}/targetservers/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
-    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
-    resp = requests.delete(uri, headers=hdrs)
-    resp.raise_for_status()
-    # print(resp.status_code)
-    return resp
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-def list_targetservers_in_an_environment(args):
-    uri = '{}/v1/organizations/{}/environments/{}/targetservers'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment)
-    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
-    resp = requests.get(uri, headers=hdrs)
-    resp.raise_for_status()
-    # print(resp.status_code)
-    if args.prefix:
-        return json.dumps([i for i in resp.json() if i.startswith(args.prefix)])
-    return resp.text
+    def create_a_targetserver(self, environment, request_body):
+        uri = '{0}/v1/organizations/{1}/environments/{2}/targetservers'.format(APIGEE_ADMIN_API_URL, self._org_name, environment)
+        hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, self._auth)
+        body = json.loads(request_body)
+        resp = requests.post(uri, headers=hdrs, json=body)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
 
-def get_targetserver(args):
-    uri = '{}/v1/organizations/{}/environments/{}/targetservers/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
-    hdrs = authorization.set_header({'Accept': 'application/json'}, args)
-    resp = requests.get(uri, headers=hdrs)
-    resp.raise_for_status()
-    # print(resp.status_code)
-    return resp
+    def delete_a_targetserver(self, environment):
+        uri = '{0}/v1/organizations/{1}/environments/{2}/targetservers/{3}'.format(APIGEE_ADMIN_API_URL, self._org_name, environment, self._targetserver_name)
+        hdrs = authorization.set_header({'Accept': 'application/json'}, self._auth)
+        resp = requests.delete(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
 
-def update_a_targetserver(args):
-    uri = '{}/v1/organizations/{}/environments/{}/targetservers/{}'.format(
-        APIGEE_ADMIN_API_URL, args.org, args.environment, args.name)
-    hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, args)
-    body = json.loads(args.body)
-    resp = requests.put(uri, headers=hdrs, json=body)
-    resp.raise_for_status()
-    # print(resp.status_code)
-    return resp
+    def list_targetservers_in_an_environment(self, environment, prefix=None):
+        uri = '{0}/v1/organizations/{1}/environments/{2}/targetservers'.format(APIGEE_ADMIN_API_URL, self._org_name, environment)
+        hdrs = authorization.set_header({'Accept': 'application/json'}, self._auth)
+        resp = requests.get(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return TargetserversSerializer().serialize_details(resp, 'json', prefix=prefix)
 
-def push_targetserver(args):
-    with open(args.file) as file:
-        body = file.read()
-    targetserver = json.loads(body)
+    def get_targetserver(self, environment):
+        uri = '{0}/v1/organizations/{1}/environments/{2}/targetservers/{3}'.format(APIGEE_ADMIN_API_URL, self._org_name, environment, self._targetserver_name)
+        hdrs = authorization.set_header({'Accept': 'application/json'}, self._auth)
+        resp = requests.get(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
 
-    args.name = targetserver['name']
-    args.body = body
+    def update_a_targetserver(self, environment, request_body):
+        uri = '{0}/v1/organizations/{1}/environments/{2}/targetservers/{3}'.format(APIGEE_ADMIN_API_URL, self._org_name, environment, self._targetserver_name)
+        hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, self._auth)
+        body = json.loads(request_body)
+        resp = requests.put(uri, headers=hdrs, json=body)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
 
-    try:
-        get_targetserver(args)
-        print('Updating', args.name)
-        print(update_a_targetserver(args).text)
-    except requests.exceptions.HTTPError:
-        print('Creating', args.name)
-        print(create_a_targetserver(args).text)
+    def push_targetserver(self, environment, file):
+        with open(file) as file:
+            body = file.read()
+        targetserver = json.loads(body)
+
+        self._targetserver_name = targetserver['name']
+
+        try:
+            self.get_targetserver(environment)
+            print('Updating', self._targetserver_name)
+            print(self.update_a_targetserver(environment, body).text)
+        except requests.exceptions.HTTPError:
+            print('Creating', self._targetserver_name)
+            print(self.create_a_targetserver(environment, body).text)
