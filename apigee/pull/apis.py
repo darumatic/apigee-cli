@@ -12,7 +12,8 @@ from pathlib import Path
 from apigee.abstract.pull.apis import IPull
 # from apigee.api.apis import export_api_proxy
 from apigee.api.apis import Apis
-from apigee.api.keyvaluemaps import get_keyvaluemap_in_an_environment
+# from apigee.api.keyvaluemaps import get_keyvaluemap_in_an_environment
+from apigee.api.keyvaluemaps import Keyvaluemaps
 from apigee.api.targetservers import get_targetserver
 from apigee.util.os import (
     makedirs,
@@ -46,15 +47,14 @@ class Pull(IPull):
                 pass
         return keyvaluemaps
 
-    def export_keyvaluemap_dependencies(self, args, keyvaluemaps, force=False):
+    def export_keyvaluemap_dependencies(self, environment, keyvaluemaps, force=False):
         makedirs(self._keyvaluemaps_dir)
         for keyvaluemap in keyvaluemaps:
             keyvaluemap_file = serializepath([self._keyvaluemaps_dir, keyvaluemap])
             if not force:
                 path_exists(keyvaluemap_file)
             print('Pulling', keyvaluemap, 'and writing to', os.path.abspath(keyvaluemap_file))
-            args.name = keyvaluemap
-            resp = get_keyvaluemap_in_an_environment(args).text
+            resp = Keyvaluemaps(self._auth, self._org_name, keyvaluemap).get_keyvaluemap_in_an_environment(environment).text
             print(resp)
             with open(keyvaluemap_file, 'w') as f:
                 f.write(resp)
@@ -141,7 +141,7 @@ class Pull(IPull):
             paths_exist([self._zip_file, self._apiproxy_dir])
 
         print('Writing ZIP to', os.path.abspath(self._zip_file))
-        writezip(self._zip_file, Apis(self._args, self._args.org, self._api_name).export_api_proxy(self._revision_number, writezip=False).content)
+        writezip(self._zip_file, Apis(self._auth, self._org_name, self._api_name).export_api_proxy(self._revision_number, writezip=False).content)
 
         makedirs(self._apiproxy_dir)
 
@@ -157,14 +157,14 @@ class Pull(IPull):
         print('KeyValueMap dependencies found:', keyvaluemaps)
         dependencies.extend(keyvaluemaps)
 
-        self.export_keyvaluemap_dependencies(self._args, keyvaluemaps, force=force)
+        self.export_keyvaluemap_dependencies(self._environment, keyvaluemaps, force=force)
 
         targetservers = self.get_targetserver_dependencies(files)
 
         print('TargetServer dependencies found:', targetservers)
         dependencies.extend(targetservers)
 
-        self.export_targetserver_dependencies(self._args, targetservers, force=force)
+        self.export_targetserver_dependencies(self._auth, targetservers, force=force)
 
         if prefix:
             self.prefix_dependencies_in_work_tree(list(set(dependencies)), prefix)

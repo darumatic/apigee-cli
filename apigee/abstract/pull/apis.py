@@ -9,8 +9,9 @@ from apigee.util.os import serializepath, deserializepath
 
 class IPull:
 
-    def __init__(self, args, api_name, revision_number, work_tree=None):
-        self._args = args
+    def __init__(self, auth, org_name, api_name, revision_number, environment, work_tree=None):
+        self._auth = auth
+        self._org_name = org_name
         if work_tree:
             if not os.path.exists(work_tree):
                 os.makedirs(work_tree)
@@ -20,21 +21,30 @@ class IPull:
         self._work_tree = serializepath(deserializepath(self._work_tree))
         self._api_name = api_name
         self._revision_number = revision_number
-        self._keyvaluemaps_dir = serializepath([self._work_tree, 'keyvaluemaps', args.environment])
-        self._targetservers_dir = serializepath([self._work_tree, 'targetservers', args.environment])
-        self._apiproxy_dir = serializepath([self._work_tree, args.name])
+        self._environment = environment
+        self._keyvaluemaps_dir = serializepath([self._work_tree, 'keyvaluemaps', environment])
+        self._targetservers_dir = serializepath([self._work_tree, 'targetservers', environment])
+        self._apiproxy_dir = serializepath([self._work_tree, api_name])
         self._zip_file = str().join([self._apiproxy_dir, '.zip'])
 
     def __call__(self, *args, **kwargs):
         self.pull(*args, **kwargs)
 
     @property
-    def args(self):
-        return self._args
+    def auth(self):
+        return self._auth
 
-    @args.setter
-    def args(self, value):
-        self._args = value
+    @auth.setter
+    def auth(self, value):
+        self._auth = value
+
+    @property
+    def org_name(self):
+        return self._org_name
+
+    @org_name.setter
+    def org_name(self, value):
+        self._org_name = value
 
     @property
     def api_name(self):
@@ -52,6 +62,14 @@ class IPull:
     def revision_number(self, value):
         self._revision_number = value
 
+    @property
+    def environment(self):
+        return self._environment
+
+    @environment.setter
+    def environment(self, value):
+        self._environment = value
+
     # @property
     # def work_tree(self):
     #     return self._work_tree
@@ -66,7 +84,7 @@ class IPull:
 
     @keyvaluemaps_dir.setter
     def keyvaluemaps_dir(self, value):
-        self._keyvaluemaps_dir = serializepath([self._work_tree, value, self._args.environment])
+        self._keyvaluemaps_dir = serializepath([self._work_tree, value, self._environment])
 
     @property
     def targetservers_dir(self):
@@ -74,7 +92,7 @@ class IPull:
 
     @targetservers_dir.setter
     def targetservers_dir(self, value):
-        self._targetservers_dir = serializepath([self._work_tree, value, self._args.environment])
+        self._targetservers_dir = serializepath([self._work_tree, value, self._environment])
 
     @property
     def apiproxy_dir(self):
@@ -101,7 +119,7 @@ class IPull:
         pass
 
     @abstractmethod
-    def export_keyvaluemap_dependencies(self, args, keyvaluemaps, force=False):
+    def export_keyvaluemap_dependencies(self, environment, keyvaluemaps, force=False):
         pass
 
     @abstractmethod
@@ -109,7 +127,7 @@ class IPull:
         pass
 
     @abstractmethod
-    def export_targetserver_dependencies(self, args, target_servers, force=False):
+    def export_targetserver_dependencies(self, environment, target_servers, force=False):
         pass
 
     @abstractmethod
@@ -133,5 +151,5 @@ class IPull:
         pass
 
     @abstractmethod
-    def pull(self, dependencies=[], force=False, prefix=None, basepath=None):
+    def pull(self, environment, dependencies=[], force=False, prefix=None, basepath=None):
         pass
