@@ -124,8 +124,12 @@ class Keyvaluemaps(IKeyvaluemaps):
                 try:
                     self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry['name'])
                     self.update_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
-                except requests.exceptions.HTTPError:
-                    self.create_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
+                except requests.exceptions.HTTPError as e:
+                    status_code = e.response.status_code
+                    if status_code == 404:
+                        self.create_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
+                    else:
+                        raise e
                 bar.update(idx)
             bar.finish()
 
