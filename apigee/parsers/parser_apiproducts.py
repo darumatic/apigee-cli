@@ -1,6 +1,6 @@
 import argparse
 
-from apigee.api import apiproducts
+from apigee.api.apiproducts import Apiproducts
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
@@ -63,13 +63,13 @@ class ParserApiproducts:
         create_api_product = self._parser_apiproducts.add_parser('create', aliases=['create-api-product'], parents=[self._parent_parser()],
             help='Creates an API product in an organization.')
         create_api_product.add_argument('-b', '--body', help='request body', required=True)
-        create_api_product.set_defaults(func=lambda args: print(apiproducts.create_api_product(args).text))
+        create_api_product.set_defaults(func=lambda args: print(Apiproducts(args, args.org, args.name).create_api_product(args.body).text))
 
     def _build_delete_api_product_argument(self):
         delete_api_product = self._parser_apiproducts.add_parser('delete', aliases=['delete-api-product'], parents=[self._parent_parser()],
             help='Deletes an API product from an organization.')
         delete_api_product.add_argument('-n', '--name', help='name', required=True)
-        delete_api_product.set_defaults(func=lambda args: print(apiproducts.delete_api_product(args).text))
+        delete_api_product.set_defaults(func=lambda args: print(Apiproducts(args, args.org, args.name).delete_api_product().text))
 
     def _build_list_api_products_argument(self):
         list_api_products = self._parser_apiproducts.add_parser('list', aliases=['list-api-products'], parents=[self._parent_parser(), self._prefix_parser()],
@@ -80,25 +80,25 @@ class ParserApiproducts:
             help='Number of API products to return in the API call. The maximum limit is 1000. Use with the startkey to provide more targeted filtering.')
         list_api_products.add_argument('--startkey', default='',
             help='Returns a list of API products starting with the specified API product.')
-        list_api_products.set_defaults(func=lambda args: print(apiproducts.list_api_products(args)))
+        list_api_products.set_defaults(func=lambda args: print(Apiproducts(args, args.org, None).list_api_products(prefix=args.prefix, expand=args.expand, count=args.count, startkey=args.startkey)))
 
     def _build_get_api_product_argument(self):
         get_api_product = self._parser_apiproducts.add_parser('get', aliases=['get-api-product'], parents=[self._parent_parser()],
             help='Gets configuration data for an API product. The API product name required in the request URL is not the "Display Name" value displayed for the API product in the Edge UI. While they may be the same, they are not always the same depending on whether the API product was created via UI or API.')
         get_api_product.add_argument('-n', '--name', help='name', required=True)
-        get_api_product.set_defaults(func=lambda args: print(apiproducts.get_api_product(args).text))
+        get_api_product.set_defaults(func=lambda args: print(Apiproducts(args, args.org, args.name).get_api_product().text))
 
     def _build_update_api_product_argument(self):
         update_api_product = self._parser_apiproducts.add_parser('update', aliases=['update-api-product'], parents=[self._parent_parser()],
             help='Updates an existing API product. You must include all required values, whether or not you are updating them, as well as any optional values that you are updating.')
         update_api_product.add_argument('-n', '--name', help='name', required=True)
         update_api_product.add_argument('-b', '--body', help='request body', required=True)
-        update_api_product.set_defaults(func=lambda args: print(apiproducts.update_api_product(args).text))
+        update_api_product.set_defaults(func=lambda args: print(Apiproducts(args, args.org, args.name).update_api_product(args.body).text))
 
     def _build_push_apiproducts_argument(self):
         push_apiproducts = self._parser_apiproducts.add_parser('push', aliases=['push-apiproducts'], parents=[self._parent_parser(), self._file_parser()],
             help='Push API product to Apigee. This will create/update an API product.')
-        push_apiproducts.set_defaults(func=lambda args: apiproducts.push_apiproducts(args))
+        push_apiproducts.set_defaults(func=lambda args: Apiproducts(args, args.org, None).push_apiproducts(args.file))
 
     def _create_parser(self):
         self._build_create_api_product_argument()
