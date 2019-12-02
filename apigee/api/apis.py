@@ -155,30 +155,30 @@ class Pull(IPull):
             with open(targetserver_file, 'w') as f:
                 f.write(resp)
 
-    def prefix_strings_in_files(self, files, strings, prefix):
-        for string in strings:
-            for file in files:
-                with open(file, 'r') as f:
-                    body = str()
-                    try:
-                        body = f.read()
-                    except Exception as e:
-                        print(type(e).__name__, e)
-                        print('Ignoring', file)
-                    if string in body:
-                        with open(file, 'w') as new_f:
-                            new_f.write(body.replace(string, str().join([prefix, string])))
-                        print('M  ', os.path.abspath(file))
+    def replace_substring(self, file, old, new):
+        with open(file, 'r') as f:
+            body = str()
+            try:
+                body = f.read()
+            except Exception as e:
+                print(type(e).__name__, e)
+                print('Ignoring', file)
+            if old in body:
+                with open(file, 'w') as nf:
+                    nf.write(body.replace(old, new))
+                print('M  ', os.path.abspath(file))
 
     def prefix_dependencies_in_work_tree(self, dependencies, prefix):
-        dependencies = [i for i in dependencies if not i.startswith(prefix)]
+        dependencies = [dep for dep in dependencies if not dep.startswith(prefix)]
         directory = self._work_tree
         files = []
         for filename in Path(directory).resolve().rglob('*'):
             if not os.path.isdir(str(filename)) and '.git' not in deserializepath(str(filename)):
                 files.append(str(filename))
         print('Prefixing', dependencies, 'with', prefix)
-        self.prefix_strings_in_files(files, dependencies, prefix)
+        for f in files:
+            for dep in dependencies:
+                self.replace_substring(f, dep, prefix+dep)
 
     def get_apiproxy_basepath(self, directory):
         default_file = serializepath([directory, 'apiproxy/proxies/default.xml'])
