@@ -58,14 +58,18 @@ class Targetservers(ITargetservers):
     def push_targetserver(self, environment, file):
         with open(file) as file:
             body = file.read()
-        targetserver = json.loads(body)
 
+        targetserver = json.loads(body)
         self._targetserver_name = targetserver['name']
 
         try:
             self.get_targetserver(environment)
             print('Updating', self._targetserver_name)
             print(self.update_a_targetserver(environment, body).text)
-        except requests.exceptions.HTTPError:
-            print('Creating', self._targetserver_name)
-            print(self.create_a_targetserver(environment, body).text)
+        except requests.exceptions.HTTPError as e:
+            status_code = e.response.status_code
+            if status_code == 404:
+                print('Creating', self._targetserver_name)
+                print(self.create_a_targetserver(environment, body).text)
+            else:
+                raise e

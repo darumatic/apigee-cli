@@ -109,13 +109,13 @@ class Keyvaluemaps(IKeyvaluemaps):
     def push_keyvaluemap(self, environment, file):
         with open(file) as kvm_file:
             body = kvm_file.read()
-        kvm = json.loads(body)
 
+        kvm = json.loads(body)
         self._map_name = kvm['name']
 
         try:
             kvm_on_apigee = self.get_keyvaluemap_in_an_environment(environment).json()
-            deleted_entries = [i for i in kvm_on_apigee['entry'] if i not in kvm['entry']]
+            deleted_entries = [entry for entry in kvm_on_apigee['entry'] if entry not in kvm['entry']]
 
             bar = progressbar.ProgressBar(maxval=len(kvm['entry'])).start()
             print('Updating existing entries in', self._map_name)
@@ -136,6 +136,10 @@ class Keyvaluemaps(IKeyvaluemaps):
                     self.delete_keyvaluemap_entry_in_an_environment(environment, entry['name'])
                     bar.update(idx)
             bar.finish()
-        except requests.exceptions.HTTPError:
-            print('Creating', self._map_name)
-            print(self.create_keyvaluemap_in_an_environment(environment, body).text)
+        except requests.exceptions.HTTPError as e:
+            status_code = e.response.status_code
+            if status_code == 404:
+                print('Creating', self._map_name)
+                print(self.create_keyvaluemap_in_an_environment(environment, body).text)
+            else:
+                raise e
