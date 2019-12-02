@@ -53,8 +53,7 @@ class Apis(IApis):
         deployments = Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json()['environment']
         deployment_details = list(map(gen_deployment_detail, deployments))
         deployed = []
-        for dep in deployment_details:
-            deployed.extend(dep['revision'])
+        list(map(lambda dep: deployed.extend(dep['revision']), deployment_details))
         deployed = list(set(deployed))
         undeployed = [int(rev) for rev in revisions if rev not in deployed]
         undeployed.sort()
@@ -213,7 +212,7 @@ class Pull(IPull):
             paths_exist([self._zip_file, self._apiproxy_dir])
 
         print('Writing ZIP to', os.path.abspath(self._zip_file))
-        writezip(self._zip_file, Apis(self._auth, self._org_name, self._api_name).export_api_proxy(self._revision_number, writezip=False).content)
+        Apis(self._auth, self._org_name, self._api_name).export_api_proxy(self._revision_number, writezip=True, output_file=self._zip_file)
 
         makedirs(self._apiproxy_dir)
 
