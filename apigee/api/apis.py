@@ -105,7 +105,8 @@ class Pull(IPull):
 
     def get_apiproxy_files(self, directory):
         files = []
-        for filename in Path(serializepath([serializepath(deserializepath(directory)), 'apiproxy'])).resolve().rglob('*'):
+        directory = serializepath(deserializepath(directory))
+        for filename in Path(serializepath([directory, 'apiproxy'])).resolve().rglob('*'):
             files.append(str(filename))
         return files
 
