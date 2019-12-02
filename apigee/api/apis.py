@@ -56,8 +56,7 @@ class Apis(IApis):
         for dep in deployment_details:
             deployed.extend(dep['revision'])
         deployed = list(set(deployed))
-        undeployed = [rev for rev in revisions if rev not in deployed]
-        undeployed = [int(rev) for rev in undeployed]
+        undeployed = [int(rev) for rev in revisions if rev not in deployed]
         undeployed.sort()
         undeployed = undeployed[:len(undeployed)-save_last]
         print('Undeployed revisions:', undeployed)
