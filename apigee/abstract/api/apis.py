@@ -42,21 +42,27 @@ class IApis:
     def api_name(self, value):
         self._api_name = value
 
+    @abstractmethod
     def delete_api_proxy_revision(self, revision_number):
         pass
 
+    @abstractmethod
     def delete_undeployed_revisions(self, save_last=0, dry_run=False):
         pass
 
+    @abstractmethod
     def export_api_proxy(self, revision_number, writezip=True, output_file=None):
         pass
 
+    @abstractmethod
     def get_api_proxy(self):
         pass
 
+    @abstractmethod
     def list_api_proxies(self, prefix=None):
         pass
 
+    @abstractmethod
     def list_api_proxy_revisions(self):
         pass
 

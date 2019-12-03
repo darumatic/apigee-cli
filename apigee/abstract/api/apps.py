@@ -41,24 +41,31 @@ class IApps:
     def __call__(self):
         pass
 
+    @abstractmethod
     def create_developer_app(self, developer, request_body):
         pass
 
+    @abstractmethod
     def create_empty_developer_app(self, developer, display_name='', callback_url=''):
         pass
 
+    @abstractmethod
     def get_developer_app_details(self, developer):
         pass
 
+    @abstractmethod
     def list_developer_apps(self, developer, prefix=None, expand=False, count=100, startkey=''):
         pass
 
+    @abstractmethod
     def delete_key_for_a_developer_app(self, developer, consumer_key):
         pass
 
+    @abstractmethod
     def create_a_consumer_key_and_secret(self, developer, consumer_key=None, consumer_secret=None, key_length=32, secret_length=32, key_suffix=None, key_delimiter='-', products=[]):
         pass
 
+    @abstractmethod
     def add_api_product_to_key(self, developer, consumer_key, request_body):
         pass
 
