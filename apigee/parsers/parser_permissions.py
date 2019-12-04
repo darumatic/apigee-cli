@@ -51,7 +51,8 @@ class ParserPermissions:
             help='Create default permissions for a team role based on a template.')
         team_permissions.add_argument('-n', '--name', help='name of user role', required=True)
         team_permissions.add_argument('-t', '--team', help='team prefix/code', required=True)
-        team_permissions.set_defaults(func=lambda args: print(Permissions(args, args.org, args.name).team_permissions(args.team).text))
+        team_permissions.add_argument('--prod', action='store_true', help='use permissions for prod org', required=False)
+        team_permissions.set_defaults(func=lambda args: print(Permissions(args, args.org, args.name).team_permissions(args.team, prod=args.prod).text))
 
     def _build_get_permissions_argument(self):
         get_permissions = self._parser_permissions.add_parser('get', aliases=['get-permissions'], parents=[self._parent_parser()],

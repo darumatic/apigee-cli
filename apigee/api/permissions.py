@@ -22,190 +22,194 @@ class Permissions(IPermissions):
         # print(resp.status_code)
         return resp
 
-    def team_permissions(self, team_prefix):
+    def team_permissions(self, team_prefix, prod=False):
         uri = '{0}/v1/organizations/{1}/userroles/{2}/resourcepermissions'.format(APIGEE_ADMIN_API_URL, self._org_name, self._role_name)
         hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, self._auth)
-        body = {
-          "resourcePermission" : [
-          {
-            "path" : "/",
-            "permissions" : [ "get" ]
-          },
-          {
-            "path" : "/apiproducts",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/apiproducts/*",
-            "permissions" : [ ]
-          },
-          {
-            "path" : "/apiproducts/" + team_prefix + "*",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/applications",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/applications/*",
-            "permissions" : [ "get" ]
-          },
-          {
-            "path" : "/developers/*/apps",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/developers/*/apps*",
-            "permissions" : [  ]
-          },
-          {
-            "path" : "/developers/*/apps/" + team_prefix + "*",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/developers/*/apps/" + team_prefix + "*/attributes",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/developers/*/apps/" + team_prefix + "*/attributes/*",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/*/caches",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/applications/*/revisions",
-            "permissions" : [ "get" ]
-          },
-          {
-            "path" : "/applications/" + team_prefix + "*/revisions/*",
-            "permissions" : [ "put", "get", "delete" ]
-          },
-          {
-            "path" : "/environments/*/caches/*",
-            "permissions" : [ ]
-          },
-          {
-            "path" : "/applications/*/deployments",
-            "permissions" : [ "get" ]
-          },
-          {
-            "path" : "/environments/*/deployments",
-            "permissions" : [ "get" ]
-          },
-          {
-            "path" : "/apiproducts/" + team_prefix + "*/attributes",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/apiproxies/" + team_prefix + "*/maskconfigs",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/environments/*/keyvaluemaps",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/environments/*/virtualhosts",
-            "permissions" : [ "get" ]
-          },
-          {
-            "path" : "/environments/*/caches/" + team_prefix + "*",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/*/targetservers",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/apiproducts/" + team_prefix + "*/attributes/*",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/apiproxies/" + team_prefix + "*/maskconfigs/*",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/*/keyvaluemaps/*",
-            "permissions" : [ ]
-          },
-          {
-            "path" : "/environments/*/virtualhosts/*",
-            "permissions" : [ "get" ]
-          },
-          {
-            "path" : "/environments/*/targetservers/*",
-            "permissions" : [ ]
-          },
-          {
-            "path" : "/environments/*/keyvaluemaps/" + team_prefix + "*",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/*/keyvaluemaps/" + team_prefix + "*/entries",
-            "permissions" : [ "put" ]
-          },
-          {
-            "path" : "/environments/*/targetservers/" + team_prefix + "*",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "organization": "snsw",
-            "path": "/applications/*/revisions/*",
-            "permissions": [ "put", "get", "delete" ]
-          },
-          {
-            "path" : "/applications/*/revisions/*/deployments",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/environments/*/applications/*/deployments",
-            "permissions" : [ "get" ]
-          },
-          {
-            "path" : "/environments/*/keyvaluemaps/" + team_prefix + "*/entries/*",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/*/applications/*/revisions/*/deployments",
-            "permissions" : [ "get" ]
-          },
-          {
-            "path" : "/environments/*/applications/" + team_prefix + "*/revisions/*/deployments",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/dev/applications/*/revisions/*/deployments",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/sit/applications/*/revisions/*/deployments",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/test/applications/*/revisions/*/deployments",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/sandbox/applications/*/revisions/*/deployments",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/psm/applications/*/revisions/*/deployments",
-            "permissions" : [ "delete", "put", "get" ]
-          },
-          {
-            "path" : "/environments/*/applications/" + team_prefix + "*/revisions/*/debugsessions",
-            "permissions" : [ "put", "get" ]
-          },
-          {
-            "path" : "/environments/*/applications/" + team_prefix + "*/revisions/*/debugsessions/*",
-            "permissions" : [ "delete", "put", "get" ]
-          }
-         ]
-        }
+        if prod:
+            import sys
+            sys.exit('error: no permissions at the moment')
+        else:
+            body = {
+              "resourcePermission" : [
+              {
+                "path" : "/",
+                "permissions" : [ "get" ]
+              },
+              {
+                "path" : "/apiproducts",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/apiproducts/*",
+                "permissions" : [ ]
+              },
+              {
+                "path" : "/apiproducts/" + team_prefix + "*",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/applications",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/applications/*",
+                "permissions" : [ "get" ]
+              },
+              {
+                "path" : "/developers/*/apps",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/developers/*/apps*",
+                "permissions" : [  ]
+              },
+              {
+                "path" : "/developers/*/apps/" + team_prefix + "*",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/developers/*/apps/" + team_prefix + "*/attributes",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/developers/*/apps/" + team_prefix + "*/attributes/*",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/*/caches",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/applications/*/revisions",
+                "permissions" : [ "get" ]
+              },
+              {
+                "path" : "/applications/" + team_prefix + "*/revisions/*",
+                "permissions" : [ "put", "get", "delete" ]
+              },
+              {
+                "path" : "/environments/*/caches/*",
+                "permissions" : [ ]
+              },
+              {
+                "path" : "/applications/*/deployments",
+                "permissions" : [ "get" ]
+              },
+              {
+                "path" : "/environments/*/deployments",
+                "permissions" : [ "get" ]
+              },
+              {
+                "path" : "/apiproducts/" + team_prefix + "*/attributes",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/apiproxies/" + team_prefix + "*/maskconfigs",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/environments/*/keyvaluemaps",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/environments/*/virtualhosts",
+                "permissions" : [ "get" ]
+              },
+              {
+                "path" : "/environments/*/caches/" + team_prefix + "*",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/*/targetservers",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/apiproducts/" + team_prefix + "*/attributes/*",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/apiproxies/" + team_prefix + "*/maskconfigs/*",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/*/keyvaluemaps/*",
+                "permissions" : [ ]
+              },
+              {
+                "path" : "/environments/*/virtualhosts/*",
+                "permissions" : [ "get" ]
+              },
+              {
+                "path" : "/environments/*/targetservers/*",
+                "permissions" : [ ]
+              },
+              {
+                "path" : "/environments/*/keyvaluemaps/" + team_prefix + "*",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/*/keyvaluemaps/" + team_prefix + "*/entries",
+                "permissions" : [ "put" ]
+              },
+              {
+                "path" : "/environments/*/targetservers/" + team_prefix + "*",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "organization": "snsw",
+                "path": "/applications/*/revisions/*",
+                "permissions": [ "put", "get", "delete" ]
+              },
+              {
+                "path" : "/applications/*/revisions/*/deployments",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/environments/*/applications/*/deployments",
+                "permissions" : [ "get" ]
+              },
+              {
+                "path" : "/environments/*/keyvaluemaps/" + team_prefix + "*/entries/*",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/*/applications/*/revisions/*/deployments",
+                "permissions" : [ "get" ]
+              },
+              {
+                "path" : "/environments/*/applications/" + team_prefix + "*/revisions/*/deployments",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/dev/applications/*/revisions/*/deployments",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/sit/applications/*/revisions/*/deployments",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/test/applications/*/revisions/*/deployments",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/sandbox/applications/*/revisions/*/deployments",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/psm/applications/*/revisions/*/deployments",
+                "permissions" : [ "delete", "put", "get" ]
+              },
+              {
+                "path" : "/environments/*/applications/" + team_prefix + "*/revisions/*/debugsessions",
+                "permissions" : [ "put", "get" ]
+              },
+              {
+                "path" : "/environments/*/applications/" + team_prefix + "*/revisions/*/debugsessions/*",
+                "permissions" : [ "delete", "put", "get" ]
+              }
+             ]
+            }
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         # print(resp.status_code)
