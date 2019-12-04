@@ -1,6 +1,6 @@
 import argparse
 
-from apigee.api import developers
+from apigee.api.developers import Developers
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.prefix_parser import PrefixParser
@@ -58,7 +58,7 @@ class ParserDevelopers:
             help='Limits the list to the number you specify. Use with the startKey parameter to provide more targeted filtering. The limit is 1000.')
         list_developers.add_argument('--startkey', default='',
             help='To filter the keys that are returned, enter the email of a developer that the list will start with.')
-        list_developers.set_defaults(func=lambda args: print(developers.list_developers(args)))
+        list_developers.set_defaults(func=lambda args: print(Developers(args, args.org, None).list_developers(prefix=args.prefix, expand=args.expand, count=args.count, startkey=args.startkey)))
 
     def _create_parser(self):
         self._build_list_developers_argument()
