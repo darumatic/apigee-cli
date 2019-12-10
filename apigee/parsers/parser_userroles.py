@@ -86,6 +86,11 @@ class ParserUserroles:
         parser.add_argument('--resource-path', help='the resource path', default='')
         parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).get_resource_permissions_for_a_specific_role(resource_path=args.resource_path).text))
 
+    def _build_get_users_for_a_role_argument(self):
+        parser = self._parser_userroles.add_parser('get-users', aliases=['get-users-for-a-role'], help='Returns a list of all system users associated with a role.', parents=[self._parent_parser()])
+        parser.add_argument('-n', '--name', help='the role name', required=True)
+        parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).get_users_for_a_role().text))
+
     def _build_remove_user_membership_in_role_argument(self):
         parser = self._parser_userroles.add_parser('remove-user', aliases=['remove-user-membership-in-role'], help='Remove user membership in role.', parents=[self._parent_parser()])
         parser.add_argument('-n', '--name', help='the role name', required=True)
@@ -101,4 +106,5 @@ class ParserUserroles:
         self._build_delete_a_user_role_argument()
         self._build_get_a_role_argument()
         self._build_get_resource_permissions_for_a_specific_role_argument()
+        self._build_get_users_for_a_role_argument()
         self._build_remove_user_membership_in_role_argument()
