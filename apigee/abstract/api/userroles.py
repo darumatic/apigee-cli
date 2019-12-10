@@ -66,7 +66,7 @@ class IUserroles:
         pass
 
     @abstractmethod
-    def get_resource_permissions_for_a_specific_role(self):
+    def get_resource_permissions_for_a_specific_role(self, resource_path=''):
         pass
 
     @abstractmethod
