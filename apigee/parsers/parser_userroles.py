@@ -113,6 +113,12 @@ class ParserUserroles:
         parser.add_argument('--resource-path', help='the resource path', required=True)
         parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).verify_a_user_roles_permission_on_a_specific_RBAC_resource(args.permission, args.resource_path).text))
 
+    def _build_verify_user_role_membership_argument(self):
+        parser = self._parser_userroles.add_parser('verify-membership', aliases=['verify-user-role-membership'], help='Verify user role membership.', parents=[self._parent_parser()])
+        parser.add_argument('-n', '--name', help='the role name', required=True)
+        parser.add_argument('--user-email', help='the email address of the user', required=True)
+        parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).verify_user_role_membership(args.user_email).text))
+
     def _create_parser(self):
         self._build_add_a_user_to_a_role_argument()
         self._build_add_permissions_for_a_resource_to_a_user_role_argument()
@@ -127,3 +133,4 @@ class ParserUserroles:
         self._build_list_user_roles_argument()
         self._build_remove_user_membership_in_role_argument()
         self._build_verify_a_user_roles_permission_on_a_specific_RBAC_resource_argument()
+        self._build_verify_user_role_membership_argument()

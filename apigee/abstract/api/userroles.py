@@ -90,5 +90,5 @@ class IUserroles:
         pass
 
     @abstractmethod
-    def verify_user_role_membership(self):
+    def verify_user_role_membership(self, user_email):
         pass
