@@ -104,7 +104,12 @@ class Userroles(IUserroles):
         return resp
 
     def list_user_roles(self):
-        pass
+        uri = '{0}/v1/organizations/{1}/userroles'.format(APIGEE_ADMIN_API_URL, self._org_name)
+        hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, self._auth)
+        resp = requests.get(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
 
     def remove_user_membership_in_role(self, user_email):
         uri = '{0}/v1/organizations/{1}/userroles/{2}/users/{3}'.format(APIGEE_ADMIN_API_URL, self._org_name, self._role_name, user_email)

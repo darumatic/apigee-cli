@@ -96,6 +96,10 @@ class ParserUserroles:
         parser.add_argument('-n', '--name', help='the role name', required=True)
         parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).list_permissions_for_a_resource().text))
 
+    def _build_list_user_roles_argument(self):
+        parser = self._parser_userroles.add_parser('list', aliases=['list-user-roles'], help='Gets a list of roles available to users in an organization.', parents=[self._parent_parser()])
+        parser.set_defaults(func=lambda args: print(Userroles(args, args.org, None).list_user_roles().text))
+
     def _build_remove_user_membership_in_role_argument(self):
         parser = self._parser_userroles.add_parser('remove-user', aliases=['remove-user-membership-in-role'], help='Remove user membership in role.', parents=[self._parent_parser()])
         parser.add_argument('-n', '--name', help='the role name', required=True)
@@ -113,4 +117,5 @@ class ParserUserroles:
         self._build_get_resource_permissions_for_a_specific_role_argument()
         self._build_get_users_for_a_role_argument()
         self._build_list_permissions_for_a_resource_argument()
+        self._build_list_user_roles_argument()
         self._build_remove_user_membership_in_role_argument()
