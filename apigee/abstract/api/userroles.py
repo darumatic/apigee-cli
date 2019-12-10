@@ -86,7 +86,7 @@ class IUserroles:
         pass
 
     @abstractmethod
-    def verify_a_user_roles_permission_on_a_specific_RBAC_resource(self):
+    def verify_a_user_roles_permission_on_a_specific_RBAC_resource(self, permission, resource_path):
         pass
 
     @abstractmethod
