@@ -58,6 +58,10 @@ class IMaskconfigs:
     def list_data_masks_for_an_organization(self):
         pass
 
+    @abstractmethod
+    def push_data_masks_for_an_api_proxy(self, file):
+        pass
+
 class MaskconfigsSerializer:
     def serialize_details(self, maskconfigs, format, prefix=None):
         resp = maskconfigs

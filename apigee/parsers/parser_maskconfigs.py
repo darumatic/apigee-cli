@@ -3,6 +3,7 @@ import argparse
 from apigee.api.maskconfigs import Maskconfigs
 
 from apigee.parsers.parent_parser import ParentParser
+from apigee.parsers.file_parser import FileParser
 
 class ParserMaskconfigs:
 
@@ -10,6 +11,7 @@ class ParserMaskconfigs:
         self._parser = parser
         self._parser_maskconfigs = self._parser.add_parser('mask', aliases=['maskconfigs'], help='manage data masks').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
+        self._file_parser = kwargs.get('file_parser', FileParser())
         self._create_parser()
 
     @property
@@ -35,6 +37,14 @@ class ParserMaskconfigs:
     @parent_parser.setter
     def parent_parser(self, value):
         self._parent_parser = value
+
+    @property
+    def file_parser(self):
+        return self._file_parser
+
+    @file_parser.setter
+    def file_parser(self, value):
+        self._file_parser = value
 
     def __call__(self):
         return self._parser
@@ -71,9 +81,16 @@ class ParserMaskconfigs:
             help='List all data masks for an organization.')
         list_data_masks_for_an_organization.set_defaults(func=lambda args: print(Maskconfigs(args, args.org, None).list_data_masks_for_an_organization().text))
 
+    def _build_push_data_masks_for_an_api_proxy_argument(self):
+        push_data_masks_for_an_api_proxy = self._parser_maskconfigs.add_parser('push', aliases=['push-data-masks-for-an-api-proxy'], parents=[self._parent_parser(), self._file_parser()],
+            help='Push data mask for an API proxy to Apigee. This will create/update a data mask.')
+        push_data_masks_for_an_api_proxy.add_argument('-n', '--name', help='name', required=True)
+        push_data_masks_for_an_api_proxy.set_defaults(func=lambda args: Maskconfigs(args, args.org, args.name).push_data_masks_for_an_api_proxy(args.file))
+
     def _create_parser(self):
         self._build_create_data_masks_for_an_api_proxy_argument()
         self._build_delete_data_masks_for_an_api_proxy_argument()
         self._build_get_data_mask_details_for_an_api_proxy_argument()
         self._build_list_data_masks_for_an_api_proxy_argument()
         self._build_list_data_masks_for_an_organization_argument()
+        self._build_push_data_masks_for_an_api_proxy_argument()
