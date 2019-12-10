@@ -46,7 +46,7 @@ class IUserroles:
         pass
 
     @abstractmethod
-    def add_permissions_for_multiple_resources_to_a_user_role(self):
+    def add_permissions_for_multiple_resources_to_a_user_role(self, request_body):
         pass
 
     @abstractmethod

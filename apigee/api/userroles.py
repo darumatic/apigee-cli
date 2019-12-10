@@ -30,8 +30,14 @@ class Userroles(IUserroles):
         # print(resp.status_code)
         return resp
 
-    def add_permissions_for_multiple_resources_to_a_user_role(self):
-        pass
+    def add_permissions_for_multiple_resources_to_a_user_role(self, request_body):
+        uri = '{0}/v1/organizations/{1}/userroles/{2}/resourcepermissions'.format(APIGEE_ADMIN_API_URL, self._org_name, self._role_name)
+        hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, self._auth)
+        body = json.loads(request_body)
+        resp = requests.post(uri, headers=hdrs, json=body)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
 
     def create_a_user_role_in_an_organization(self):
         uri = '{0}/v1/organizations/{1}/userroles'.format(APIGEE_ADMIN_API_URL, self._org_name)

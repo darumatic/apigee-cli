@@ -52,6 +52,12 @@ class ParserUserroles:
         parser.add_argument('-b', '--body', help='request body', required=True)
         parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).add_permissions_for_a_resource_to_a_user_role(args.body).text))
 
+    def _build_add_permissions_for_multiple_resources_to_a_user_role_argument(self):
+        parser = self._parser_userroles.add_parser('add-permissions-multiple', aliases=['add-permissions-for-multiple-resources-to-a-user-role'], help='Adds multiple permissions to multiple resources simultaneously.', parents=[self._parent_parser()])
+        parser.add_argument('-n', '--name', help='name', required=True)
+        parser.add_argument('-b', '--body', help='request body', required=True)
+        parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).add_permissions_for_multiple_resources_to_a_user_role(args.body).text))
+
     def _build_create_a_user_role_in_an_organization_argument(self):
         parser = self._parser_userroles.add_parser('create', aliases=['create-a-user-role-in-an-organization'], help='Creates one ore more user roles in an organization.', parents=[self._parent_parser()])
         parser.add_argument('-n', '--name', nargs='+', help='list of role names', required=True)
@@ -78,6 +84,7 @@ class ParserUserroles:
     def _create_parser(self):
         self._build_add_a_user_to_a_role_argument()
         self._build_add_permissions_for_a_resource_to_a_user_role_argument()
+        self._build_add_permissions_for_multiple_resources_to_a_user_role_argument()
         self._build_create_a_user_role_in_an_organization_argument()
         self._build_delete_a_permission_for_a_resource_argument()
         self._build_delete_a_user_role_argument()
