@@ -151,6 +151,8 @@ def printDeployments(dep):
         print('Environment: %s' % d['environment'])
         print('  Revision: %i BasePath = %s' % (d['revision'], d['basePath']))
         print('  State: %s' % d['state'])
+        if d['state'] != 'deployed':
+            sys.exit(1)
         if 'error' in d:
             print('  Error: %s' % d['error'])
 
