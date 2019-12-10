@@ -70,7 +70,12 @@ class Userroles(IUserroles):
         return resp
 
     def get_a_role(self):
-        pass
+        uri = '{0}/v1/organizations/{1}/userroles/{2}'.format(APIGEE_ADMIN_API_URL, self._org_name, self._role_name)
+        hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, self._auth)
+        resp = requests.get(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
 
     def get_resource_permissions_for_a_specific_role(self):
         pass
