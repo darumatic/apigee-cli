@@ -15,15 +15,7 @@ from apigee.api.deployments import Deployments
 from apigee.api.keyvaluemaps import Keyvaluemaps
 from apigee.api.targetservers import Targetservers
 from apigee.util import authorization
-from apigee.util.os import writezip as wzip
-from apigee.util.os import (
-    makedirs,
-    path_exists,
-    paths_exist,
-    extractzip,
-    writezip,
-    serializepath,
-    deserializepath
+from apigee.util.os import (makedirs, path_exists, paths_exist, extractzip, writezip, serializepath, deserializepath
 )
 
 class Apis(IApis):
@@ -62,14 +54,13 @@ class Apis(IApis):
         if not dry_run:
             list(map(delete_revisions, undeployed))
 
-    def export_api_proxy(self, revision_number, writezip=True, output_file=None):
+    def export_api_proxy(self, revision_number, write=True, output_file=None):
         uri = '{0}/v1/organizations/{1}/apis/{2}/revisions/{3}?format=bundle'.format(APIGEE_ADMIN_API_URL, self._org_name, self._api_name, revision_number)
         hdrs = authorization.set_header({'Accept': 'application/json'}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         # print(resp.status_code)
-        if writezip:
-            wzip(output_file, resp.content)
+        if write: writezip(output_file, resp.content)
         return resp
 
     def get_api_proxy(self):
@@ -212,7 +203,7 @@ class Pull(IPull):
             paths_exist([self._zip_file, self._apiproxy_dir])
 
         print('Writing ZIP to', os.path.abspath(self._zip_file))
-        Apis(self._auth, self._org_name, self._api_name).export_api_proxy(self._revision_number, writezip=True, output_file=self._zip_file)
+        Apis(self._auth, self._org_name, self._api_name).export_api_proxy(self._revision_number, write=True, output_file=self._zip_file)
 
         makedirs(self._apiproxy_dir)
 

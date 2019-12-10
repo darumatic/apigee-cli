@@ -100,7 +100,7 @@ class ParserApis:
         export_api_proxy.add_argument('-n', '--name', help='name', required=True)
         export_api_proxy.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
         export_api_proxy.add_argument('-O', '--output-file', help='output file')
-        export_api_proxy.set_defaults(func=lambda args: Apis(args, args.org, args.name).export_api_proxy(args.revision_number, writezip=True, output_file=args.output_file if args.output_file else '{}.zip'.format(args.name)))
+        export_api_proxy.set_defaults(func=lambda args: Apis(args, args.org, args.name).export_api_proxy(args.revision_number, write=True, output_file=args.output_file if args.output_file else '{}.zip'.format(args.name)))
         # export_api_proxy.set_defaults(func=apis.export_api_proxy)
 
     def _build_pull_argument(self):
