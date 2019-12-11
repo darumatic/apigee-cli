@@ -14,8 +14,14 @@ class Developers(IDevelopers):
         super().__init__(*args, **kwargs)
 
     def list_developers(self, prefix=None, expand=False, count=100, startkey=''):
-        uri = '{0}/v1/organizations/{1}/developers?expand={2}&count={3}&startKey={4}'.format(APIGEE_ADMIN_API_URL, self._org_name, expand, count, startkey)
-        hdrs = authorization.set_header({'Accept': 'application/json'}, self._auth)
+        uri = '{0}/v1/organizations/{1}/developers?expand={2}&count={3}&startKey={4}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    expand,
+                    count,
+                    startkey)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         # print(resp.status_code)
