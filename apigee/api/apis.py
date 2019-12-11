@@ -259,7 +259,7 @@ class Pull(IPull):
         self.export_targetserver_dependencies(self._environment, targetservers, force=force)
 
         if prefix:
-            self.prefix_dependencies_in_work_tree(list(set(dependencies)), prefix)
+            self.prefix_dependencies_in_work_tree(set(dependencies), prefix)
 
         if basepath:
             current_basepath, file = self.get_apiproxy_basepath(self._apiproxy_dir)
