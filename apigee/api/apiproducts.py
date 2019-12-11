@@ -14,8 +14,12 @@ class Apiproducts(IApiproducts):
         super().__init__(*args, **kwargs)
 
     def create_api_product(self, request_body):
-        uri = '{0}/v1/organizations/{1}/apiproducts'.format(APIGEE_ADMIN_API_URL, self._org_name)
-        hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, self._auth)
+        uri = '{0}/v1/organizations/{1}/apiproducts' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name)
+        hdrs = authorization.set_header({'Accept': 'application/json',
+                                         'Content-Type': 'application/json'},
+                                        self._auth)
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -23,32 +27,51 @@ class Apiproducts(IApiproducts):
         return resp
 
     def delete_api_product(self):
-        uri = '{0}/v1/organizations/{1}/apiproducts/{2}'.format(APIGEE_ADMIN_API_URL, self._org_name, self._apiproduct_name)
-        hdrs = authorization.set_header({'Accept': 'application/json'}, self._auth)
+        uri = '{0}/v1/organizations/{1}/apiproducts/{2}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    self._apiproduct_name)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         # print(resp.status_code)
         return resp
 
     def get_api_product(self):
-        uri = '{0}/v1/organizations/{1}/apiproducts/{2}'.format(APIGEE_ADMIN_API_URL, self._org_name, self._apiproduct_name)
-        hdrs = authorization.set_header({'Accept': 'application/json'}, self._auth)
+        uri = '{0}/v1/organizations/{1}/apiproducts/{2}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    self._apiproduct_name)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         # print(resp.status_code)
         return resp
 
     def list_api_products(self, prefix=None, expand=False, count=1000, startkey=''):
-        uri = '{0}/v1/organizations/{1}/apiproducts?expand={2}&count={3}&startKey={4}'.format(APIGEE_ADMIN_API_URL, self._org_name, expand, count, startkey)
-        hdrs = authorization.set_header({'Accept': 'application/json'}, self._auth)
+        uri = '{0}/v1/organizations/{1}/apiproducts?expand={2}&count={3}&startKey={4}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    expand,
+                    count,
+                    startkey)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         # print(resp.status_code)
         return ApiproductsSerializer().serialize_details(resp, 'json', prefix=prefix)
 
     def update_api_product(self, request_body):
-        uri = '{0}/v1/organizations/{1}/apiproducts/{2}'.format(APIGEE_ADMIN_API_URL, self._org_name, self._apiproduct_name)
-        hdrs = authorization.set_header({'Accept': 'application/json', 'Content-Type': 'application/json'}, self._auth)
+        uri = '{0}/v1/organizations/{1}/apiproducts/{2}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    self._apiproduct_name)
+        hdrs = authorization.set_header({'Accept': 'application/json',
+                                         'Content-Type': 'application/json'},
+                                        self._auth)
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -56,12 +79,10 @@ class Apiproducts(IApiproducts):
         return resp
 
     def push_apiproducts(self, file):
-        with open(file) as file:
-            body = file.read()
-
+        with open(file) as f:
+            body = f.read()
         apiproduct = json.loads(body)
         self._apiproduct_name = apiproduct['name']
-
         try:
             self.get_api_product()
             print('Updating', self._apiproduct_name)
