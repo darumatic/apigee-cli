@@ -192,7 +192,7 @@ class Pull(IPull):
         directory = self._work_tree
         files = []
         for filename in Path(directory).resolve().rglob('*'):
-            if not os.path.isdir(str(filename)) and '.git' not in deserializepath(str(filename)):
+            if not filename.is_dir() and '.git' not in deserializepath(str(filename)):
                 files.append(str(filename))
         print('Prefixing', dependencies, 'with', prefix)
         for f in files:
