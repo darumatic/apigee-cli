@@ -34,6 +34,9 @@ class Configure:
     def __call__(self):
         self._main()
 
+    def _mask_secret(self, secret):
+        return '*' * 16
+
     def _remove_empty_keys(self, dict):
         return {k: v for k, v in dict.items() if v}
 
@@ -44,8 +47,8 @@ class Configure:
 
     def _main(self):
         self._profile_dict['username']   = input('Apigee username (email) [{}]: '                    .format(self._profile_dict['username']))
-        self._profile_dict['password']   = input('Apigee password [{}]: '                            .format(self._profile_dict['password']))
-        self._profile_dict['mfa_secret'] = input('Apigee MFA key (recommended) [{}]: '               .format(self._profile_dict['mfa_secret']))
+        self._profile_dict['password']   = input('Apigee password [{}]: '                            .format(self._mask_secret(self._profile_dict['password'])))
+        self._profile_dict['mfa_secret'] = input('Apigee MFA key (recommended) [{}]: '               .format(self._mask_secret(self._profile_dict['mfa_secret'])))
         self._profile_dict['org']        = input('Default Apigee organization (recommended) [{}]: '  .format(self._profile_dict['org']))
         self._profile_dict['prefix']     = input('Default team/resource prefix (recommended) [{}]: ' .format(self._profile_dict['prefix']))
 
