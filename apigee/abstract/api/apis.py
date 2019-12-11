@@ -6,7 +6,7 @@ import os
 from abc import ABC, abstractmethod
 from pathlib import Path
 
-from apigee.util.os import serializepath, deserializepath
+# from apigee.util.os import serializepath, deserializepath
 
 class IApis:
 
@@ -93,14 +93,18 @@ class IPull:
             self._work_tree = str(Path(work_tree).resolve())
         else:
             self._work_tree = os.getcwd()
-        self._work_tree = serializepath(deserializepath(self._work_tree))
+        # self._work_tree = serializepath(deserializepath(self._work_tree))
         self._api_name = api_name
         self._revision_number = revision_number
         self._environment = environment
-        self._keyvaluemaps_dir = serializepath([self._work_tree, 'keyvaluemaps', environment])
-        self._targetservers_dir = serializepath([self._work_tree, 'targetservers', environment])
-        self._apiproxy_dir = serializepath([self._work_tree, api_name])
-        self._zip_file = str().join([self._apiproxy_dir, '.zip'])
+        # self._keyvaluemaps_dir = serializepath([self._work_tree, 'keyvaluemaps', environment])
+        self._keyvaluemaps_dir = str(Path(self._work_tree) / 'keyvaluemaps' / environment)
+        # self._targetservers_dir = serializepath([self._work_tree, 'targetservers', environment])
+        self._targetservers_dir = str(Path(self._work_tree) / 'targetservers' / environment)
+        # self._apiproxy_dir = serializepath([self._work_tree, api_name])
+        self._apiproxy_dir = str(Path(self._work_tree) / api_name)
+        # self._zip_file = ''.join([self._apiproxy_dir, '.zip'])
+        self._zip_file = str(Path(self._apiproxy_dir).with_suffix('.zip'))
 
     def __call__(self, *args, **kwargs):
         self.pull(*args, **kwargs)
@@ -159,7 +163,7 @@ class IPull:
 
     @keyvaluemaps_dir.setter
     def keyvaluemaps_dir(self, value):
-        self._keyvaluemaps_dir = serializepath([self._work_tree, value, self._environment])
+        self._keyvaluemaps_dir = str(Path(self._work_tree) / value / environment)
 
     @property
     def targetservers_dir(self):
@@ -167,7 +171,7 @@ class IPull:
 
     @targetservers_dir.setter
     def targetservers_dir(self, value):
-        self._targetservers_dir = serializepath([self._work_tree, value, self._environment])
+        self._targetservers_dir = str(Path(self._work_tree) / value / environment)
 
     @property
     def apiproxy_dir(self):
@@ -175,7 +179,7 @@ class IPull:
 
     @apiproxy_dir.setter
     def apiproxy_dir(self, value):
-        self._apiproxy_dir = serializepath([self._work_tree, value])
+        self._apiproxy_dir = str(Path(self._work_tree) / value)
 
     @property
     def zip_file(self):
@@ -183,7 +187,7 @@ class IPull:
 
     @zip_file.setter
     def zip_file(self, value):
-        self._zip_file = serializepath([self._work_tree, value])
+        self._zip_file = str(Path(self._apiproxy_dir) / value)
 
     @abstractmethod
     def get_apiproxy_files(self, directory):
