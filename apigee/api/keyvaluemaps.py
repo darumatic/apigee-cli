@@ -169,29 +169,33 @@ class Keyvaluemaps(IKeyvaluemaps):
         kvm = json.loads(body)
         self._map_name = kvm['name']
         try:
-            kvm_on_apigee = self.get_keyvaluemap_in_an_environment(environment).json()
-            deleted_entries = [entry for entry in kvm_on_apigee['entry'] if entry not in kvm['entry']]
+            keyvaluemap_in_an_environment = self.get_keyvaluemap_in_an_environment(environment).json()
+
+            # get KeyValueMap entries to be deleted
+            keys = [_['name'] for _ in kvm['entry']]
+            entries_deleted = [_ for _ in keyvaluemap_in_an_environment['entry'] if _['name'] not in keys]
 
             bar = progressbar.ProgressBar(maxval=len(kvm['entry'])).start()
-            print('Updating existing entries in', self._map_name)
+            print('Updating entries in', self._map_name)
 
             for idx, entry in enumerate(kvm['entry']):
-                try:
-                    self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry['name'])
-                    self.update_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
-                except requests.exceptions.HTTPError as e:
-                    status_code = e.response.status_code
-                    if status_code == 404:
-                        self.create_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
-                    else:
-                        raise e
+                if entry not in keyvaluemap_in_an_environment['entry']:
+                    try:
+                        self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry['name'])
+                        self.update_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
+                    except requests.exceptions.HTTPError as e:
+                        status_code = e.response.status_code
+                        if status_code == 404:
+                            self.create_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
+                        else:
+                            raise e
                 bar.update(idx)
             bar.finish()
 
-            if deleted_entries:
-                bar = progressbar.ProgressBar(maxval=len(deleted_entries)).start()
-                print('Updating deleted entries in', self._map_name)
-                for idx, entry in enumerate(deleted_entries):
+            if entries_deleted:
+                bar = progressbar.ProgressBar(maxval=len(entries_deleted)).start()
+                print('Deleting entries in', self._map_name)
+                for idx, entry in enumerate(entries_deleted):
                     self.delete_keyvaluemap_entry_in_an_environment(environment, entry['name'])
                     bar.update(idx)
             bar.finish()
