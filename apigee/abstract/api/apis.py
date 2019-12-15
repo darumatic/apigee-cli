@@ -6,7 +6,7 @@ import os
 from abc import ABC, abstractmethod
 from pathlib import Path
 
-# from apigee.util.os import serializepath, deserializepath
+# from apigee.util.os import serializepath, splitpath
 
 class IApis:
 
@@ -93,7 +93,7 @@ class IPull:
             self._work_tree = str(Path(work_tree).resolve())
         else:
             self._work_tree = os.getcwd()
-        # self._work_tree = serializepath(deserializepath(self._work_tree))
+        # self._work_tree = serializepath(splitpath(self._work_tree))
         self._api_name = api_name
         self._revision_number = revision_number
         self._environment = environment
