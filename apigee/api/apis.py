@@ -15,7 +15,7 @@ from apigee.api.deployments import Deployments
 from apigee.api.keyvaluemaps import Keyvaluemaps
 from apigee.api.targetservers import Targetservers
 from apigee.util import authorization
-from apigee.util.os import (makedirs, path_exists, paths_exist, extractzip, writezip, deserializepath#, serializepath, deserializepath
+from apigee.util.os import (makedirs, path_exists, paths_exist, extractzip, writezip, splitpath#, serializepath, splitpath
 )
 
 class Apis(IApis):
@@ -134,7 +134,8 @@ class Pull(IPull):
             try:
                 root = et.parse(f).getroot()
                 if root.tag == 'KeyValueMapOperations':
-                    keyvaluemaps.append(root.attrib['mapIdentifier'])
+                    if root.attrib['mapIdentifier'] not in keyvaluemaps:
+                        keyvaluemaps.append(root.attrib['mapIdentifier'])
             except:
                 pass
         return keyvaluemaps
@@ -146,7 +147,8 @@ class Pull(IPull):
             if not force:
                 path_exists(keyvaluemap_file)
             print('Pulling', keyvaluemap, 'and writing to', os.path.abspath(keyvaluemap_file))
-            resp = Keyvaluemaps(self._auth, self._org_name, keyvaluemap).get_keyvaluemap_in_an_environment(environment).text
+            resp = Keyvaluemaps(self._auth, self._org_name, keyvaluemap) \
+                .get_keyvaluemap_in_an_environment(environment).text
             print(resp)
             with open(keyvaluemap_file, 'w') as f:
                 f.write(resp)
@@ -157,7 +159,8 @@ class Pull(IPull):
             try:
                 root = et.parse(f).getroot()
                 for child in root.iter('Server'):
-                    targetservers.append(child.attrib['name'])
+                    if child.attrib['name'] not in targetservers:
+                        targetservers.append(child.attrib['name'])
             except:
                 pass
         return targetservers
@@ -169,7 +172,8 @@ class Pull(IPull):
             if not force:
                 path_exists(targetserver_file)
             print('Pulling', targetserver, 'and writing to', os.path.abspath(targetserver_file))
-            resp = Targetservers(self._auth, self._org_name, targetserver).get_targetserver(environment).text
+            resp = Targetservers(self._auth, self._org_name, targetserver) \
+                .get_targetserver(environment).text
             print(resp)
             with open(targetserver_file, 'w') as f:
                 f.write(resp)
@@ -192,7 +196,7 @@ class Pull(IPull):
         directory = self._work_tree
         files = []
         for filename in Path(directory).resolve().rglob('*'):
-            if not filename.is_dir() and '.git' not in deserializepath(str(filename)):
+            if not filename.is_dir() and '.git' not in splitpath(str(filename)):
                 files.append(str(filename))
         print('Prefixing', dependencies, 'with', prefix)
         for f in files:
