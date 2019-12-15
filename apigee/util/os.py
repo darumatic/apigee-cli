@@ -23,10 +23,8 @@ def writezip(file, content):
     with open(file, 'wb') as f:
         f.write(content)
 
-def serializepath(path_items, separator='/'):
-    if path_items[0] == '':
-        return '/' + separator.join(list(filter(None, path_items)))
-    return separator.join(list(filter(None, path_items)))
+# def serializepath(path_items, separator='/'):
+#     pass
 
-def deserializepath(path, delimiter='[/\\\\]'):
+def splitpath(path, delimiter='[/\\\\]'):
     return re.split(delimiter, path)
