@@ -37,9 +37,9 @@ class Permissions(IPermissions):
                                          'Content-Type': 'application/json'},
                                         self._auth)
         if prod:
-            body = production.resource_permission(team_prefix)
+            body = production.resource_permissions(team_prefix)
         else:
-            body = default.resource_permission(team_prefix)
+            body = default.resource_permissions(team_prefix)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         # print(resp.status_code)

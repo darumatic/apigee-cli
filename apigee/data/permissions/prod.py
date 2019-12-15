@@ -1,4 +1,4 @@
-def resource_permission(team_prefix):
+def resource_permissions(team_prefix):
     return {
       "resourcePermission" : [
       {
