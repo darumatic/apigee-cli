@@ -42,6 +42,10 @@ class IDevelopers:
     def list_developers(self):
         pass
 
+    @abstractmethod
+    def get_developer_attribute(self, attribute_name):
+        pass
+
 class DevelopersSerializer:
     def serialize_details(self, developers, format, prefix=None):
         resp = developers

@@ -17,3 +17,5 @@ APIGEE_ADMIN_API_URL = 'https://api.enterprise.apigee.com'
 APIGEE_OAUTH_URL = 'https://login.apigee.com/oauth/token'
 APIGEE_ORG = getenv('APIGEE_ORG')
 HTTP_MAX_RETRIES = 3
+
+APIGEE_CLI_AUTHORIZATION_DEVELOPER_ATTRIBUTE = 'team'

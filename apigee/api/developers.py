@@ -26,3 +26,16 @@ class Developers(IDevelopers):
         resp.raise_for_status()
         # print(resp.status_code)
         return DevelopersSerializer().serialize_details(resp, 'json', prefix=prefix)
+
+    def get_developer_attribute(self, attribute_name):
+        uri = '{}/v1/organizations/{}/developers/{}/attributes/{}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    self._developer_email,
+                    attribute_name)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
+        resp = requests.get(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp

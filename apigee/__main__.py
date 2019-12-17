@@ -2,6 +2,7 @@
 """apigee"""
 
 import argparse
+import json
 
 import apigee
 
@@ -14,6 +15,7 @@ from apigee.parsers.format_parser import FormatParser
 from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
 
+from apigee.parsers.parser_authorization import ParserAuthorization
 from apigee.parsers.parser_configure import ParserConfigure
 from apigee.parsers.parser_apis import ParserApis
 from apigee.parsers.parser_deployments import ParserDeployments
@@ -42,9 +44,10 @@ def main():
     parser.add_argument('-V', '--version', action='version', version=apigee.APP + ' ' + apigee.__version__)
     subparsers = parser.add_subparsers()
 
-    parser_test = subparsers.add_parser('test', aliases=['get-access-token'], help='get access token', parents=[parent_parser()])
+    parser_test = subparsers.add_parser('test', aliases=['access-token'], help='get access token', parents=[parent_parser()])
     parser_test.set_defaults(func=lambda args: print(mfa_with_pyotp.get_access_token(args)))
 
+    ParserAuthorization(subparsers).parser
     ParserConfigure(subparsers).parser
     ParserApis(subparsers, parent_parser=parent_parser, dir_parser=dir_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
     ParserDeployments(subparsers, parent_parser=parent_parser).parser
