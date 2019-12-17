@@ -5,16 +5,16 @@ apigee-cli
 This package provides a command-line interface for the Apigee Management API with easy-to-use MFA authentication. ::
 
     usage: apigee [-h] [-V]
-                  {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,userroles}
+                  {auth,authorization,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,userroles}
                   ...
 
     Apigee Management API command-line interface with easy-to-use MFA
     authentication
 
     positional arguments:
-      {test,get-access-token,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,userroles}
-        test (get-access-token)
-                            get access token
+      {auth,authorization,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,userroles}
+        auth (authorization)
+                            verify authorization
         configure           configure credentials
         apis                manage apis
         deployments (deps)  see apis that are actively deployed
@@ -121,7 +121,7 @@ Getting an OAuth 2.0 Access Token
 
 To get an OAuth 2.0 access token, configure an MFA key, then run::
 
-    $ apigee test
+    $ apigee auth access-token
 
 This will return ``None`` if an MFA key is not set.
 
@@ -301,9 +301,9 @@ To ``push`` a key value map in a file to Apigee Edge, run::
 
 This will display a loading bar output like so::
 
-    Updating existing entries in test-kvm                                                              |
+    Updating entries in test-kvm                                                                       |
     100% |#############################################################################################|
-    Updating deleted entries in test-kvm                                                               |
+    Deleting entries in test-kvm                                                                       |
     100% |#############################################################################################|
 
 As you can see, this command will update existing entries and delete those that are not present in the request body.
