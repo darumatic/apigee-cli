@@ -39,3 +39,15 @@ class Developers(IDevelopers):
         resp.raise_for_status()
         # print(resp.status_code)
         return resp
+
+    def get_all_developer_attributes(self):
+        uri = '{}/v1/organizations/{}/developers/{}/attributes' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    self._developer_email)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
+        resp = requests.get(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
