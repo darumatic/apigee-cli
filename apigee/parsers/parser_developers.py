@@ -68,6 +68,13 @@ class ParserDevelopers:
         update_a_developer_attribute.add_argument('--updated-value', help="updated value", required=True)
         update_a_developer_attribute.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).update_a_developer_attribute(args.attribute_name, args.updated_value).text))
 
+    def _build_delete_developer_attribute_argument(self):
+        delete_developer_attribute = self._parser_developers.add_parser('delete-attr', aliases=['delete-attribute', 'delete-developer-attribute'], parents=[self._parent_parser()],
+            help='Deletes a developer attribute.')
+        delete_developer_attribute.add_argument('-n', '--name', help="the developer's email address", required=True)
+        delete_developer_attribute.add_argument('--attribute-name', help="attribute name", required=True)
+        delete_developer_attribute.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).delete_developer_attribute(args.attribute_name).text))
+
     def _build_get_all_developer_attributes_argument(self):
         get_all_developer_attributes = self._parser_developers.add_parser('get-attrs', aliases=['get-attributes', 'get-all-developer-attributes'], parents=[self._parent_parser()],
             help='Returns a list of all developer attributes.')
@@ -84,5 +91,6 @@ class ParserDevelopers:
     def _create_parser(self):
         self._build_list_developers_argument()
         self._build_update_a_developer_attribute_argument()
+        self._build_delete_developer_attribute_argument()
         self._build_get_all_developer_attributes_argument()
         self._build_update_all_developer_attributes_argument()

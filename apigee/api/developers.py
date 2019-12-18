@@ -54,6 +54,19 @@ class Developers(IDevelopers):
         # print(resp.status_code)
         return resp
 
+    def delete_developer_attribute(self, attribute_name):
+        uri = '{0}/v1/organizations/{1}/developers/{2}/attributes/{3}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    self._developer_email,
+                    attribute_name)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
+        resp = requests.delete(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
+
     def get_all_developer_attributes(self):
         uri = '{0}/v1/organizations/{1}/developers/{2}/attributes' \
             .format(APIGEE_ADMIN_API_URL,

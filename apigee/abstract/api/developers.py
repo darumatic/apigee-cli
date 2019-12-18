@@ -51,6 +51,10 @@ class IDevelopers:
         pass
 
     @abstractmethod
+    def delete_developer_attribute(self, attribute_name):
+        pass
+
+    @abstractmethod
     def get_all_developer_attributes(self):
         pass
 
