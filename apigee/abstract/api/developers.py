@@ -54,6 +54,10 @@ class IDevelopers:
     def get_all_developer_attributes(self):
         pass
 
+    @abstractmethod
+    def update_all_developer_attributes(self, request_body):
+        pass
+
 class DevelopersSerializer:
     def serialize_details(self, developers, format, prefix=None):
         resp = developers

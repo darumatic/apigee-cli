@@ -74,7 +74,15 @@ class ParserDevelopers:
         get_all_developer_attributes.add_argument('-n', '--name', help="the developer's email address", required=True)
         get_all_developer_attributes.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).get_all_developer_attributes().text))
 
+    def _build_update_all_developer_attributes_argument(self):
+        update_all_developer_attributes = self._parser_developers.add_parser('update-all-attrs', aliases=['update-all-attributes', 'update-all-developer-attributes'], parents=[self._parent_parser()],
+            help='Updates or creates developer attributes. This API replaces the current list of attributes with the attributes specified in the request body. This lets you update existing attributes, add new attributes, or delete existing attributes by omitting them from the request body.')
+        update_all_developer_attributes.add_argument('-n', '--name', help="the developer's email address", required=True)
+        update_all_developer_attributes.add_argument('-b', '--body', help='request body', required=True)
+        update_all_developer_attributes.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).update_all_developer_attributes(args.body).text))
+
     def _create_parser(self):
         self._build_list_developers_argument()
         self._build_update_a_developer_attribute_argument()
         self._build_get_all_developer_attributes_argument()
+        self._build_update_all_developer_attributes_argument()
