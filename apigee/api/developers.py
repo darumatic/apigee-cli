@@ -28,7 +28,7 @@ class Developers(IDevelopers):
         return DevelopersSerializer().serialize_details(resp, 'json', prefix=prefix)
 
     def get_developer_attribute(self, attribute_name):
-        uri = '{}/v1/organizations/{}/developers/{}/attributes/{}' \
+        uri = '{0}/v1/organizations/{1}/developers/{2}/attributes/{3}' \
             .format(APIGEE_ADMIN_API_URL,
                     self._org_name,
                     self._developer_email,
@@ -40,8 +40,22 @@ class Developers(IDevelopers):
         # print(resp.status_code)
         return resp
 
+    def update_a_developer_attribute(self, attribute_name, updated_value):
+        uri = '{0}/v1/organizations/{1}/developers/{2}/attributes/{3}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    self._developer_email,
+                    attribute_name)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
+        body = {"value" : updated_value}
+        resp = requests.post(uri, headers=hdrs, json=body)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
+
     def get_all_developer_attributes(self):
-        uri = '{}/v1/organizations/{}/developers/{}/attributes' \
+        uri = '{0}/v1/organizations/{1}/developers/{2}/attributes' \
             .format(APIGEE_ADMIN_API_URL,
                     self._org_name,
                     self._developer_email)

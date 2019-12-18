@@ -60,6 +60,14 @@ class ParserDevelopers:
             help='To filter the keys that are returned, enter the email of a developer that the list will start with.')
         list_developers.set_defaults(func=lambda args: print(Developers(args, args.org, None).list_developers(prefix=args.prefix, expand=args.expand, count=args.count, startkey=args.startkey)))
 
+    def _build_update_a_developer_attribute_argument(self):
+        update_a_developer_attribute = self._parser_developers.add_parser('update-attr', aliases=['update-attribute', 'update-a-developer-attribute'], parents=[self._parent_parser()],
+            help='Updates the value of a developer attribute.')
+        update_a_developer_attribute.add_argument('-n', '--name', help="the developer's email address", required=True)
+        update_a_developer_attribute.add_argument('--attribute-name', help="attribute name", required=True)
+        update_a_developer_attribute.add_argument('--updated-value', help="updated value", required=True)
+        update_a_developer_attribute.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).update_a_developer_attribute(args.attribute_name, args.updated_value).text))
+
     def _build_get_all_developer_attributes_argument(self):
         get_all_developer_attributes = self._parser_developers.add_parser('get-attrs', aliases=['get-attributes', 'get-all-developer-attributes'], parents=[self._parent_parser()],
             help='Returns a list of all developer attributes.')
@@ -68,4 +76,5 @@ class ParserDevelopers:
 
     def _create_parser(self):
         self._build_list_developers_argument()
+        self._build_update_a_developer_attribute_argument()
         self._build_get_all_developer_attributes_argument()

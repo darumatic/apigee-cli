@@ -47,6 +47,10 @@ class IDevelopers:
         pass
 
     @abstractmethod
+    def update_a_developer_attribute(self, attribute_name, updated_value):
+        pass
+
+    @abstractmethod
     def get_all_developer_attributes(self):
         pass
 
