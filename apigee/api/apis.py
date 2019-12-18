@@ -15,8 +15,9 @@ from apigee.api.deployments import Deployments
 from apigee.api.keyvaluemaps import Keyvaluemaps
 from apigee.api.targetservers import Targetservers
 from apigee.util import authorization
-from apigee.util.os import (makedirs, path_exists, paths_exist, extractzip, writezip, splitpath#, serializepath, splitpath
-)
+from apigee.util.os import (makedirs, path_exists, paths_exist,
+                            extractzip, writezip, splitpath)
+
 
 class Apis(IApis):
 
@@ -115,6 +116,7 @@ class Apis(IApis):
         resp.raise_for_status()
         # print(resp.status_code)
         return resp
+
 
 class Pull(IPull):
 

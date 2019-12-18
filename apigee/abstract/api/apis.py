@@ -8,6 +8,7 @@ from pathlib import Path
 
 # from apigee.util.os import serializepath, splitpath
 
+
 class IApis:
 
     def __init__(self, auth, org_name, api_name):
@@ -66,6 +67,7 @@ class IApis:
     def list_api_proxy_revisions(self):
         pass
 
+
 class ApisSerializer:
     def serialize_details(self, apis, format, prefix=None):
         resp = apis
@@ -81,6 +83,7 @@ class ApisSerializer:
         # else:
         #     raise ValueError(format)
         return resp
+
 
 class IPull:
 
