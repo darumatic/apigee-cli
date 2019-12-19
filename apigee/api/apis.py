@@ -62,7 +62,8 @@ class Apis(IApis):
 
         undeployed = [int(rev) for rev in revisions if rev not in deployed]
         undeployed.sort()
-        undeployed = undeployed[:len(undeployed)-save_last]
+        undeployed_length = len(undeployed)
+        undeployed = undeployed[:undeployed_length-(save_last if save_last <= undeployed_length else undeployed_length)]
         print('Undeployed revisions:', undeployed)
 
         if not dry_run:
