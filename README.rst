@@ -322,13 +322,13 @@ This will output a table like so::
     ╒══════╤════════════════╤═════════════════╤══════════════════════════╕
     │   id │ organization   │ path            │ permissions              │
     ╞══════╪════════════════╪═════════════════╪══════════════════════════╡
-    │    0 │ snsw           │ /               │ ['get', 'delete', 'put'] │
+    │    0 │ myorg          │ /               │ ['get', 'delete', 'put'] │
     ├──────┼────────────────┼─────────────────┼──────────────────────────┤
-    │    1 │ snsw           │ /environments   │ ['get']                  │
+    │    1 │ myorg          │ /environments   │ ['get']                  │
     ├──────┼────────────────┼─────────────────┼──────────────────────────┤
-    │    2 │ snsw           │ /environments/* │ ['get']                  │
+    │    2 │ myorg          │ /environments/* │ ['get']                  │
     ├──────┼────────────────┼─────────────────┼──────────────────────────┤
-    │    3 │ snsw           │ /apimonitoring  │ ['get', 'delete', 'put'] │
+    │    3 │ myorg          │ /apimonitoring  │ ['get', 'delete', 'put'] │
     ╘══════╧════════════════╧═════════════════╧══════════════════════════╛
 
 To output as JSON, specify the ``-j/--json`` argument.
