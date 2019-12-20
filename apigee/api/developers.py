@@ -68,6 +68,20 @@ class Developers(IDevelopers):
         # print(resp.status_code)
         return resp
 
+    def list_developers(self, prefix=None, expand=False, count=100, startkey=''):
+        uri = '{0}/v1/organizations/{1}/developers?expand={2}&count={3}&startKey={4}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    expand,
+                    count,
+                    startkey)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
+        resp = requests.get(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return DevelopersSerializer().serialize_details(resp, 'json', prefix=prefix)
+
     def set_developer_status(self, action):
         uri = '{0}/v1/organizations/{1}/developers/{2}?action={3}' \
             .format(APIGEE_ADMIN_API_URL,
@@ -82,19 +96,19 @@ class Developers(IDevelopers):
         # print(resp.status_code)
         return resp
 
-    def list_developers(self, prefix=None, expand=False, count=100, startkey=''):
-        uri = '{0}/v1/organizations/{1}/developers?expand={2}&count={3}&startKey={4}' \
+    def update_developer(self, request_body):
+        uri = '{0}/v1/organizations/{1}/developers/{2}' \
             .format(APIGEE_ADMIN_API_URL,
                     self._org_name,
-                    expand,
-                    count,
-                    startkey)
-        hdrs = authorization.set_header({'Accept': 'application/json'},
+                    self._developer_email)
+        hdrs = authorization.set_header({'Accept': 'application/json',
+                                         'Content-Type': 'application/json'},
                                         self._auth)
-        resp = requests.get(uri, headers=hdrs)
+        body = json.loads(request_body)
+        resp = requests.put(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         # print(resp.status_code)
-        return DevelopersSerializer().serialize_details(resp, 'json', prefix=prefix)
+        return resp
 
     def get_developer_attribute(self, attribute_name):
         uri = '{0}/v1/organizations/{1}/developers/{2}/attributes/{3}' \

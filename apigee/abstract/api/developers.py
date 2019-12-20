@@ -63,6 +63,10 @@ class IDevelopers:
         pass
 
     @abstractmethod
+    def update_developer(self, request_body):
+        pass
+
+    @abstractmethod
     def get_developer_attribute(self, attribute_name):
         pass
 

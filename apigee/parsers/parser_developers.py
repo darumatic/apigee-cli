@@ -9,7 +9,7 @@ class ParserDevelopers:
 
     def __init__(self, parser, **kwargs):
         self._parser = parser
-        self._parser_developers = self._parser.add_parser('developers', aliases=['devs'], help='see developers').add_subparsers()
+        self._parser_developers = self._parser.add_parser('developers', aliases=['devs'], help='manage developers').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
         self._prefix_parser = kwargs.get('prefix_parser', PrefixParser(profile='default'))
         self._create_parser()
@@ -61,7 +61,7 @@ class ParserDevelopers:
 
     def _build_delete_developer_argument(self):
         delete_developer = self._parser_developers.add_parser('delete', aliases=['delete-developer'], parents=[self._parent_parser(), self._prefix_parser()],
-            help='Deletes a developer from an organization. All apps and API keys associated with the developer are also removed from the organization. All times in the response are UNIX times. To avoid permanently deleting developers and their artifacts, consider deactivating developers instead. See Set Developer Status.')
+            help='Deletes a developer from an organization. All apps and API keys associated with the developer are also removed from the organization. All times in the response are UNIX times. To avoid permanently deleting developers and their artifacts, consider deactivating developers instead.')
         delete_developer.add_argument('-n', '--name', help="The developer's email. This value is used to uniquely identify the developer in Apigee Edge.", required=True)
         delete_developer.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).delete_developer().text))
 
@@ -94,6 +94,13 @@ class ParserDevelopers:
         set_developer_status.add_argument('-n', '--name', help="The developer's email. This value is used to uniquely identify the developer in Apigee Edge.", required=True)
         set_developer_status.add_argument('--action', choices=('active', 'inactive'), type=str, help='', required=True)
         set_developer_status.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).set_developer_status(args.action).text))
+
+    def _build_update_developer_argument(self):
+        set_developer_status = self._parser_developers.add_parser('update', aliases=['update-developer'], parents=[self._parent_parser(), self._prefix_parser()],
+            help='Update an existing developer profile. To add new values or update existing values, submit the new or updated portion of the developer profile along with the rest of the developer profile, even if no values are changing. To delete attributes from a developer profile, submit the entire profile without the attributes that you want to delete.')
+        set_developer_status.add_argument('-n', '--name', help="The developer's email. This value is used to uniquely identify the developer in Apigee Edge.", required=True)
+        set_developer_status.add_argument('-b', '--body', help='request body', required=True)
+        set_developer_status.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).update_developer(args.body).text))
 
     def _build_update_a_developer_attribute_argument(self):
         update_a_developer_attribute = self._parser_developers.add_parser('update-attr', aliases=['update-attribute', 'update-a-developer-attribute'], parents=[self._parent_parser()],
@@ -130,6 +137,7 @@ class ParserDevelopers:
         self._build_get_developer_by_app_argument()
         self._build_list_developers_argument()
         self._build_set_developer_status_argument()
+        self._build_update_developer_argument()
         self._build_update_a_developer_attribute_argument()
         self._build_delete_developer_attribute_argument()
         self._build_get_all_developer_attributes_argument()
