@@ -51,6 +51,10 @@ class IDevelopers:
         pass
 
     @abstractmethod
+    def get_developer_by_app(self, app_name):
+        pass
+
+    @abstractmethod
     def list_developers(self):
         pass
 
