@@ -58,6 +58,10 @@ class IUserroles:
         pass
 
     @abstractmethod
+    def delete_resource_from_permissions(self, resource_path):
+        pass
+
+    @abstractmethod
     def delete_a_user_role(self):
         pass
 

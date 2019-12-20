@@ -88,6 +88,20 @@ class Userroles(IUserroles):
         # print(resp.status_code)
         return resp
 
+    def delete_resource_from_permissions(self, resource_path):
+        uri = '{0}/v1/organizations/{1}/userroles/{2}/permissions?path={3}&delete=true' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    self._role_name,
+                    resource_path)
+        hdrs = authorization.set_header({'Accept': 'application/json',
+                                         'Content-Type': 'application/octet-stream'},
+                                        self._auth)
+        resp = requests.delete(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
+
     def delete_a_user_role(self):
         uri = '{0}/v1/organizations/{1}/userroles/{2}' \
             .format(APIGEE_ADMIN_API_URL,

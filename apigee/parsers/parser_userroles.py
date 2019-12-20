@@ -70,6 +70,12 @@ class ParserUserroles:
         parser.add_argument('--resource-path', help='the resource path', required=True)
         parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).delete_a_permission_for_a_resource(args.permission, args.resource_path).text))
 
+    def _build_delete_resource_from_permissions_argument(self):
+        parser = self._parser_userroles.add_parser('delete-resource', aliases=['delete-resource-from-permissions'], help='Removes all permissions for a resource for the role specified. Permissions are case sensitive.', parents=[self._parent_parser()])
+        parser.add_argument('-n', '--name', help='the role name', required=True)
+        parser.add_argument('--resource-path', help='the resource path', required=True)
+        parser.set_defaults(func=lambda args: print(Userroles(args, args.org, args.name).delete_resource_from_permissions(args.resource_path).text))
+
     def _build_delete_a_user_role_argument(self):
         parser = self._parser_userroles.add_parser('delete', aliases=['delete-a-user-role'], help='Deletes a role from an organization. Roles can only be deleted when no users are in the role.', parents=[self._parent_parser()])
         parser.add_argument('-n', '--name', help='the role name', required=True)
@@ -125,6 +131,7 @@ class ParserUserroles:
         self._build_add_permissions_for_multiple_resources_to_a_user_role_argument()
         self._build_create_a_user_role_in_an_organization_argument()
         self._build_delete_a_permission_for_a_resource_argument()
+        self._build_delete_resource_from_permissions_argument()
         self._build_delete_a_user_role_argument()
         self._build_get_a_role_argument()
         self._build_get_resource_permissions_for_a_specific_role_argument()
