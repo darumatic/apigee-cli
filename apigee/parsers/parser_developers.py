@@ -49,6 +49,16 @@ class ParserDevelopers:
     def __call__(self):
         return self._parser
 
+    def _build_create_developer_argument(self):
+        create_developer = self._parser_developers.add_parser('create', aliases=['create-developer'], parents=[self._parent_parser(), self._prefix_parser()],
+            help='Creates a profile for a developer in an organization. Once created, the developer can register an app and receive an API key.')
+        create_developer.add_argument('-n', '--name', help="The developer's email. This value is used to uniquely identify the developer in Apigee Edge.", required=True)
+        create_developer.add_argument('--first-name', help="The first name of the developer.", required=True)
+        create_developer.add_argument('--last-name', help="The last name of the developer.", required=True)
+        create_developer.add_argument('--user-name', help="The developer's username. This value is not used by Apigee Edge.", required=True)
+        create_developer.add_argument('--attributes', help='request body e.g.: \'{"attribute" : [ ]}\'', required=False, default='{"attribute" : [ ]}')
+        create_developer.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).create_developer(args.first_name, args.last_name, args.user_name, attributes=args.attributes).text))
+
     def _build_list_developers_argument(self):
         list_developers = self._parser_developers.add_parser('list', aliases=['list-developers'], parents=[self._parent_parser(), self._prefix_parser()],
             help='Lists all developers in an organization by email address. This call does not list any company developers who are a part of the designated organization.')
@@ -89,6 +99,7 @@ class ParserDevelopers:
         update_all_developer_attributes.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).update_all_developer_attributes(args.body).text))
 
     def _create_parser(self):
+        self._build_create_developer_argument()
         self._build_list_developers_argument()
         self._build_update_a_developer_attribute_argument()
         self._build_delete_developer_attribute_argument()
