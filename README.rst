@@ -81,7 +81,7 @@ The quickest way to get started is to run the ``apigee configure`` command::
     Apigee password [None]: my_pass
     Apigee MFA key (recommended) [None]: my_key
     Default Apigee organization (recommended) [None]: my_org
-    Default team/resource prefix (recommended) [None]: apt
+    Default team/resource prefix (recommended) [None]: team_prefix
 
 
 To use environment variables, do the following::
@@ -135,9 +135,9 @@ To list all APIs in an organization, run::
 
 To only list APIs that start with a prefix, run::
 
-    $ apigee apis list --prefix apt
+    $ apigee apis list --prefix [team_prefix]
 
-This will list all APIs within an organization that start with ``apt``. To change
+This will list all APIs within an organization that start with ``[team_prefix]``. To change
 the organization, specify ``-o/--organization``.
 
 ----------------------
