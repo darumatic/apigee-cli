@@ -65,6 +65,12 @@ class ParserDevelopers:
         delete_developer.add_argument('-n', '--name', help="The developer's email. This value is used to uniquely identify the developer in Apigee Edge.", required=True)
         delete_developer.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).delete_developer().text))
 
+    def _build_get_developer_argument(self):
+        get_developer = self._parser_developers.add_parser('get', aliases=['get-developer'], parents=[self._parent_parser(), self._prefix_parser()],
+            help="Returns the profile for a developer by email address or ID. All time values are UNIX time values. The profile includes the developer's email address, ID, name, and other information.")
+        get_developer.add_argument('-n', '--name', help="The developer's email. This value is used to uniquely identify the developer in Apigee Edge.", required=True)
+        get_developer.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).get_developer().text))
+
     def _build_list_developers_argument(self):
         list_developers = self._parser_developers.add_parser('list', aliases=['list-developers'], parents=[self._parent_parser(), self._prefix_parser()],
             help='Lists all developers in an organization by email address. This call does not list any company developers who are a part of the designated organization.')
@@ -107,6 +113,7 @@ class ParserDevelopers:
     def _create_parser(self):
         self._build_create_developer_argument()
         self._build_delete_developer_argument()
+        self._build_get_developer_argument()
         self._build_list_developers_argument()
         self._build_update_a_developer_attribute_argument()
         self._build_delete_developer_attribute_argument()
