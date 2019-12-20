@@ -59,6 +59,12 @@ class ParserDevelopers:
         create_developer.add_argument('--attributes', help='request body e.g.: \'{"attribute" : [ ]}\'', required=False, default='{"attribute" : [ ]}')
         create_developer.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).create_developer(args.first_name, args.last_name, args.user_name, attributes=args.attributes).text))
 
+    def _build_delete_developer_argument(self):
+        delete_developer = self._parser_developers.add_parser('delete', aliases=['delete-developer'], parents=[self._parent_parser(), self._prefix_parser()],
+            help='Deletes a developer from an organization. All apps and API keys associated with the developer are also removed from the organization. All times in the response are UNIX times. To avoid permanently deleting developers and their artifacts, consider deactivating developers instead. See Set Developer Status.')
+        delete_developer.add_argument('-n', '--name', help="The developer's email. This value is used to uniquely identify the developer in Apigee Edge.", required=True)
+        delete_developer.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).delete_developer().text))
+
     def _build_list_developers_argument(self):
         list_developers = self._parser_developers.add_parser('list', aliases=['list-developers'], parents=[self._parent_parser(), self._prefix_parser()],
             help='Lists all developers in an organization by email address. This call does not list any company developers who are a part of the designated organization.')
@@ -100,6 +106,7 @@ class ParserDevelopers:
 
     def _create_parser(self):
         self._build_create_developer_argument()
+        self._build_delete_developer_argument()
         self._build_list_developers_argument()
         self._build_update_a_developer_attribute_argument()
         self._build_delete_developer_attribute_argument()

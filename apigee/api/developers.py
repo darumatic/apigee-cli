@@ -32,6 +32,18 @@ class Developers(IDevelopers):
         # print(resp.status_code)
         return resp
 
+    def delete_developer(self):
+        uri = '{0}/v1/organizations/{1}/developers/{2}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    self._developer_email)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
+        resp = requests.delete(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
+
     def list_developers(self, prefix=None, expand=False, count=100, startkey=''):
         uri = '{0}/v1/organizations/{1}/developers?expand={2}&count={3}&startKey={4}' \
             .format(APIGEE_ADMIN_API_URL,

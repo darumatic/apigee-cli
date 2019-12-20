@@ -43,6 +43,10 @@ class IDevelopers:
         pass
 
     @abstractmethod
+    def delete_developer(self):
+        pass
+
+    @abstractmethod
     def list_developers(self):
         pass
 
