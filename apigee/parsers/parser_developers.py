@@ -74,7 +74,7 @@ class ParserDevelopers:
     def _build_get_developer_by_app_argument(self):
         get_developer_by_app = self._parser_developers.add_parser('get-by-app', aliases=['get-developer-by-app'], parents=[self._parent_parser(), self._prefix_parser()],
             help='Gets the developer profile by app name. The profile retrieved is for the developer associated with the app in the organization. All time values are UNIX time values.')
-        get_developer_by_app.add_argument('--app-name', help="The developer's email. This value is used to uniquely identify the developer in Apigee Edge.", required=True)
+        get_developer_by_app.add_argument('--app-name', help='the app name', required=True)
         get_developer_by_app.set_defaults(func=lambda args: print(Developers(args, args.org, None).get_developer_by_app(args.app_name).text))
 
     def _build_list_developers_argument(self):
@@ -87,6 +87,13 @@ class ParserDevelopers:
         list_developers.add_argument('--startkey', default='',
             help='To filter the keys that are returned, enter the email of a developer that the list will start with.')
         list_developers.set_defaults(func=lambda args: print(Developers(args, args.org, None).list_developers(prefix=args.prefix, expand=args.expand, count=args.count, startkey=args.startkey)))
+
+    def _build_set_developer_status_argument(self):
+        set_developer_status = self._parser_developers.add_parser('set-status', aliases=['set-developer-status'], parents=[self._parent_parser(), self._prefix_parser()],
+            help="Sets a developer's status to active or inactive for a specific organization. Run this API for each organization where you want to change the developer's status.")
+        set_developer_status.add_argument('-n', '--name', help="The developer's email. This value is used to uniquely identify the developer in Apigee Edge.", required=True)
+        set_developer_status.add_argument('--action', choices=('active', 'inactive'), type=str, help='', required=True)
+        set_developer_status.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).set_developer_status(args.action).text))
 
     def _build_update_a_developer_attribute_argument(self):
         update_a_developer_attribute = self._parser_developers.add_parser('update-attr', aliases=['update-attribute', 'update-a-developer-attribute'], parents=[self._parent_parser()],
@@ -122,6 +129,7 @@ class ParserDevelopers:
         self._build_get_developer_argument()
         self._build_get_developer_by_app_argument()
         self._build_list_developers_argument()
+        self._build_set_developer_status_argument()
         self._build_update_a_developer_attribute_argument()
         self._build_delete_developer_attribute_argument()
         self._build_get_all_developer_attributes_argument()
