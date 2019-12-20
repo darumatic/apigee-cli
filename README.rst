@@ -20,7 +20,7 @@ This package provides a command-line interface for the Apigee Management API wit
         deployments (deps)  see apis that are actively deployed
         kvms (keyvaluemaps)
                             manage keyvaluemaps
-        developers (devs)   see developers
+        developers (devs)   manage developers
         apps                manage developer apps
         products (prods)    manage api products
         ts (targetservers)  manage target servers
