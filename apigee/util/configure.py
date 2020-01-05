@@ -35,7 +35,7 @@ class Configure:
         self._main()
 
     def _mask_secret(self, secret):
-        return '*' * 16
+        return '*' * 16 if secret else secret
 
     def _remove_empty_keys(self, dict):
         return {k: v for k, v in dict.items() if v}
