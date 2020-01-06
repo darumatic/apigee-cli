@@ -5,29 +5,30 @@ apigee-cli
 This package provides a command-line interface for the Apigee Management API with easy-to-use MFA authentication. ::
 
     usage: apigee [-h] [-V]
-                  {auth,authorization,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,roles,userroles}
+                  {authorization,auth,configure,apis,deployments,deps,keyvaluemaps,kvms,developers,devs,apps,products,prods,targetservers,ts,maskconfigs,masks,permissions,perms,userroles,roles}
                   ...
 
     Apigee Management API command-line interface with easy-to-use MFA
     authentication
 
     positional arguments:
-      {auth,authorization,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,roles,userroles}
-        auth (authorization)
+      {authorization,auth,configure,apis,deployments,deps,keyvaluemaps,kvms,developers,devs,apps,products,prods,targetservers,ts,maskconfigs,masks,permissions,perms,userroles,roles}
+        authorization (auth)
                             verify authorization
         configure           configure credentials
         apis                manage apis
         deployments (deps)  see apis that are actively deployed
-        kvms (keyvaluemaps)
+        keyvaluemaps (kvms)
                             manage keyvaluemaps
         developers (devs)   manage developers
         apps                manage developer apps
         products (prods)    manage api products
-        ts (targetservers)  manage target servers
-        mask (maskconfigs)  manage data masks
-        perms (permissions)
+        targetservers (ts)  manage target servers
+        maskconfigs (masks)
+                            manage data masks
+        permissions (perms)
                             manage permissions for a role
-        roles (userroles)   manage user roles
+        userroles (roles)   manage user roles
 
     optional arguments:
       -h, --help            show this help message and exit
