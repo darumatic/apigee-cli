@@ -5,14 +5,14 @@ apigee-cli
 This package provides a command-line interface for the Apigee Management API with easy-to-use MFA authentication. ::
 
     usage: apigee [-h] [-V]
-                  {auth,authorization,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,userroles}
+                  {auth,authorization,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,roles,userroles}
                   ...
 
     Apigee Management API command-line interface with easy-to-use MFA
     authentication
 
     positional arguments:
-      {auth,authorization,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,userroles}
+      {auth,authorization,configure,apis,deployments,deps,kvms,keyvaluemaps,developers,devs,apps,products,prods,ts,targetservers,mask,maskconfigs,perms,permissions,roles,userroles}
         auth (authorization)
                             verify authorization
         configure           configure credentials
@@ -27,7 +27,7 @@ This package provides a command-line interface for the Apigee Management API wit
         mask (maskconfigs)  manage data masks
         perms (permissions)
                             manage permissions for a role
-        userroles           manage user roles
+        roles (userroles)   manage user roles
 
     optional arguments:
       -h, --help            show this help message and exit
