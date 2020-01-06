@@ -11,7 +11,7 @@ class ParserKeyvaluemaps:
 
     def __init__(self, parser, **kwargs):
         self._parser = parser
-        self._parser_keyvaluemaps = self._parser.add_parser('kvms', aliases=['keyvaluemaps'], help='manage keyvaluemaps').add_subparsers()
+        self._parser_keyvaluemaps = self._parser.add_parser('keyvaluemaps', aliases=['kvms'], help='manage keyvaluemaps').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
         self._file_parser = kwargs.get('file_parser', FileParser())
         self._environment_parser = kwargs.get('environment_parser', EnvironmentParser())

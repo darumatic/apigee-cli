@@ -9,7 +9,7 @@ class ParserMaskconfigs:
 
     def __init__(self, parser, **kwargs):
         self._parser = parser
-        self._parser_maskconfigs = self._parser.add_parser('mask', aliases=['maskconfigs'], help='manage data masks').add_subparsers()
+        self._parser_maskconfigs = self._parser.add_parser('maskconfigs', aliases=['masks'], help='manage data masks').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
         self._file_parser = kwargs.get('file_parser', FileParser())
         self._create_parser()

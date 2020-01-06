@@ -9,7 +9,7 @@ class ParserUserroles:
 
     def __init__(self, parser, **kwargs):
         self._parser = parser
-        self._parser_userroles = self._parser.add_parser('roles', aliases=['userroles'], help='manage user roles').add_subparsers()
+        self._parser_userroles = self._parser.add_parser('userroles', aliases=['roles'], help='manage user roles').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
         self._create_parser()
 
