@@ -82,6 +82,14 @@ class ParserCaches:
         parser.add_argument('--entry', help='cache entry to clear', required=True)
         parser.set_defaults(func=lambda args: print(Caches(args, args.org, args.name).clear_a_cache_entry(args.environment, args.entry).text))
 
+    def _build_create_a_cache_in_an_environment_argument(self):
+        parser = self._parser_caches.add_parser('create', aliases=['create-a-cache-in-an-environment'], parents=[self._parent_parser(), self._environment_parser()],
+            help="Creates a cache in an environment. Caches are created per environment. For data segregation, a cache created in 'test', for example, cannot be accessed by API proxies deployed in 'prod'. The JSON object in the request body can be empty to create a cache with the default settings.")
+        parser.add_argument('-n', '--name', help='name', required=True)
+        parser.add_argument('-b', '--body', help='request body', required=True)
+        parser.set_defaults(func=lambda args: print(Caches(args, args.org, args.name).create_a_cache_in_an_environment(args.environment, args.body).text))
+
     def _create_parser(self):
         self._build_clear_all_cache_entries_argument()
         self._build_clear_a_cache_entry_argument()
+        self._build_create_a_cache_in_an_environment_argument()
