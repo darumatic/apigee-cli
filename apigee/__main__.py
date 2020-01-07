@@ -27,6 +27,7 @@ from apigee.parsers.parser_targetservers import ParserTargetservers
 from apigee.parsers.parser_maskconfigs import ParserMaskconfigs
 from apigee.parsers.parser_permissions import ParserPermissions
 from apigee.parsers.parser_userroles import ParserUserroles
+from apigee.parsers.parser_caches import ParserCaches
 
 # from apigee.util import mfa_with_pyotp
 from apigee.util.exceptions import exception_handler
@@ -59,6 +60,7 @@ def main():
     ParserMaskconfigs(subparsers, parent_parser=parent_parser).parser
     ParserPermissions(subparsers, parent_parser=parent_parser).parser
     ParserUserroles(subparsers, parent_parser=parent_parser).parser
+    ParserCaches(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
 
     args = parser.parse_args()
     try:
