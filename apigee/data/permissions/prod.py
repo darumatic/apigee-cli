@@ -46,10 +46,6 @@ def resource_permissions(team_prefix):
         "permissions" : [ "put", "get" ]
       },
       {
-        "path" : "/developers/*/apps*",
-        "permissions" : [  ]
-      },
-      {
         "path" : "/developers/*/apps/" + team_prefix + "*",
         "permissions" : [ "delete", "put", "get" ]
       },

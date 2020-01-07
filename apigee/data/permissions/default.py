@@ -22,16 +22,8 @@ def resource_permissions(team_prefix):
         "permissions" : [ "put", "get" ]
       },
       {
-        "path" : "/applications/*",
-        "permissions" : [ "get" ]
-      },
-      {
         "path" : "/developers/*/apps",
         "permissions" : [ "put", "get" ]
-      },
-      {
-        "path" : "/developers/*/apps*",
-        "permissions" : [  ]
       },
       {
         "path" : "/developers/*/apps/" + team_prefix + "*",
@@ -100,10 +92,6 @@ def resource_permissions(team_prefix):
       {
         "path" : "/apiproxies/" + team_prefix + "*/maskconfigs/*",
         "permissions" : [ "delete", "put", "get" ]
-      },
-      {
-        "path" : "/environments/*/keyvaluemaps/*",
-        "permissions" : [ ]
       },
       {
         "path" : "/environments/*/virtualhosts/*",
