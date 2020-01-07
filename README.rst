@@ -41,6 +41,22 @@ The apigee-cli package works on Python versions:
 * 3.6.x and greater
 * 3.7.x and greater
 
+Skip to:
+
+- `Installation`_
+- `Getting Started`_
+- `Getting an OAuth 2.0 Access Token`_
+- `Listing API Proxies`_
+- `Deploying an API Proxy`_
+- `Exporting an API Proxy`_
+- `Getting API proxy revisions that are actively deployed`_
+- `Deleting all undeployed revisions of an API proxy`_
+- `Managing Key value maps (KVMs)`_
+- `Getting permissions for a role`_
+- `Setting permissions for a role`_
+- `Getting Help`_
+
+.. _`Installation`:
 
 ------------
 Installation
@@ -63,6 +79,8 @@ you can run::
 
     $ pip install --upgrade apigeecli
 
+
+.. _`Getting Started`:
 
 ---------------
 Getting Started
@@ -116,6 +134,8 @@ profile to use by using the ``-P/--profile`` option. If no profile is specified
 the ``default`` profile is used.
 
 
+.. _`Getting an OAuth 2.0 Access Token`:
+
 ---------------------------------
 Getting an OAuth 2.0 Access Token
 ---------------------------------
@@ -125,6 +145,8 @@ To get an OAuth 2.0 access token, configure an MFA key, then run::
     $ apigee auth access-token
 
 This will return ``None`` if an MFA key is not set.
+
+.. _`Listing API Proxies`:
 
 -------------------
 Listing API Proxies
@@ -141,6 +163,8 @@ To only list APIs that start with a prefix, run::
 This will list all APIs within an organization that start with ``[team_prefix]``. To change
 the organization, specify ``-o/--organization``.
 
+.. _`Deploying an API Proxy`:
+
 ----------------------
 Deploying an API Proxy
 ----------------------
@@ -148,6 +172,8 @@ Deploying an API Proxy
 To seamless deploy an API Proxy, run::
 
     $ apigee apis deploy --seamless-deploy -d [path] -n [name] -e [env]
+
+.. _`Exporting an API Proxy`:
 
 ----------------------
 Exporting an API Proxy
@@ -164,6 +190,8 @@ To export to specific file, run::
     $ apigee apis export -n [name] -r 2 -O [new_name].zip
 
 This will export to ``[new_name].zip``.
+
+.. _`Getting API proxy revisions that are actively deployed`:
 
 ------------------------------------------------------
 Getting API proxy revisions that are actively deployed
@@ -189,6 +217,8 @@ This will output the table like so::
 
     [{"name": "dev", "revision": ["3", "5"]}, {"name": "test", "revision": ["3"]}]
 
+.. _`Deleting all undeployed revisions of an API proxy`:
+
 -------------------------------------------------
 Deleting all undeployed revisions of an API proxy
 -------------------------------------------------
@@ -204,6 +234,8 @@ To preserve the ``N`` most recent revisions, run::
 To see which revisions will be deleted but not delete anything, run::
 
     $ apigee apis clean -n [name] --dry-run
+
+.. _`Managing Key value maps (KVMs)`:
 
 ------------------------------
 Managing Key value maps (KVMs)
@@ -310,6 +342,9 @@ This will display a loading bar output like so::
 As you can see, this command will update existing entries and delete those that are not present in the request body.
 If the key value map or entry does not exist, a new one will be created.
 
+
+.. _`Getting permissions for a role`:
+
 ------------------------------
 Getting permissions for a role
 ------------------------------
@@ -334,6 +369,8 @@ This will output a table like so::
 
 To output as JSON, specify the ``-j/--json`` argument.
 
+.. _`Setting permissions for a role`:
+
 ------------------------------
 Setting permissions for a role
 ------------------------------
@@ -355,6 +392,7 @@ The important thing to note here is that some resources will start with ``[team_
 users with the role ``[role]`` will only be able to access those resources which start with ``[team_prefix]``.
 This is useful for the use case where many teams are working together on the same platform.
 
+.. _`Getting Help`:
 
 ------------
 Getting Help
