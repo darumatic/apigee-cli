@@ -75,5 +75,13 @@ class ParserCaches:
         parser.add_argument('-n', '--name', help='name', required=True)
         parser.set_defaults(func=lambda args: print(Caches(args, args.org, args.name).clear_all_cache_entries(args.environment).text))
 
+    def _build_clear_a_cache_entry_argument(self):
+        parser = self._parser_caches.add_parser('clear-entry', aliases=['clear-a-cache-entry'], parents=[self._parent_parser(), self._environment_parser()],
+            help='Clears a cache entry, which is identified by the full CacheKey prefix and value.')
+        parser.add_argument('-n', '--name', help='name', required=True)
+        parser.add_argument('--entry', help='cache entry to clear', required=True)
+        parser.set_defaults(func=lambda args: print(Caches(args, args.org, args.name).clear_a_cache_entry(args.environment, args.entry).text))
+
     def _create_parser(self):
         self._build_clear_all_cache_entries_argument()
+        self._build_clear_a_cache_entry_argument()

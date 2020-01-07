@@ -26,3 +26,18 @@ class Caches(ICaches):
         resp.raise_for_status()
         # print(resp.status_code)
         return resp
+
+    def clear_a_cache_entry(self, environment, entry):
+        uri = '{0}/v1/organizations/{1}/environments/{2}/caches/{3}/entries/{4}?action=clear' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    environment,
+                    self._cache_name,
+                    entry)
+        hdrs = authorization.set_header({'Accept': 'application/json',
+                                         'Content-Type': 'application/octet-stream'},
+                                        self._auth)
+        resp = requests.post(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
