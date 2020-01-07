@@ -100,9 +100,17 @@ class ParserCaches:
             help='List caches in an environment.')
         parser.set_defaults(func=lambda args: print(Caches(args, args.org, None).list_caches_in_an_environment(args.environment, prefix=args.prefix)))
 
+    def _build_update_a_cache_in_an_environment_argument(self):
+        parser = self._parser_caches.add_parser('update', aliases=['update-a-cache-in-an-environment'], parents=[self._parent_parser(), self._environment_parser()],
+            help='Updates a cache in an environment. You must specify the complete definition of the cache, including the properties that you want to change and the ones that retain their current value. Any properties omitted from the request body are reset to their default value. Use Get information about a cache to obtain an object containing the current value of all properties, then change only those that you want to update.')
+        parser.add_argument('-n', '--name', help='name', required=True)
+        parser.add_argument('-b', '--body', help='request body', required=True)
+        parser.set_defaults(func=lambda args: print(Caches(args, args.org, args.name).update_a_cache_in_an_environment(args.environment, args.body).text))
+
     def _create_parser(self):
         self._build_clear_all_cache_entries_argument()
         self._build_clear_a_cache_entry_argument()
         self._build_create_a_cache_in_an_environment_argument()
         self._build_get_information_about_a_cache_argument()
         self._build_list_caches_in_an_environment_argument()
+        self._build_update_a_cache_in_an_environment_argument()

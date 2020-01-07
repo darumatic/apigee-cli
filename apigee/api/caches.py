@@ -81,3 +81,18 @@ class Caches(ICaches):
         resp.raise_for_status()
         # print(resp.status_code)
         return CachesSerializer().serialize_details(resp, 'json', prefix=prefix)
+
+    def update_a_cache_in_an_environment(self, environment, request_body):
+        uri = '{0}/v1/organizations/{1}/environments/{2}/caches/{3}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    environment,
+                    self._cache_name)
+        hdrs = authorization.set_header({'Accept': 'application/json',
+                                         'Content-Type': 'application/json'},
+                                        self._auth)
+        body = json.loads(request_body)
+        resp = requests.put(uri, headers=hdrs, json=body)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
