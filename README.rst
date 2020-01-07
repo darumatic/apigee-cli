@@ -134,7 +134,7 @@ profile to use by using the ``-P/--profile`` option. If no profile is specified
 the ``default`` profile is used.
 
 
-.. _`Getting an OAuth 2.0 Access Token`:
+.. _`Getting an OAuth 2.0 Access Token`: #getting-an-oauth-20-access-token
 
 ---------------------------------
 Getting an OAuth 2.0 Access Token
