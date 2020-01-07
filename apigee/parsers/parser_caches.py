@@ -95,8 +95,14 @@ class ParserCaches:
         parser.add_argument('-n', '--name', help='name', required=True)
         parser.set_defaults(func=lambda args: print(Caches(args, args.org, args.name).get_information_about_a_cache(args.environment).text))
 
+    def _build_list_caches_in_an_environment_argument(self):
+        parser = self._parser_caches.add_parser('list', aliases=['list-caches-in-an-environment'], parents=[self._parent_parser(), self._environment_parser(), self._prefix_parser()],
+            help='List caches in an environment.')
+        parser.set_defaults(func=lambda args: print(Caches(args, args.org, None).list_caches_in_an_environment(args.environment, prefix=args.prefix)))
+
     def _create_parser(self):
         self._build_clear_all_cache_entries_argument()
         self._build_clear_a_cache_entry_argument()
         self._build_create_a_cache_in_an_environment_argument()
         self._build_get_information_about_a_cache_argument()
+        self._build_list_caches_in_an_environment_argument()
