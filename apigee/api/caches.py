@@ -109,3 +109,20 @@ class Caches(ICaches):
         resp.raise_for_status()
         # print(resp.status_code)
         return resp
+
+    def push_cache(self, environment, file):
+        with open(file) as f:
+            body = f.read()
+        cache = json.loads(body)
+        self._cache_name = cache['name']
+        try:
+            self.get_information_about_a_cache(environment)
+            print('Updating', self._cache_name)
+            print(self.update_a_cache_in_an_environment(environment, body).text)
+        except requests.exceptions.HTTPError as e:
+            status_code = e.response.status_code
+            if status_code == 404:
+                print('Creating', self._cache_name)
+                print(self.create_a_cache_in_an_environment(environment, body).text)
+            else:
+                raise e

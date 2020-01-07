@@ -113,6 +113,11 @@ class ParserCaches:
         parser.add_argument('-n', '--name', help='name', required=True)
         parser.set_defaults(func=lambda args: print(Caches(args, args.org, args.name).delete_a_cache(args.environment).text))
 
+    def _build_push_cache_argument(self):
+        parser = self._parser_caches.add_parser('push', aliases=['push-cache'], parents=[self._parent_parser(), self._environment_parser(), self._file_parser()],
+            help='Push Cache to Apigee. This will create/update a Cache.')
+        parser.set_defaults(func=lambda args: Caches(args, args.org, None).push_cache(args.environment, args.file))
+
     def _create_parser(self):
         self._build_clear_all_cache_entries_argument()
         self._build_clear_a_cache_entry_argument()
@@ -121,3 +126,4 @@ class ParserCaches:
         self._build_list_caches_in_an_environment_argument()
         self._build_update_a_cache_in_an_environment_argument()
         self._build_delete_a_cache_argument()
+        self._build_push_cache_argument()
