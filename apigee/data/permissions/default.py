@@ -10,10 +10,6 @@ def resource_permissions(team_prefix):
         "permissions" : [ "put", "get" ]
       },
       {
-        "path" : "/apiproducts/*",
-        "permissions" : [ ]
-      },
-      {
         "path" : "/apiproducts/" + team_prefix + "*",
         "permissions" : [ "delete", "put", "get" ]
       },
@@ -47,6 +43,10 @@ def resource_permissions(team_prefix):
       },
       {
         "path" : "/applications/" + team_prefix + "*/revisions/*",
+        "permissions" : [ "put", "get", "delete" ]
+      },
+      {
+        "path" : "/applications/" + team_prefix + "*",
         "permissions" : [ "put", "get", "delete" ]
       },
       {
@@ -96,10 +96,6 @@ def resource_permissions(team_prefix):
       {
         "path" : "/environments/*/virtualhosts/*",
         "permissions" : [ "get" ]
-      },
-      {
-        "path" : "/environments/*/targetservers/*",
-        "permissions" : [ ]
       },
       {
         "path" : "/environments/*/keyvaluemaps/" + team_prefix + "*",
@@ -180,6 +176,10 @@ def resource_permissions(team_prefix):
       },
       {
         "path" : "/environments/sandbox/applications/*/revisions/*/debugsessions/*",
+        "permissions" : [ "delete", "put", "get" ]
+      },
+      {
+        "path" : "/environments/sandbox/applications/*/revisions/*/deployments",
         "permissions" : [ "delete", "put", "get" ]
       },
       {
