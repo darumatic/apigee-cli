@@ -10,13 +10,10 @@ import zipfile
 from pathlib import Path
 
 from apigee import APIGEE_ADMIN_API_URL
-from apigee.abstract.api.apis import IApis, ApisSerializer, IPull
+from apigee.abstract.api.apis import IApis, ApisSerializer
 from apigee.api.deployments import Deployments
-from apigee.api.keyvaluemaps import Keyvaluemaps
-from apigee.api.targetservers import Targetservers
 from apigee.util import authorization
-from apigee.util.os import (makedirs, path_exists, paths_exist,
-                            extractzip, writezip, splitpath)
+from apigee.util.os import writezip
 
 class Apis(IApis):
 
@@ -65,7 +62,9 @@ class Apis(IApis):
         undeployed = undeployed[:undeployed_length - (save_last if save_last <= undeployed_length else undeployed_length)]
         print('Undeployed revisions:', undeployed)
         # delete undeployed revisions
-        list(map(self.delete_revisions, undeployed)) if not dry_run else None
+        if not dry_run:
+            return list(map(self.delete_revisions, undeployed))
+        return []
 
     def export_api_proxy(self, revision_number, write=True, output_file=None):
         uri = '{0}/v1/organizations/{1}/apis/{2}/revisions/{3}?format=bundle' \
@@ -78,7 +77,8 @@ class Apis(IApis):
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         # print(resp.status_code)
-        if write: writezip(output_file, resp.content)
+        if write:
+            writezip(output_file, resp.content)
         return resp
 
     def get_api_proxy(self):
