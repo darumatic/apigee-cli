@@ -1,7 +1,8 @@
 import argparse
 
 from apigee.api import deploy
-from apigee.api.apis import Apis, Pull
+from apigee.api.apis import Apis
+from apigee.api.apis_pull import Pull
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.dir_parser import DirParser
