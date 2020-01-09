@@ -200,6 +200,15 @@ Getting API proxy revisions that are actively deployed
 
 To get actively deployed revisions for an API Proxy, run::
 
+    $ apigee deps get -r -n [name]
+
+This will output a table like so::
+
+    name    revision
+    dev     ['32']
+
+The table can be formatted by specifiying ``--tablefmt``::
+
     $ apigee deps get -r -n [name] --tablefmt fancy_grid --showindex
 
 This will output a table like so::
@@ -209,6 +218,12 @@ This will output a table like so::
     ╞══════╪════════╪════════════╡
     │    0 │ dev    │ ['32']     │
     ╘══════╧════════╧════════════╛
+
+Supported table formats are (default is ``plain``)::
+
+    --tablefmt {plain,simple,github,grid,fancy_grid,pipe,orgtbl,jira,presto,psql,rst,mediawiki,moinmoin,youtrack,html,latex,latex_raw,latex_booktabs,textile}
+
+See the ``tabulate`` package for more info.
 
 To output as JSON, specify the ``-j/--json`` argument::
 
@@ -352,21 +367,15 @@ Getting permissions for a role
 
 To get permissions for a role, run::
 
-    $ apigee perms get -n [role] --showindex --tablefmt fancy_grid
+    $ apigee perms get -n [role] #--showindex --tablefmt fancy_grid
 
 This will output a table like so::
 
-    ╒══════╤════════════════╤═════════════════╤══════════════════════════╕
-    │   id │ organization   │ path            │ permissions              │
-    ╞══════╪════════════════╪═════════════════╪══════════════════════════╡
-    │    0 │ myorg          │ /               │ ['get', 'delete', 'put'] │
-    ├──────┼────────────────┼─────────────────┼──────────────────────────┤
-    │    1 │ myorg          │ /environments   │ ['get']                  │
-    ├──────┼────────────────┼─────────────────┼──────────────────────────┤
-    │    2 │ myorg          │ /environments/* │ ['get']                  │
-    ├──────┼────────────────┼─────────────────┼──────────────────────────┤
-    │    3 │ myorg          │ /apimonitoring  │ ['get', 'delete', 'put'] │
-    ╘══════╧════════════════╧═════════════════╧══════════════════════════╛
+    organization    path             permissions
+    myorg           /                ['delete', 'get', 'put']
+    myorg           /environments    ['get']
+    myorg           /environments/*  ['get']
+    myorg           /apimonitoring   ['delete', 'get', 'put']
 
 To output as JSON, specify the ``-j/--json`` argument.
 
@@ -385,11 +394,11 @@ To see how the ``[request_body]`` is constructed, see:
 * `Permissions reference`_
 * `Add permissions to testing role`_
 
-There is also the ``apigee perms template`` command, which sets permissions for a team role using a template::
+There is also the ``apigee perms template`` command, which sets permissions for a team role using a template file::
 
     $ apigee perms template -n [role] -f [template_file] --placeholder-key [placeholder_string] --placeholder-value [placeholder_value]
 
-where ``[template_file]`` is the file with the ``resourcePermission`` and looks something like this::
+where ``[template_file]`` contains the ``resourcePermission`` and looks something like this::
 
     {
       "resourcePermission" : [ {
