@@ -2,6 +2,8 @@
 apigee-cli
 ==========
 
+|Upload Python Package badge|
+
 This package provides a command-line interface for the Apigee Management API with easy-to-use MFA authentication. ::
 
     usage: apigee [-h] [-V]
@@ -423,6 +425,8 @@ Getting Help
 
 
 
+.. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
+    :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
 .. _`Apigee Product Documentation`: https://apidocs.apigee.com/management/apis
 .. _`Permissions reference`: https://docs.apigee.com/api-platform/system-administration/permissions
 .. _`Add permissions to testing role`: https://docs.apigee.com/api-platform/system-administration/managing-roles-api#addpermissionstotestingrole
