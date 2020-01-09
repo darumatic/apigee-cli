@@ -385,13 +385,21 @@ To see how the ``[request_body]`` is constructed, see:
 * `Permissions reference`_
 * `Add permissions to testing role`_
 
-There is also the ``apigee perms team`` command, which sets default permissions for a team role based on a template::
+There is also the ``apigee perms template`` command, which sets permissions for a team role using a template::
 
-    $ apigee permissions team -n [role] --team [team_prefix]
+    $ apigee perms template -n [role] -f [template_file] --placeholder-key [placeholder_string] --placeholder-value [placeholder_value]
 
-The important thing to note here is that some resources will start with ``[team_prefix]*``. This means that
-users with the role ``[role]`` will only be able to access those resources which start with ``[team_prefix]``.
-This is useful for the use case where many teams are working together on the same platform.
+where ``[template_file]`` is the file with the ``resourcePermission`` and looks something like this::
+
+    {
+      "resourcePermission" : [ {
+        "organization" : "myorg",
+        "path" : "/",
+        "permissions" : [ "get", "put", "delete" ]
+      } ]
+    }
+
+If ``--placeholder-key`` is specified, then all instances of the placeholder string will be replaced with the ``--placeholder-value`` (default is an empty string).
 
 .. _`Getting Help`:
 
