@@ -6,7 +6,6 @@ import requests
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.permissions import IPermissions, PermissionsSerializer
-# from apigee.data.permissions import default, prod as production
 from apigee.util import authorization
 
 class Permissions(IPermissions):
