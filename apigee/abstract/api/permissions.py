@@ -46,7 +46,7 @@ class IPermissions:
         pass
 
     @abstractmethod
-    def team_permissions(self, team_prefix, prod=False):
+    def team_permissions(self, template_file, placeholder_key=None, placeholder_value=''):
         pass
 
     @abstractmethod

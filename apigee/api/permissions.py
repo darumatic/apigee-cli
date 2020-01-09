@@ -6,7 +6,7 @@ import requests
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.permissions import IPermissions, PermissionsSerializer
-from apigee.data.permissions import default, prod as production
+# from apigee.data.permissions import default, prod as production
 from apigee.util import authorization
 
 class Permissions(IPermissions):
@@ -28,7 +28,7 @@ class Permissions(IPermissions):
         # print(resp.status_code)
         return resp
 
-    def team_permissions(self, team_prefix, prod=False):
+    def team_permissions(self, template_file, placeholder_key=None, placeholder_value=''):
         uri = '{0}/v1/organizations/{1}/userroles/{2}/resourcepermissions' \
             .format(APIGEE_ADMIN_API_URL,
                     self._org_name,
@@ -36,10 +36,12 @@ class Permissions(IPermissions):
         hdrs = authorization.set_header({'Accept': 'application/json',
                                          'Content-Type': 'application/json'},
                                         self._auth)
-        if prod:
-            body = production.resource_permissions(team_prefix)
-        else:
-            body = default.resource_permissions(team_prefix)
+        with open(template_file) as f:
+            body = json.loads(f.read())
+        if placeholder_key:
+            for idx, resource_permission in enumerate(body['resourcePermission']):
+                path = resource_permission['path']
+                body['resourcePermission'][idx]['path'] = path.replace(placeholder_key, placeholder_value)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         # print(resp.status_code)

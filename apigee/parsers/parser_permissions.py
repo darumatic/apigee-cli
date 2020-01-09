@@ -1,7 +1,7 @@
 import argparse
 
 from apigee.api.permissions import Permissions
-
+from apigee.parsers.file_parser import FileParser
 from apigee.parsers.parent_parser import ParentParser
 
 class ParserPermissions:
@@ -10,6 +10,7 @@ class ParserPermissions:
         self._parser = parser
         self._parser_permissions = self._parser.add_parser('permissions', aliases=['perms'], help='manage permissions for a role').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
+        self._file_parser = kwargs.get('file_parser', FileParser())
         self._create_parser()
 
     @property
@@ -36,6 +37,14 @@ class ParserPermissions:
     def parent_parser(self, value):
         self._parent_parser = value
 
+    @property
+    def file_parser(self):
+        return self._file_parser
+
+    @file_parser.setter
+    def file_parser(self, value):
+        self._file_parser = value
+
     def __call__(self):
         return self._parser
 
@@ -47,12 +56,12 @@ class ParserPermissions:
         create_permissions.set_defaults(func=lambda args: print(Permissions(args, args.org, args.name).create_permissions(args.body).text))
 
     def _build_team_permissions_argument(self):
-        team_permissions = self._parser_permissions.add_parser('team', aliases=['team-permissions'], parents=[self._parent_parser()],
-            help='Create default permissions for a team role based on a template.')
+        team_permissions = self._parser_permissions.add_parser('template', aliases=['template-permissions', 'team-permissions', 'team'], parents=[self._parent_parser(), self._file_parser()],
+            help='Create permissions for a role using a template file.')
         team_permissions.add_argument('-n', '--name', help='name of user role', required=True)
-        team_permissions.add_argument('-t', '--team', help='team prefix/code', required=True)
-        team_permissions.add_argument('--prod', action='store_true', help='use permissions for prod org', required=False)
-        team_permissions.set_defaults(func=lambda args: print(Permissions(args, args.org, args.name).team_permissions(args.team, prod=args.prod).text))
+        team_permissions.add_argument('--placeholder-key', help='placeholder key to replace with a placeholder value', required=False)
+        team_permissions.add_argument('--placeholder-value', help="placeholder value to replace placeholder key. default is an empty string.", default='', required=False)
+        team_permissions.set_defaults(func=lambda args: print(Permissions(args, args.org, args.name).team_permissions(args.file, placeholder_key=args.placeholder_key, placeholder_value=args.placeholder_value).text))
 
     def _build_get_permissions_argument(self):
         get_permissions = self._parser_permissions.add_parser('get', aliases=['get-permissions'], parents=[self._parent_parser()],
