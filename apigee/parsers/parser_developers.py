@@ -56,7 +56,7 @@ class ParserDevelopers:
         create_developer.add_argument('--first-name', help="The first name of the developer.", required=True)
         create_developer.add_argument('--last-name', help="The last name of the developer.", required=True)
         create_developer.add_argument('--user-name', help="The developer's username. This value is not used by Apigee Edge.", required=True)
-        create_developer.add_argument('--attributes', help='request body e.g.: \'{"attribute" : [ ]}\'', required=False, default='{"attribute" : [ ]}')
+        create_developer.add_argument('--attributes', help='request body e.g.: \'{"attributes" : [ ]}\'', required=False, default='{"attributes" : [ ]}')
         create_developer.set_defaults(func=lambda args: print(Developers(args, args.org, args.name).create_developer(args.first_name, args.last_name, args.user_name, attributes=args.attributes).text))
 
     def _build_delete_developer_argument(self):

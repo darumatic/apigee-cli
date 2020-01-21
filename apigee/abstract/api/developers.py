@@ -39,7 +39,7 @@ class IDevelopers:
         pass
 
     @abstractmethod
-    def create_developer(self, first_name, last_name, user_name, attributes='{"attribute" : [ ]}'):
+    def create_developer(self, first_name, last_name, user_name, attributes='{"attributes" : [ ]}'):
         pass
 
     @abstractmethod

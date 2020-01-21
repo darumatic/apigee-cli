@@ -13,7 +13,7 @@ class Developers(IDevelopers):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def create_developer(self, first_name, last_name, user_name, attributes='{"attribute" : [ ]}'):
+    def create_developer(self, first_name, last_name, user_name, attributes='{"attributes" : [ ]}'):
         uri = '{0}/v1/organizations/{1}/developers' \
             .format(APIGEE_ADMIN_API_URL,
                     self._org_name)
@@ -25,7 +25,7 @@ class Developers(IDevelopers):
            "firstName" : first_name,
            "lastName" : last_name,
            "userName" : user_name,
-           "attributes" : json.loads(attributes)['attribute']
+           "attributes" : json.loads(attributes)['attributes']
         }
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
