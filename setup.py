@@ -17,7 +17,7 @@ setup(name=APP,
       author_email='matthew.t.delotavo@gmail.com',
       url='https://github.com/mdelotavo/apigee-cli',
       download_url='https://github.com/mdelotavo/apigee-cli/archive/v'+__version__+'.tar.gz',
-      keywords=['apigee', 'management', 'api', 'oauth'],
+      keywords=['apigee', 'management', 'api', 'oauth', 'mfa'],
       packages=find_packages(),
       entry_points={
           'console_scripts': [
@@ -28,11 +28,14 @@ setup(name=APP,
       install_requires=['pyotp', 'requests', 'progressbar', 'tabulate'],
       license='Apache license 2.0',
       classifiers=[
-        'Development Status :: 3 - Alpha',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
+        'Development Status :: 4 - Beta',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
         'Intended Audience :: Developers',
         'Topic :: Utilities',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7'
-      ])
+      ],
+      project_urls={
+        'Documentation': 'https://mdelotavo.github.io/apigee-cli/index.html'
+      })
