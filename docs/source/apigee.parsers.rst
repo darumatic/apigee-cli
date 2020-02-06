@@ -22,7 +22,6 @@ Submodules
    apigee.parsers.parser_keyvaluemaps
    apigee.parsers.parser_maskconfigs
    apigee.parsers.parser_permissions
-   apigee.parsers.parser_prepend
    apigee.parsers.parser_targetservers
    apigee.parsers.parser_userroles
    apigee.parsers.prefix_parser
