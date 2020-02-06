@@ -7,7 +7,7 @@ Welcome to the Apigee Management API command-line interface documentation!
 ==========================================================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents
 
    installation
