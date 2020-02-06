@@ -4,14 +4,13 @@ apigee-cli
 
 |Upload Python Package badge|
 
-This package provides a command-line interface for the Apigee Management API with easy-to-use MFA authentication. ::
+This package provides a command-line interface for the Apigee Management API with multi-factor authentication. ::
 
     usage: apigee [-h] [-V]
                   {authorization,auth,configure,apis,deployments,deps,keyvaluemaps,kvms,developers,devs,apps,products,prods,targetservers,ts,maskconfigs,masks,permissions,perms,userroles,roles,caches}
                   ...
 
-    Apigee Management API command-line interface with easy-to-use MFA
-    authentication
+    Apigee Management API command-line interface with multi-factor authentication
 
     positional arguments:
       {authorization,auth,configure,apis,deployments,deps,keyvaluemaps,kvms,developers,devs,apps,products,prods,targetservers,ts,maskconfigs,masks,permissions,perms,userroles,roles,caches}
