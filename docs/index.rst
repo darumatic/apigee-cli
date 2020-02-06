@@ -6,6 +6,13 @@
 Welcome to the Apigee Management API command-line interface documentation!
 ==========================================================================
 
+|Upload Python Package badge|
+
+The package can be found here:
+
+* `GitHub`_
+* `Python Package Index (PyPI)`_
+
 .. toctree::
    :maxdepth: 1
    :caption: Contents
@@ -30,3 +37,8 @@ Indices and tables
    :caption: Indices and tables
 
 * :ref:`modindex`
+
+.. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
+    :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
+.. _`GitHub`: https://github.com/mdelotavo/apigee-cli
+.. _`Python Package Index (PyPI)`: https://pypi.org/project/apigeecli/
