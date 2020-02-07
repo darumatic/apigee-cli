@@ -40,9 +40,10 @@ class Apis(IApis):
             ]
         }
 
-    def delete_revisions(self, revision_number):
-        print('Deleting revison', revision_number)
-        self.delete_api_proxy_revision(revision_number)
+    def delete_revisions(self, revisions):
+        for rev in revisions:
+            print('Deleting revison', rev)
+            self.delete_api_proxy_revision(rev)
 
     def delete_undeployed_revisions(self, save_last=0, dry_run=False):
         revisions = self.list_api_proxy_revisions().json()
@@ -58,7 +59,7 @@ class Apis(IApis):
         print('Undeployed revisions:', undeployed)
         if dry_run:
             return
-        return list(map(self.delete_revisions, undeployed))
+        self.delete_revisions(undeployed)
 
     def export_api_proxy(self, revision_number, write=True, output_file=None):
         uri = '{0}/v1/organizations/{1}/apis/{2}/revisions/{3}?format=bundle' \
