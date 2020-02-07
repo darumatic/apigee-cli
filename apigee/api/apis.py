@@ -45,26 +45,20 @@ class Apis(IApis):
         self.delete_api_proxy_revision(revision_number)
 
     def delete_undeployed_revisions(self, save_last=0, dry_run=False):
-        # get all revisions
         revisions = self.list_api_proxy_revisions().json()
-        # get deployment details
-        deployments = Deployments(self._auth, self._org_name, self._api_name) \
-            .get_api_proxy_deployment_details().json()['environment']
-        deployment_details = list(map(self.gen_deployment_detail, deployments))
-        # filter deployment details to get deployed revisions
+        deployment = Deployments(self._auth, self._org_name, self._api_name)
+        deployment_details = list(map(self.gen_deployment_detail, deployment.get_api_proxy_deployment_details().json()['environment']))
         deployed = []
         list(map(lambda dep: deployed.extend(dep['revision']), deployment_details))
         deployed = list(set(deployed))
-        # get undeployed revisions by comparing all revisions with deployed revisions
         undeployed = [int(rev) for rev in revisions if rev not in deployed]
         undeployed.sort()
         undeployed_length = len(undeployed)
         undeployed = undeployed[:undeployed_length - (save_last if save_last <= undeployed_length else undeployed_length)]
         print('Undeployed revisions:', undeployed)
-        # delete undeployed revisions
-        if not dry_run:
-            return list(map(self.delete_revisions, undeployed))
-        return []
+        if dry_run:
+            return
+        return list(map(self.delete_revisions, undeployed))
 
     def export_api_proxy(self, revision_number, write=True, output_file=None):
         uri = '{0}/v1/organizations/{1}/apis/{2}/revisions/{3}?format=bundle' \
