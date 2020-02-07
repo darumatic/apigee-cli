@@ -8,7 +8,6 @@ Submodules
 
    apigee.api.apiproducts
    apigee.api.apis
-   apigee.api.apis_pull
    apigee.api.apps
    apigee.api.caches
    apigee.api.deploy
