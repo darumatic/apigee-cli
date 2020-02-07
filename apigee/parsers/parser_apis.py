@@ -2,7 +2,6 @@ import argparse
 
 from apigee.api import deploy
 from apigee.api.apis import Apis
-from apigee.api.apis_pull import Pull
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.dir_parser import DirParser
@@ -113,7 +112,7 @@ class ParserApis:
         pull_api.add_argument('--work-tree', help='set the path to the working tree')
         pull_api.add_argument('--prefix', help='prefix to prepend. WARNING: this is not foolproof. make sure to review the changes.')
         pull_api.add_argument('-b', '--basepath', help='set default basepath in apiproxy/proxies/default.xml')
-        pull_api.set_defaults(func=lambda args: Pull(args, args.org, args.name, args.revision_number, args.environment, work_tree=args.work_tree).__call__(force=args.force, prefix=args.prefix, basepath=args.basepath))
+        pull_api.set_defaults(func=lambda args: Apis(args, args.org, args.name, args.revision_number, args.environment, work_tree=args.work_tree).pull(force=args.force, prefix=args.prefix, basepath=args.basepath))
 
     def _build_get_api_proxy_argument(self):
         get_api_proxy = self._parser_apis.add_parser('get', aliases=['get-api-proxy'], parents=[self._parent_parser()],
