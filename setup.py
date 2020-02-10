@@ -25,7 +25,7 @@ setup(name=APP,
           ]
       },
       python_requires='>=3.5',
-      install_requires=['pyotp', 'requests', 'progressbar', 'tabulate'],
+      install_requires=['pyotp', 'requests', 'progressbar', 'tabulate', 'pyjwt'],
       license='Apache license 2.0',
       classifiers=[
         'Development Status :: 4 - Beta',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package

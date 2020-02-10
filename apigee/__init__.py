@@ -8,6 +8,7 @@ from os import getenv
 from pathlib import Path
 
 APIGEE_CLI_DIRECTORY = str(Path.home() / '.apigee')
+APIGEE_CLI_ACCESS_TOKEN_FILE = str(Path(APIGEE_CLI_DIRECTORY) / 'access_token')
 APIGEE_CLI_CREDENTIALS_FILE = str(Path(APIGEE_CLI_DIRECTORY) / 'credentials')
 APIGEE_CLI_PREFIX = getenv('APIGEE_CLI_PREFIX')
 APIGEE_USERNAME = getenv('APIGEE_USERNAME')
