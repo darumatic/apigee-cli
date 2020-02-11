@@ -7,6 +7,8 @@ from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
 
 from apigee import APIGEE_ADMIN_API_URL
+from apigee import APIGEE_CLI_SUPPRESS_RETRY_MESSAGE
+from apigee import APIGEE_CLI_SUPPRESS_RETRY_RESPONSE
 from apigee import APIGEE_OAUTH_URL
 from apigee import HTTP_MAX_RETRIES
 
@@ -37,7 +39,9 @@ def get_access_token(args):
     try:
         responsePost.json()['access_token']
     except KeyError as ke:
-        print('retry http POST ' + APIGEE_OAUTH_URL)
+        if APIGEE_CLI_SUPPRESS_RETRY_MESSAGE not in ('True', 'true', '1'):
+            print('retry http POST ' + APIGEE_OAUTH_URL)
         responsePost = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=postHeaders, data=postBody)
-        print(responsePost.json())
+        if APIGEE_CLI_SUPPRESS_RETRY_RESPONSE not in ('True', 'true', '1'):
+            print(responsePost.json())
     return responsePost.json()['access_token']
