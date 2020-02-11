@@ -23,8 +23,6 @@ def set_header(hdrs, args):
             with open(APIGEE_CLI_ACCESS_TOKEN_FILE, 'r') as f:
                 access_token = f.read()
         except (IOError, OSError) as e:
-            # with open(APIGEE_CLI_ACCESS_TOKEN_FILE, 'w') as f:
-            #     f.write(access_token)
             pass
         finally:
             if access_token:
