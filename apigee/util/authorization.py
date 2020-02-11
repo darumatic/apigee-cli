@@ -6,16 +6,19 @@ import time
 import jwt
 
 from apigee import (APIGEE_CLI_CREDENTIALS_FILE,
+                    APIGEE_CLI_DIRECTORY,
                     APIGEE_CLI_ACCESS_TOKEN_FILE,
                     APIGEE_CLI_AUTHORIZATION_DEVELOPER_ATTRIBUTE)
 from apigee.api.developers import Developers
 from apigee.util import envvar_exists, mfa_with_pyotp
+from apigee.util.os import makedirs
 
 def set_header(hdrs, args):
     if hdrs is None:
         hdrs = dict()
     if args.mfa_secret:
         access_token = ''
+        makedirs(APIGEE_CLI_DIRECTORY)
         try:
             with open(APIGEE_CLI_ACCESS_TOKEN_FILE, 'r') as f:
                 access_token = f.read()
