@@ -45,7 +45,7 @@ def get_credential(section, key):
         if section in config:
             return config[section][key]
     except:
-        return None
+        return
 
 def with_prefix(name, args, attribute_name=APIGEE_CLI_AUTHORIZATION_DEVELOPER_ATTRIBUTE):
     team = Developers(args, args.org, args.username).get_developer_attribute(attribute_name).json()['value']

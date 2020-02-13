@@ -14,7 +14,7 @@ from apigee import HTTP_MAX_RETRIES
 
 def get_access_token(args):
     if args.mfa_secret is None:
-        return None
+        return
     APIGEE_USERNAME = args.username
     APIGEE_PASSWORD = args.password
     APIGEE_MFA_SECRET = args.mfa_secret
