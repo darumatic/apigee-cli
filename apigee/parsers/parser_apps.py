@@ -3,6 +3,7 @@ import argparse
 from apigee.api.apps import Apps
 
 from apigee.parsers.parent_parser import ParentParser
+from apigee.parsers.file_parser import FileParser
 from apigee.parsers.prefix_parser import PrefixParser
 
 class ParserApps:
@@ -11,6 +12,7 @@ class ParserApps:
         self._parser = parser
         self._parser_apps = self._parser.add_parser('apps', help='manage developer apps').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
+        self._file_parser = kwargs.get('file_parser', FileParser())
         self._prefix_parser = kwargs.get('prefix_parser', PrefixParser(profile='default'))
         self._create_parser()
 
@@ -37,6 +39,14 @@ class ParserApps:
     @parent_parser.setter
     def parent_parser(self, value):
         self._parent_parser = value
+
+    @property
+    def file_parser(self):
+        return self._file_parser
+
+    @file_parser.setter
+    def file_parser(self, value):
+        self._file_parser = value
 
     @property
     def prefix_parser(self):
@@ -100,9 +110,15 @@ class ParserApps:
         get_developer_app_details.add_argument('-n', '--name', help='name', required=True)
         get_developer_app_details.set_defaults(func=lambda args: print(Apps(args, args.org, args.name).get_developer_app_details(args.developer).text))
 
+    def _build_restore_app_argument(self):
+        restore_app = self._parser_apps.add_parser('restore', aliases=['restore-app'], parents=[self._parent_parser(), self._file_parser()],
+            help='Restore developer app from a file.')
+        restore_app.set_defaults(func=lambda args: print(Apps(args, args.org, None).restore_app(args.file).text))
+
     def _create_parser(self):
         self._build_create_developer_app_argument()
         self._build_create_empty_developer_app_argument()
         self._build_create_a_consumer_key_and_secret_argument()
         self._build_list_developer_apps_argument()
         self._build_get_developer_app_details_argument()
+        self._build_restore_app_argument()

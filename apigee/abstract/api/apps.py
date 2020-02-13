@@ -69,6 +69,10 @@ class IApps:
     def add_api_product_to_key(self, developer, consumer_key, request_body):
         pass
 
+    @abstractmethod
+    def restore_app(self, file):
+        pass
+
 class AppsSerializer:
     def serialize_details(self, apps, format, prefix=None):
         resp = apps

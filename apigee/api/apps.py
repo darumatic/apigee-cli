@@ -156,3 +156,24 @@ class Apps(IApps):
         resp.raise_for_status()
         # print(resp.status_code)
         return resp
+
+    def restore_app(self, file):
+        with open(file, 'r') as f:
+            app = json.loads(f.read())
+        self._app_name = app['name']
+        request_body = {}
+        request_body['name'] = app['name']
+        request_body['attributes'] = app.get('attributes')
+        request_body['scopes'] = app.get('scopes')
+        request_body['callbackUrl'] = app.get('callbackUrl')
+        request_body = {k: v for k, v in request_body.items() if v}
+        resp = self.create_developer_app(app['developerId'], json.dumps(request_body))
+        consumer_key = resp.json()['credentials'][0]['consumerKey']
+        self.delete_key_for_a_developer_app(app['developerId'], consumer_key)
+        if app['credentials']:
+            for cred in app['credentials']:
+                consumer_key = cred['consumerKey']
+                consumer_secret = cred['consumerSecret']
+                products = [product['apiproduct'] for product in cred['apiProducts']]
+                resp = self.create_a_consumer_key_and_secret(app['developerId'], consumer_key=consumer_key, consumer_secret=consumer_secret, products=products)
+        return self.get_developer_app_details(app['developerId'])
