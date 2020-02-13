@@ -28,7 +28,8 @@ import xml.dom.minidom
 import zipfile
 
 from apigee import APIGEE_ADMIN_API_URL
-from apigee.util import mfa_with_pyotp
+# from apigee.util import mfa_with_pyotp
+from apigee.util import authorization
 
 ApigeeHost = APIGEE_ADMIN_API_URL
 UserPW = None
@@ -40,13 +41,20 @@ BasePath = '/'
 ShouldDeploy = True
 ShouldOverride = False
 GracePeriod = 15
-AccessToken = None
+Auth = None
 
 url = urllib.parse.urlparse(ApigeeHost)
 httpScheme = url[0]
 httpHost = url[1]
 
 body = None
+
+class ApigeeAuth:
+    def __init__(self, username, password, mfa_secret):
+        self.username = username
+        self.password = password
+        self.mfa_secret = mfa_secret
+
 
 def httpCall(verb, uri, headers, body):
     if httpScheme == 'https':
@@ -59,10 +67,12 @@ def httpCall(verb, uri, headers, body):
     else:
         hdrs = headers
 
-    if AccessToken:
-        hdrs['Authorization'] = 'Bearer %s' % AccessToken
-    else:
-        hdrs['Authorization'] = 'Basic %s' % base64.b64encode(UserPW.encode()).decode()
+    # if Auth:
+    #     # hdrs['Authorization'] = 'Bearer %s' % AccessToken
+    #     hdrs = authorization.set_header(hdrs, Auth)
+    # else:
+    #     hdrs['Authorization'] = 'Basic %s' % base64.b64encode(UserPW.encode()).decode()
+    hdrs = authorization.set_header(hdrs, Auth)
     conn.request(verb, uri, body, hdrs)
 
     return conn.getresponse()
@@ -146,7 +156,12 @@ def getDeployments():
     return ret
 
 
-def printDeployments(dep):
+def printDeployments(dep, check_revision=None):
+    if check_revision:
+        revisions = [d['revision'] for d in dep]
+        if check_revision not in revisions:
+            sys.exit('Error: proxy version %i not found' % check_revision)
+        print('Proxy version %i found' % check_revision)
     for d in dep:
         print('Environment: %s' % d['environment'])
         print('  Revision: %i BasePath = %s' % (d['revision'], d['basePath']))
@@ -164,7 +179,7 @@ def deploy(args):
     global Name
     global ShouldDeploy
     global ShouldOverride
-    global AccessToken
+    global Auth
 
     # ApigeeHost = 'https://api.enterprise.apigee.com'
     UserPW = args.username + ':' + args.password
@@ -176,7 +191,8 @@ def deploy(args):
     ShouldDeploy = not args.import_only
     ShouldOverride = args.seamless_deploy
     # GracePeriod = 15
-    AccessToken = mfa_with_pyotp.get_access_token(args)
+    # AccessToken = mfa_with_pyotp.get_access_token(args)
+    Auth = ApigeeAuth(args.username, args.password, args.mfa_secret)
 
     # if UserPW == None or \
     #         (Directory == None and ZipFile == None) or \
@@ -291,7 +307,11 @@ def deploy(args):
             sys.exit(2)
 
     deps = getDeployments()
-    printDeployments(deps)
+    # printDeployments(deps, check_revision=revision)
+    if ShouldDeploy and not ShouldOverride:
+        printDeployments(deps)
+    if ShouldOverride:
+        printDeployments(deps, check_revision=revision)
 
 def main():
     pass
