@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>apigee.api.apis module &mdash; apigee-cli 0.23.4 documentation</title>
+  <title>apigee.api.apis module &mdash; apigee-cli 0.24.1 documentation</title>
   
 
   
@@ -159,7 +159,7 @@
 <dl class="class">
 <dt id="apigee.api.apis.Apis">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.api.apis.</code><code class="sig-name descname">Apis</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.apis.html#apigee.abstract.api.apis.IApis" title="apigee.abstract.api.apis.IApis"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apis.IApis</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.apis.html#apigee.abstract.api.apis.IApis" title="apigee.abstract.api.apis.IApis"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apis.IApis</span></code></a>, <a class="reference internal" href="apigee.abstract.api.apis.html#apigee.abstract.api.apis.IPull" title="apigee.abstract.api.apis.IPull"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apis.IPull</span></code></a></p>
 <dl class="method">
 <dt id="apigee.api.apis.Apis.delete_api_proxy_revision">
 <code class="sig-name descname">delete_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.delete_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
@@ -167,7 +167,7 @@
 
 <dl class="method">
 <dt id="apigee.api.apis.Apis.delete_revisions">
-<code class="sig-name descname">delete_revisions</code><span class="sig-paren">(</span><em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.delete_revisions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_revisions</code><span class="sig-paren">(</span><em class="sig-param">revisions</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.delete_revisions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -181,6 +181,16 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="apigee.api.apis.Apis.export_keyvaluemap_dependencies">
+<code class="sig-name descname">export_keyvaluemap_dependencies</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">keyvaluemaps</em>, <em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_keyvaluemap_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.export_targetserver_dependencies">
+<code class="sig-name descname">export_targetserver_dependencies</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">targetservers</em>, <em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_targetserver_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="apigee.api.apis.Apis.gen_deployment_detail">
 <code class="sig-name descname">gen_deployment_detail</code><span class="sig-paren">(</span><em class="sig-param">deployment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.gen_deployment_detail" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -191,6 +201,26 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="apigee.api.apis.Apis.get_apiproxy_basepath">
+<code class="sig-name descname">get_apiproxy_basepath</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_apiproxy_basepath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_apiproxy_files">
+<code class="sig-name descname">get_apiproxy_files</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_apiproxy_files" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_keyvaluemap_dependencies">
+<code class="sig-name descname">get_keyvaluemap_dependencies</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_keyvaluemap_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.get_targetserver_dependencies">
+<code class="sig-name descname">get_targetserver_dependencies</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_targetserver_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="apigee.api.apis.Apis.list_api_proxies">
 <code class="sig-name descname">list_api_proxies</code><span class="sig-paren">(</span><em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.list_api_proxies" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -198,6 +228,26 @@
 <dl class="method">
 <dt id="apigee.api.apis.Apis.list_api_proxy_revisions">
 <code class="sig-name descname">list_api_proxy_revisions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.list_api_proxy_revisions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.prefix_dependencies_in_work_tree">
+<code class="sig-name descname">prefix_dependencies_in_work_tree</code><span class="sig-paren">(</span><em class="sig-param">dependencies</em>, <em class="sig-param">prefix</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.prefix_dependencies_in_work_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.pull">
+<code class="sig-name descname">pull</code><span class="sig-paren">(</span><em class="sig-param">dependencies=[]</em>, <em class="sig-param">force=False</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">basepath=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.replace_substring">
+<code class="sig-name descname">replace_substring</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">old</em>, <em class="sig-param">new</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.replace_substring" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.api.apis.Apis.set_apiproxy_basepath">
+<code class="sig-name descname">set_apiproxy_basepath</code><span class="sig-paren">(</span><em class="sig-param">basepath</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.set_apiproxy_basepath" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
