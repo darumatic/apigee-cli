@@ -108,9 +108,35 @@ This will export to ``[name].zip``.
 
 To export to specific file, run::
 
-    $ apigee apis export -n [name] -r 2 -O [new_name].zip
+    $ apigee apis export -n [name] -r [revision] -O [new_name].zip
 
 This will export to ``[new_name].zip``.
+
+.. _`Pulling an API proxy and its dependencies`:
+
+-----------------------------------------
+Pulling an API Proxy and its dependencies
+-----------------------------------------
+
+To pull an API proxy revision and its dependencies into the current working directory, run::
+
+    $ apigee apis pull -e [env] -n [name] -r [revision]
+
+To specify a target directory, use the ``--work-tree``  option::
+
+    $ apigee apis pull -e [env] -n [name] -r [revision] --work-tree [dir]
+
+You can also prefix the name of the API and its dependencies, using the ``--prefix`` option::
+
+    $ apigee apis pull -e [env] -n [name] -r [revision] --prefix [prefix]
+
+If you get the following error::
+
+    error: [path] already exists
+
+where ``[path]`` is the file path of the pulled API proxy, then use the ``-f/--force`` flag::
+
+    $ apigee apis pull -e [env] -n [name] -r [revision] --force
 
 .. _`Getting API proxy revisions that are actively deployed`:
 
@@ -278,6 +304,8 @@ This will display a loading bar output like so::
 As you can see, this command will update existing entries and delete those that are not present in the request body.
 If the key value map or entry does not exist, a new one will be created.
 
+The ``push`` subcommand is also available for ``targetservers``, ``caches``, ``products`` and ``maskconfigs``.
+
 
 .. _`Getting permissions for a role`:
 
@@ -329,6 +357,56 @@ where ``[template_file]`` contains the ``resourcePermission`` and looks somethin
     }
 
 If ``--placeholder-key`` is specified, then all instances of the placeholder string will be replaced with the ``--placeholder-value`` (default is an empty string).
+
+.. _`Importing modules`:
+
+-----------------
+Importing modules
+-----------------
+
+To import and make API calls using the modules, do the following::
+
+    from apigee.api.apis import Apis
+
+    class ApigeeAuth:
+        def __init__(self, username, password, mfa_secret):
+            self.username = username
+            self.password = password
+            self.mfa_secret = mfa_secret
+
+    auth = ApigeeAuth('[username]', '[password]', '[mfa_secret]')
+    apis = Apis(auth, '[org]', '[api_name]')
+
+    print(apis.list_api_proxy_revisions().text)
+
+.. _`Restoring Developer Apps`:
+
+------------------------
+Restoring Developer Apps
+------------------------
+
+To restore a developer app, run::
+
+    $ apigee apps restore -f [app_file]
+
+This will create the app specified in the ``[app_file]`` and restore the credentials.
+
+To get a developer app in the first place, run::
+
+    $ apigee apps get -d [developer] -n [app_file]
+
+.. _`Suppressing retry messages`:
+
+--------------------------
+Suppressing retry messages
+--------------------------
+
+To suppress the retry message and response from printing to the console, set the following environment variables::
+
+    APIGEE_CLI_SUPPRESS_RETRY_MESSAGE=True
+    APIGEE_CLI_SUPPRESS_RETRY_RESPONSE=True
+
+This is useful if you want to reliably redirect JSON output to a file without retry messages showing up from time to time.
 
 .. _`Getting Help`:
 

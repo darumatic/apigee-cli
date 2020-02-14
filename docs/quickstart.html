@@ -89,6 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#listing-api-proxies">Listing API Proxies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deploying-an-api-proxy">Deploying an API Proxy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#exporting-an-api-proxy">Exporting an API Proxy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pulling-an-api-proxy-and-its-dependencies">Pulling an API Proxy and its dependencies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-api-proxy-revisions-that-are-actively-deployed">Getting API proxy revisions that are actively deployed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deleting-all-undeployed-revisions-of-an-api-proxy">Deleting all undeployed revisions of an API proxy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#managing-key-value-maps-kvms">Managing Key value maps (KVMs)</a><ul>
@@ -97,6 +98,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-permissions-for-a-role">Getting permissions for a role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setting-permissions-for-a-role">Setting permissions for a role</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#importing-modules">Importing modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#restoring-developer-apps">Restoring Developer Apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#suppressing-retry-messages">Suppressing retry messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-help">Getting Help</a></li>
 </ul>
 </li>
@@ -255,13 +259,36 @@ the organization, specify <code class="docutils literal notranslate"><span class
 </div>
 <p>This will export to <code class="docutils literal notranslate"><span class="pre">[name].zip</span></code>.</p>
 <p>To export to specific file, run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis export -n [name] -r 2 -O [new_name].zip
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis export -n [name] -r [revision] -O [new_name].zip
 </pre></div>
 </div>
 <p>This will export to <code class="docutils literal notranslate"><span class="pre">[new_name].zip</span></code>.</p>
 </div>
+<div class="section" id="pulling-an-api-proxy-and-its-dependencies">
+<span id="id6"></span><h2>Pulling an API Proxy and its dependencies<a class="headerlink" href="#pulling-an-api-proxy-and-its-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>To pull an API proxy revision and its dependencies into the current working directory, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis pull -e [env] -n [name] -r [revision]
+</pre></div>
+</div>
+<p>To specify a target directory, use the <code class="docutils literal notranslate"><span class="pre">--work-tree</span></code>  option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis pull -e [env] -n [name] -r [revision] --work-tree [dir]
+</pre></div>
+</div>
+<p>You can also prefix the name of the API and its dependencies, using the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis pull -e [env] -n [name] -r [revision] --prefix [prefix]
+</pre></div>
+</div>
+<p>If you get the following error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="p">:</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span> <span class="n">already</span> <span class="n">exists</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">[path]</span></code> is the file path of the pulled API proxy, then use the <code class="docutils literal notranslate"><span class="pre">-f/--force</span></code> flag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis pull -e [env] -n [name] -r [revision] --force
+</pre></div>
+</div>
+</div>
 <div class="section" id="getting-api-proxy-revisions-that-are-actively-deployed">
-<span id="id6"></span><h2>Getting API proxy revisions that are actively deployed<a class="headerlink" href="#getting-api-proxy-revisions-that-are-actively-deployed" title="Permalink to this headline">¶</a></h2>
+<span id="id7"></span><h2>Getting API proxy revisions that are actively deployed<a class="headerlink" href="#getting-api-proxy-revisions-that-are-actively-deployed" title="Permalink to this headline">¶</a></h2>
 <p>To get actively deployed revisions for an API Proxy, run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee deps get -r -n [name]
 </pre></div>
@@ -298,7 +325,7 @@ the organization, specify <code class="docutils literal notranslate"><span class
 </div>
 </div>
 <div class="section" id="deleting-all-undeployed-revisions-of-an-api-proxy">
-<span id="id7"></span><h2>Deleting all undeployed revisions of an API proxy<a class="headerlink" href="#deleting-all-undeployed-revisions-of-an-api-proxy" title="Permalink to this headline">¶</a></h2>
+<span id="id8"></span><h2>Deleting all undeployed revisions of an API proxy<a class="headerlink" href="#deleting-all-undeployed-revisions-of-an-api-proxy" title="Permalink to this headline">¶</a></h2>
 <p>To delete all undeployed revisions for an API Proxy, run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis clean -n [name]
 </pre></div>
@@ -313,7 +340,7 @@ the organization, specify <code class="docutils literal notranslate"><span class
 </div>
 </div>
 <div class="section" id="managing-key-value-maps-kvms">
-<span id="id8"></span><h2>Managing Key value maps (KVMs)<a class="headerlink" href="#managing-key-value-maps-kvms" title="Permalink to this headline">¶</a></h2>
+<span id="id9"></span><h2>Managing Key value maps (KVMs)<a class="headerlink" href="#managing-key-value-maps-kvms" title="Permalink to this headline">¶</a></h2>
 <p>The following commands are supported:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">apigee</span> <span class="n">kvms</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span>
                    <span class="p">{</span><span class="n">create</span><span class="p">,</span><span class="n">create</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">delete</span><span class="p">,</span><span class="n">delete</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">delete</span><span class="o">-</span><span class="n">entry</span><span class="p">,</span><span class="n">delete</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">get</span><span class="p">,</span><span class="n">get</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">get</span><span class="o">-</span><span class="n">value</span><span class="p">,</span><span class="n">get</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">keys</span><span class="o">-</span><span class="n">value</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">,</span><span class="nb">list</span><span class="p">,</span><span class="nb">list</span><span class="o">-</span><span class="n">keyvaluemaps</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">update</span><span class="p">,</span><span class="n">update</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">create</span><span class="o">-</span><span class="n">entry</span><span class="p">,</span><span class="n">create</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">kvm</span><span class="p">,</span><span class="n">update</span><span class="o">-</span><span class="n">entry</span><span class="p">,</span><span class="n">update</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">kvm</span><span class="p">,</span><span class="nb">list</span><span class="o">-</span><span class="n">keys</span><span class="p">,</span><span class="nb">list</span><span class="o">-</span><span class="n">keys</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">,</span><span class="n">push</span><span class="p">,</span><span class="n">push</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">}</span>
@@ -411,10 +438,11 @@ the organization, specify <code class="docutils literal notranslate"><span class
 </div>
 <p>As you can see, this command will update existing entries and delete those that are not present in the request body.
 If the key value map or entry does not exist, a new one will be created.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">push</span></code> subcommand is also available for <code class="docutils literal notranslate"><span class="pre">targetservers</span></code>, <code class="docutils literal notranslate"><span class="pre">caches</span></code>, <code class="docutils literal notranslate"><span class="pre">products</span></code> and <code class="docutils literal notranslate"><span class="pre">maskconfigs</span></code>.</p>
 </div>
 </div>
 <div class="section" id="getting-permissions-for-a-role">
-<span id="id9"></span><h2>Getting permissions for a role<a class="headerlink" href="#getting-permissions-for-a-role" title="Permalink to this headline">¶</a></h2>
+<span id="id10"></span><h2>Getting permissions for a role<a class="headerlink" href="#getting-permissions-for-a-role" title="Permalink to this headline">¶</a></h2>
 <p>To get permissions for a role, run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee perms get -n [role] #--showindex --tablefmt fancy_grid
 </pre></div>
@@ -430,7 +458,7 @@ If the key value map or entry does not exist, a new one will be created.</p>
 <p>To output as JSON, specify the <code class="docutils literal notranslate"><span class="pre">-j/--json</span></code> argument.</p>
 </div>
 <div class="section" id="setting-permissions-for-a-role">
-<span id="id10"></span><h2>Setting permissions for a role<a class="headerlink" href="#setting-permissions-for-a-role" title="Permalink to this headline">¶</a></h2>
+<span id="id11"></span><h2>Setting permissions for a role<a class="headerlink" href="#setting-permissions-for-a-role" title="Permalink to this headline">¶</a></h2>
 <p>To set permissions for a role, run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee perms create -n [role] -b [request_body]
 </pre></div>
@@ -456,8 +484,47 @@ If the key value map or entry does not exist, a new one will be created.</p>
 </div>
 <p>If <code class="docutils literal notranslate"><span class="pre">--placeholder-key</span></code> is specified, then all instances of the placeholder string will be replaced with the <code class="docutils literal notranslate"><span class="pre">--placeholder-value</span></code> (default is an empty string).</p>
 </div>
+<div class="section" id="importing-modules">
+<span id="id12"></span><h2>Importing modules<a class="headerlink" href="#importing-modules" title="Permalink to this headline">¶</a></h2>
+<p>To import and make API calls using the modules, do the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">apigee.api.apis</span> <span class="kn">import</span> <span class="n">Apis</span>
+
+<span class="k">class</span> <span class="nc">ApigeeAuth</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">mfa_secret</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">mfa_secret</span>
+
+<span class="n">auth</span> <span class="o">=</span> <span class="n">ApigeeAuth</span><span class="p">(</span><span class="s1">&#39;[username]&#39;</span><span class="p">,</span> <span class="s1">&#39;[password]&#39;</span><span class="p">,</span> <span class="s1">&#39;[mfa_secret]&#39;</span><span class="p">)</span>
+<span class="n">apis</span> <span class="o">=</span> <span class="n">Apis</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="s1">&#39;[org]&#39;</span><span class="p">,</span> <span class="s1">&#39;[api_name]&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">apis</span><span class="o">.</span><span class="n">list_api_proxy_revisions</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="restoring-developer-apps">
+<span id="id13"></span><h2>Restoring Developer Apps<a class="headerlink" href="#restoring-developer-apps" title="Permalink to this headline">¶</a></h2>
+<p>To restore a developer app, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apps restore -f [app_file]
+</pre></div>
+</div>
+<p>This will create the app specified in the <code class="docutils literal notranslate"><span class="pre">[app_file]</span></code> and restore the credentials.</p>
+<p>To get a developer app in the first place, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apps get -d [developer] -n [app_file]
+</pre></div>
+</div>
+</div>
+<div class="section" id="suppressing-retry-messages">
+<span id="id14"></span><h2>Suppressing retry messages<a class="headerlink" href="#suppressing-retry-messages" title="Permalink to this headline">¶</a></h2>
+<p>To suppress the retry message and response from printing to the console, set the following environment variables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">APIGEE_CLI_SUPPRESS_RETRY_MESSAGE</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">APIGEE_CLI_SUPPRESS_RETRY_RESPONSE</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>This is useful if you want to reliably redirect JSON output to a file without retry messages showing up from time to time.</p>
+</div>
 <div class="section" id="getting-help">
-<span id="id11"></span><h2>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
+<span id="id15"></span><h2>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://apidocs.apigee.com/management/apis">Apigee Product Documentation</a></p></li>
 <li><p><a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/permissions">Permissions reference</a></p></li>
