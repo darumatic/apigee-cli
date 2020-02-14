@@ -106,7 +106,7 @@ To export an API Proxy revision, run::
 
 This will export to ``[name].zip``.
 
-To export to specific file, run::
+To export to a specific file, run::
 
     $ apigee apis export -n [name] -r [revision] -O [new_name].zip
 
@@ -126,7 +126,7 @@ To specify a target directory, use the ``--work-tree``  option::
 
     $ apigee apis pull -e [env] -n [name] -r [revision] --work-tree [dir]
 
-You can also prefix the name of the API and its dependencies, using the ``--prefix`` option::
+You can also add a prefix to the name of the API and its dependencies using the ``--prefix`` option::
 
     $ apigee apis pull -e [env] -n [name] -r [revision] --prefix [prefix]
 
@@ -134,7 +134,7 @@ If you get the following error::
 
     error: [path] already exists
 
-where ``[path]`` is the file path of the pulled API proxy, then use the ``-f/--force`` flag::
+then use the ``-f/--force`` flag::
 
     $ apigee apis pull -e [env] -n [name] -r [revision] --force
 

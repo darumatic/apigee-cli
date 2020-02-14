@@ -258,7 +258,7 @@ the organization, specify <code class="docutils literal notranslate"><span class
 </pre></div>
 </div>
 <p>This will export to <code class="docutils literal notranslate"><span class="pre">[name].zip</span></code>.</p>
-<p>To export to specific file, run:</p>
+<p>To export to a specific file, run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis export -n [name] -r [revision] -O [new_name].zip
 </pre></div>
 </div>
@@ -274,7 +274,7 @@ the organization, specify <code class="docutils literal notranslate"><span class
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis pull -e [env] -n [name] -r [revision] --work-tree [dir]
 </pre></div>
 </div>
-<p>You can also prefix the name of the API and its dependencies, using the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> option:</p>
+<p>You can also add a prefix to the name of the API and its dependencies using the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> option:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis pull -e [env] -n [name] -r [revision] --prefix [prefix]
 </pre></div>
 </div>
@@ -282,7 +282,7 @@ the organization, specify <code class="docutils literal notranslate"><span class
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="p">:</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span> <span class="n">already</span> <span class="n">exists</span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal notranslate"><span class="pre">[path]</span></code> is the file path of the pulled API proxy, then use the <code class="docutils literal notranslate"><span class="pre">-f/--force</span></code> flag:</p>
+<p>then use the <code class="docutils literal notranslate"><span class="pre">-f/--force</span></code> flag:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis pull -e [env] -n [name] -r [revision] --force
 </pre></div>
 </div>
