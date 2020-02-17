@@ -27,7 +27,7 @@ def set_header(hdrs, args):
         finally:
             if access_token:
                 decoded = jwt.decode(access_token, verify=False)
-                if decoded['exp'] < int(time.time()):
+                if decoded['exp'] < int(time.time()) or decoded['email'] != args.username:
                     access_token = ''
         if not access_token:
             access_token = mfa_with_pyotp.get_access_token(args)
