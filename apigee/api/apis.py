@@ -47,20 +47,38 @@ class Apis(IApis, IPull):
             ]
         }
 
-    def delete_undeployed_revisions(self, save_last=0, dry_run=False):
-        revisions = self.list_api_proxy_revisions().json()
-        deployments = Deployments(self._auth, self._org_name, self._api_name)
+    def get_deployment_details(self, details):
         deployment_details = []
-        deployed = []
-        for dep in deployments.get_api_proxy_deployment_details().json()['environment']:
+        for dep in details['environment']:
             deployment_details.append(self.gen_deployment_detail(dep))
-        for dep in deployment_details:
+        return deployment_details
+
+    def get_deployed_revisions(self, details):
+        deployed = []
+        for dep in details:
             deployed.extend(dep['revision'])
         deployed = list(set(deployed))
+        return deployed
+
+    def bounded_subtract_list_index(self, list, subtract):
+        length = len(list)
+        return list[:length - (subtract if subtract <= length else length)]
+
+    def get_undeployed_revisions(self, revisions, deployed, save_last=0):
         undeployed = [int(rev) for rev in revisions if rev not in deployed]
         undeployed.sort()
-        undeployed_length = len(undeployed)
-        undeployed = undeployed[:undeployed_length - (save_last if save_last <= undeployed_length else undeployed_length)]
+        return self.bounded_subtract_list_index(undeployed, save_last)
+
+    def delete_undeployed_revisions(self, save_last=0, dry_run=False):
+        deployed = self.get_deployed_revisions(
+            self.get_deployment_details(
+                Deployments(
+                    self._auth, self._org_name, self._api_name
+                ).get_api_proxy_deployment_details().json()
+            )
+        )
+        undeployed = self.get_undeployed_revisions(
+            self.list_api_proxy_revisions().json(), deployed, save_last=save_last)
         print('Undeployed revisions:', undeployed)
         if dry_run:
             return
