@@ -32,6 +32,19 @@ class Apps(IApps):
         # print(resp.status_code)
         return resp
 
+    def delete_developer_app(self, developer):
+        uri = '{0}/v1/organizations/{1}/developers/{2}/apps/{3}' \
+            .format(APIGEE_ADMIN_API_URL,
+                    self._org_name,
+                    developer,
+                    self._app_name)
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
+        resp = requests.delete(uri, headers=hdrs)
+        resp.raise_for_status()
+        # print(resp.status_code)
+        return resp
+
     def create_empty_developer_app(self, developer, display_name='', callback_url=''):
         uri = '{0}/v1/organizations/{1}/developers/{2}/apps' \
             .format(APIGEE_ADMIN_API_URL,

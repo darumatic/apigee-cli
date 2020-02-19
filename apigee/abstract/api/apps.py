@@ -50,6 +50,10 @@ class IApps:
         pass
 
     @abstractmethod
+    def delete_developer_app(self, developer):
+        pass
+
+    @abstractmethod
     def get_developer_app_details(self, developer):
         pass
 

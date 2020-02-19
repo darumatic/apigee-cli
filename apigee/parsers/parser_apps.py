@@ -66,6 +66,13 @@ class ParserApps:
         create_developer_app.add_argument('-b', '--body', help='request body', required=True)
         create_developer_app.set_defaults(func=lambda args: print(Apps(args, args.org, None).create_developer_app(args.developer, args.body).text))
 
+    def _build_delete_developer_app_arguments(self):
+        delete_developer_app = self._parser_apps.add_parser('delete', aliases=['delete-developer-app'], parents=[self._parent_parser()],
+            help='Deletes a developer app.')
+        delete_developer_app.add_argument('-d', '--developer', help='developer email or id', required=True)
+        delete_developer_app.add_argument('-n', '--name', help='Name of the app. The name is the unique ID of the app for this organization and developer.', required=True)
+        delete_developer_app.set_defaults(func=lambda args: print(Apps(args, args.org, args.name).delete_developer_app(args.developer).text))
+
     def _build_create_empty_developer_app_argument(self):
         create_empty_developer_app = self._parser_apps.add_parser('create-empty', aliases=['create-empty-developer-app'], parents=[self._parent_parser()],
             help='Creates an empty developer app.')
@@ -117,6 +124,7 @@ class ParserApps:
 
     def _create_parser(self):
         self._build_create_developer_app_argument()
+        self._build_delete_developer_app_arguments()
         self._build_create_empty_developer_app_argument()
         self._build_create_a_consumer_key_and_secret_argument()
         self._build_list_developer_apps_argument()
