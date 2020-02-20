@@ -60,25 +60,18 @@ class Apis(IApis, IPull):
         deployed = list(set(deployed))
         return deployed
 
-    def bounded_subtract_list_index(self, list, subtract):
-        length = len(list)
-        return list[:length - (subtract if subtract <= length else length)]
-
     def get_undeployed_revisions(self, revisions, deployed, save_last=0):
         undeployed = [int(rev) for rev in revisions if rev not in deployed]
         undeployed.sort()
-        return self.bounded_subtract_list_index(undeployed, save_last)
+        if save_last:
+            return undeployed[:-save_last]
+        return undeployed
 
     def delete_undeployed_revisions(self, save_last=0, dry_run=False):
-        deployed = self.get_deployed_revisions(
-            self.get_deployment_details(
-                Deployments(
-                    self._auth, self._org_name, self._api_name
-                ).get_api_proxy_deployment_details().json()
-            )
-        )
-        undeployed = self.get_undeployed_revisions(
-            self.list_api_proxy_revisions().json(), deployed, save_last=save_last)
+        if save_last < 0:
+            raise TypeError('integers must be positive')
+        deployed = self.get_deployed_revisions(self.get_deployment_details(Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json()))
+        undeployed = self.get_undeployed_revisions(self.list_api_proxy_revisions().json(), deployed, save_last=save_last)
         print('Undeployed revisions:', undeployed)
         if dry_run:
             return
