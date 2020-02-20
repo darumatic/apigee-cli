@@ -64,15 +64,13 @@ class Apis(IApis, IPull):
         undeployed = [int(rev) for rev in revisions if rev not in deployed]
         undeployed.sort()
         if save_last:
-            return undeployed[:-save_last]
+            return undeployed[:-save_last if save_last >= 0 else len(deployed)]
         return undeployed
 
     def delete_undeployed_revisions(self, save_last=0, dry_run=False):
-        if save_last < 0:
-            raise TypeError('integers must be positive')
         deployed = self.get_deployed_revisions(self.get_deployment_details(Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json()))
         undeployed = self.get_undeployed_revisions(self.list_api_proxy_revisions().json(), deployed, save_last=save_last)
-        print('Undeployed revisions:', undeployed)
+        print('Undeployed revisions to be deleted:', undeployed)
         if dry_run:
             return undeployed
         for rev in undeployed:
