@@ -296,10 +296,10 @@ To ``push`` a key value map in a file to Apigee Edge, run::
 
 This will display a loading bar output like so::
 
-    Updating entries in test-kvm                                                                       |
-    100% |#############################################################################################|
-    Deleting entries in test-kvm                                                                       |
-    100% |#############################################################################################|
+    Updating entries in test-kvm
+    100%|██████████████████████████████████████████████| 2/2 [00:00<00:00, 10143.42it/s]
+    Deleting entries in test-kvm
+    100%|█████████████████████████████████████████████████| 1/1 [00:00<00:00,  3.70it/s]
 
 As you can see, this command will update existing entries and delete those that are not present in the request body.
 If the key value map or entry does not exist, a new one will be created.

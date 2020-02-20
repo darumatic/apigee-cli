@@ -22,7 +22,7 @@ copyright = '2020, Matthew Delotavo'
 author = 'Matthew Delotavo'
 
 # The full version, including alpha/beta/rc tags
-release = '0.24.1'
+release = '0.26.0'
 
 
 # -- General configuration ---------------------------------------------------
