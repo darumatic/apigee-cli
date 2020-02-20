@@ -3,8 +3,9 @@
 
 import json
 import requests
+from requests.exceptions import HTTPError
 
-import progressbar
+from tqdm import tqdm
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.keyvaluemaps import IKeyvaluemaps, KeyvaluemapsSerializer
@@ -166,42 +167,31 @@ class Keyvaluemaps(IKeyvaluemaps):
     def push_keyvaluemap(self, environment, file):
         with open(file) as f:
             body = f.read()
+
         kvm = json.loads(body)
         self._map_name = kvm['name']
+
         try:
             keyvaluemap_in_an_environment = self.get_keyvaluemap_in_an_environment(environment).json()
-
-            # get KeyValueMap entries to be deleted
-            keys = [_['name'] for _ in kvm['entry']]
-            entries_deleted = [_ for _ in keyvaluemap_in_an_environment['entry'] if _['name'] not in keys]
-
-            bar = progressbar.ProgressBar(maxval=len(kvm['entry'])).start()
+            keys = [entry['name'] for entry in kvm['entry']]
+            deleted = [entry for entry in keyvaluemap_in_an_environment['entry'] if entry['name'] not in keys]
             print('Updating entries in', self._map_name)
-
-            for idx, entry in enumerate(kvm['entry']):
+            for idx, entry in enumerate(tqdm(kvm['entry'])):
                 if entry not in keyvaluemap_in_an_environment['entry']:
                     try:
                         self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry['name'])
                         self.update_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
-                    except requests.exceptions.HTTPError as e:
-                        status_code = e.response.status_code
-                        if status_code == 404:
+                    except HTTPError as e:
+                        if e.response.status_code == 404:
                             self.create_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
                         else:
                             raise e
-                bar.update(idx)
-            bar.finish()
-
-            if entries_deleted:
-                bar = progressbar.ProgressBar(maxval=len(entries_deleted)).start()
+            if deleted:
                 print('Deleting entries in', self._map_name)
-                for idx, entry in enumerate(entries_deleted):
+                for idx, entry in enumerate(tqdm(deleted)):
                     self.delete_keyvaluemap_entry_in_an_environment(environment, entry['name'])
-                    bar.update(idx)
-            bar.finish()
-        except requests.exceptions.HTTPError as e:
-            status_code = e.response.status_code
-            if status_code == 404:
+        except HTTPError as e:
+            if e.response.status_code == 404:
                 print('Creating', self._map_name)
                 print(self.create_keyvaluemap_in_an_environment(environment, body).text)
             else:
