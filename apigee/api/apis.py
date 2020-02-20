@@ -74,7 +74,7 @@ class Apis(IApis, IPull):
         undeployed = self.get_undeployed_revisions(self.list_api_proxy_revisions().json(), deployed, save_last=save_last)
         print('Undeployed revisions:', undeployed)
         if dry_run:
-            return
+            return undeployed
         for rev in undeployed:
             print('Deleting revison', rev)
             self.delete_api_proxy_revision(rev)
