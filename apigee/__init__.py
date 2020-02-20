@@ -1,6 +1,6 @@
 APP = 'apigeecli'
 CMD = 'apigee'
-__version__ = '0.25.0'
+__version__ = '0.26.0'
 description = 'Apigee Management API command-line interface with multi-factor authentication'
 
 import json
