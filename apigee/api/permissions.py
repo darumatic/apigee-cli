@@ -14,7 +14,9 @@ from apigee.util import authorization
 class Permissions(IPermissions):
 
     def __init__(self, *args, **kwargs):
-        """Args:
+        """Permissions constructor
+
+        Args:
             auth: Apigee Edge credentials object.
             org_name: Apigee Edge organization.
             role_name: The role name.

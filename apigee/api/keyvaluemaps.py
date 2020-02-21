@@ -17,7 +17,9 @@ from apigee.util import authorization
 class Keyvaluemaps(IKeyvaluemaps):
 
     def __init__(self, *args, **kwargs):
-        """Args:
+        """Keyvaluemaps constructor
+
+        Args:
             auth: Apigee Edge credentials object.
             org_name: Apigee Edge organization.
             map_name: The KeyValueMap name.

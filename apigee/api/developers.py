@@ -18,7 +18,9 @@ from apigee.util import authorization
 class Developers(IDevelopers):
 
     def __init__(self, *args, **kwargs):
-        """Args:
+        """Developers constructor
+
+        Args:
             auth: Apigee Edge credentials object.
             org_name: Apigee Edge organization.
             developer_email: The developer's email address or ID.

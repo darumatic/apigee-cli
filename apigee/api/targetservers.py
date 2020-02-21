@@ -18,7 +18,9 @@ from apigee.util import authorization
 class Targetservers(ITargetservers):
 
     def __init__(self, *args, **kwargs):
-        """Args:
+        """Targetservers constructor
+
+        Args:
             auth: Apigee Edge credentials object.
             org_name: Apigee Edge organization.
             targetserver_name: The TargetSever name.

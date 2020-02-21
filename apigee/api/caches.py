@@ -19,7 +19,9 @@ from apigee.util import authorization
 class Caches(ICaches):
 
     def __init__(self, *args, **kwargs):
-        """Args:
+        """Caches constructor
+
+        Args:
             auth: Apigee Edge credentials object.
             org_name: Apigee Edge organization.
             cache_name: The cache name.
