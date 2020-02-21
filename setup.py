@@ -16,7 +16,7 @@ setup(name=APP,
       author='Matthew Delotavo',
       author_email='matthew.t.delotavo@gmail.com',
       url='https://github.com/mdelotavo/apigee-cli',
-      download_url='https://github.com/mdelotavo/apigee-cli/archive/v'+__version__+'.tar.gz',
+      download_url=f'https://github.com/mdelotavo/apigee-cli/archive/v{__version__}.tar.gz',
       keywords=['apigee', 'management', 'api', 'oauth', 'mfa'],
       packages=find_packages(),
       entry_points={
@@ -24,7 +24,7 @@ setup(name=APP,
               'apigee=apigee.__main__:main'
           ]
       },
-      python_requires='>=3.5',
+      python_requires='>=3.6',
       install_requires=['pyotp', 'requests', 'tqdm', 'tabulate', 'pyjwt'],
       license='Apache license 2.0',
       classifiers=[
@@ -32,9 +32,9 @@ setup(name=APP,
         'Intended Audience :: Developers',
         'Topic :: Utilities',
         'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7'
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8'
       ],
       project_urls={
         'Documentation': 'https://mdelotavo.github.io/apigee-cli/index.html'
