@@ -1,8 +1,22 @@
 #!/usr/bin/env python
-"""https://apidocs.apigee.com/api-reference/content/data-masks"""
+"""Source: https://apidocs.apigee.com/api-reference/content/data-masks
+
+Base Path: https://api.enterprise.apigee.com/v1/o/{org_name}
+
+API Resource Path: /maskconfigs
+
+Specify data that will be filtered out of trace sessions
+
+Edge enables developers to capture message content to enable runtime debugging of APIs calls.
+In many cases, API traffic contains sensitive data, such credit cards or personally identifiable health information (PHI)
+that needs to filtered out of the captured message content.
+Mask configurations enable you to specify data that will be filtered out of trace sessions.
+Masking configurations can be set globally (at the organization-level) or locally (at the API proxy level).
+"""
 
 import json
 import requests
+from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.maskconfigs import IMaskconfigs
@@ -11,83 +25,124 @@ from apigee.util import authorization
 class Maskconfigs(IMaskconfigs):
 
     def __init__(self, *args, **kwargs):
+        """Args:
+            auth: Apigee Edge credentials object.
+            org_name: Apigee Edge organization.
+            api_name: The API Proxy name.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
         super().__init__(*args, **kwargs)
 
     def create_data_masks_for_an_api_proxy(self, request_body):
-        uri = '{0}/v1/organizations/{1}/apis/{2}/maskconfigs' \
-            .format(APIGEE_ADMIN_API_URL,
-                    self._org_name,
-                    self._api_name)
+        """Create a data mask for an API proxy.
+
+        Args:
+            request_body (str): JSON string.
+
+        Returns:
+            requests.Response()
+        """
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs'
         hdrs = authorization.set_header({'Accept': 'application/json',
                                          'Content-Type': 'application/json'},
                                         self._auth)
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
-        # print(resp.status_code)
         return resp
 
     def delete_data_masks_for_an_api_proxy(self, maskconfig_name):
-        uri = '{0}/v1/organizations/{1}/apis/{2}/maskconfigs/{3}' \
-            .format(APIGEE_ADMIN_API_URL,
-                    self._org_name,
-                    self._api_name,
-                    maskconfig_name)
+        """Delete a data mask for an API proxy.
+
+        Args:
+            maskconfig_name (str): The data mask to delete.
+
+        Returns:
+            requests.Response()
+        """
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs/{maskconfig_name}'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
-        # print(resp.status_code)
         return resp
 
     def get_data_mask_details_for_an_api_proxy(self, maskconfig_name):
-        uri = '{0}/v1/organizations/{1}/apis/{2}/maskconfigs/{3}' \
-            .format(APIGEE_ADMIN_API_URL,
-                    self._org_name,
-                    self._api_name,
-                    maskconfig_name)
+        """Get the details for a data mask for an API proxy.
+
+        Args:
+            maskconfig_name (str): The data mask name.
+
+        Returns:
+            requests.Response()
+        """
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs/{maskconfig_name}'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        # print(resp.status_code)
         return resp
 
     def list_data_masks_for_an_api_proxy(self):
-        uri = '{0}/v1/organizations/{1}/apis/{2}/maskconfigs' \
-            .format(APIGEE_ADMIN_API_URL,
-                    self._org_name,
-                    self._api_name)
+        """List all data masks for an API proxy.
+
+        Args:
+            None
+
+        Returns:
+            requests.Response()
+        """
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        # print(resp.status_code)
         return resp
 
     def list_data_masks_for_an_organization(self):
-        uri = '{0}/v1/organizations/{1}/maskconfigs' \
-            .format(APIGEE_ADMIN_API_URL,
-                    self._org_name)
+        """List all data masks for an organization.
+
+        Args:
+            None
+
+        Returns:
+            requests.Response()
+        """
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/maskconfigs'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        # print(resp.status_code)
         return resp
 
     def push_data_masks_for_an_api_proxy(self, file):
+        """Push data mask file to Apigee
+
+        This will create a data mask if it does not exist and update if it does.
+
+        Args:
+            environment (str): Apigee environment.
+            file (str): The file path.
+
+        Returns:
+            None
+
+        Raises:
+            HTTPError: If response status code is not successful or 404 (GET data mask).
+        """
         with open(file) as f:
             body = f.read()
+
         maskconfig = json.loads(body)
         maskconfig_name = maskconfig['name']
+
         try:
             self.get_data_mask_details_for_an_api_proxy(maskconfig_name)
             print('Updating', maskconfig_name, 'for', self._api_name)
             print(self.create_data_masks_for_an_api_proxy(body).text)
-        except requests.exceptions.HTTPError as e:
-            status_code = e.response.status_code
-            if status_code == 404:
+        except HTTPError as e:
+            if e.response.status_code == 404:
                 print('Creating', maskconfig_name, 'for', self._api_name)
                 print(self.create_data_masks_for_an_api_proxy(body).text)
             else:

@@ -1314,7 +1314,7 @@ along with the rest of the developer profile, even if no values are changing.</p
 </div>
 <div class="section" id="module-apigee.api.keyvaluemaps">
 <span id="apigee-api-keyvaluemaps-module"></span><h2>apigee.api.keyvaluemaps module<a class="headerlink" href="#module-apigee.api.keyvaluemaps" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://apidocs.apigee.com/api-services/content/environment-keyvalue-maps">https://apidocs.apigee.com/api-services/content/environment-keyvalue-maps</a></p>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api-services/content/environment-keyvalue-maps">https://apidocs.apigee.com/api-services/content/environment-keyvalue-maps</a></p>
 <p>The Key/Value maps API lets you create and manage collections of arbitrary key/value pairs at the environment scope (for example, test or prod) for longer-term data persistence.</p>
 <dl class="class">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps">
@@ -1534,7 +1534,15 @@ For Apigee Edge for Public Cloud use Update an entry in an environment-scoped KV
 </div>
 <div class="section" id="module-apigee.api.maskconfigs">
 <span id="apigee-api-maskconfigs-module"></span><h2>apigee.api.maskconfigs module<a class="headerlink" href="#module-apigee.api.maskconfigs" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://apidocs.apigee.com/api-reference/content/data-masks">https://apidocs.apigee.com/api-reference/content/data-masks</a></p>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api-reference/content/data-masks">https://apidocs.apigee.com/api-reference/content/data-masks</a></p>
+<p>Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
+<p>API Resource Path: /maskconfigs</p>
+<p>Specify data that will be filtered out of trace sessions</p>
+<p>Edge enables developers to capture message content to enable runtime debugging of APIs calls.
+In many cases, API traffic contains sensitive data, such credit cards or personally identifiable health information (PHI)
+that needs to filtered out of the captured message content.
+Mask configurations enable you to specify data that will be filtered out of trace sessions.
+Masking configurations can be set globally (at the organization-level) or locally (at the API proxy level).</p>
 <dl class="class">
 <dt id="apigee.api.maskconfigs.Maskconfigs">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.api.maskconfigs.</code><code class="sig-name descname">Maskconfigs</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs" title="Permalink to this definition">¶</a></dt>
@@ -1542,32 +1550,93 @@ For Apigee Edge for Public Cloud use Update an entry in an environment-scoped KV
 <dl class="method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.create_data_masks_for_an_api_proxy">
 <code class="sig-name descname">create_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.create_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Create a data mask for an API proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.delete_data_masks_for_an_api_proxy">
 <code class="sig-name descname">delete_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">maskconfig_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.delete_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Delete a data mask for an API proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>maskconfig_name</strong> (<em>str</em>) – The data mask to delete.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.get_data_mask_details_for_an_api_proxy">
 <code class="sig-name descname">get_data_mask_details_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">maskconfig_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.get_data_mask_details_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get the details for a data mask for an API proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>maskconfig_name</strong> (<em>str</em>) – The data mask name.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_api_proxy">
 <code class="sig-name descname">list_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>List all data masks for an API proxy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_organization">
 <code class="sig-name descname">list_data_masks_for_an_organization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_organization" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>List all data masks for an organization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.push_data_masks_for_an_api_proxy">
 <code class="sig-name descname">push_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.push_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Push data mask file to Apigee</p>
+<p>This will create a data mask if it does not exist and update if it does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – The file path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HTTPError</strong> – If response status code is not successful or 404 (GET data mask).</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

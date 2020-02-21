@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""https://apidocs.apigee.com/api-services/content/environment-keyvalue-maps
+"""Source: https://apidocs.apigee.com/api-services/content/environment-keyvalue-maps
 
 The Key/Value maps API lets you create and manage collections of arbitrary key/value pairs at the environment scope (for example, test or prod) for longer-term data persistence.
 """
