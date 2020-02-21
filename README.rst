@@ -39,9 +39,9 @@ This package provides a command-line interface for the Apigee Management API wit
 
 The apigee-cli package works on Python versions:
 
-* 3.5.x and greater
 * 3.6.x and greater
 * 3.7.x and greater
+* 3.8.x and greater
 
 Documentation: `The Apigee Management API command-line interface documentation`_
 
