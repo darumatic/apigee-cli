@@ -161,6 +161,7 @@
 <div class="section" id="module-apigee.api.apiproducts">
 <span id="apigee-api-apiproducts-module"></span><h2>apigee.api.apiproducts module<a class="headerlink" href="#module-apigee.api.apiproducts" title="Permalink to this headline">¶</a></h2>
 <p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/api-products-1">https://apidocs.apigee.com/api/api-products-1</a></p>
+<p>Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/organizations">https://api.enterprise.apigee.com/v1/organizations</a>/{org_name}</p>
 <p>API Resource Path: /apiproducts
 A list of URIs with an associated Quota (or “service plan”), which is used to expose customized API bundles to different developer groups.
 API products enable you to bundle and distribute your APIs to multiple developer groups simultaneously, without having to modify code. An API product consists of a list of API resources (URIs) combined with a Service Plan (rate-limiting policy settings) plus any custom metadata required by the API provider. API products provide the basis for access control in Apigee, since they provide control over the set of API resources that apps are allowed to consume.</p>
@@ -625,8 +626,9 @@ Defaults to False.</p></li>
 </div>
 <div class="section" id="module-apigee.api.apps">
 <span id="apigee-api-apps-module"></span><h2>apigee.api.apps module<a class="headerlink" href="#module-apigee.api.apps" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://apidocs.apigee.com/api/apps-developer">https://apidocs.apigee.com/api/apps-developer</a></p>
-<p><a class="reference external" href="https://apidocs.apigee.com/api/developer-app-keys">https://apidocs.apigee.com/api/developer-app-keys</a></p>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/apps-developer">https://apidocs.apigee.com/api/apps-developer</a>, <a class="reference external" href="https://apidocs.apigee.com/api/developer-app-keys">https://apidocs.apigee.com/api/developer-app-keys</a></p>
+<p>Apps associated with developers (as developer apps).</p>
+<p>Apps are API consumers registered with an API provider’s organization. Apps are registered with an organization to obtain credentials that enable access to one or more API products (or, a set of URIs). The default app profile can be extended by using custom attributes.</p>
 <dl class="class">
 <dt id="apigee.api.apps.Apps">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.api.apps.</code><code class="sig-name descname">Apps</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps" title="Permalink to this definition">¶</a></dt>
@@ -634,47 +636,199 @@ Defaults to False.</p></li>
 <dl class="method">
 <dt id="apigee.api.apps.Apps.add_api_product_to_key">
 <code class="sig-name descname">add_api_product_to_key</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">consumer_key</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.add_api_product_to_key" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Adds an API product to a developer app key, enabling the app that holds the key to access the API resources bundled in the API product.</p>
+<p>You can also use this API to add attributes to the key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>consumer_key</strong> (<em>str</em><em>, </em><em>optional</em>) – Consumer key to add the API Product to.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apps.Apps.create_a_consumer_key_and_secret">
 <code class="sig-name descname">create_a_consumer_key_and_secret</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">consumer_key=None</em>, <em class="sig-param">consumer_secret=None</em>, <em class="sig-param">key_length=32</em>, <em class="sig-param">secret_length=32</em>, <em class="sig-param">key_suffix=None</em>, <em class="sig-param">key_delimiter='-'</em>, <em class="sig-param">products=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_a_consumer_key_and_secret" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates a custom consumer key and secret for a developer app.</p>
+<p>This is particularly useful if you want to migrate existing consumer keys/secrets to Edge from another system.</p>
+<p>Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>consumer_key</strong> (<em>str</em><em>, </em><em>optional</em>) – Consumer key to create.</p></li>
+<li><p><strong>consumer_secret</strong> (<em>str</em><em>, </em><em>optional</em>) – Consumer secret to create.</p></li>
+<li><p><strong>key_length</strong> (<em>int</em><em>, </em><em>optional</em>) – Length of the consumer key to generate if <code class="docutils literal notranslate"><span class="pre">consumer_key</span></code> is not specified.
+Defaults to 32 characters.</p></li>
+<li><p><strong>secret_length</strong> (<em>int</em><em>, </em><em>optional</em>) – Length of the consumer secret to generate if <code class="docutils literal notranslate"><span class="pre">consumer_secret</span></code> is not specified.
+Defaults to 32 characters.</p></li>
+<li><p><strong>key_suffix</strong> (<em>str</em><em>, </em><em>optional</em>) – String to append to consumer key. Defaults to None.</p></li>
+<li><p><strong>key_delimiter</strong> (<em>str</em><em>, </em><em>optional</em>) – String to delimit <code class="docutils literal notranslate"><span class="pre">consumer_key</span></code> and <code class="docutils literal notranslate"><span class="pre">key_suffix</span></code>. Defaults to ‘-‘.</p></li>
+<li><p><strong>products</strong> (<em>list</em><em>, </em><em>optional</em>) – List of API Products to add to the consumer key and secret.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apps.Apps.create_developer_app">
 <code class="sig-name descname">create_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_developer_app" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates an app associated with a developer, associates the app with an API product, and auto-generates an API key for the app to use in calls to API proxies inside the API product.</p>
+<p>The name is the unique ID of the app that you can use in management API calls.
+The DisplayName (set with an attribute) is what appears in the management UI. If you don’t provide a DisplayName, the name is used.</p>
+<p>The keyExpiresIn property sets the expiration on the API key. If you don’t set this, or set the value to -1, they API key never expires.</p>
+<p>Apigee recommends that you use the developer’s email address when calling this API.
+Developer IDs are generated internally by Apigee and are not guaranteed to stay the same over time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apps.Apps.create_empty_developer_app">
 <code class="sig-name descname">create_empty_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">display_name=''</em>, <em class="sig-param">callback_url=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_empty_developer_app" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates an empty developer app.</p>
+<dl class="simple">
+<dt>This method combines three API calls to Apigee:</dt><dd><ol class="arabic simple">
+<li><p>Create a developer app with the option to specify display name and callback URL</p></li>
+<li><p>Delete default key created for the new developer app</p></li>
+<li><p>Get the developer details</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>display_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The <code class="docutils literal notranslate"><span class="pre">DisplayName</span></code> is what appears in the management UI. If you don’t provide a <code class="docutils literal notranslate"><span class="pre">DisplayName</span></code>, the <code class="docutils literal notranslate"><span class="pre">name</span></code> is used.</p></li>
+<li><p><strong>callback_url</strong> (<em>str</em><em>, </em><em>optional</em>) – The callbackUrl is used by OAuth 2.0 authorization servers to communicate authorization codes back to apps.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apps.Apps.delete_developer_app">
 <code class="sig-name descname">delete_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.delete_developer_app" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Deletes a developer app.</p>
+<dl class="simple">
+<dt>Note the following:</dt><dd><ul class="simple">
+<li><p>With Apigee Edge for Public Cloud, deletion of the developer app and associated artifacts happens asynchronously.
+The developer app is deleted immediately, but the resources associated with that developer app,
+such as app keys or access tokens, may take anywhere from a few seconds to a few minutes to be automatically deleted.</p></li>
+<li><p>Apigee recommends that you use the developer’s email address when calling this API.
+Developer IDs are generated internally by Apigee and are not guaranteed to stay the same over time.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apps.Apps.delete_key_for_a_developer_app">
 <code class="sig-name descname">delete_key_for_a_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">consumer_key</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.delete_key_for_a_developer_app" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Deletes a consumer key that belongs to an app, and removes all API products associated with the app.</p>
+<p>Once deleted, the consumer key cannot be used to access any APIs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>consumer_key</strong> (<em>str</em>) – Consumer key to delete.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apps.Apps.get_developer_app_details">
 <code class="sig-name descname">get_developer_app_details</code><span class="sig-paren">(</span><em class="sig-param">developer</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.get_developer_app_details" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Get the profile of a specific developer app.</p>
+<p>All times in the response are UNIX times.</p>
+<p>Note that the response contains a top-level attribute named accessType that is no longer used by Apigee.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apps.Apps.list_developer_apps">
 <code class="sig-name descname">list_developer_apps</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">expand=False</em>, <em class="sig-param">count=100</em>, <em class="sig-param">startkey=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.list_developer_apps" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps.</p>
+<p>All time values in the response are UNIX times.</p>
+<p>You can specify either the developer’s email address or Edge ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string. Defaults to None.</p></li>
+<li><p><strong>expand</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, show product details. Defaults to False.</p></li>
+<li><p><strong>count</strong> (<em>int</em><em>, </em><em>optional</em>) – This parameter can be used with Apigee Edge for Public Cloud only.
+Limits the list to the number you specify. The limit is 100.
+Use with the startKey parameter to provide more targeted filtering.</p></li>
+<li><p><strong>startkey</strong> (<em>str</em><em>, </em><em>optional</em>) – This parameter can be used with Apigee Edge for Public Cloud only.
+To filter the keys that are returned, enter the name of a company app that the list will start with.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apps.Apps.restore_app">
 <code class="sig-name descname">restore_app</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.restore_app" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Restore developer app file to Apigee.</p>
+<dl class="simple">
+<dt>This method combines four different types of API calls to Apigee:</dt><dd><ol class="arabic simple">
+<li><p>Create a developer app</p></li>
+<li><p>Delete default key created for the new developer app</p></li>
+<li><p>For each consumer key and secret pair, add (create) to the new app</p></li>
+<li><p>Get the developer details</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

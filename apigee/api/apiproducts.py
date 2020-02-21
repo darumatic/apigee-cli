@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """Source: https://apidocs.apigee.com/api/api-products-1
 
+Base Path: https://api.enterprise.apigee.com/v1/organizations/{org_name}
+
 API Resource Path: /apiproducts
 A list of URIs with an associated Quota (or "service plan"), which is used to expose customized API bundles to different developer groups.
 API products enable you to bundle and distribute your APIs to multiple developer groups simultaneously, without having to modify code. An API product consists of a list of API resources (URIs) combined with a Service Plan (rate-limiting policy settings) plus any custom metadata required by the API provider. API products provide the basis for access control in Apigee, since they provide control over the set of API resources that apps are allowed to consume.
