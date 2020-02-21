@@ -4,7 +4,9 @@
 API Platform Base Path: https://api.enterprise.apigee.com/v1/o/{org_name}
 
 API Resource Path: /environments/{env_name}/caches
+
 A lightweight persistence store that can be used by policies or code executing on the Apigee Edge.
+
 To support data segregation, cache resources are scoped to environments.
 """
 

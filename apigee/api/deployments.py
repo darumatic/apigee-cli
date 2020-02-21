@@ -4,6 +4,7 @@
 API Platform Base Path: https://api.enterprise.apigee.com/v1/o/{org_name}
 
 API Resource Path: /apis/{api_name}/deployments
+
 API proxies that are actively deployed in environments on Apigee Edge.
 """
 
