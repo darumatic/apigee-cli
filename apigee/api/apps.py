@@ -154,7 +154,7 @@ class Apps(IApps):
         Args:
             developer (str): The developer's email address or ID.
             prefix (str, optional): Filter results by a prefix string. Defaults to None.
-            expand (bool, optional): If True, show product details. Defaults to False.
+            expand (bool, optional): If True, show app details. Defaults to False.
             count (int, optional): This parameter can be used with Apigee Edge for Public Cloud only.
                 Limits the list to the number you specify. The limit is 100.
                 Use with the startKey parameter to provide more targeted filtering.

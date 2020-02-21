@@ -796,7 +796,7 @@ Developer IDs are generated internally by Apigee and are not guaranteed to stay 
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>developer</strong> (<em>str</em>) – The developer’s email address or ID.</p></li>
 <li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string. Defaults to None.</p></li>
-<li><p><strong>expand</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, show product details. Defaults to False.</p></li>
+<li><p><strong>expand</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, show app details. Defaults to False.</p></li>
 <li><p><strong>count</strong> (<em>int</em><em>, </em><em>optional</em>) – This parameter can be used with Apigee Edge for Public Cloud only.
 Limits the list to the number you specify. The limit is 100.
 Use with the startKey parameter to provide more targeted filtering.</p></li>
@@ -1073,7 +1073,10 @@ API proxies that are actively deployed in environments on Apigee Edge.</p>
 </div>
 <div class="section" id="module-apigee.api.developers">
 <span id="apigee-api-developers-module"></span><h2>apigee.api.developers module<a class="headerlink" href="#module-apigee.api.developers" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://apidocs.apigee.com/api/developers-0">https://apidocs.apigee.com/api/developers-0</a></p>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/developers-0">https://apidocs.apigee.com/api/developers-0</a></p>
+<p>Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
+<p>API Resource Path: /developers</p>
+<p>Developers implement client/consumer apps and must be registered with an organization on Apigee Edge.</p>
 <dl class="class">
 <dt id="apigee.api.developers.Developers">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.api.developers.</code><code class="sig-name descname">Developers</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers" title="Permalink to this definition">¶</a></dt>
@@ -1081,62 +1084,230 @@ API proxies that are actively deployed in environments on Apigee Edge.</p>
 <dl class="method">
 <dt id="apigee.api.developers.Developers.create_developer">
 <code class="sig-name descname">create_developer</code><span class="sig-paren">(</span><em class="sig-param">first_name</em>, <em class="sig-param">last_name</em>, <em class="sig-param">user_name</em>, <em class="sig-param">attributes='{&quot;attributes&quot; : [ ]}'</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.create_developer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates a profile for a developer in an organization.</p>
+<p>Once created, the developer can register an app and receive an API key.</p>
+<p>The developer is always created with a status of active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>first_name</strong> (<em>str</em>) – The developer’s first name.</p></li>
+<li><p><strong>last_name</strong> (<em>str</em>) – The developer’s last name.</p></li>
+<li><p><strong>user_name</strong> (<em>str</em>) – The developer’s user name.</p></li>
+<li><p><strong>attributes</strong> (<em>str</em><em>, </em><em>optional</em>) – JSON string. Defaults to ‘{“attributes” : [ ]}’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.delete_developer">
 <code class="sig-name descname">delete_developer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.delete_developer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Deletes a developer from an organization.</p>
+<p>All apps and API keys associated with the developer are also removed from the organization.
+All times in the response are UNIX times.</p>
+<p>To avoid permanently deleting developers and their artifacts, consider deactivating developers instead.</p>
+<dl class="simple">
+<dt>Note the following:</dt><dd><ul class="simple">
+<li><p>With Apigee Edge for Public Cloud, deletion of the developer and associated artifacts happens asynchronously.
+The developer is deleted immediately, but the resources associated with that developer, such as apps,
+may take anywhere from a few seconds to a few minutes to be automatically deleted.</p></li>
+<li><p>Apigee recommends that you use the developer’s email address when calling this API.
+Developer IDs are generated internally by Apigee and are not guaranteed to stay the same over time.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.delete_developer_attribute">
 <code class="sig-name descname">delete_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param">attribute_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.delete_developer_attribute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Deletes a developer attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>attribute_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The attribute name to delete.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.get_all_developer_attributes">
 <code class="sig-name descname">get_all_developer_attributes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_all_developer_attributes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns a list of all developer attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.get_developer">
 <code class="sig-name descname">get_developer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the profile for a developer by email address or ID.</p>
+<p>All time values are UNIX time values.</p>
+<p>The profile includes the developer’s email address, ID, name, and other information.</p>
+<dl class="simple">
+<dt>Note the following:</dt><dd><ul class="simple">
+<li><p>With Apigee Edge for Public Cloud, the response includes only the first 100 apps.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.get_developer_attribute">
 <code class="sig-name descname">get_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param">attribute_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer_attribute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns the value of a developer attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>attribute_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The attribute name.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.get_developer_by_app">
 <code class="sig-name descname">get_developer_by_app</code><span class="sig-paren">(</span><em class="sig-param">app_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer_by_app" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets the developer profile by app name.</p>
+<p>The profile retrieved is for the developer associated with the app in the organization.
+All time values are UNIX time values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>app_name</strong> (<em>str</em>) – The name of the app.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.list_developers">
 <code class="sig-name descname">list_developers</code><span class="sig-paren">(</span><em class="sig-param">prefix=None</em>, <em class="sig-param">expand=False</em>, <em class="sig-param">count=100</em>, <em class="sig-param">startkey=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.list_developers" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Lists all developers in an organization by email address.</p>
+<p>This call does not list any company developers who are a part of the designated organization.</p>
+<dl class="simple">
+<dt>With Apigee Edge for Public Cloud:</dt><dd><ul class="simple">
+<li><p>A maximum of 1000 developers are returned per API call.</p></li>
+<li><p>You can paginate the list of companies returned using the <code class="docutils literal notranslate"><span class="pre">startKey</span></code> and <code class="docutils literal notranslate"><span class="pre">count</span></code> query parameters.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string. Defaults to None.</p></li>
+<li><p><strong>expand</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, list developers exanded with details. Defaults to False.</p></li>
+<li><p><strong>count</strong> (<em>int</em><em>, </em><em>optional</em>) – Note: This parameter can be used with Apigee Edge for Public Cloud only.
+Limits the list to the number you specify.
+Use with the startKey parameter to provide more targeted filtering. The limit is 1000. Defaults to 100.</p></li>
+<li><p><strong>startkey</strong> (<em>str</em><em>, </em><em>optional</em>) – Note: This parameter can be used with Apigee Edge for Public Cloud only.
+To filter the keys that are returned, enter the email of a developer that the list will start with.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.set_developer_status">
 <code class="sig-name descname">set_developer_status</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.set_developer_status" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sets a developer’s status to active or inactive for a specific organization.</p>
+<p>Run this API for each organization where you want to change the developer’s status.</p>
+<p>By default, the status of a developer is set to active.
+Admins with proper permissions (such as Organization Administrator) can change a developer’s status using this API call.</p>
+<p>If you set a developer’s status to inactive, the API keys assigned to the developer’s apps are no longer valid
+even though keys continue to show a status of “Approved” (in strikethrough text in the management UI).
+Inactive developers, however, can still log into the developer portal and create apps. The new keys that get created just won’t work.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>str</em>) – Set to <code class="docutils literal notranslate"><span class="pre">active</span></code> or <code class="docutils literal notranslate"><span class="pre">inactive</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.update_a_developer_attribute">
 <code class="sig-name descname">update_a_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param">attribute_name</em>, <em class="sig-param">updated_value</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_a_developer_attribute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Updates the value of a developer attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attribute_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The attribute name to update.</p></li>
+<li><p><strong>updated_value</strong> (<em>str</em><em>, </em><em>optional</em>) – The new attribute value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.update_all_developer_attributes">
 <code class="sig-name descname">update_all_developer_attributes</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_all_developer_attributes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Updates or creates developer attributes.</p>
+<p>This API replaces the current list of attributes with the attributes specified in the request body.
+This lets you update existing attributes, add new attributes, or delete existing attributes by omitting them from the request body.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.developers.Developers.update_developer">
 <code class="sig-name descname">update_developer</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_developer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Update an existing developer profile.</p>
+<p>To add new values or update existing values, submit the new or updated portion of the developer profile
+along with the rest of the developer profile, even if no values are changing.</p>
+<p>To delete attributes from a developer profile, submit the entire profile without the attributes that you want to delete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
