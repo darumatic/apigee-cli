@@ -4,15 +4,62 @@ apigee.util package
 Submodules
 ----------
 
-.. toctree::
+apigee.util.authorization module
+--------------------------------
 
-   apigee.util.authorization
-   apigee.util.configure
-   apigee.util.exceptions
-   apigee.util.mfa_with_pyotp
-   apigee.util.os
-   apigee.util.string
-   apigee.util.types
+.. automodule:: apigee.util.authorization
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.util.configure module
+----------------------------
+
+.. automodule:: apigee.util.configure
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.util.exceptions module
+-----------------------------
+
+.. automodule:: apigee.util.exceptions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.util.mfa\_with\_pyotp module
+-----------------------------------
+
+.. automodule:: apigee.util.mfa_with_pyotp
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.util.os module
+---------------------
+
+.. automodule:: apigee.util.os
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.util.string module
+-------------------------
+
+.. automodule:: apigee.util.string
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.util.types module
+------------------------
+
+.. automodule:: apigee.util.types
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

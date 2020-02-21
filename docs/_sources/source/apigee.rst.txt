@@ -12,13 +12,6 @@ Subpackages
    apigee.parsers
    apigee.util
 
-Submodules
-----------
-
-.. toctree::
-
-   apigee.__main__
-
 Module contents
 ---------------
 

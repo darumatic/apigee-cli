@@ -4,19 +4,94 @@ apigee.abstract.api package
 Submodules
 ----------
 
-.. toctree::
+apigee.abstract.api.apiproducts module
+--------------------------------------
 
-   apigee.abstract.api.apiproducts
-   apigee.abstract.api.apis
-   apigee.abstract.api.apps
-   apigee.abstract.api.caches
-   apigee.abstract.api.deployments
-   apigee.abstract.api.developers
-   apigee.abstract.api.keyvaluemaps
-   apigee.abstract.api.maskconfigs
-   apigee.abstract.api.permissions
-   apigee.abstract.api.targetservers
-   apigee.abstract.api.userroles
+.. automodule:: apigee.abstract.api.apiproducts
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.apis module
+-------------------------------
+
+.. automodule:: apigee.abstract.api.apis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.apps module
+-------------------------------
+
+.. automodule:: apigee.abstract.api.apps
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.caches module
+---------------------------------
+
+.. automodule:: apigee.abstract.api.caches
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.deployments module
+--------------------------------------
+
+.. automodule:: apigee.abstract.api.deployments
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.developers module
+-------------------------------------
+
+.. automodule:: apigee.abstract.api.developers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.keyvaluemaps module
+---------------------------------------
+
+.. automodule:: apigee.abstract.api.keyvaluemaps
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.maskconfigs module
+--------------------------------------
+
+.. automodule:: apigee.abstract.api.maskconfigs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.permissions module
+--------------------------------------
+
+.. automodule:: apigee.abstract.api.permissions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.targetservers module
+----------------------------------------
+
+.. automodule:: apigee.abstract.api.targetservers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.userroles module
+------------------------------------
+
+.. automodule:: apigee.abstract.api.userroles
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------
