@@ -1711,6 +1711,9 @@ Default to ‘’.</p></li>
 <div class="section" id="module-apigee.api.targetservers">
 <span id="apigee-api-targetservers-module"></span><h2>apigee.api.targetservers module<a class="headerlink" href="#module-apigee.api.targetservers" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://apidocs.apigee.com/api/api_resources/51-targetservers">https://apidocs.apigee.com/api/api_resources/51-targetservers</a></p>
+<p>TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services.</p>
+<p>To do so, an HTTPConnection can be configured to use a LoadBalancer that lists one or more ‘named’ TargetSevers.
+Using TargetServers, you can create an HTTPTargetConnection that calls a different backend server based on the environment where the API proxy is deployed.</p>
 <dl class="class">
 <dt id="apigee.api.targetservers.Targetservers">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.api.targetservers.</code><code class="sig-name descname">Targetservers</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers" title="Permalink to this definition">¶</a></dt>
@@ -1718,32 +1721,109 @@ Default to ‘’.</p></li>
 <dl class="method">
 <dt id="apigee.api.targetservers.Targetservers.create_a_targetserver">
 <code class="sig-name descname">create_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.create_a_targetserver" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Create a TargetServer in the specified environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.targetservers.Targetservers.delete_a_targetserver">
 <code class="sig-name descname">delete_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.delete_a_targetserver" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Delete a TargetServer configuration from an environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Information about the deleted TargetServer.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.targetservers.Targetservers.get_targetserver">
 <code class="sig-name descname">get_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.get_targetserver" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns a TargetServer definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.targetservers.Targetservers.list_targetservers_in_an_environment">
 <code class="sig-name descname">list_targetservers_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.list_targetservers_in_an_environment" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>List all TargetServers in an environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.targetservers.Targetservers.push_targetserver">
 <code class="sig-name descname">push_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.push_targetserver" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Push TargetSever file to Apigee</p>
+<p>This will create a TargetSever if it does not exist and update if it does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – The file path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HTTPError</strong> – If response status code is not successful or 404 (GET TargetSever).</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.targetservers.Targetservers.update_a_targetserver">
 <code class="sig-name descname">update_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.update_a_targetserver" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Modifies an existing TargetServer.</p>
+<p>Note: In the request body when Content-Type is set to application/json, use the element sSLInfo in the request body,
+not SSLInfo (note the case). You must use the case sSLInfo exactly.
+Using SSLInfo will cause an error when Content-Type is set to application/json.
+The case does not matter if Content-Type is application/xml.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
