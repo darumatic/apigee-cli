@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""https://apidocs.apigee.com/api/user-roles
+"""Source: https://apidocs.apigee.com/api/user-roles
 
 API Platform Base Path: https://api.enterprise.apigee.com/v1/o/{org_name}
 

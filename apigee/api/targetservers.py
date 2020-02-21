@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""https://apidocs.apigee.com/api/api_resources/51-targetservers
+"""Source: https://apidocs.apigee.com/api/api_resources/51-targetservers
 
 TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services.
 

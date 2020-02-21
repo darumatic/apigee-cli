@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""https://docs.apigee.com/api-platform/system-administration/permissions
+"""Source: https://docs.apigee.com/api-platform/system-administration/permissions
 
 Manage permissions that you can assign to a role by using the Edge API.
 """
