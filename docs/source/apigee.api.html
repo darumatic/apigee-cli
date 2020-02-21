@@ -174,37 +174,99 @@ API products enable you to bundle and distribute your APIs to multiple developer
 <dt id="apigee.api.apiproducts.Apiproducts.create_api_product">
 <code class="sig-name descname">create_api_product</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.create_api_product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an API product: a list of API resources (URIs) combined with Quota settings that you can use to deliver customized API bundles to your developers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apiproducts.Apiproducts.delete_api_product">
 <code class="sig-name descname">delete_api_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.delete_api_product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes an API Product</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apiproducts.Apiproducts.get_api_product">
 <code class="sig-name descname">get_api_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.get_api_product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets an API Product</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apiproducts.Apiproducts.list_api_products">
 <code class="sig-name descname">list_api_products</code><span class="sig-paren">(</span><em class="sig-param">prefix=None</em>, <em class="sig-param">expand=False</em>, <em class="sig-param">count=1000</em>, <em class="sig-param">startkey=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.list_api_products" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lists all API Products by name for an organization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string. Defaults to None.</p></li>
+<li><p><strong>expand</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, show product details. Defaults to False.</p></li>
+<li><p><strong>count</strong> (<em>int</em><em>, </em><em>optional</em>) – Apigee Edge for Public Cloud only:
+Number of API products to return in the API call.
+The maximum limit is 1000. Use with the startkey to provide more targeted filtering.</p></li>
+<li><p><strong>startkey</strong> (<em>str</em><em>, </em><em>optional</em>) – Apigee Edge for Public Cloud only:
+Returns a list of API products starting with the specified API product.
+For example, if you’re returning 50 API products at a time (using the count query parameter),
+you can view products 50-99 by entering the name of the 50th API product in the first API.
+The API product name is case sensitive.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apiproducts.Apiproducts.push_apiproducts">
 <code class="sig-name descname">push_apiproducts</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.push_apiproducts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Push API product to Apigee</p>
+<dd><p>Push API product file to Apigee</p>
 <p>This will create an API product if it does not exist and update if it does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – The file path.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HTTPError</strong> – If response status code is not successful or 404 (GET API Product).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.apiproducts.Apiproducts.update_api_product">
 <code class="sig-name descname">update_api_product</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.update_api_product" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates an existing API product</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
