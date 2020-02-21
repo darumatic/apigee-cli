@@ -276,6 +276,9 @@ class Apps(IApps):
           3. For each consumer key and secret pair, add (create) to the new app
           4. Get the developer details
 
+        Args:
+            file (str): The file path.
+
         Returns:
             requests.Response()
         """
