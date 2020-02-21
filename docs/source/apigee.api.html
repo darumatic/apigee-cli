@@ -838,7 +838,11 @@ To filter the keys that are returned, enter the name of a company app that the l
 </div>
 <div class="section" id="module-apigee.api.caches">
 <span id="apigee-api-caches-module"></span><h2>apigee.api.caches module<a class="headerlink" href="#module-apigee.api.caches" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://apidocs.apigee.com/api/caches">https://apidocs.apigee.com/api/caches</a></p>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/caches">https://apidocs.apigee.com/api/caches</a></p>
+<p>API Platform Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
+<p>API Resource Path: /environments/{env_name}/caches
+A lightweight persistence store that can be used by policies or code executing on the Apigee Edge.
+To support data segregation, cache resources are scoped to environments.</p>
 <dl class="class">
 <dt id="apigee.api.caches.Caches">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.api.caches.</code><code class="sig-name descname">Caches</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches" title="Permalink to this definition">¶</a></dt>
@@ -846,42 +850,138 @@ To filter the keys that are returned, enter the name of a company app that the l
 <dl class="method">
 <dt id="apigee.api.caches.Caches.clear_a_cache_entry">
 <code class="sig-name descname">clear_a_cache_entry</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.clear_a_cache_entry" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Clears a cache entry, which is identified by the full CacheKey prefix and value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>entry</strong> (<em>str</em>) – The cache entry to clear.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.caches.Caches.clear_all_cache_entries">
 <code class="sig-name descname">clear_all_cache_entries</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.clear_all_cache_entries" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Clears all entries from the specified cache.</p>
+<p>Entries to be cleared can be scoped by CacheKey prefix by using the ‘prefix’ parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.caches.Caches.create_a_cache_in_an_environment">
 <code class="sig-name descname">create_a_cache_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.create_a_cache_in_an_environment" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates a cache in an environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.caches.Caches.delete_a_cache">
 <code class="sig-name descname">delete_a_cache</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.delete_a_cache" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Deletes a cache.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.caches.Caches.get_information_about_a_cache">
 <code class="sig-name descname">get_information_about_a_cache</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.get_information_about_a_cache" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets information about a cache.</p>
+<p>The response might contain a property named <code class="docutils literal notranslate"><span class="pre">persistent</span></code>. That property is no longer used by Edge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.caches.Caches.list_caches_in_an_environment">
 <code class="sig-name descname">list_caches_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.list_caches_in_an_environment" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>List caches in an environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Filter results by a prefix string. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.caches.Caches.push_cache">
 <code class="sig-name descname">push_cache</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.push_cache" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Push cache file to Apigee</p>
+<p>This will create a cache if it does not exist and update if it does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – The file path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HTTPError</strong> – If response status code is not successful or 404 (GET cache).</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.caches.Caches.update_a_cache_in_an_environment">
 <code class="sig-name descname">update_a_cache_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.update_a_cache_in_an_environment" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Updates a cache in an environment.</p>
+<p>You must specify the complete definition of the cache,
+including the properties that you want to change and the ones that retain their current value.
+Any properties omitted from the request body are reset to their default value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
