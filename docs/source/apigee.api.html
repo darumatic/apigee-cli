@@ -160,7 +160,7 @@
 </div>
 <div class="section" id="module-apigee.api.apiproducts">
 <span id="apigee-api-apiproducts-module"></span><h2>apigee.api.apiproducts module<a class="headerlink" href="#module-apigee.api.apiproducts" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://apidocs.apigee.com/api/api-products-1">https://apidocs.apigee.com/api/api-products-1</a></p>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/api-products-1">https://apidocs.apigee.com/api/api-products-1</a></p>
 <p>API Resource Path: /apiproducts
 A list of URIs with an associated Quota (or “service plan”), which is used to expose customized API bundles to different developer groups.
 API products enable you to bundle and distribute your APIs to multiple developer groups simultaneously, without having to modify code. An API product consists of a list of API resources (URIs) combined with a Service Plan (rate-limiting policy settings) plus any custom metadata required by the API provider. API products provide the basis for access control in Apigee, since they provide control over the set of API resources that apps are allowed to consume.</p>
@@ -212,7 +212,7 @@ API products enable you to bundle and distribute your APIs to multiple developer
 </div>
 <div class="section" id="module-apigee.api.apis">
 <span id="apigee-api-apis-module"></span><h2>apigee.api.apis module<a class="headerlink" href="#module-apigee.api.apis" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://apidocs.apigee.com/api-reference/content/api-proxies">https://apidocs.apigee.com/api-reference/content/api-proxies</a></p>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api-reference/content/api-proxies">https://apidocs.apigee.com/api-reference/content/api-proxies</a></p>
 <p>The proxy APIs let you perform operations on API proxies, such as create, delete, update, and deploy.</p>
 <p>You expose APIs on Apigee Edge by implementing API proxies. API proxies decouple the app-facing API from your backend services, shielding those apps from backend code changes. As you make backend changes to your services, apps continue to call the same API without any interruption.</p>
 <dl class="class">
@@ -348,10 +348,13 @@ Defaults to False.</p></li>
 <dd class="field-odd"><p><strong>directory</strong> (<em>str</em>) – Path of <code class="docutils literal notranslate"><span class="pre">apiproxy</span></code> bundle.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p>basepath, file</p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>AttributeError</strong> – If no <code class="docutils literal notranslate"><span class="pre">BasePath</span></code> can be found.</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str, str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>AttributeError</strong> – If no <code class="docutils literal notranslate"><span class="pre">BasePath</span></code> can be found.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -502,17 +505,17 @@ Defaults to False.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dependencies</strong> (<em>list</em>) – Initial list of dependencies to <code class="docutils literal notranslate"><span class="pre">pull</span></code> from Apigee.</p></li>
-<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, overwrite existing files .Defaults to False.</p></li>
+<li><p><strong>dependencies</strong> (<em>list</em><em>, </em><em>optional</em>) – Initial list of dependencies to <code class="docutils literal notranslate"><span class="pre">pull</span></code> from Apigee. Defaults to <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, overwrite existing files. Defaults to False.</p></li>
 <li><p><strong>prefix</strong> (<em>str</em><em>, </em><em>optional</em>) – Prefix to add. Defaults to None.</p></li>
 <li><p><strong>basepath</strong> (<em>str</em><em>, </em><em>optional</em>) – New basepath to overwrite the existing one. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>exported API Proxy, list: KeyValueMaps, list: Targetservers</p>
+<dd class="field-even"><p>exported API Proxy, KeyValueMaps, Targetservers</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>requests.Response()</p>
+<dd class="field-odd"><p>requests.Response(), list, list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -521,6 +524,18 @@ Defaults to False.</p></li>
 <dt id="apigee.api.apis.Apis.replace_substring">
 <code class="sig-name descname">replace_substring</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">old</em>, <em class="sig-param">new</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.replace_substring" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces old string in file with new string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – The file path.</p></li>
+<li><p><strong>old</strong> (<em>str</em>) – The old string to replace.</p></li>
+<li><p><strong>new</strong> (<em>str</em>) – The new string to replace the old string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">

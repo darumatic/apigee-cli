@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""https://apidocs.apigee.com/api/api-products-1
+"""Source: https://apidocs.apigee.com/api/api-products-1
 
 API Resource Path: /apiproducts
 A list of URIs with an associated Quota (or "service plan"), which is used to expose customized API bundles to different developer groups.

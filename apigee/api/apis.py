@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""https://apidocs.apigee.com/api-reference/content/api-proxies
+"""Source: https://apidocs.apigee.com/api-reference/content/api-proxies
 
 The proxy APIs let you perform operations on API proxies, such as create, delete, update, and deploy.
 
@@ -326,7 +326,16 @@ class Apis(IApis, IPull):
                 f.write(resp)
 
     def replace_substring(self, file, old, new):
-        """Replaces old string in file with new string."""
+        """Replaces old string in file with new string.
+
+        Args:
+            file (str): The file path.
+            old (str): The old string to replace.
+            new (str): The new string to replace the old string.
+
+        Returns:
+            None
+        """
         with open(file, 'r') as f:
             body = str()
             try:
@@ -369,7 +378,7 @@ class Apis(IApis, IPull):
             directory (str): Path of ``apiproxy`` bundle.
 
         Returns:
-            None
+            str, str: basepath, file
 
         Raises:
             AttributeError: If no ``BasePath`` can be found.
@@ -413,13 +422,13 @@ class Apis(IApis, IPull):
         """Pull API Proxy revision and its dependencies from Apigee.
 
         Args:
-            dependencies (list): Initial list of dependencies to ``pull`` from Apigee.
-            force (bool, optional): If True, overwrite existing files .Defaults to False.
+            dependencies (list, optional): Initial list of dependencies to ``pull`` from Apigee. Defaults to ``[]``.
+            force (bool, optional): If True, overwrite existing files. Defaults to False.
             prefix (str, optional): Prefix to add. Defaults to None.
             basepath (str, optional): New basepath to overwrite the existing one. Defaults to None.
 
         Returns:
-            requests.Response(): exported API Proxy, list: KeyValueMaps, list: Targetservers
+            requests.Response(), list, list: exported API Proxy, KeyValueMaps, Targetservers
         """
         apis = Apis(self._auth, self._org_name, self._api_name)
         dependencies.append(self._api_name)
