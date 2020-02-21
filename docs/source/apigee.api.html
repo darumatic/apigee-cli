@@ -1644,6 +1644,7 @@ Masking configurations can be set globally (at the organization-level) or locall
 <div class="section" id="module-apigee.api.permissions">
 <span id="apigee-api-permissions-module"></span><h2>apigee.api.permissions module<a class="headerlink" href="#module-apigee.api.permissions" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/permissions">https://docs.apigee.com/api-platform/system-administration/permissions</a></p>
+<p>Manage permissions that you can assign to a role by using the Edge API.</p>
 <dl class="class">
 <dt id="apigee.api.permissions.Permissions">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.api.permissions.</code><code class="sig-name descname">Permissions</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions" title="Permalink to this definition">¶</a></dt>
@@ -1651,17 +1652,58 @@ Masking configurations can be set globally (at the organization-level) or locall
 <dl class="method">
 <dt id="apigee.api.permissions.Permissions.create_permissions">
 <code class="sig-name descname">create_permissions</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.create_permissions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates permissions for a role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>request_body</strong> (<em>str</em>) – JSON string.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.permissions.Permissions.get_permissions">
 <code class="sig-name descname">get_permissions</code><span class="sig-paren">(</span><em class="sig-param">formatted=False</em>, <em class="sig-param">format='text'</em>, <em class="sig-param">showindex=False</em>, <em class="sig-param">tablefmt='plain'</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.get_permissions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets permissions for a role.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formatted</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, format <code class="docutils literal notranslate"><span class="pre">requests.Response()</span></code>. Defaults to False.</p></li>
+<li><p><strong>format</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify how to format response. Defaults to ‘text’.</p></li>
+<li><p><strong>showindex</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, show table index. Defaults to False.</p></li>
+<li><p><strong>tablefmt</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify table format. Defaults to ‘plain’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Response if <code class="docutils literal notranslate"><span class="pre">formatted</span></code> is False, else return a <code class="docutils literal notranslate"><span class="pre">formatted</span></code> value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="apigee.api.permissions.Permissions.team_permissions">
 <code class="sig-name descname">team_permissions</code><span class="sig-paren">(</span><em class="sig-param">template_file</em>, <em class="sig-param">placeholder_key=None</em>, <em class="sig-param">placeholder_value=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.team_permissions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates permissions for a role using a template file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template_file</strong> (<em>str</em>) – The template file path.</p></li>
+<li><p><strong>placeholder_key</strong> (<em>str</em><em>, </em><em>optional</em>) – The placeholder key to replace with a placeholder value.
+Defaults to None.</p></li>
+<li><p><strong>placeholder_value</strong> (<em>str</em><em>, </em><em>optional</em>) – The placeholder value to replace placeholder key.
+Default to ‘’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
