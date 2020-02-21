@@ -1037,7 +1037,10 @@ Any properties omitted from the request body are reset to their default value.</
 </div>
 <div class="section" id="module-apigee.api.deployments">
 <span id="apigee-api-deployments-module"></span><h2>apigee.api.deployments module<a class="headerlink" href="#module-apigee.api.deployments" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://apidocs.apigee.com/api/deployments">https://apidocs.apigee.com/api/deployments</a></p>
+<p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/deployments">https://apidocs.apigee.com/api/deployments</a></p>
+<p>API Platform Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
+<p>API Resource Path: /apis/{api_name}/deployments
+API proxies that are actively deployed in environments on Apigee Edge.</p>
 <dl class="class">
 <dt id="apigee.api.deployments.Deployments">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.api.deployments.</code><code class="sig-name descname">Deployments</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deployments.Deployments" title="Permalink to this definition">¶</a></dt>
@@ -1045,7 +1048,25 @@ Any properties omitted from the request body are reset to their default value.</
 <dl class="method">
 <dt id="apigee.api.deployments.Deployments.get_api_proxy_deployment_details">
 <code class="sig-name descname">get_api_proxy_deployment_details</code><span class="sig-paren">(</span><em class="sig-param">formatted=False</em>, <em class="sig-param">format='text'</em>, <em class="sig-param">showindex=False</em>, <em class="sig-param">tablefmt='plain'</em>, <em class="sig-param">revision_name_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deployments.Deployments.get_api_proxy_deployment_details" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets details for a specific API proxy deployed in a given environment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>formatted</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, format <code class="docutils literal notranslate"><span class="pre">requests.Response()</span></code>. Defaults to False.</p></li>
+<li><p><strong>format</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify how to format response. Defaults to ‘text’.</p></li>
+<li><p><strong>showindex</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, show table index. Defaults to False.</p></li>
+<li><p><strong>tablefmt</strong> (<em>str</em><em>, </em><em>optional</em>) – Specify table format. Defaults to ‘plain’.</p></li>
+<li><p><strong>revision_name_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, truncate response information. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Response if <code class="docutils literal notranslate"><span class="pre">formatted</span></code> is False, else return a <code class="docutils literal notranslate"><span class="pre">formatted</span></code> value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>requests.Response()</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
