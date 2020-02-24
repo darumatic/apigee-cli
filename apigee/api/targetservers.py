@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 """Source: https://apidocs.apigee.com/api/api_resources/51-targetservers
 
-TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services.
+TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from
+concrete URLs for backend services.
 
-To do so, an HTTPConnection can be configured to use a LoadBalancer that lists one or more 'named' TargetSevers.
-Using TargetServers, you can create an HTTPTargetConnection that calls a different backend server based on the environment where the API proxy is deployed.
+To do so, an HTTPConnection can be configured to use a LoadBalancer that lists
+one or more 'named' TargetSevers.
+Using TargetServers, you can create an HTTPTargetConnection that calls a
+different backend server based on the environment where the API proxy is
+deployed.
 """
 
 import json
@@ -69,7 +73,8 @@ class Targetservers(ITargetservers):
 
         Args:
             environment (str): Apigee environment.
-            prefix (str, optional): Filter results by a prefix string. Defaults to None.
+            prefix (str, optional): Filter results by a prefix string.
+                Defaults to None.
 
         Returns:
             requests.Response()
@@ -100,9 +105,12 @@ class Targetservers(ITargetservers):
     def update_a_targetserver(self, environment, request_body):
         """Modifies an existing TargetServer.
 
-        Note: In the request body when Content-Type is set to application/json, use the element sSLInfo in the request body,
-        not SSLInfo (note the case). You must use the case sSLInfo exactly.
-        Using SSLInfo will cause an error when Content-Type is set to application/json.
+        Note: In the request body when Content-Type is set to application/json,
+        use the element sSLInfo in the request body, not SSLInfo (note the
+        case).
+        You must use the case sSLInfo exactly.
+        Using SSLInfo will cause an error when Content-Type is set to
+        application/json.
         The case does not matter if Content-Type is application/xml.
 
         Args:
@@ -124,7 +132,8 @@ class Targetservers(ITargetservers):
     def push_targetserver(self, environment, file):
         """Push TargetSever file to Apigee
 
-        This will create a TargetSever if it does not exist and update if it does.
+        This will create a TargetSever if it does not exist and update if it
+        does.
 
         Args:
             environment (str): Apigee environment.
@@ -134,7 +143,8 @@ class Targetservers(ITargetservers):
             None
 
         Raises:
-            HTTPError: If response status code is not successful or 404 (GET TargetSever).
+            HTTPError: If response status code is not successful or 404
+            (GET TargetSever).
         """
         with open(file) as f:
             body = f.read()
