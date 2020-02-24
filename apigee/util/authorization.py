@@ -15,7 +15,7 @@ from apigee.util.os import makedirs
 
 def set_header(hdrs, args):
     if hdrs is None:
-        hdrs = dict()
+        hdrs = ''
     if args.mfa_secret:
         access_token = ''
         makedirs(APIGEE_CLI_DIRECTORY)
