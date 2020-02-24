@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 """Source: https://apidocs.apigee.com/api-services/content/environment-keyvalue-maps
 
-The Key/Value maps API lets you create and manage collections of arbitrary key/value pairs at the environment scope (for example, test or prod) for longer-term data persistence.
+The Key/Value maps API lets you create and manage collections of arbitrary
+key/value pairs at the environment scope (for example, test or prod) for
+longer-term data persistence.
 """
 
 import json
@@ -31,11 +33,16 @@ class Keyvaluemaps(IKeyvaluemaps):
     def create_keyvaluemap_in_an_environment(self, environment, request_body):
         """Creates a key value map in an environment.
 
-        A key value map is a simple structure for persistently storing name/value pairs as entries in a named map.
-        The entries in a KVM can be retrieved at runtime by the Key Value Map Operations policy or code running on Apigee Edge.
-        Use KVMs for use cases such as profile-based access control, storing environment-specific data, to control application-specific behavior, and so on.
+        A key value map is a simple structure for persistently storing
+        name/value pairs as entries in a named map.
+        The entries in a KVM can be retrieved at runtime by the Key Value Map
+        Operations policy or code running on Apigee Edge.
+        Use KVMs for use cases such as profile-based access control, storing
+        environment-specific data, to control application-specific behavior,
+        and so on.
 
-        You can created an encrypted KVM by adding "encrypted" : "true" to the payload.
+        You can created an encrypted KVM by adding "encrypted" : "true" to the
+        payload.
 
         KVM names are case sensitive.
 
@@ -56,7 +63,8 @@ class Keyvaluemaps(IKeyvaluemaps):
         return resp
 
     def delete_keyvaluemap_from_an_environment(self, environment):
-        """Deletes a key/value map and all associated entries from an environment.
+        """Deletes a key/value map and all associated entries from an
+        environment.
 
         Args:
             environment (str): Apigee environment.
@@ -72,7 +80,8 @@ class Keyvaluemaps(IKeyvaluemaps):
         return resp
 
     def delete_keyvaluemap_entry_in_an_environment(self, environment, entry_name):
-        """Deletes a specific key/value map entry in an environment by name, along with associated entries.
+        """Deletes a specific key/value map entry in an environment by name,
+        along with associated entries.
 
         Args:
             environment (str): Apigee environment.
@@ -89,11 +98,13 @@ class Keyvaluemaps(IKeyvaluemaps):
         return resp
 
     def get_keyvaluemap_in_an_environment(self, environment):
-        """Gets a KeyValueMap (KVM) in an environment by name, along with the keys and values.
+        """Gets a KeyValueMap (KVM) in an environment by name, along with the
+        keys and values.
 
         KVM names are case sensitive.
 
-        With Apigee Edge for Public Cloud, this API returns only the first 100 keys in a KVM.
+        With Apigee Edge for Public Cloud, this API returns only the first 100
+        keys in a KVM.
 
         Args:
             environment (str): Apigee environment.
@@ -128,11 +139,13 @@ class Keyvaluemaps(IKeyvaluemaps):
     def list_keyvaluemaps_in_an_environment(self, environment, prefix=None):
         """Lists the name of all key/value maps in an environment.
 
-        Optionally returns an expanded view of all key/value maps for the environment.
+        Optionally returns an expanded view of all key/value maps for the
+        environment.
 
         Args:
             environment (str): Apigee environment.
-            prefix (str, optional): Filter results by a prefix string. Defaults to None.
+            prefix (str, optional): Filter results by a prefix string.
+                Defaults to None.
 
         Returns:
             requests.Response()
@@ -148,11 +161,14 @@ class Keyvaluemaps(IKeyvaluemaps):
         """Updates an existing KeyValueMap in an environment.
 
         Note: This API is supported for Apigee Edge for Private Cloud only.
-        For Apigee Edge for Public Cloud use Update an entry in an environment-scoped KVM.
+        For Apigee Edge for Public Cloud use Update an entry in an
+        environment-scoped KVM.
 
-        Does not override the existing map. Instead, this method updates the entries if they exist or adds them if not.
+        Does not override the existing map. Instead, this method updates the
+        entries if they exist or adds them if not.
 
-        It can take several minutes before the new value is visible to runtime traffic.
+        It can take several minutes before the new value is visible to runtime
+        traffic.
 
         Args:
             environment (str): Apigee environment.
@@ -205,8 +221,10 @@ class Keyvaluemaps(IKeyvaluemaps):
         A key cannot be larger than 2 KB. KVM names are case sensitive.
 
         Does not override the existing map.
-        Instead, this method updates the entries if they exist or adds them if not.
-        It can take several minutes before the new value is visible to runtime traffic.
+        Instead, this method updates the entries if they exist or adds them if
+        not.
+        It can take several minutes before the new value is visible to runtime
+        traffic.
 
         Args:
             environment (str): Apigee environment.
@@ -235,9 +253,12 @@ class Keyvaluemaps(IKeyvaluemaps):
 
         Args:
             environment (str): Apigee environment.
-            startkey (str): To filter the keys that are returned, enter the name of a key that the list will start with.
-            count (int): Limits the list of keys to the number you specify, up to a maximum of 100.
-                Use with the startkey parameter to provide more targeted filtering.
+            startkey (str): To filter the keys that are returned, enter the name
+                of a key that the list will start with.
+            count (int): Limits the list of keys to the number you specify, up
+                to a maximum of 100.
+                Use with the startkey parameter to provide more targeted
+                filtering.
 
         Returns:
             requests.Response()
@@ -253,7 +274,8 @@ class Keyvaluemaps(IKeyvaluemaps):
     def push_keyvaluemap(self, environment, file):
         """Push KeyValueMap file to Apigee
 
-        This will create a KeyValueMap if it does not exist and update if it does.
+        This will create a KeyValueMap if it does not exist and update if it
+        does.
 
         Args:
             environment (str): Apigee environment.
@@ -263,7 +285,8 @@ class Keyvaluemaps(IKeyvaluemaps):
             None
 
         Raises:
-            HTTPError: If response status code is not successful or 404 (GET KeyValueMap).
+            HTTPError: If response status code is not successful or 404
+            (GET KeyValueMap).
         """
         with open(file) as f:
             body = f.read()
