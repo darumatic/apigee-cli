@@ -63,7 +63,7 @@ def httpCall(verb, uri, headers, body):
         conn = http.client.HTTPConnection(httpHost)
 
     if headers == None:
-        hdrs = ''
+        hdrs = {}
     else:
         hdrs = headers
 
