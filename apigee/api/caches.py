@@ -5,7 +5,8 @@ API Platform Base Path: https://api.enterprise.apigee.com/v1/o/{org_name}
 
 API Resource Path: /environments/{env_name}/caches
 
-A lightweight persistence store that can be used by policies or code executing on the Apigee Edge.
+A lightweight persistence store that can be used by policies or code executing
+on the Apigee Edge.
 
 To support data segregation, cache resources are scoped to environments.
 """
@@ -35,7 +36,8 @@ class Caches(ICaches):
     def clear_all_cache_entries(self, environment):
         """Clears all entries from the specified cache.
 
-        Entries to be cleared can be scoped by CacheKey prefix by using the 'prefix' parameter.
+        Entries to be cleared can be scoped by CacheKey prefix by using the
+        'prefix' parameter.
 
         Args:
             environment (str): Apigee environment.
@@ -52,7 +54,8 @@ class Caches(ICaches):
         return resp
 
     def clear_a_cache_entry(self, environment, entry):
-        """Clears a cache entry, which is identified by the full CacheKey prefix and value.
+        """Clears a cache entry, which is identified by the full CacheKey prefix
+        and value.
 
         Args:
             environment (str): Apigee environment.
@@ -91,7 +94,8 @@ class Caches(ICaches):
     def get_information_about_a_cache(self, environment):
         """Gets information about a cache.
 
-        The response might contain a property named ``persistent``. That property is no longer used by Edge.
+        The response might contain a property named ``persistent``.
+        That property is no longer used by Edge.
 
         Args:
             environment (str): Apigee environment.
@@ -111,7 +115,8 @@ class Caches(ICaches):
 
         Args:
             environment (str): Apigee environment.
-            prefix (str, optional): Filter results by a prefix string. Defaults to None.
+            prefix (str, optional): Filter results by a prefix string.
+                Defaults to None.
 
         Returns:
             requests.Response()
@@ -127,8 +132,10 @@ class Caches(ICaches):
         """Updates a cache in an environment.
 
         You must specify the complete definition of the cache,
-        including the properties that you want to change and the ones that retain their current value.
-        Any properties omitted from the request body are reset to their default value.
+        including the properties that you want to change and the ones that
+        retain their current value.
+        Any properties omitted from the request body are reset to their default
+        value.
 
         Args:
             environment (str): Apigee environment.
@@ -175,7 +182,8 @@ class Caches(ICaches):
             None
 
         Raises:
-            HTTPError: If response status code is not successful or 404 (GET cache).
+            HTTPError: If response status code is not successful or 404
+            (GET cache).
         """
         with open(file) as f:
             body = f.read()
