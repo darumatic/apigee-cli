@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 """Source: https://apidocs.apigee.com/api-reference/content/api-proxies
 
-The proxy APIs let you perform operations on API proxies, such as create, delete, update, and deploy.
+The proxy APIs let you perform operations on API proxies, such as create,
+delete, update, and deploy.
 
-You expose APIs on Apigee Edge by implementing API proxies. API proxies decouple the app-facing API from your backend services, shielding those apps from backend code changes. As you make backend changes to your services, apps continue to call the same API without any interruption.
+You expose APIs on Apigee Edge by implementing API proxies.
+API proxies decouple the app-facing API from your backend services, shielding
+those apps from backend code changes.
+As you make backend changes to your services, apps continue to call the same API
+without any interruption.
 """
 
 import json
@@ -32,8 +37,9 @@ class Apis(IApis, IPull):
     def __init__(self, *args, **kwargs):
         """Apis constructor
 
-        This constructor accepts a minimum of three positional arguments to initialize the IApis constructor,
-        and a minimum of five positional arguments to initialize the IPull constructor.
+        This constructor accepts a minimum of three positional arguments to
+        initialize the IApis constructor, and a minimum of five positional
+        arguments to initialize the IPull constructor.
 
         Args:
             auth: Apigee Edge credentials object.
@@ -52,7 +58,8 @@ class Apis(IApis, IPull):
             pass
 
     def delete_api_proxy_revision(self, revision_number):
-        """Deletes a revision of an API proxy and all policies, resources, endpoints, and revisions associated with it.
+        """Deletes a revision of an API proxy and all policies, resources,
+        endpoints, and revisions associated with it.
 
         The API proxy revision must be undeployed before you can delete it.
 
@@ -114,12 +121,14 @@ class Apis(IApis, IPull):
         return deployed
 
     def get_undeployed_revisions(self, revisions, deployed, save_last=0):
-        """Gets list of undeployed revisions by comparing all API Proxy revisions with currently deployed revisons.
+        """Gets list of undeployed revisions by comparing all API Proxy
+        revisions with currently deployed revisons.
 
         Args:
             revisions (list): List of all API Proxy revisions.
             deployed (list): List of currently deployed API Proxy revisions.
-            save_last (int, optional): Exclude ``n`` last revisions from result. Defaults to 0.
+            save_last (int, optional): Exclude ``n`` last revisions from result.
+                Defaults to 0.
 
         Returns:
             list
@@ -131,14 +140,20 @@ class Apis(IApis, IPull):
         return undeployed
 
     def delete_undeployed_revisions(self, save_last=0, dry_run=False):
-        """Deletes all undeployed revisions of an API proxy and all policies, resources, and endpoints associated with it.
+        """Deletes all undeployed revisions of an API proxy and all policies,
+        resources, and endpoints associated with it.
 
         Args:
-            save_last (int, optional): Exclude ``n`` last revisions from deletion. Defaults to 0 (delete all undeployed revisions).
-            dry_run (bool, optional): If True, only show revisions to be deleted (do not actually delete). Defaults to False.
+            save_last (int, optional): Exclude ``n`` last revisions from
+                deletion.
+                Defaults to 0 (delete all undeployed revisions).
+            dry_run (bool, optional): If True, only show revisions to be deleted
+                (do not actually delete).
+                Defaults to False.
 
         Returns:
-            dict: list of revisions deleted or to be deleted (if ``dry_run`` is True).
+            dict: list of revisions deleted or to be deleted
+            (if ``dry_run`` is True).
         """
         deployed = self.get_deployed_revisions(self.get_deployment_details(Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json()))
         undeployed = self.get_undeployed_revisions(self.list_api_proxy_revisions().json(), deployed, save_last=save_last)
@@ -151,14 +166,18 @@ class Apis(IApis, IPull):
         return undeployed
 
     def export_api_proxy(self, revision_number, write=True, output_file=None):
-        """Outputs an API proxy revision as a ZIP formatted bundle of code and config files.
+        """Outputs an API proxy revision as a ZIP formatted bundle of code and
+        config files.
 
-        This enables local configuration and development, including attachment of policies and scripts.
+        This enables local configuration and development, including attachment
+        of policies and scripts.
 
         Args:
             revision_number (int): The API Proxy revision to export.
-            write (bool, optional): If True, write to ZIP file. Defaults to True.
-            output_file (str, optional): Path of the output file. Defaults to None.
+            write (bool, optional): If True, write to ZIP file.
+                Defaults to True.
+            output_file (str, optional): Path of the output file.
+                Defaults to None.
 
         Returns:
             requests.Response()
@@ -173,7 +192,8 @@ class Apis(IApis, IPull):
         return resp
 
     def get_api_proxy(self):
-        """Gets an API proxy by name, including a list of existing revisions of the proxy.
+        """Gets an API proxy by name, including a list of existing revisions of
+        the proxy.
 
         Args:
             None
@@ -191,7 +211,8 @@ class Apis(IApis, IPull):
     def list_api_proxies(self, prefix=None):
         """Gets the names of all API proxies in an organization.
 
-        The names correspond to the names defined in the configuration files for each API proxy.
+        The names correspond to the names defined in the configuration files for
+        each API proxy.
 
         Args:
             prefix (str, optional): Path of the output file.
@@ -238,9 +259,11 @@ class Apis(IApis, IPull):
         return files
 
     def get_keyvaluemap_dependencies(self, files):
-        """Gets all ``mapIdentifier`` names for all ``KeyValueMapOperations`` XML files.
+        """Gets all ``mapIdentifier`` names for all ``KeyValueMapOperations``
+        XML files.
 
-        This will automatically ignore files that are not ``KeyValueMapOperations`` files.
+        This will automatically ignore files that are not
+        ``KeyValueMapOperations`` files.
 
         Args:
             files (list): List of ``KeyValueMapOperations`` XML files.
@@ -265,7 +288,8 @@ class Apis(IApis, IPull):
         Args:
             environment (str): Apigee environment.
             keyvaluemaps (list): List of KVMs to GET from Apigee.
-            force (bool, optional): If True, overwrite existing files in the current working directory.
+            force (bool, optional): If True, overwrite existing files in the
+                current working directory.
                 Defaults to False.
 
         Returns:
@@ -308,7 +332,8 @@ class Apis(IApis, IPull):
         Args:
             environment (str): Apigee environment.
             targetservers (list): List of target servers to GET from Apigee.
-            force (bool, optional): If True, overwrite existing files in the current working directory.
+            force (bool, optional): If True, overwrite existing files in the
+                current working directory.
                 Defaults to False.
 
         Returns:
@@ -349,7 +374,8 @@ class Apis(IApis, IPull):
                 print('M  ', os.path.abspath(file))
 
     def prefix_dependencies_in_work_tree(self, dependencies, prefix):
-        """Adds a prefix string to all instances of the specified strings within the current working directory (recursively).
+        """Adds a prefix string to all instances of the specified strings within
+        the current working directory (recursively).
 
         This will ignore paths with ``.git``.
 
@@ -372,7 +398,8 @@ class Apis(IApis, IPull):
                 self.replace_substring(f, dep, prefix+dep)
 
     def get_apiproxy_basepath(self, directory):
-        """Gets the basepath of an API Proxy by parsing an ``apiproxy`` bundle directory.
+        """Gets the basepath of an API Proxy by parsing an ``apiproxy`` bundle
+        directory.
 
         Args:
             directory (str): Path of ``apiproxy`` bundle.
@@ -422,13 +449,19 @@ class Apis(IApis, IPull):
         """Pull API Proxy revision and its dependencies from Apigee.
 
         Args:
-            dependencies (list, optional): Initial list of dependencies to ``pull`` from Apigee. Defaults to ``[]``.
-            force (bool, optional): If True, overwrite existing files. Defaults to False.
+            dependencies (list, optional): Initial list of dependencies to
+                ``pull`` from Apigee.
+                Defaults to ``[]``.
+            force (bool, optional): If True, overwrite existing files.
+                Defaults to False.
             prefix (str, optional): Prefix to add. Defaults to None.
-            basepath (str, optional): New basepath to overwrite the existing one. Defaults to None.
+            basepath (str, optional): New basepath to overwrite the existing
+                one.
+                Defaults to None.
 
         Returns:
-            requests.Response(), list, list: exported API Proxy, KeyValueMaps, Targetservers
+            requests.Response(), list, list: exported API Proxy, KeyValueMaps,
+            Targetservers
         """
         apis = Apis(self._auth, self._org_name, self._api_name)
         dependencies.append(self._api_name)
