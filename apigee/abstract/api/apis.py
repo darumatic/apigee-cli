@@ -96,17 +96,12 @@ class IPull:
             self._work_tree = str(Path(work_tree).resolve())
         else:
             self._work_tree = os.getcwd()
-        # self._work_tree = serializepath(splitpath(self._work_tree))
         self._api_name = api_name
         self._revision_number = revision_number
         self._environment = environment
-        # self._keyvaluemaps_dir = serializepath([self._work_tree, 'keyvaluemaps', environment])
         self._keyvaluemaps_dir = str(Path(self._work_tree) / 'keyvaluemaps' / environment)
-        # self._targetservers_dir = serializepath([self._work_tree, 'targetservers', environment])
         self._targetservers_dir = str(Path(self._work_tree) / 'targetservers' / environment)
-        # self._apiproxy_dir = serializepath([self._work_tree, api_name])
         self._apiproxy_dir = str(Path(self._work_tree) / api_name)
-        # self._zip_file = ''.join([self._apiproxy_dir, '.zip'])
         self._zip_file = str(Path(self._apiproxy_dir).with_suffix('.zip'))
 
     def __call__(self, *args, **kwargs):
@@ -213,11 +208,7 @@ class IPull:
         pass
 
     @abstractmethod
-    def replace_strings_in_files(self, files, strings, replacement):
-        pass
-
-    @abstractmethod
-    def prefix_strings_in_files(self, files, strings, prefix):
+    def replace_substring(self, file, old, new):
         pass
 
     @abstractmethod
