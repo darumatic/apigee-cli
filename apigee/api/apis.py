@@ -25,12 +25,12 @@ from apigee.api.deployments import Deployments
 from apigee.api.keyvaluemaps import Keyvaluemaps
 from apigee.api.targetservers import Targetservers
 from apigee.util import authorization
-from apigee.util.os import makedirs
-from apigee.util.os import path_exists
-from apigee.util.os import paths_exist
-from apigee.util.os import extractzip
-from apigee.util.os import writezip
-from apigee.util.os import splitpath
+from apigee.util.os import (makedirs,
+                            path_exists,
+                            paths_exist,
+                            extractzip,
+                            writezip,
+                            splitpath)
 
 class Apis(IApis, IPull):
 
