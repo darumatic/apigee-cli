@@ -124,7 +124,7 @@ def getDeployments():
     if resp.status != 200:
         return None
 
-    ret = list()
+    ret = ''
     deployments = xml.dom.minidom.parse(resp)
     environments = deployments.getElementsByTagName('Environment')
 

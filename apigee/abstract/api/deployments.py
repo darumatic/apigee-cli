@@ -63,7 +63,7 @@ class DeploymentsSerializer:
             # pd.set_option('display.max_colwidth', max_colwidth)
             # return pd.DataFrame.from_dict(json_normalize(revisions), orient='columns')
             table = [[rev['name'], rev['revision']] for rev in revisions]
-            headers = list()
+            headers = ''
             if showindex == 'always' or showindex is True:
                 headers = ['id', 'name', 'revision']
             elif showindex == 'never' or showindex is False:

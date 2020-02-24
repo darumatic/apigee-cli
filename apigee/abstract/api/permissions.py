@@ -61,7 +61,7 @@ class PermissionsSerializer:
             # pd.set_option('display.max_colwidth', max_colwidth)
             # return pd.DataFrame.from_dict(json_normalize(permission_details.json()['resourcePermission']), orient='columns')
             table = [[res['organization'], res['path'], res['permissions']] for res in permission_details.json()['resourcePermission']]
-            headers = list()
+            headers = ''
             if showindex == 'always' or showindex is True:
                 headers = ['id', 'organization', 'path', 'permissions']
             elif showindex == 'never' or showindex is False:
