@@ -9,7 +9,8 @@ Roles for users in an organization on Apigee Edge.
 
 User roles form the basis of role-based access in Apigee Edge.
 
-Users are associated with one or more userroles. Each userrole defines a set of permissions (GET, PUT, DELETE) on RBAC resources (defined by URI paths).
+Users are associated with one or more userroles. Each userrole defines a set of
+permissions (GET, PUT, DELETE) on RBAC resources (defined by URI paths).
 
 A userrole is scoped to an organization.
 """
