@@ -9,7 +9,7 @@ def makedirs(path):
 
 def path_exists(file):
     if os.path.exists(file):
-        sys.exit('error: ' + os.path.abspath(file) + ' already exists')
+        sys.exit(f'error: {os.path.abspath(file)} already exists')
 
 def paths_exist(files):
     for file in files:

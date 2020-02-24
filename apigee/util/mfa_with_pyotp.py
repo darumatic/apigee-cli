@@ -22,7 +22,7 @@ def get_access_token(args):
     try:
         TOTP.now()
     except binascii.Error as e:
-        sys.exit('{0}: {1}: {2}'.format(type(e).__name__, e, 'Not a valid MFA key'))
+        sys.exit(f'{type(e).__name__}: {e}: Not a valid MFA key')
     adapter = HTTPAdapter(max_retries=HTTP_MAX_RETRIES)
     session = requests.Session()
     session.mount('https://', adapter)
