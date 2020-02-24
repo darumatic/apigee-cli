@@ -7,11 +7,15 @@ API Resource Path: /maskconfigs
 
 Specify data that will be filtered out of trace sessions
 
-Edge enables developers to capture message content to enable runtime debugging of APIs calls.
-In many cases, API traffic contains sensitive data, such credit cards or personally identifiable health information (PHI)
+Edge enables developers to capture message content to enable runtime debugging
+of APIs calls.
+In many cases, API traffic contains sensitive data, such credit cards or
+personally identifiable health information (PHI)
 that needs to filtered out of the captured message content.
-Mask configurations enable you to specify data that will be filtered out of trace sessions.
-Masking configurations can be set globally (at the organization-level) or locally (at the API proxy level).
+Mask configurations enable you to specify data that will be filtered out of
+trace sessions.
+Masking configurations can be set globally (at the organization-level) or
+locally (at the API proxy level).
 """
 
 import json
@@ -131,7 +135,8 @@ class Maskconfigs(IMaskconfigs):
             None
 
         Raises:
-            HTTPError: If response status code is not successful or 404 (GET data mask).
+            HTTPError: If response status code is not successful or 404
+            (GET data mask).
         """
         with open(file) as f:
             body = f.read()
