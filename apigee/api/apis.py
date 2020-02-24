@@ -362,7 +362,7 @@ class Apis(IApis, IPull):
             None
         """
         with open(file, 'r') as f:
-            body = str()
+            body = ''
             try:
                 body = f.read()
             except Exception as e:
