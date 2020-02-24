@@ -48,9 +48,11 @@ class Permissions(IPermissions):
 
         Args:
             template_file (str): The template file path.
-            placeholder_key (str, optional): The placeholder key to replace with a placeholder value.
+            placeholder_key (str, optional): The placeholder key to replace with
+                a placeholder value.
                 Defaults to None.
-            placeholder_value (str, optional): The placeholder value to replace placeholder key.
+            placeholder_value (str, optional): The placeholder value to replace
+                placeholder key.
                 Default to ''.
 
         Returns:
@@ -74,13 +76,17 @@ class Permissions(IPermissions):
         """Gets permissions for a role.
 
         Args:
-            formatted (bool, optional): If True, format ``requests.Response()``. Defaults to False.
-            format (str, optional): Specify how to format response. Defaults to 'text'.
-            showindex (bool, optional): If True, show table index. Defaults to False.
+            formatted (bool, optional): If True, format ``requests.Response()``.
+                Defaults to False.
+            format (str, optional): Specify how to format response.
+                Defaults to 'text'.
+            showindex (bool, optional): If True, show table index.
+                Defaults to False.
             tablefmt (str, optional): Specify table format. Defaults to 'plain'.
 
         Returns:
-            requests.Response(): Response if ``formatted`` is False, else return a ``formatted`` value.
+            requests.Response(): Response if ``formatted`` is False, else return
+            a ``formatted`` value.
         """
         uri = f'{APIGEE_ADMIN_API_URL}/v1/o/{self._org_name}/userroles/{self._role_name}/permissions'
         hdrs = authorization.set_header({'Accept': 'application/json'},
