@@ -1,9 +1,13 @@
 #!/usr/bin/env python
-"""Source: https://apidocs.apigee.com/api/apps-developer, https://apidocs.apigee.com/api/developer-app-keys
+"""Source: https://apidocs.apigee.com/api/apps-developer,
+https://apidocs.apigee.com/api/developer-app-keys
 
 Apps associated with developers (as developer apps).
 
-Apps are API consumers registered with an API provider's organization. Apps are registered with an organization to obtain credentials that enable access to one or more API products (or, a set of URIs). The default app profile can be extended by using custom attributes.
+Apps are API consumers registered with an API provider's organization.
+Apps are registered with an organization to obtain credentials that enable
+access to one or more API products (or, a set of URIs). The default app profile
+can be extended by using custom attributes.
 """
 
 import json
@@ -23,25 +27,39 @@ class Apps(IApps):
         Args:
             auth: Apigee Edge credentials object.
             org_name: Apigee Edge organization.
-            app_name: The name of the app. The name becomes the unique ID of the app for this organization and developer.
-                Names must begin with an alphanumeric character and can contain letters, numbers, spaces, and the following characters: . _ # - $ %.
-                While you can use spaces in the name, you should instead use camel case, underscores, or hyphens.
-                Otherwise, you will have to URL encode the app name when you need to include it in the URL of other Edge API calls.
+            app_name: The name of the app. The name becomes the unique ID of the
+                app for this organization and developer.
+                Names must begin with an alphanumeric character and can contain
+                letters, numbers, spaces, and the following characters:
+                . _ # - $ %.
+                While you can use spaces in the name, you should instead use
+                camel case, underscores, or hyphens.
+                Otherwise, you will have to URL encode the app name when you
+                need to include it in the URL of other Edge API calls.
             *args: Variable length argument list.
             **kwargs: Arbitrary keyword arguments.
         """
         super().__init__(*args, **kwargs)
 
     def create_developer_app(self, developer, request_body):
-        """Creates an app associated with a developer, associates the app with an API product, and auto-generates an API key for the app to use in calls to API proxies inside the API product.
+        """Creates an app associated with a developer, associates the app with
+        an API product, and auto-generates an API key for the app to use in
+        calls to API proxies inside the API product.
 
-        The name is the unique ID of the app that you can use in management API calls.
-        The DisplayName (set with an attribute) is what appears in the management UI. If you don't provide a DisplayName, the name is used.
+        The name is the unique ID of the app that you can use in management API
+        calls.
+        The DisplayName (set with an attribute) is what appears in the
+        management UI.
+        If you don't provide a DisplayName, the name is used.
 
-        The keyExpiresIn property sets the expiration on the API key. If you don't set this, or set the value to -1, they API key never expires.
+        The keyExpiresIn property sets the expiration on the API key.
+        If you don't set this, or set the value to -1, they API key never
+        expires.
 
-        Apigee recommends that you use the developer's email address when calling this API.
-        Developer IDs are generated internally by Apigee and are not guaranteed to stay the same over time.
+        Apigee recommends that you use the developer's email address when
+        calling this API.
+        Developer IDs are generated internally by Apigee and are not guaranteed
+        to stay the same over time.
 
         Args:
             developer (str): The developer's email address or ID.
@@ -63,11 +81,15 @@ class Apps(IApps):
         """Deletes a developer app.
 
         Note the following:
-          - With Apigee Edge for Public Cloud, deletion of the developer app and associated artifacts happens asynchronously.
-            The developer app is deleted immediately, but the resources associated with that developer app,
-            such as app keys or access tokens, may take anywhere from a few seconds to a few minutes to be automatically deleted.
-          - Apigee recommends that you use the developer's email address when calling this API.
-            Developer IDs are generated internally by Apigee and are not guaranteed to stay the same over time.
+          - With Apigee Edge for Public Cloud, deletion of the developer app and
+            associated artifacts happens asynchronously.
+            The developer app is deleted immediately, but the resources
+            associated with that developer app, such as app keys or access
+            tokens, may take anywhere from a few seconds to a few minutes to be
+            automatically deleted.
+          - Apigee recommends that you use the developer's email address when
+            calling this API. Developer IDs are generated internally by Apigee
+            and are not guaranteed to stay the same over time.
 
         Args:
             developer (str): The developer's email address or ID.
@@ -86,14 +108,19 @@ class Apps(IApps):
         """Creates an empty developer app.
 
         This method combines three API calls to Apigee:
-          1. Create a developer app with the option to specify display name and callback URL
+          1. Create a developer app with the option to specify display name and
+             callback URL
           2. Delete default key created for the new developer app
           3. Get the developer details
 
         Args:
             developer (str): The developer's email address or ID.
-            display_name (str, optional): The ``DisplayName`` is what appears in the management UI. If you don't provide a ``DisplayName``, the ``name`` is used.
-            callback_url (str, optional): The callbackUrl is used by OAuth 2.0 authorization servers to communicate authorization codes back to apps.
+            display_name (str, optional): The ``DisplayName`` is what appears in
+                the management UI. If you don't provide a ``DisplayName``, the
+                ``name`` is used.
+            callback_url (str, optional): The callbackUrl is used by OAuth 2.0
+                authorization servers to communicate authorization codes back to
+                apps.
 
         Returns:
             requests.Response()
@@ -129,7 +156,8 @@ class Apps(IApps):
 
         All times in the response are UNIX times.
 
-        Note that the response contains a top-level attribute named accessType that is no longer used by Apigee.
+        Note that the response contains a top-level attribute named accessType
+        that is no longer used by Apigee.
 
         Args:
             developer (str): The developer's email address or ID.
@@ -145,7 +173,8 @@ class Apps(IApps):
         return resp
 
     def list_developer_apps(self, developer, prefix=None, expand=False, count=100, startkey=''):
-        """Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps.
+        """Lists all apps created by a developer in an organization, and
+        optionally provides an expanded view of the apps.
 
         All time values in the response are UNIX times.
 
@@ -153,13 +182,19 @@ class Apps(IApps):
 
         Args:
             developer (str): The developer's email address or ID.
-            prefix (str, optional): Filter results by a prefix string. Defaults to None.
-            expand (bool, optional): If True, show app details. Defaults to False.
-            count (int, optional): This parameter can be used with Apigee Edge for Public Cloud only.
+            prefix (str, optional): Filter results by a prefix string.
+                Defaults to None.
+            expand (bool, optional): If True, show app details.
+                Defaults to False.
+            count (int, optional): This parameter can be used with Apigee Edge
+                for Public Cloud only.
                 Limits the list to the number you specify. The limit is 100.
-                Use with the startKey parameter to provide more targeted filtering.
-            startkey (str, optional): This parameter can be used with Apigee Edge for Public Cloud only.
-                To filter the keys that are returned, enter the name of a company app that the list will start with.
+                Use with the startKey parameter to provide more targeted
+                filtering.
+            startkey (str, optional): This parameter can be used with Apigee
+                Edge for Public Cloud only.
+                To filter the keys that are returned, enter the name of a
+                company app that the list will start with.
 
         Returns:
             requests.Response()
@@ -176,7 +211,8 @@ class Apps(IApps):
         return AppsSerializer().serialize_details(resp, 'json', prefix=prefix)
 
     def delete_key_for_a_developer_app(self, developer, consumer_key):
-        """Deletes a consumer key that belongs to an app, and removes all API products associated with the app.
+        """Deletes a consumer key that belongs to an app, and removes all API
+        products associated with the app.
 
         Once deleted, the consumer key cannot be used to access any APIs.
 
@@ -198,21 +234,29 @@ class Apps(IApps):
                                          secret_length=32, key_suffix=None, key_delimiter='-', products=[]):
         """Creates a custom consumer key and secret for a developer app.
 
-        This is particularly useful if you want to migrate existing consumer keys/secrets to Edge from another system.
+        This is particularly useful if you want to migrate existing consumer
+        keys/secrets to Edge from another system.
 
-        Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed.
+        Consumer keys and secrets can contain letters, numbers, underscores,
+        and hyphens. No other special characters are allowed.
 
         Args:
             developer (str): The developer's email address or ID.
             consumer_key (str, optional): Consumer key to create.
             consumer_secret (str, optional): Consumer secret to create.
-            key_length (int, optional): Length of the consumer key to generate if ``consumer_key`` is not specified.
+            key_length (int, optional): Length of the consumer key to generate
+                if ``consumer_key`` is not specified.
                 Defaults to 32 characters.
-            secret_length (int, optional): Length of the consumer secret to generate if ``consumer_secret`` is not specified.
+            secret_length (int, optional): Length of the consumer secret to
+                generate if ``consumer_secret`` is not specified.
                 Defaults to 32 characters.
-            key_suffix (str, optional): String to append to consumer key. Defaults to None.
-            key_delimiter (str, optional): String to delimit ``consumer_key`` and ``key_suffix``. Defaults to '-'.
-            products (list, optional): List of API Products to add to the consumer key and secret.
+            key_suffix (str, optional): String to append to consumer key.
+                Defaults to None.
+            key_delimiter (str, optional): String to delimit ``consumer_key``
+                and ``key_suffix``.
+                Defaults to '-'.
+            products (list, optional): List of API Products to add to the
+                consumer key and secret.
 
         Returns:
             requests.Response()
@@ -246,13 +290,15 @@ class Apps(IApps):
         return resp
 
     def add_api_product_to_key(self, developer, consumer_key, request_body):
-        """Adds an API product to a developer app key, enabling the app that holds the key to access the API resources bundled in the API product.
+        """Adds an API product to a developer app key, enabling the app that
+        holds the key to access the API resources bundled in the API product.
 
         You can also use this API to add attributes to the key.
 
         Args:
             developer (str): The developer's email address or ID.
-            consumer_key (str, optional): Consumer key to add the API Product to.
+            consumer_key (str, optional): Consumer key to add the API Product
+                to.
             request_body (str): JSON string.
 
         Returns:
