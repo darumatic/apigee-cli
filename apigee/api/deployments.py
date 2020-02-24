@@ -33,14 +33,20 @@ class Deployments(IDeployments):
         """Gets details for a specific API proxy deployed in a given environment
 
         Args:
-            formatted (bool, optional): If True, format ``requests.Response()``. Defaults to False.
-            format (str, optional): Specify how to format response. Defaults to 'text'.
-            showindex (bool, optional): If True, show table index. Defaults to False.
+            formatted (bool, optional): If True, format ``requests.Response()``.
+                Defaults to False.
+            format (str, optional): Specify how to format response.
+                Defaults to 'text'.
+            showindex (bool, optional): If True, show table index.
+                Defaults to False.
             tablefmt (str, optional): Specify table format. Defaults to 'plain'.
-            revision_name_only (bool, optional): If True, truncate response information. Defaults to False.
+            revision_name_only (bool, optional): If True, truncate response
+                information.
+                Defaults to False.
 
         Returns:
-            requests.Response(): Response if ``formatted`` is False, else return a ``formatted`` value.
+            requests.Response(): Response if ``formatted`` is False,
+            else return a ``formatted`` value.
         """
         uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/deployments'
         hdrs = authorization.set_header({'Accept': 'application/json'},
