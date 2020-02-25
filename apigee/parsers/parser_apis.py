@@ -86,6 +86,17 @@ class ParserApis:
         delete_api_proxy_revision.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
         delete_api_proxy_revision.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).delete_api_proxy_revision(args.revision_number).text))
 
+    def _build_deploy_api_proxy_revision_argument(self):
+        deploy_api_proxy_revision = self._parser_apis.add_parser('deploy-rev', aliases=['deploy-api-proxy-revision', 'deploy-revision'], parents=[self._parent_parser(), self._environment_parser()],
+            help='Deploys a revision of an existing API proxy to an environment in an organization.')
+        deploy_api_proxy_revision.add_argument('-n', '--name', help='name', required=True)
+        deploy_api_proxy_revision.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
+        deploy_api_proxy_revision.add_argument('--delay', type=int, default=0,
+            help='Enforces a delay, measured in seconds, before the currently deployed API proxy revision is undeployed and replaced by the new revision that is being deployed. Use this setting to minimize the impact of deployment on in-flight transactions. The default value is 0.')
+        deploy_api_proxy_revision.add_argument('--override', action='store_true',
+            help='Flag that specifies whether to use seamless deployment to ensure zero downtime. Set this flag to "true" to instruct Edge to deploy the new revision fully before undeploying the existing revision. Use in conjunction with the delay parameter to control when the existing revision is undeployed.')
+        deploy_api_proxy_revision.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).deploy_api_proxy_revision(args.environment, args.revision_number, delay=args.delay, override=args.override).text))
+
     def _build_delete_undeployed_revisions_argument(self):
         delete_undeployed_revisions = self._parser_apis.add_parser('clean', aliases=['delete-undeployed-revisions'], parents=[self._parent_parser()],
             help='Deletes all undeployed revisions of an API proxy and all policies, resources, endpoints, and revisions associated with it.')
@@ -134,6 +145,7 @@ class ParserApis:
     def _create_parser(self):
         self._build_apis_deploy_argument()
         self._build_delete_api_proxy_revision_argument()
+        self._build_deploy_api_proxy_revision_argument()
         self._build_delete_undeployed_revisions_argument()
         self._build_export_api_proxy_argument()
         self._build_pull_argument()

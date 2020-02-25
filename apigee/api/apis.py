@@ -76,6 +76,64 @@ class Apis(IApis, IPull):
         resp.raise_for_status()
         return resp
 
+    def deploy_api_proxy_revision(self, environment, revision_number, delay=0, override=False):
+        """Deploys a revision of an existing API proxy to an environment in an
+        organization.
+
+        API proxies cannot be invoked until they have been deployed to an
+        environment.
+
+        No body is required for this API call, because this simply executes a
+        deploy command for an undeployed API proxy revision that already exists
+        in your Edge organization.
+
+        If you experience HTTP 500 errors during API proxy deployment,
+        see Seamless deployment (zero downtime) for information on using the
+        override and delay parameters. That topic also has more details on API
+        proxy deployment.
+
+        About API proxies that use shared flows
+          - Edge does not validate the dependencies between shared flows and
+            API proxies at deploy time.
+          - For example, if the Flow Callout policy in an API proxy references a
+            shared flow that either doesn't exist or isn't deployed,
+            API proxy deployment still succeeds.
+          - When Edge checks the dependency at runtime and validation fails,
+            Edge throws an API proxy error with a 500 HTTP status code.
+
+        Pass override as a form parameter
+          - When set to ``true``, the ``override`` form parameter forces deployment of
+            the new revision by overriding conflict checks between revisions.
+          - Set this parameter to ``true`` when using the ``delay`` parameter to
+            minimize impact on in-flight transaction during deployment.
+
+        Args:
+            environment (str): Apigee environment.
+            revision_number (int): The API proxy revision to deploy.
+            delay (int, optional): Enforces a delay, measured in seconds,
+                before the currently deployed API proxy revision is undeployed
+                and replaced by the new revision that is being deployed.
+                Use this setting to minimize the impact of deployment on
+                in-flight transactions.
+                The default value is 0.
+            override (bool, optional): Flag that specifies whether to use
+                seamless deployment to ensure zero downtime.
+                Set this flag to "true" to instruct Edge to deploy the new
+                revision fully before undeploying the existing revision.
+                Use in conjunction with the ``delay`` parameter to control when
+                the existing revision is undeployed.
+
+        Returns:
+            requests.Response()
+        """
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/apis/{self._api_name}/revisions/{revision_number}/deployments?delay={delay}"
+        hdrs = authorization.set_header({'Accept': 'application/json',
+                                         'Content-Type': 'application/x-www-form-urlencoded'},
+                                        self._auth)
+        resp = requests.post(uri, headers=hdrs, data={'override': 'true' if override else 'false'})
+        resp.raise_for_status()
+        return resp
+
     def gen_deployment_detail(self, deployment):
         """Generates deployment detail
 

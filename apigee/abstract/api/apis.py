@@ -48,6 +48,10 @@ class IApis:
         pass
 
     @abstractmethod
+    def deploy_api_proxy_revision(self, environment, revision_number, delay=0, override=False):
+        pass
+
+    @abstractmethod
     def delete_undeployed_revisions(self, save_last=0, dry_run=False):
         pass
 
