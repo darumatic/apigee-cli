@@ -1,4 +1,5 @@
 import sys
-def log(*message, status=0):
+def log(*message, status=None):
     print(*message)
-    sys.exit(status)
+    if status:
+        sys.exit(status)
