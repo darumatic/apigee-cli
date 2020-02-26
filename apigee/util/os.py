@@ -5,7 +5,10 @@ import zipfile
 
 def makedirs(path):
     if not os.path.exists(path):
-        os.makedirs(path)
+        try:
+            os.makedirs(path)
+        except FileExistsError:
+            pass
 
 def path_exists(file):
     if os.path.exists(file):
@@ -28,3 +31,12 @@ def writezip(file, content):
 
 def splitpath(path, delimiter='[/\\\\]'):
     return re.split(delimiter, path)
+
+def touch(path):
+    try:
+       with open(path, 'x'):
+           os.utime(path, None)
+    except FileNotFoundError:
+        os.makedirs(os.path.split(path)[0])
+    except FileExistsError:
+        pass

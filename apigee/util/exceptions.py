@@ -1,5 +1,9 @@
 import functools
+import logging
 import sys
+
+from apigee import APIGEE_CLI_LAST_ERROR_LOG_FILE
+from apigee.util.os import touch
 
 def exception_handler(func):
     @functools.wraps(func)
@@ -8,6 +12,13 @@ def exception_handler(func):
             result = func(*args, **kwargs)
             return result
         except Exception as e:
+            touch(APIGEE_CLI_LAST_ERROR_LOG_FILE)
+            f_handler = logging.FileHandler(APIGEE_CLI_LAST_ERROR_LOG_FILE, 'w+')
+            f_handler.setLevel(logging.INFO)
+            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            f_handler.setFormatter(formatter)
+            logging.getLogger('').addHandler(f_handler)
+            logging.error("Exception occurred", exc_info=True)
             sys.exit(f'An exception of type {type(e).__name__} occurred. Arguments:\n{e}')
         except KeyboardInterrupt as ki:
             print()
