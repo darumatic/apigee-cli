@@ -29,7 +29,6 @@ from apigee.parsers.parser_permissions import ParserPermissions
 from apigee.parsers.parser_userroles import ParserUserroles
 from apigee.parsers.parser_caches import ParserCaches
 
-# from apigee.util import mfa_with_pyotp
 from apigee.util.exceptions import exception_handler
 
 @exception_handler
@@ -44,9 +43,6 @@ def main():
     parser = argparse.ArgumentParser(prog=apigee.CMD, description=apigee.description)
     parser.add_argument('-V', '--version', action='version', version=apigee.APP + ' ' + apigee.__version__)
     subparsers = parser.add_subparsers()
-
-    # parser_test = subparsers.add_parser('test', aliases=['access-token'], help='get access token', parents=[parent_parser()])
-    # parser_test.set_defaults(func=lambda args: print(mfa_with_pyotp.get_access_token(args)))
 
     ParserAuthorization(subparsers).parser
     ParserConfigure(subparsers).parser
