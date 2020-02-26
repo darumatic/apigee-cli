@@ -71,6 +71,10 @@ class IApis:
     def list_api_proxy_revisions(self):
         pass
 
+    @abstractmethod
+    def undeploy_api_proxy_revision(self, environment, revision_number):
+        pass
+
 
 class ApisSerializer:
     def serialize_details(self, apis, format, prefix=None):

@@ -142,6 +142,13 @@ class ParserApis:
         list_api_proxies.add_argument('-n', '--name', help='name', required=True)
         list_api_proxies.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).list_api_proxy_revisions().text))
 
+    def _build_undeploy_api_proxy_revision_argument(self):
+        undeploy_api_proxy_revision = self._parser_apis.add_parser('undeploy-rev', aliases=['undeploy-api-proxy-revision', 'undeploy-revision'], parents=[self._parent_parser(), self._environment_parser()],
+            help='Undeploys an API proxy revision from an environment.')
+        undeploy_api_proxy_revision.add_argument('-n', '--name', help='name', required=True)
+        undeploy_api_proxy_revision.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
+        undeploy_api_proxy_revision.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).undeploy_api_proxy_revision(args.environment, args.revision_number).text))
+
     def _create_parser(self):
         self._build_apis_deploy_argument()
         self._build_delete_api_proxy_revision_argument()
@@ -152,3 +159,4 @@ class ParserApis:
         self._build_get_api_proxy_argument()
         self._build_list_api_proxies_argument()
         self._build_list_api_proxy_revisions_argument()
+        self._build_undeploy_api_proxy_revision_argument()
