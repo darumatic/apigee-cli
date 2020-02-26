@@ -39,9 +39,9 @@ def get_access_token(args):
     try:
         responsePost.json()['access_token']
     except KeyError as ke:
-        if APIGEE_CLI_SUPPRESS_RETRY_MESSAGE not in ('True', 'true', '1'):
+        if APIGEE_CLI_SUPPRESS_RETRY_MESSAGE not in (True, 'True', 'true', '1'):
             print('retry http POST ' + APIGEE_OAUTH_URL)
         responsePost = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=postHeaders, data=postBody)
-        if APIGEE_CLI_SUPPRESS_RETRY_RESPONSE not in ('True', 'true', '1'):
+        if APIGEE_CLI_SUPPRESS_RETRY_RESPONSE not in (True, 'True', 'true', '1'):
             print(responsePost.json())
     return responsePost.json()['access_token']
