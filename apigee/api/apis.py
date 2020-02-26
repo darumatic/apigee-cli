@@ -325,6 +325,32 @@ class Apis(IApis, IPull):
         resp.raise_for_status()
         return resp
 
+    def force_undeploy_api_proxy_revision(self, environment, revision_number):
+        """Force the undeployment of the API proxy that is partially deployed.
+
+        This can be necessary if the API proxy becomes partially deployed and
+        must be undeployed, then redeployed.
+
+        You must specify the revision number of the API proxy because multiple
+        revisions of the same API Proxy can be deployed in the same environment
+        if the proxy base path is different.
+
+        See Undeploy API Proxy for the standard undeploy API.
+
+        Args:
+            environment (str): Apigee environment.
+            revision_number (int): The API proxy revision to undeploy.
+
+        Returns:
+            requests.Response()
+        """
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/revisions/{revision_number}/deployments?action=undeploy&env={environment}&force=true'
+        hdrs = authorization.set_header({'Accept': 'application/json'},
+                                        self._auth)
+        resp = requests.delete(uri, headers=hdrs)
+        resp.raise_for_status()
+        return resp
+
     def get_apiproxy_files(self, directory):
         """Gets the paths of all ``apiproxy`` bundle files.
 

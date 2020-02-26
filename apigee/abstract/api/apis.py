@@ -75,6 +75,10 @@ class IApis:
     def undeploy_api_proxy_revision(self, environment, revision_number):
         pass
 
+    @abstractmethod
+    def force_undeploy_api_proxy_revision(self, environment, revision_number):
+        pass
+
 
 class ApisSerializer:
     def serialize_details(self, apis, format, prefix=None):

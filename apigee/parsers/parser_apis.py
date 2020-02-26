@@ -149,6 +149,13 @@ class ParserApis:
         undeploy_api_proxy_revision.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
         undeploy_api_proxy_revision.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).undeploy_api_proxy_revision(args.environment, args.revision_number).text))
 
+    def _build_force_undeploy_api_proxy_revision_argument(self):
+        force_undeploy_api_proxy_revision = self._parser_apis.add_parser('force-undeploy-rev', aliases=['force-undeploy-api-proxy-revision', 'force-undeploy-revision'], parents=[self._parent_parser(), self._environment_parser()],
+            help='Force the undeployment of the API proxy that is partially deployed.')
+        force_undeploy_api_proxy_revision.add_argument('-n', '--name', help='name', required=True)
+        force_undeploy_api_proxy_revision.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
+        force_undeploy_api_proxy_revision.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).force_undeploy_api_proxy_revision(args.environment, args.revision_number).text))
+
     def _create_parser(self):
         self._build_apis_deploy_argument()
         self._build_delete_api_proxy_revision_argument()
@@ -160,3 +167,4 @@ class ParserApis:
         self._build_list_api_proxies_argument()
         self._build_list_api_proxy_revisions_argument()
         self._build_undeploy_api_proxy_revision_argument()
+        self._build_force_undeploy_api_proxy_revision_argument()
