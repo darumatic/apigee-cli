@@ -13,7 +13,7 @@ import requests
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.deployments import IDeployments, DeploymentsSerializer
-from apigee.util import authorization
+from apigee.util import authorization, console
 
 class Deployments(IDeployments):
 

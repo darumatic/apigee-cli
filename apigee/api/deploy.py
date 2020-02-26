@@ -29,7 +29,7 @@ import zipfile
 
 from apigee import APIGEE_ADMIN_API_URL
 # from apigee.util import mfa_with_pyotp
-from apigee.util import authorization
+from apigee.util import authorization, console
 
 ApigeeHost = APIGEE_ADMIN_API_URL
 UserPW = None
@@ -161,15 +161,15 @@ def printDeployments(dep, check_revision=None):
         revisions = [d['revision'] for d in dep]
         if check_revision not in revisions:
             sys.exit('Error: proxy version %i not found' % check_revision)
-        print('Proxy version %i found' % check_revision)
+        console.log('Proxy version %i found' % check_revision)
     for d in dep:
-        print('Environment: %s' % d['environment'])
-        print('  Revision: %i BasePath = %s' % (d['revision'], d['basePath']))
-        print('  State: %s' % d['state'])
+        console.log('Environment: %s' % d['environment'])
+        console.log('  Revision: %i BasePath = %s' % (d['revision'], d['basePath']))
+        console.log('  State: %s' % d['state'])
         if d['state'] != 'deployed':
             sys.exit(1)
         if 'error' in d:
-            print('  Error: %s' % d['error'])
+            console.log('  Error: %s' % d['error'])
 
 def deploy(args):
     global UserPW
@@ -228,7 +228,7 @@ def deploy(args):
                         en = os.path.join(
                             os.path.relpath(dirEntry[0], Directory),
                             fileEntry)
-                        print('Writing %s to %s' % (fn, en))
+                        console.log('Writing %s to %s' % (fn, en))
                         zipout.write(fn, en)
 
         zipout.close()
@@ -246,14 +246,14 @@ def deploy(args):
     resp = httpCall('POST', uri, hdrs, body)
 
     if resp.status != 200 and resp.status != 201:
-        print('Import failed to %s with status %i:\n%s' % \
+        console.log('Import failed to %s with status %i:\n%s' % \
               (uri, resp.status, resp.read().decode()))
         sys.exit(2)
 
     deployment = json.loads(resp.read().decode())
     revision = int(deployment['revision'])
 
-    print('Imported new proxy version %i' % revision)
+    console.log('Imported new proxy version %i' % revision)
 
     if ShouldDeploy and not ShouldOverride:
         # Undeploy duplicates
@@ -262,7 +262,7 @@ def deploy(args):
             if d['environment'] == Environment and \
                     d['basePath'] == BasePath and \
                     d['revision'] != revision:
-                print('Undeploying revision %i in same environment and path:' % \
+                console.log('Undeploying revision %i in same environment and path:' % \
                       d['revision'])
                 conn = http.client.HTTPSConnection(httpHost)
                 resp = httpCall('POST',
@@ -273,7 +273,7 @@ def deploy(args):
                                 (Organization, Name, Environment, d['revision']),
                                 None, None)
                 if resp.status != 200 and resp.status != 204:
-                    print('Error %i on undeployment:\n%s' % \
+                    console.log('Error %i on undeployment:\n%s' % \
                           (resp.status, resp.read().decode()))
 
         # Deploy the bundle
@@ -288,12 +288,12 @@ def deploy(args):
                         hdrs, None)
 
         if resp.status != 200 and resp.status != 201:
-            print('Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode()))
+            console.log('Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode()))
             sys.exit(2)
 
     if ShouldOverride:
         # Seamless Deploy the bundle
-        print('Seamless deploy %s' % Name)
+        console.log('Seamless deploy %s' % Name)
         hdrs = {'Content-Type': 'application/x-www-form-urlencoded'}
         resp = httpCall('POST',
                         ('/v1/organizations/%s/environments/%s/apis/%s/revisions/%s/deployments' +
@@ -303,7 +303,7 @@ def deploy(args):
                         hdrs, None)
 
         if resp.status != 200 and resp.status != 201:
-            print('Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode()))
+            console.log('Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode()))
             sys.exit(2)
 
     deps = getDeployments()

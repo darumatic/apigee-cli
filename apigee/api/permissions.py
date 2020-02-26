@@ -9,7 +9,7 @@ import requests
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.permissions import IPermissions, PermissionsSerializer
-from apigee.util import authorization
+from apigee.util import authorization, console
 
 class Permissions(IPermissions):
 

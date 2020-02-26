@@ -4,6 +4,8 @@ from apigee.api.deployments import Deployments
 
 from apigee.parsers.parent_parser import ParentParser
 
+from apigee.util import console
+
 class ParserDeployments:
 
     def __init__(self, parser, **kwargs):
@@ -71,7 +73,7 @@ class ParserDeployments:
             ),
             type=str
         )
-        get_api_proxy_deployment_details.set_defaults(func=lambda args: print(Deployments(args, args.org, args.name).get_api_proxy_deployment_details(formatted=True, format=args.json, showindex=args.showindex, tablefmt=args.tablefmt, revision_name_only=args.revision_name)))
+        get_api_proxy_deployment_details.set_defaults(func=lambda args: console.log(Deployments(args, args.org, args.name).get_api_proxy_deployment_details(formatted=True, format=args.json, showindex=args.showindex, tablefmt=args.tablefmt, revision_name_only=args.revision_name)))
 
     def _create_parser(self):
         self._build_get_api_proxy_deployment_details_argument()

@@ -24,7 +24,7 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.maskconfigs import IMaskconfigs
-from apigee.util import authorization
+from apigee.util import authorization, console
 
 class Maskconfigs(IMaskconfigs):
 
@@ -146,11 +146,11 @@ class Maskconfigs(IMaskconfigs):
 
         try:
             self.get_data_mask_details_for_an_api_proxy(maskconfig_name)
-            print('Updating', maskconfig_name, 'for', self._api_name)
-            print(self.create_data_masks_for_an_api_proxy(body).text)
+            console.log('Updating', maskconfig_name, 'for', self._api_name)
+            console.log(self.create_data_masks_for_an_api_proxy(body).text)
         except HTTPError as e:
             if e.response.status_code == 404:
-                print('Creating', maskconfig_name, 'for', self._api_name)
-                print(self.create_data_masks_for_an_api_proxy(body).text)
+                console.log('Creating', maskconfig_name, 'for', self._api_name)
+                console.log(self.create_data_masks_for_an_api_proxy(body).text)
             else:
                 raise e

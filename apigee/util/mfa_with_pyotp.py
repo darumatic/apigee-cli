@@ -11,6 +11,7 @@ from apigee import APIGEE_CLI_SUPPRESS_RETRY_MESSAGE
 from apigee import APIGEE_CLI_SUPPRESS_RETRY_RESPONSE
 from apigee import APIGEE_OAUTH_URL
 from apigee import HTTP_MAX_RETRIES
+from apigee.util import console
 
 def get_access_token(args):
     if args.mfa_secret is None:
@@ -35,13 +36,13 @@ def get_access_token(args):
     try:
         responsePost = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=postHeaders, data=postBody)
     except ConnectionError as ce:
-        print(ce)
+        console.log(ce)
     try:
         responsePost.json()['access_token']
     except KeyError as ke:
         if APIGEE_CLI_SUPPRESS_RETRY_MESSAGE not in (True, 'True', 'true', '1'):
-            print('retry http POST ' + APIGEE_OAUTH_URL)
+            console.log('retry http POST ' + APIGEE_OAUTH_URL)
         responsePost = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=postHeaders, data=postBody)
         if APIGEE_CLI_SUPPRESS_RETRY_RESPONSE not in (True, 'True', 'true', '1'):
-            print(responsePost.json())
+            console.log(responsePost.json())
     return responsePost.json()['access_token']

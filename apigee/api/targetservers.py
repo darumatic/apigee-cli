@@ -17,7 +17,7 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.targetservers import ITargetservers, TargetserversSerializer
-from apigee.util import authorization
+from apigee.util import authorization, console
 
 class Targetservers(ITargetservers):
 
@@ -154,11 +154,11 @@ class Targetservers(ITargetservers):
 
         try:
             self.get_targetserver(environment)
-            print('Updating', self._targetserver_name)
-            print(self.update_a_targetserver(environment, body).text)
+            console.log('Updating', self._targetserver_name)
+            console.log(self.update_a_targetserver(environment, body).text)
         except HTTPError as e:
             if e.response.status_code == 404:
-                print('Creating', self._targetserver_name)
-                print(self.create_a_targetserver(environment, body).text)
+                console.log('Creating', self._targetserver_name)
+                console.log(self.create_a_targetserver(environment, body).text)
             else:
                 raise e

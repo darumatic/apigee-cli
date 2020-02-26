@@ -4,6 +4,8 @@ from apigee.api.permissions import Permissions
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.parent_parser import ParentParser
 
+from apigee.util import console
+
 class ParserPermissions:
 
     def __init__(self, parser, **kwargs):
@@ -53,7 +55,7 @@ class ParserPermissions:
             help='Create permissions for a role.')
         create_permissions.add_argument('-n', '--name', help='name', required=True)
         create_permissions.add_argument('-b', '--body', help='request body', required=True)
-        create_permissions.set_defaults(func=lambda args: print(Permissions(args, args.org, args.name).create_permissions(args.body).text))
+        create_permissions.set_defaults(func=lambda args: console.log(Permissions(args, args.org, args.name).create_permissions(args.body).text))
 
     def _build_team_permissions_argument(self):
         team_permissions = self._parser_permissions.add_parser('template', aliases=['template-permissions', 'team-permissions', 'team'], parents=[self._parent_parser(), self._file_parser()],
@@ -61,7 +63,7 @@ class ParserPermissions:
         team_permissions.add_argument('-n', '--name', help='name of user role', required=True)
         team_permissions.add_argument('--placeholder-key', help='placeholder key to replace with a placeholder value', required=False)
         team_permissions.add_argument('--placeholder-value', help="placeholder value to replace placeholder key. default is an empty string.", default='', required=False)
-        team_permissions.set_defaults(func=lambda args: print(Permissions(args, args.org, args.name).team_permissions(args.file, placeholder_key=args.placeholder_key, placeholder_value=args.placeholder_value).text))
+        team_permissions.set_defaults(func=lambda args: console.log(Permissions(args, args.org, args.name).team_permissions(args.file, placeholder_key=args.placeholder_key, placeholder_value=args.placeholder_value).text))
 
     def _build_get_permissions_argument(self):
         get_permissions = self._parser_permissions.add_parser('get', aliases=['get-permissions'], parents=[self._parent_parser()],
@@ -94,7 +96,7 @@ class ParserPermissions:
             ),
             type=str
         )
-        get_permissions.set_defaults(func=lambda args: print(Permissions(args, args.org, args.name).get_permissions(formatted=True, format=args.json, showindex=args.showindex, tablefmt=args.tablefmt)))
+        get_permissions.set_defaults(func=lambda args: console.log(Permissions(args, args.org, args.name).get_permissions(formatted=True, format=args.json, showindex=args.showindex, tablefmt=args.tablefmt)))
 
     def _create_parser(self):
         self._build_create_permissions_argument()

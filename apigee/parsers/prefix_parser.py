@@ -1,7 +1,7 @@
 import argparse
 
 from apigee import APIGEE_CLI_PREFIX
-from apigee.util import authorization
+from apigee.util import authorization, console
 
 class PrefixParser:
 

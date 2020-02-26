@@ -8,6 +8,8 @@ from apigee.parsers.dir_parser import DirParser
 from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
 
+from apigee.util import console
+
 class ParserApis:
 
     def __init__(self, parser, **kwargs):
@@ -84,7 +86,7 @@ class ParserApis:
             help='Deletes a revision of an API proxy and all policies, resources, endpoints, and revisions associated with it. The API proxy revision must be undeployed before you can delete it.')
         delete_api_proxy_revision.add_argument('-n', '--name', help='name', required=True)
         delete_api_proxy_revision.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
-        delete_api_proxy_revision.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).delete_api_proxy_revision(args.revision_number).text))
+        delete_api_proxy_revision.set_defaults(func=lambda args: console.log(Apis(args, args.org, args.name).delete_api_proxy_revision(args.revision_number).text))
 
     def _build_deploy_api_proxy_revision_argument(self):
         deploy_api_proxy_revision = self._parser_apis.add_parser('deploy-rev', aliases=['deploy-api-proxy-revision', 'deploy-revision'], parents=[self._parent_parser(), self._environment_parser()],
@@ -95,7 +97,7 @@ class ParserApis:
             help='Enforces a delay, measured in seconds, before the currently deployed API proxy revision is undeployed and replaced by the new revision that is being deployed. Use this setting to minimize the impact of deployment on in-flight transactions. The default value is 0.')
         deploy_api_proxy_revision.add_argument('--override', action='store_true',
             help='Flag that specifies whether to use seamless deployment to ensure zero downtime. Set this flag to "true" to instruct Edge to deploy the new revision fully before undeploying the existing revision. Use in conjunction with the delay parameter to control when the existing revision is undeployed.')
-        deploy_api_proxy_revision.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).deploy_api_proxy_revision(args.environment, args.revision_number, delay=args.delay, override=args.override).text))
+        deploy_api_proxy_revision.set_defaults(func=lambda args: console.log(Apis(args, args.org, args.name).deploy_api_proxy_revision(args.environment, args.revision_number, delay=args.delay, override=args.override).text))
 
     def _build_delete_undeployed_revisions_argument(self):
         delete_undeployed_revisions = self._parser_apis.add_parser('clean', aliases=['delete-undeployed-revisions'], parents=[self._parent_parser()],
@@ -129,32 +131,32 @@ class ParserApis:
         get_api_proxy = self._parser_apis.add_parser('get', aliases=['get-api-proxy'], parents=[self._parent_parser()],
             help='Gets an API proxy by name, including a list of existing revisions of the proxy.')
         get_api_proxy.add_argument('-n', '--name', help='name', required=True)
-        get_api_proxy.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).get_api_proxy().text))
+        get_api_proxy.set_defaults(func=lambda args: console.log(Apis(args, args.org, args.name).get_api_proxy().text))
 
     def _build_list_api_proxies_argument(self):
         list_api_proxies = self._parser_apis.add_parser('list', aliases=['list-api-proxies'], parents=[self._parent_parser(), self._prefix_parser()],
             help='Gets the names of all API proxies in an organization. The names correspond to the names defined in the configuration files for each API proxy.')
-        list_api_proxies.set_defaults(func=lambda args: print(Apis(args, args.org, None).list_api_proxies(prefix=args.prefix)))
+        list_api_proxies.set_defaults(func=lambda args: console.log(Apis(args, args.org, None).list_api_proxies(prefix=args.prefix)))
 
     def _build_list_api_proxy_revisions_argument(self):
         list_api_proxies = self._parser_apis.add_parser('list-revs', aliases=['list-api-proxy-revisions', 'list-revisions'], parents=[self._parent_parser()],
             help='List all revisions for an API proxy.')
         list_api_proxies.add_argument('-n', '--name', help='name', required=True)
-        list_api_proxies.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).list_api_proxy_revisions().text))
+        list_api_proxies.set_defaults(func=lambda args: console.log(Apis(args, args.org, args.name).list_api_proxy_revisions().text))
 
     def _build_undeploy_api_proxy_revision_argument(self):
         undeploy_api_proxy_revision = self._parser_apis.add_parser('undeploy-rev', aliases=['undeploy-api-proxy-revision', 'undeploy-revision'], parents=[self._parent_parser(), self._environment_parser()],
             help='Undeploys an API proxy revision from an environment.')
         undeploy_api_proxy_revision.add_argument('-n', '--name', help='name', required=True)
         undeploy_api_proxy_revision.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
-        undeploy_api_proxy_revision.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).undeploy_api_proxy_revision(args.environment, args.revision_number).text))
+        undeploy_api_proxy_revision.set_defaults(func=lambda args: console.log(Apis(args, args.org, args.name).undeploy_api_proxy_revision(args.environment, args.revision_number).text))
 
     def _build_force_undeploy_api_proxy_revision_argument(self):
         force_undeploy_api_proxy_revision = self._parser_apis.add_parser('force-undeploy-rev', aliases=['force-undeploy-api-proxy-revision', 'force-undeploy-revision'], parents=[self._parent_parser(), self._environment_parser()],
             help='Force the undeployment of the API proxy that is partially deployed.')
         force_undeploy_api_proxy_revision.add_argument('-n', '--name', help='name', required=True)
         force_undeploy_api_proxy_revision.add_argument('-r', '--revision-number', type=int, help='revision number', required=True)
-        force_undeploy_api_proxy_revision.set_defaults(func=lambda args: print(Apis(args, args.org, args.name).force_undeploy_api_proxy_revision(args.environment, args.revision_number).text))
+        force_undeploy_api_proxy_revision.set_defaults(func=lambda args: console.log(Apis(args, args.org, args.name).force_undeploy_api_proxy_revision(args.environment, args.revision_number).text))
 
     def _create_parser(self):
         self._build_apis_deploy_argument()

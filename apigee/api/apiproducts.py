@@ -37,7 +37,7 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.apiproducts import IApiproducts, ApiproductsSerializer
-from apigee.util import authorization
+from apigee.util import authorization, console
 
 class Apiproducts(IApiproducts):
 
@@ -178,11 +178,11 @@ class Apiproducts(IApiproducts):
 
         try:
             self.get_api_product()
-            print('Updating', self._apiproduct_name)
-            print(self.update_api_product(body).text)
+            console.log('Updating', self._apiproduct_name)
+            console.log(self.update_api_product(body).text)
         except HTTPError as e:
             if e.response.status_code == 404:
-                print('Creating', self._apiproduct_name)
-                print(self.create_api_product(body).text)
+                console.log('Creating', self._apiproduct_name)
+                console.log(self.create_api_product(body).text)
             else:
                 raise e

@@ -3,6 +3,7 @@ import logging
 import sys
 
 from apigee import APIGEE_CLI_LAST_ERROR_LOG_FILE
+from apigee.util import console
 from apigee.util.os import touch
 
 def exception_handler(func):
@@ -21,7 +22,7 @@ def exception_handler(func):
             logging.error("Exception occurred", exc_info=True)
             sys.exit(f'An exception of type {type(e).__name__} occurred. Arguments:\n{e}')
         except KeyboardInterrupt as ki:
-            print()
+            console.log()
             sys.exit(130)
     return wrapper
 

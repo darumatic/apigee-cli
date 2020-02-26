@@ -17,7 +17,7 @@ import string
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.apps import IApps, AppsSerializer
-from apigee.util import authorization
+from apigee.util import authorization, console
 
 class Apps(IApps):
 
@@ -280,12 +280,12 @@ class Apps(IApps):
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         if products:
-            print(resp.text)
+            console.log(resp.text)
             consumer_key = resp.json()['consumerKey']
             request_body = json.dumps({ "apiProducts": products,
               "attributes": resp.json()['attributes']
             })
-            print('Adding API Products', products, 'to consumerKey', consumer_key)
+            console.log('Adding API Products', products, 'to consumerKey', consumer_key)
             return self.add_api_product_to_key(developer, consumer_key, request_body)
         return resp
 

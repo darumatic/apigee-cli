@@ -24,7 +24,7 @@ from apigee.abstract.api.apis import IApis, ApisSerializer, IPull
 from apigee.api.deployments import Deployments
 from apigee.api.keyvaluemaps import Keyvaluemaps
 from apigee.api.targetservers import Targetservers
-from apigee.util import authorization
+from apigee.util import authorization, console
 from apigee.util.os import (makedirs,
                             path_exists,
                             paths_exist,
@@ -215,11 +215,11 @@ class Apis(IApis, IPull):
         """
         deployed = self.get_deployed_revisions(self.get_deployment_details(Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json()))
         undeployed = self.get_undeployed_revisions(self.list_api_proxy_revisions().json(), deployed, save_last=save_last)
-        print('Undeployed revisions to be deleted:', undeployed)
+        console.log('Undeployed revisions to be deleted:', undeployed)
         if dry_run:
             return undeployed
         for rev in undeployed:
-            print('Deleting revison', rev)
+            console.log('Deleting revison', rev)
             self.delete_api_proxy_revision(rev)
         return undeployed
 
@@ -408,9 +408,9 @@ class Apis(IApis, IPull):
             keyvaluemap_file = str(Path(self._keyvaluemaps_dir) / keyvaluemap)
             if not force:
                 path_exists(keyvaluemap_file)
-            print('Pulling', keyvaluemap, 'and writing to', os.path.abspath(keyvaluemap_file))
+            console.log('Pulling', keyvaluemap, 'and writing to', os.path.abspath(keyvaluemap_file))
             resp = Keyvaluemaps(self._auth, self._org_name, keyvaluemap).get_keyvaluemap_in_an_environment(environment).text
-            print(resp)
+            console.log(resp)
             with open(keyvaluemap_file, 'w') as f:
                 f.write(resp)
 
@@ -452,9 +452,9 @@ class Apis(IApis, IPull):
             targetserver_file = str(Path(self._targetservers_dir) / targetserver)
             if not force:
                 path_exists(targetserver_file)
-            print('Pulling', targetserver, 'and writing to', os.path.abspath(targetserver_file))
+            console.log('Pulling', targetserver, 'and writing to', os.path.abspath(targetserver_file))
             resp = Targetservers(self._auth, self._org_name, targetserver).get_targetserver(environment).text
-            print(resp)
+            console.log(resp)
             with open(targetserver_file, 'w') as f:
                 f.write(resp)
 
@@ -474,12 +474,12 @@ class Apis(IApis, IPull):
             try:
                 body = f.read()
             except Exception as e:
-                print(type(e).__name__, e)
-                print('Ignoring', file)
+                console.log(type(e).__name__, e)
+                console.log('Ignoring', file)
             if old in body:
                 with open(file, 'w') as nf:
                     nf.write(body.replace(old, new))
-                print('M  ', os.path.abspath(file))
+                console.log('M  ', os.path.abspath(file))
 
     def prefix_dependencies_in_work_tree(self, dependencies, prefix):
         """Adds a prefix string to all instances of the specified strings within
@@ -500,7 +500,7 @@ class Apis(IApis, IPull):
         for filename in Path(directory).resolve().rglob('*'):
             if not filename.is_dir() and '.git' not in splitpath(str(filename)):
                 files.append(str(filename))
-        print('Prefixing', dependencies, 'with', prefix)
+        console.log('Prefixing', dependencies, 'with', prefix)
         for f in files:
             for dep in dependencies:
                 self.replace_substring(f, dep, prefix+dep)
@@ -550,8 +550,8 @@ class Apis(IApis, IPull):
             f.seek(0)
             f.write(body)
             f.truncate()
-        print(current_basepath, '->', basepath)
-        print('M  ', default_file)
+        console.log(current_basepath, '->', basepath)
+        console.log('M  ', default_file)
 
     def pull(self, dependencies=[], force=False, prefix=None, basepath=None):
         """Pull API Proxy revision and its dependencies from Apigee.
@@ -579,12 +579,12 @@ class Apis(IApis, IPull):
         if not force:
             paths_exist([self._zip_file, self._apiproxy_dir])
 
-        print('Writing ZIP to', os.path.abspath(self._zip_file))
+        console.log('Writing ZIP to', os.path.abspath(self._zip_file))
         export = apis.export_api_proxy(self._revision_number, write=True, output_file=self._zip_file)
 
         makedirs(self._apiproxy_dir)
 
-        print('Extracting', self._zip_file, 'in', os.path.abspath(self._apiproxy_dir))
+        console.log('Extracting', self._zip_file, 'in', os.path.abspath(self._apiproxy_dir))
         extractzip(self._zip_file, self._apiproxy_dir)
 
         os.remove(self._zip_file)
@@ -593,14 +593,14 @@ class Apis(IApis, IPull):
 
         keyvaluemaps = self.get_keyvaluemap_dependencies(files)
 
-        print('KeyValueMap dependencies found:', keyvaluemaps)
+        console.log('KeyValueMap dependencies found:', keyvaluemaps)
         dependencies.extend(keyvaluemaps)
 
         self.export_keyvaluemap_dependencies(self._environment, keyvaluemaps, force=force)
 
         targetservers = self.get_targetserver_dependencies(files)
 
-        print('TargetServer dependencies found:', targetservers)
+        console.log('TargetServer dependencies found:', targetservers)
         dependencies.extend(targetservers)
 
         self.export_targetserver_dependencies(self._environment, targetservers, force=force)

@@ -14,7 +14,7 @@ from tqdm import tqdm
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.keyvaluemaps import IKeyvaluemaps, KeyvaluemapsSerializer
-from apigee.util import authorization
+from apigee.util import authorization, console
 
 class Keyvaluemaps(IKeyvaluemaps):
 
@@ -298,7 +298,7 @@ class Keyvaluemaps(IKeyvaluemaps):
             keyvaluemap_in_an_environment = self.get_keyvaluemap_in_an_environment(environment).json()
             keys = [entry['name'] for entry in kvm['entry']]
             deleted = [entry for entry in keyvaluemap_in_an_environment['entry'] if entry['name'] not in keys]
-            print('Updating entries in', self._map_name)
+            console.log('Updating entries in', self._map_name)
             for idx, entry in enumerate(tqdm(kvm['entry'])):
                 if entry not in keyvaluemap_in_an_environment['entry']:
                     try:
@@ -310,12 +310,12 @@ class Keyvaluemaps(IKeyvaluemaps):
                         else:
                             raise e
             if deleted:
-                print('Deleting entries in', self._map_name)
+                console.log('Deleting entries in', self._map_name)
                 for idx, entry in enumerate(tqdm(deleted)):
                     self.delete_keyvaluemap_entry_in_an_environment(environment, entry['name'])
         except HTTPError as e:
             if e.response.status_code == 404:
-                print('Creating', self._map_name)
-                print(self.create_keyvaluemap_in_an_environment(environment, body).text)
+                console.log('Creating', self._map_name)
+                console.log(self.create_keyvaluemap_in_an_environment(environment, body).text)
             else:
                 raise e
