@@ -45,10 +45,10 @@ class Configure:
             self._config.write(configfile)
 
     def _main(self):
-        self._profile_dict['username'] = input('Apigee username (email) [{}]: '.format(self._profile_dict['username']))
-        self._profile_dict['password'] = input('Apigee password [{}]: '.format(self._mask_secret(self._profile_dict['password'])))
-        self._profile_dict['mfa_secret'] = input('Apigee MFA key (recommended) [{}]: '.format(self._mask_secret(self._profile_dict['mfa_secret'])))
-        self._profile_dict['org'] = input('Default Apigee organization (recommended) [{}]: '.format(self._profile_dict['org']))
-        self._profile_dict['prefix'] = input('Default team/resource prefix (recommended) [{}]: '.format(self._profile_dict['prefix']))
+        self._profile_dict['username'] = input(f"Apigee username (email) [{self._profile_dict['username']}]: ")
+        self._profile_dict['password'] = input(f"Apigee password [{self._mask_secret(self._profile_dict['password'])}]: ")
+        self._profile_dict['mfa_secret'] = input(f"Apigee MFA key (recommended) [{self._mask_secret(self._profile_dict['mfa_secret'])}]: ")
+        self._profile_dict['org'] = input(f"Default Apigee organization (recommended) [{self._profile_dict['org']}]: ")
+        self._profile_dict['prefix'] = input(f"Default team/resource prefix (recommended) [{self._profile_dict['prefix']}]: ")
         self._config[self._profile] = self._remove_empty_keys(self._profile_dict)
         self._save_config(APIGEE_CLI_CREDENTIALS_FILE)

@@ -201,9 +201,9 @@ class Apps(IApps):
         """
         uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps'
         if expand:
-            uri += '?expand={0}'.format(expand)
+            uri += f'?expand={expand}'
         else:
-            uri += '?count={0}&startKey={1}'.format(count, startkey)
+            uri += f'?count={count}&startKey={startkey}'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.get(uri, headers=hdrs)

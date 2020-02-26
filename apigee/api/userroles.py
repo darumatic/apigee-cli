@@ -119,7 +119,7 @@ class Userroles(IUserroles):
     def get_resource_permissions_for_a_specific_role(self, resource_path=''):
         uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/userroles/{self._role_name}/permissions'
         if resource_path:
-            uri += '?path={}'.format(resource_path)
+            uri += f'?path={resource_path}'
         hdrs = authorization.set_header({'Accept': 'application/json',
                                          'Content-Type': 'application/octet-stream'},
                                         self._auth)
