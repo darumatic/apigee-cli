@@ -19,7 +19,7 @@ def exception_handler(func):
             formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
             f_handler.setFormatter(formatter)
             logging.getLogger('').addHandler(f_handler)
-            logging.error("Exception occurred", exc_info=True)
+            logging.error('Exception occurred', exc_info=True)
             sys.exit(f'An exception of type {type(e).__name__} occurred. Arguments:\n{e}')
         except KeyboardInterrupt as ki:
             console.log()
