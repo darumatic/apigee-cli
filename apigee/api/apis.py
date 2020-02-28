@@ -25,12 +25,7 @@ from apigee.api.deployments import Deployments
 from apigee.api.keyvaluemaps import Keyvaluemaps
 from apigee.api.targetservers import Targetservers
 from apigee.util import authorization, console
-from apigee.util.os import (makedirs,
-                            path_exists,
-                            paths_exist,
-                            extractzip,
-                            writezip,
-                            splitpath)
+from apigee.util.os import *
 
 class Apis(IApis, IPull):
 
@@ -102,8 +97,9 @@ class Apis(IApis, IPull):
             Edge throws an API proxy error with a 500 HTTP status code.
 
         Pass override as a form parameter
-          - When set to ``true``, the ``override`` form parameter forces deployment of
-            the new revision by overriding conflict checks between revisions.
+          - When set to ``true``, the ``override`` form parameter forces
+            deployment of the new revision by overriding conflict checks between
+            revisions.
           - Set this parameter to ``true`` when using the ``delay`` parameter to
             minimize impact on in-flight transaction during deployment.
 
@@ -213,9 +209,12 @@ class Apis(IApis, IPull):
             dict: list of revisions deleted or to be deleted
             (if ``dry_run`` is True).
         """
-        undeployed = self.get_undeployed_revisions(self.list_api_proxy_revisions().json(),
-                                                   self.get_deployed_revisions(self.get_deployment_details(Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json())),
-                                                   save_last=save_last)
+        undeployed = self.get_undeployed_revisions(
+            self.list_api_proxy_revisions().json(),
+            self.get_deployed_revisions(
+                self.get_deployment_details(
+                    Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json())),
+            save_last=save_last)
         console.log('Undeployed revisions to be deleted:', undeployed)
         if dry_run:
             return undeployed
