@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Need Help &mdash; apigee-cli 0.29.1 documentation</title>
+  <title>Setting up your Apigee credentials &mdash; apigee-cli 0.29.1 documentation</title>
   
 
   
@@ -35,7 +35,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Disclaimer" href="disclaimer.html" /> 
+    <link rel="next" title="apigee.api package" href="source/apigee.api.html" />
+    <link rel="prev" title="Quickstart" href="quickstart.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,18 +86,18 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="auth.html">Setting up your Apigee credentials</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setting up your Apigee credentials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/apigee.api.html">apigee.api package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/apigee.abstract.api.html">apigee.abstract.api package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/apigee.parsers.html">apigee.parsers package</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Guide</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="license.html">Apache License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
 <li class="toctree-l1"><a class="reference internal" href="disclaimer.html">Disclaimer</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Need Help</a></li>
+<li class="toctree-l1"><a class="reference internal" href="help.html">Need Help</a></li>
 </ul>
 
             
@@ -142,13 +143,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Need Help</li>
+      <li>Setting up your Apigee credentials</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/help.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/auth.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -161,9 +162,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="need-help">
-<h1>Need Help<a class="headerlink" href="#need-help" title="Permalink to this headline">¶</a></h1>
-<p>If you’re have trouble please email Matthew Delotavo &lt;<a class="reference external" href="mailto:matthew&#46;t&#46;delotavo&#37;&#52;&#48;gmail&#46;com">matthew<span>&#46;</span>t<span>&#46;</span>delotavo<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p>
+  <div class="section" id="setting-up-your-apigee-credentials">
+<h1>Setting up your Apigee credentials<a class="headerlink" href="#setting-up-your-apigee-credentials" title="Permalink to this headline">¶</a></h1>
+<p>The API modules read Apigee credentials from a single object that can be defined
+as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Struct</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">entries</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;[username]&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;[password]&#39;</span><span class="p">,</span> <span class="n">mfa_secret</span><span class="o">=</span><span class="s1">&#39;[mfa_secret]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>or you can define it this way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">(),</span> <span class="nb">dict</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;[username]&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;[password]&#39;</span><span class="p">,</span> <span class="n">mfa_secret</span><span class="o">=</span><span class="s1">&#39;[mfa_secret]&#39;</span><span class="p">))()</span>
+</pre></div>
+</div>
+<p>The resulting <code class="docutils literal notranslate"><span class="pre">auth</span></code> object can then be passed to API methods like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">apigee.api.apis</span> <span class="kn">import</span> <span class="n">Apis</span>
+
+<span class="n">apis</span> <span class="o">=</span> <span class="n">Apis</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="s1">&#39;[org]&#39;</span><span class="p">,</span> <span class="s1">&#39;[api_name]&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">apis</span><span class="o">.</span><span class="n">list_api_proxy_revisions</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 
 
@@ -174,8 +193,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="source/apigee.api.html" class="btn btn-neutral float-right" title="apigee.api package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="disclaimer.html" class="btn btn-neutral float-left" title="Disclaimer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

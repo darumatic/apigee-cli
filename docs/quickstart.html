@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Quickstart &mdash; apigee-cli 0.27.0 documentation</title>
+  <title>Quickstart &mdash; apigee-cli 0.29.1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Apache License" href="license.html" />
+    <link rel="next" title="Setting up your Apigee credentials" href="auth.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
 </head>
 
@@ -80,12 +80,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption"><span class="caption-text">Getting started</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">Getting an OAuth 2.0 Access Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-an-oauth-access-token">Getting an OAuth Access Token</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#listing-api-proxies">Listing API Proxies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deploying-an-api-proxy">Deploying an API Proxy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#exporting-an-api-proxy">Exporting an API Proxy</a></li>
@@ -100,10 +100,16 @@
 <li class="toctree-l2"><a class="reference internal" href="#setting-permissions-for-a-role">Setting permissions for a role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#importing-modules">Importing modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#restoring-developer-apps">Restoring Developer Apps</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#suppressing-retry-messages">Suppressing retry messages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-help">Getting Help</a></li>
 </ul>
 </li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="auth.html">Setting up your Apigee credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/apigee.api.html">apigee.api package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/apigee.abstract.api.html">apigee.abstract.api package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/apigee.parsers.html">apigee.parsers package</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Guide</span></p>
 <ul>
@@ -223,8 +229,8 @@ $ export APIGEE_CLI_PREFIX=&lt;my_prefix&gt;
 profile to use by using the <code class="docutils literal notranslate"><span class="pre">-P/--profile</span></code> option. If no profile is specified
 the <code class="docutils literal notranslate"><span class="pre">default</span></code> profile is used.</p>
 </div>
-<div class="section" id="id2">
-<h2>Getting an OAuth 2.0 Access Token<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="getting-an-oauth-access-token">
+<span id="id2"></span><h2>Getting an OAuth Access Token<a class="headerlink" href="#getting-an-oauth-access-token" title="Permalink to this headline">¶</a></h2>
 <p>To get an OAuth 2.0 access token, configure an MFA key, then run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee auth access-token
 </pre></div>
@@ -342,89 +348,74 @@ the organization, specify <code class="docutils literal notranslate"><span class
 <div class="section" id="managing-key-value-maps-kvms">
 <span id="id9"></span><h2>Managing Key value maps (KVMs)<a class="headerlink" href="#managing-key-value-maps-kvms" title="Permalink to this headline">¶</a></h2>
 <p>The following commands are supported:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">apigee</span> <span class="n">kvms</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span>
-                   <span class="p">{</span><span class="n">create</span><span class="p">,</span><span class="n">create</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">delete</span><span class="p">,</span><span class="n">delete</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">delete</span><span class="o">-</span><span class="n">entry</span><span class="p">,</span><span class="n">delete</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">get</span><span class="p">,</span><span class="n">get</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">get</span><span class="o">-</span><span class="n">value</span><span class="p">,</span><span class="n">get</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">keys</span><span class="o">-</span><span class="n">value</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">,</span><span class="nb">list</span><span class="p">,</span><span class="nb">list</span><span class="o">-</span><span class="n">keyvaluemaps</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">update</span><span class="p">,</span><span class="n">update</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">create</span><span class="o">-</span><span class="n">entry</span><span class="p">,</span><span class="n">create</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">kvm</span><span class="p">,</span><span class="n">update</span><span class="o">-</span><span class="n">entry</span><span class="p">,</span><span class="n">update</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">kvm</span><span class="p">,</span><span class="nb">list</span><span class="o">-</span><span class="n">keys</span><span class="p">,</span><span class="nb">list</span><span class="o">-</span><span class="n">keys</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">,</span><span class="n">push</span><span class="p">,</span><span class="n">push</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">}</span>
-                   <span class="o">...</span>
-
-<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
-  <span class="p">{</span><span class="n">create</span><span class="p">,</span><span class="n">create</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">delete</span><span class="p">,</span><span class="n">delete</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">delete</span><span class="o">-</span><span class="n">entry</span><span class="p">,</span><span class="n">delete</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">get</span><span class="p">,</span><span class="n">get</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">get</span><span class="o">-</span><span class="n">value</span><span class="p">,</span><span class="n">get</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">keys</span><span class="o">-</span><span class="n">value</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">,</span><span class="nb">list</span><span class="p">,</span><span class="nb">list</span><span class="o">-</span><span class="n">keyvaluemaps</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">update</span><span class="p">,</span><span class="n">update</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">,</span><span class="n">create</span><span class="o">-</span><span class="n">entry</span><span class="p">,</span><span class="n">create</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">kvm</span><span class="p">,</span><span class="n">update</span><span class="o">-</span><span class="n">entry</span><span class="p">,</span><span class="n">update</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">kvm</span><span class="p">,</span><span class="nb">list</span><span class="o">-</span><span class="n">keys</span><span class="p">,</span><span class="nb">list</span><span class="o">-</span><span class="n">keys</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">,</span><span class="n">push</span><span class="p">,</span><span class="n">push</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">}</span>
-    <span class="n">create</span> <span class="p">(</span><span class="n">create</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">)</span>
-                        <span class="n">Creates</span> <span class="n">a</span> <span class="n">key</span> <span class="n">value</span> <span class="nb">map</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">environment</span><span class="o">.</span>
-    <span class="n">delete</span> <span class="p">(</span><span class="n">delete</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">)</span>
-                        <span class="n">Deletes</span> <span class="n">a</span> <span class="n">key</span><span class="o">/</span><span class="n">value</span> <span class="nb">map</span> <span class="ow">and</span> <span class="nb">all</span> <span class="n">associated</span> <span class="n">entries</span>
-                        <span class="kn">from</span> <span class="nn">an</span> <span class="n">environment</span><span class="o">.</span>
-    <span class="n">delete</span><span class="o">-</span><span class="n">entry</span> <span class="p">(</span><span class="n">delete</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">)</span>
-                        <span class="n">Deletes</span> <span class="n">a</span> <span class="n">specific</span> <span class="n">key</span><span class="o">/</span><span class="n">value</span> <span class="nb">map</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">an</span>
-                        <span class="n">environment</span> <span class="n">by</span> <span class="n">name</span><span class="p">,</span> <span class="n">along</span> <span class="k">with</span> <span class="n">associated</span> <span class="n">entries</span><span class="o">.</span>
-    <span class="n">get</span> <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">)</span>
-                        <span class="n">Gets</span> <span class="n">a</span> <span class="n">KeyValueMap</span> <span class="p">(</span><span class="n">KVM</span><span class="p">)</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">environment</span> <span class="n">by</span> <span class="n">name</span><span class="p">,</span>
-                        <span class="n">along</span> <span class="k">with</span> <span class="n">the</span> <span class="n">keys</span> <span class="ow">and</span> <span class="n">values</span><span class="o">.</span>
-    <span class="n">get</span><span class="o">-</span><span class="n">value</span> <span class="p">(</span><span class="n">get</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">keys</span><span class="o">-</span><span class="n">value</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">)</span>
-                        <span class="n">Gets</span> <span class="n">the</span> <span class="n">value</span> <span class="n">of</span> <span class="n">a</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">environment</span><span class="o">-</span><span class="n">scoped</span>
-                        <span class="n">KeyValueMap</span> <span class="p">(</span><span class="n">KVM</span><span class="p">)</span><span class="o">.</span>
-    <span class="nb">list</span> <span class="p">(</span><span class="nb">list</span><span class="o">-</span><span class="n">keyvaluemaps</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">)</span>
-                        <span class="n">Lists</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">key</span><span class="o">/</span><span class="n">value</span> <span class="n">maps</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">environment</span>
-                        <span class="ow">and</span> <span class="n">optionally</span> <span class="n">returns</span> <span class="n">an</span> <span class="n">expanded</span> <span class="n">view</span> <span class="n">of</span> <span class="nb">all</span>
-                        <span class="n">key</span><span class="o">/</span><span class="n">value</span> <span class="n">maps</span> <span class="k">for</span> <span class="n">the</span> <span class="n">environment</span><span class="o">.</span>
-    <span class="n">update</span> <span class="p">(</span><span class="n">update</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="p">)</span>
-                        <span class="n">Note</span><span class="p">:</span> <span class="n">This</span> <span class="n">API</span> <span class="ow">is</span> <span class="n">supported</span> <span class="k">for</span> <span class="n">Apigee</span> <span class="n">Edge</span> <span class="k">for</span>
-                        <span class="n">Private</span> <span class="n">Cloud</span> <span class="n">only</span><span class="o">.</span> <span class="n">For</span> <span class="n">Apigee</span> <span class="n">Edge</span> <span class="k">for</span> <span class="n">Public</span> <span class="n">Cloud</span>
-                        <span class="n">use</span> <span class="n">Update</span> <span class="n">an</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">environment</span><span class="o">-</span><span class="n">scoped</span> <span class="n">KVM</span><span class="o">.</span>
-                        <span class="n">Updates</span> <span class="n">an</span> <span class="n">existing</span> <span class="n">KeyValueMap</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">environment</span><span class="o">.</span>
-                        <span class="n">Does</span> <span class="ow">not</span> <span class="n">override</span> <span class="n">the</span> <span class="n">existing</span> <span class="nb">map</span><span class="o">.</span> <span class="n">Instead</span><span class="p">,</span> <span class="n">this</span>
-                        <span class="n">method</span> <span class="n">updates</span> <span class="n">the</span> <span class="n">entries</span> <span class="k">if</span> <span class="n">they</span> <span class="n">exist</span> <span class="ow">or</span> <span class="n">adds</span> <span class="n">them</span>
-                        <span class="k">if</span> <span class="ow">not</span><span class="o">.</span> <span class="n">It</span> <span class="n">can</span> <span class="n">take</span> <span class="n">several</span> <span class="n">minutes</span> <span class="n">before</span> <span class="n">the</span> <span class="n">new</span>
-                        <span class="n">value</span> <span class="ow">is</span> <span class="n">visible</span> <span class="n">to</span> <span class="n">runtime</span> <span class="n">traffic</span><span class="o">.</span>
-    <span class="n">create</span><span class="o">-</span><span class="n">entry</span> <span class="p">(</span><span class="n">create</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">kvm</span><span class="p">)</span>
-                        <span class="n">Note</span><span class="p">:</span> <span class="n">This</span> <span class="n">API</span> <span class="ow">is</span> <span class="n">supported</span> <span class="k">for</span> <span class="n">Apigee</span> <span class="n">Edge</span> <span class="k">for</span> <span class="n">the</span>
-                        <span class="n">Public</span> <span class="n">Cloud</span> <span class="n">only</span><span class="o">.</span> <span class="n">Creates</span> <span class="n">an</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">existing</span>
-                        <span class="n">KeyValueMap</span> <span class="n">scoped</span> <span class="n">to</span> <span class="n">an</span> <span class="n">environment</span><span class="o">.</span> <span class="n">A</span> <span class="n">key</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span>
-                        <span class="n">cannot</span> <span class="n">be</span> <span class="n">larger</span> <span class="n">than</span> <span class="mi">2</span> <span class="n">KB</span><span class="o">.</span> <span class="n">KVM</span> <span class="n">names</span> <span class="n">are</span> <span class="n">case</span>
-                        <span class="n">sensitive</span><span class="o">.</span>
-    <span class="n">update</span><span class="o">-</span><span class="n">entry</span> <span class="p">(</span><span class="n">update</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">entry</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">kvm</span><span class="p">)</span>
-                        <span class="n">Note</span><span class="p">:</span> <span class="n">This</span> <span class="n">API</span> <span class="ow">is</span> <span class="n">supported</span> <span class="k">for</span> <span class="n">Apigee</span> <span class="n">Edge</span> <span class="k">for</span> <span class="n">the</span>
-                        <span class="n">Public</span> <span class="n">Cloud</span> <span class="n">only</span><span class="o">.</span> <span class="n">Updates</span> <span class="n">an</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">KeyValueMap</span>
-                        <span class="n">scoped</span> <span class="n">to</span> <span class="n">an</span> <span class="n">environment</span><span class="o">.</span> <span class="n">A</span> <span class="n">key</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">larger</span> <span class="n">than</span>
-                        <span class="mi">2</span> <span class="n">KB</span><span class="o">.</span> <span class="n">KVM</span> <span class="n">names</span> <span class="n">are</span> <span class="n">case</span> <span class="n">sensitive</span><span class="o">.</span> <span class="n">Does</span> <span class="ow">not</span> <span class="n">override</span>
-                        <span class="n">the</span> <span class="n">existing</span> <span class="nb">map</span><span class="o">.</span> <span class="n">It</span> <span class="n">can</span> <span class="n">take</span> <span class="n">several</span> <span class="n">minutes</span> <span class="n">before</span>
-                        <span class="n">the</span> <span class="n">new</span> <span class="n">value</span> <span class="ow">is</span> <span class="n">visible</span> <span class="n">to</span> <span class="n">runtime</span> <span class="n">traffic</span><span class="o">.</span>
-    <span class="nb">list</span><span class="o">-</span><span class="n">keys</span> <span class="p">(</span><span class="nb">list</span><span class="o">-</span><span class="n">keys</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">an</span><span class="o">-</span><span class="n">environment</span><span class="o">-</span><span class="n">scoped</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">)</span>
-                        <span class="n">Note</span><span class="p">:</span> <span class="n">This</span> <span class="n">API</span> <span class="ow">is</span> <span class="n">supported</span> <span class="k">for</span> <span class="n">Apigee</span> <span class="n">Edge</span> <span class="k">for</span> <span class="n">the</span>
-                        <span class="n">Public</span> <span class="n">Cloud</span> <span class="n">only</span><span class="o">.</span> <span class="n">Lists</span> <span class="n">keys</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">KeyValueMap</span> <span class="n">scoped</span>
-                        <span class="n">to</span> <span class="n">an</span> <span class="n">environment</span><span class="o">.</span> <span class="n">KVM</span> <span class="n">names</span> <span class="n">are</span> <span class="n">case</span> <span class="n">sensitive</span><span class="o">.</span>
-    <span class="n">push</span> <span class="p">(</span><span class="n">push</span><span class="o">-</span><span class="n">keyvaluemap</span><span class="p">)</span>
-                        <span class="n">Push</span> <span class="n">KeyValueMap</span> <span class="n">to</span> <span class="n">Apigee</span><span class="o">.</span> <span class="n">This</span> <span class="n">will</span> <span class="n">create</span>
-                        <span class="n">KeyValueMap</span><span class="o">/</span><span class="n">entries</span> <span class="k">if</span> <span class="n">they</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">exist</span><span class="p">,</span> <span class="n">update</span>
-                        <span class="n">existing</span> <span class="n">KeyValueMap</span><span class="o">/</span><span class="n">entries</span><span class="p">,</span> <span class="ow">and</span> <span class="n">delete</span> <span class="n">entries</span> <span class="n">on</span>
-                        <span class="n">Apigee</span> <span class="n">that</span> <span class="n">are</span> <span class="ow">not</span> <span class="n">present</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">request</span> <span class="n">body</span><span class="o">.</span>
-
-<span class="n">optional</span> <span class="n">arguments</span><span class="p">:</span>
-  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
-</pre></div>
-</div>
+<dl>
+<dt>usage: apigee kvms [-h]</dt><dd><p>{create,create-keyvaluemap-in-an-environment,delete,delete-keyvaluemap-from-an-environment,delete-entry,delete-keyvaluemap-entry-in-an-environment,get,get-keyvaluemap-in-an-environment,get-value,get-a-keys-value-in-an-environment-scoped-keyvaluemap,list,list-keyvaluemaps-in-an-environment,update,update-keyvaluemap-in-an-environment,create-entry,create-an-entry-in-an-environment-scoped-kvm,update-entry,update-an-entry-in-an-environment-scoped-kvm,list-keys,list-keys-in-an-environment-scoped-keyvaluemap,push,push-keyvaluemap}
+…</p>
+</dd>
+<dt>positional arguments:</dt><dd><dl class="simple">
+<dt>{create,create-keyvaluemap-in-an-environment,delete,delete-keyvaluemap-from-an-environment,delete-entry,delete-keyvaluemap-entry-in-an-environment,get,get-keyvaluemap-in-an-environment,get-value,get-a-keys-value-in-an-environment-scoped-keyvaluemap,list,list-keyvaluemaps-in-an-environment,update,update-keyvaluemap-in-an-environment,create-entry,create-an-entry-in-an-environment-scoped-kvm,update-entry,update-an-entry-in-an-environment-scoped-kvm,list-keys,list-keys-in-an-environment-scoped-keyvaluemap,push,push-keyvaluemap}</dt><dd><dl class="simple">
+<dt>create (create-keyvaluemap-in-an-environment)</dt><dd><p>Creates a key value map in an environment.</p>
+</dd>
+<dt>delete (delete-keyvaluemap-from-an-environment)</dt><dd><p>Deletes a key/value map and all associated entries
+from an environment.</p>
+</dd>
+<dt>delete-entry (delete-keyvaluemap-entry-in-an-environment)</dt><dd><p>Deletes a specific key/value map entry in an
+environment by name, along with associated entries.</p>
+</dd>
+<dt>get (get-keyvaluemap-in-an-environment)</dt><dd><p>Gets a KeyValueMap (KVM) in an environment by name,
+along with the keys and values.</p>
+</dd>
+<dt>get-value (get-a-keys-value-in-an-environment-scoped-keyvaluemap)</dt><dd><p>Gets the value of a key in an environment-scoped
+KeyValueMap (KVM).</p>
+</dd>
+<dt>list (list-keyvaluemaps-in-an-environment)</dt><dd><p>Lists the name of all key/value maps in an environment
+and optionally returns an expanded view of all
+key/value maps for the environment.</p>
+</dd>
+<dt>update (update-keyvaluemap-in-an-environment)</dt><dd><p>Note: This API is supported for Apigee Edge for
+Private Cloud only. For Apigee Edge for Public Cloud
+use Update an entry in an environment-scoped KVM.
+Updates an existing KeyValueMap in an environment.
+Does not override the existing map. Instead, this
+method updates the entries if they exist or adds them
+if not. It can take several minutes before the new
+value is visible to runtime traffic.</p>
+</dd>
+<dt>create-entry (create-an-entry-in-an-environment-scoped-kvm)</dt><dd><p>Note: This API is supported for Apigee Edge for the
+Public Cloud only. Creates an entry in an existing
+KeyValueMap scoped to an environment. A key (name)
+cannot be larger than 2 KB. KVM names are case
+sensitive.</p>
+</dd>
+<dt>update-entry (update-an-entry-in-an-environment-scoped-kvm)</dt><dd><p>Note: This API is supported for Apigee Edge for the
+Public Cloud only. Updates an entry in a KeyValueMap
+scoped to an environment. A key cannot be larger than
+2 KB. KVM names are case sensitive. Does not override
+the existing map. It can take several minutes before
+the new value is visible to runtime traffic.</p>
+</dd>
+<dt>list-keys (list-keys-in-an-environment-scoped-keyvaluemap)</dt><dd><p>Note: This API is supported for Apigee Edge for the
+Public Cloud only. Lists keys in a KeyValueMap scoped
+to an environment. KVM names are case sensitive.</p>
+</dd>
+<dt>push (push-keyvaluemap)</dt><dd><p>Push KeyValueMap to Apigee. This will create
+KeyValueMap/entries if they do not exist, update
+existing KeyValueMap/entries, and delete entries on
+Apigee that are not present in the request body.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>optional arguments:</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
+<dd><p>show this help message and exit</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<p>For example, to create a key value map in an environment, create the request body:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ body=&#39;{
- &quot;name&quot; : &quot;Map_name&quot;,
- &quot;encrypted&quot; : &quot;true&quot;,
- &quot;entry&quot; : [
-  {
-   &quot;name&quot; : &quot;Key1&quot;,
-   &quot;value&quot; : &quot;value_one&quot;
-  },
-  {
-   &quot;name&quot; : &quot;Key2&quot;,
-   &quot;value&quot; : &quot;value_two&quot;
-  }
- ]
-}&#39;
-</pre></div>
-</div>
-<p>Then run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee kvms create -e [env] -b &quot;$body&quot;
-</pre></div>
-</div>
 <p>To <code class="docutils literal notranslate"><span class="pre">push</span></code> a key value map in a file to Apigee Edge, run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee kvms push -e dev -f test_kvm.json
 </pre></div>
@@ -489,13 +480,13 @@ If the key value map or entry does not exist, a new one will be created.</p>
 <p>To import and make API calls using the modules, do the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">apigee.api.apis</span> <span class="kn">import</span> <span class="n">Apis</span>
 
-<span class="k">class</span> <span class="nc">ApigeeAuth</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">mfa_secret</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">mfa_secret</span>
+<span class="k">class</span> <span class="nc">Struct</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">entries</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
 
-<span class="n">auth</span> <span class="o">=</span> <span class="n">ApigeeAuth</span><span class="p">(</span><span class="s1">&#39;[username]&#39;</span><span class="p">,</span> <span class="s1">&#39;[password]&#39;</span><span class="p">,</span> <span class="s1">&#39;[mfa_secret]&#39;</span><span class="p">)</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">Struct</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;[username]&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;[password]&#39;</span><span class="p">,</span> <span class="n">mfa_secret</span><span class="o">=</span><span class="s1">&#39;[mfa_secret]&#39;</span><span class="p">)</span>
+<span class="c1"># or use:</span>
+<span class="c1"># auth = type(&#39;&#39;, (), dict(username=&#39;[username]&#39;, password=&#39;[password]&#39;, mfa_secret=&#39;[mfa_secret]&#39;))()</span>
+
 <span class="n">apis</span> <span class="o">=</span> <span class="n">Apis</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="s1">&#39;[org]&#39;</span><span class="p">,</span> <span class="s1">&#39;[api_name]&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">apis</span><span class="o">.</span><span class="n">list_api_proxy_revisions</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -514,17 +505,8 @@ If the key value map or entry does not exist, a new one will be created.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="suppressing-retry-messages">
-<span id="id14"></span><h2>Suppressing retry messages<a class="headerlink" href="#suppressing-retry-messages" title="Permalink to this headline">¶</a></h2>
-<p>To suppress the retry message and response from printing to the console, set the following environment variables:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">APIGEE_CLI_SUPPRESS_RETRY_MESSAGE</span><span class="o">=</span><span class="kc">True</span>
-<span class="n">APIGEE_CLI_SUPPRESS_RETRY_RESPONSE</span><span class="o">=</span><span class="kc">True</span>
-</pre></div>
-</div>
-<p>This is useful if you want to reliably redirect JSON output to a file without retry messages showing up from time to time.</p>
-</div>
 <div class="section" id="getting-help">
-<span id="id15"></span><h2>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
+<span id="id14"></span><h2>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://apidocs.apigee.com/management/apis">Apigee Product Documentation</a></p></li>
 <li><p><a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/permissions">Permissions reference</a></p></li>
@@ -541,7 +523,7 @@ If the key value map or entry does not exist, a new one will be created.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="license.html" class="btn btn-neutral float-right" title="Apache License" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="auth.html" class="btn btn-neutral float-right" title="Setting up your Apigee credentials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

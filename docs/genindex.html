@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; apigee-cli 0.27.0 documentation</title>
+  <title>Index &mdash; apigee-cli 0.29.1 documentation</title>
   
 
   
@@ -79,10 +79,17 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption"><span class="caption-text">Getting started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="auth.html">Setting up your Apigee credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/apigee.api.html">apigee.api package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/apigee.abstract.api.html">apigee.abstract.api package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/apigee.parsers.html">apigee.parsers package</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Guide</span></p>
 <ul>
@@ -581,6 +588,12 @@
       </ul></li>
       <li><a href="source/apigee.api.html#apigee.api.deploy.deploy">deploy() (in module apigee.api.deploy)</a>
 </li>
+      <li><a href="source/apigee.abstract.api.html#apigee.abstract.api.apis.IApis.deploy_api_proxy_revision">deploy_api_proxy_revision() (apigee.abstract.api.apis.IApis method)</a>
+
+      <ul>
+        <li><a href="source/apigee.api.html#apigee.api.apis.Apis.deploy_api_proxy_revision">(apigee.api.apis.Apis method)</a>
+</li>
+      </ul></li>
       <li><a href="source/apigee.api.html#apigee.api.deployments.Deployments">Deployments (class in apigee.api.deployments)</a>
 </li>
       <li><a href="source/apigee.abstract.api.html#apigee.abstract.api.deployments.DeploymentsSerializer">DeploymentsSerializer (class in apigee.abstract.api.deployments)</a>
@@ -669,6 +682,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/apigee.parsers.html#apigee.parsers.file_parser.FileParser">FileParser (class in apigee.parsers.file_parser)</a>
 </li>
+      <li><a href="source/apigee.abstract.api.html#apigee.abstract.api.apis.IApis.force_undeploy_api_proxy_revision">force_undeploy_api_proxy_revision() (apigee.abstract.api.apis.IApis method)</a>
+
+      <ul>
+        <li><a href="source/apigee.api.html#apigee.api.apis.Apis.force_undeploy_api_proxy_revision">(apigee.api.apis.Apis method)</a>
+</li>
+      </ul></li>
       <li><a href="source/apigee.parsers.html#apigee.parsers.format_parser.FormatParser">FormatParser (class in apigee.parsers.format_parser)</a>
 </li>
   </ul></td>
@@ -1115,10 +1134,10 @@
 </li>
       <li><a href="source/apigee.parsers.html#apigee.parsers.parser_targetservers.ParserTargetservers.parser_targetservers">parser_targetservers() (apigee.parsers.parser_targetservers.ParserTargetservers property)</a>
 </li>
-      <li><a href="source/apigee.parsers.html#apigee.parsers.parser_userroles.ParserUserroles.parser_userroles">parser_userroles() (apigee.parsers.parser_userroles.ParserUserroles property)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/apigee.parsers.html#apigee.parsers.parser_userroles.ParserUserroles.parser_userroles">parser_userroles() (apigee.parsers.parser_userroles.ParserUserroles property)</a>
+</li>
       <li><a href="source/apigee.parsers.html#apigee.parsers.parser_apiproducts.ParserApiproducts">ParserApiproducts (class in apigee.parsers.parser_apiproducts)</a>
 </li>
       <li><a href="source/apigee.parsers.html#apigee.parsers.parser_apis.ParserApis">ParserApis (class in apigee.parsers.parser_apis)</a>
@@ -1177,8 +1196,6 @@
         <li><a href="source/apigee.parsers.html#apigee.parsers.parser_targetservers.ParserTargetservers.prefix_parser">(apigee.parsers.parser_targetservers.ParserTargetservers property)</a>
 </li>
       </ul></li>
-      <li><a href="source/apigee.abstract.api.html#apigee.abstract.api.apis.IPull.prefix_strings_in_files">prefix_strings_in_files() (apigee.abstract.api.apis.IPull method)</a>
-</li>
       <li><a href="source/apigee.parsers.html#apigee.parsers.prefix_parser.PrefixParser">PrefixParser (class in apigee.parsers.prefix_parser)</a>
 </li>
       <li><a href="source/apigee.api.html#apigee.api.deploy.printDeployments">printDeployments() (in module apigee.api.deploy)</a>
@@ -1237,10 +1254,12 @@
         <li><a href="source/apigee.api.html#apigee.api.userroles.Userroles.remove_user_membership_in_role">(apigee.api.userroles.Userroles method)</a>
 </li>
       </ul></li>
-      <li><a href="source/apigee.abstract.api.html#apigee.abstract.api.apis.IPull.replace_strings_in_files">replace_strings_in_files() (apigee.abstract.api.apis.IPull method)</a>
+      <li><a href="source/apigee.abstract.api.html#apigee.abstract.api.apis.IPull.replace_substring">replace_substring() (apigee.abstract.api.apis.IPull method)</a>
+
+      <ul>
+        <li><a href="source/apigee.api.html#apigee.api.apis.Apis.replace_substring">(apigee.api.apis.Apis method)</a>
 </li>
-      <li><a href="source/apigee.api.html#apigee.api.apis.Apis.replace_substring">replace_substring() (apigee.api.apis.Apis method)</a>
-</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/apigee.abstract.api.html#apigee.abstract.api.apps.IApps.restore_app">restore_app() (apigee.abstract.api.apps.IApps method)</a>
@@ -1325,12 +1344,20 @@
         <li><a href="source/apigee.api.html#apigee.api.permissions.Permissions.team_permissions">(apigee.api.permissions.Permissions method)</a>
 </li>
       </ul></li>
+      <li><a href="source/apigee.util.html#apigee.util.os.touch">touch() (in module apigee.util.os)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/apigee.abstract.api.html#apigee.abstract.api.apis.IApis.undeploy_api_proxy_revision">undeploy_api_proxy_revision() (apigee.abstract.api.apis.IApis method)</a>
+
+      <ul>
+        <li><a href="source/apigee.api.html#apigee.api.apis.Apis.undeploy_api_proxy_revision">(apigee.api.apis.Apis method)</a>
+</li>
+      </ul></li>
       <li><a href="source/apigee.abstract.api.html#apigee.abstract.api.caches.ICaches.update_a_cache_in_an_environment">update_a_cache_in_an_environment() (apigee.abstract.api.caches.ICaches method)</a>
 
       <ul>

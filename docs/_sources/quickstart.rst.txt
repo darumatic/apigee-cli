@@ -55,10 +55,10 @@ profile to use by using the ``-P/--profile`` option. If no profile is specified
 the ``default`` profile is used.
 
 
-.. _`Getting an OAuth 2.0 Access Token`: #getting-an-oauth-20-access-token
+.. _`Getting an OAuth Access Token`:
 
 ---------------------------------
-Getting an OAuth 2.0 Access Token
+Getting an OAuth Access Token
 ---------------------------------
 
 To get an OAuth 2.0 access token, configure an MFA key, then run::
@@ -203,92 +203,71 @@ To see which revisions will be deleted but not delete anything, run::
 Managing Key value maps (KVMs)
 ------------------------------
 
-The following commands are supported::
+The following commands are supported:
 
-    usage: apigee kvms [-h]
-                       {create,create-keyvaluemap-in-an-environment,delete,delete-keyvaluemap-from-an-environment,delete-entry,delete-keyvaluemap-entry-in-an-environment,get,get-keyvaluemap-in-an-environment,get-value,get-a-keys-value-in-an-environment-scoped-keyvaluemap,list,list-keyvaluemaps-in-an-environment,update,update-keyvaluemap-in-an-environment,create-entry,create-an-entry-in-an-environment-scoped-kvm,update-entry,update-an-entry-in-an-environment-scoped-kvm,list-keys,list-keys-in-an-environment-scoped-keyvaluemap,push,push-keyvaluemap}
-                       ...
+usage: apigee kvms [-h]
+                   {create,create-keyvaluemap-in-an-environment,delete,delete-keyvaluemap-from-an-environment,delete-entry,delete-keyvaluemap-entry-in-an-environment,get,get-keyvaluemap-in-an-environment,get-value,get-a-keys-value-in-an-environment-scoped-keyvaluemap,list,list-keyvaluemaps-in-an-environment,update,update-keyvaluemap-in-an-environment,create-entry,create-an-entry-in-an-environment-scoped-kvm,update-entry,update-an-entry-in-an-environment-scoped-kvm,list-keys,list-keys-in-an-environment-scoped-keyvaluemap,push,push-keyvaluemap}
+                   ...
 
-    positional arguments:
-      {create,create-keyvaluemap-in-an-environment,delete,delete-keyvaluemap-from-an-environment,delete-entry,delete-keyvaluemap-entry-in-an-environment,get,get-keyvaluemap-in-an-environment,get-value,get-a-keys-value-in-an-environment-scoped-keyvaluemap,list,list-keyvaluemaps-in-an-environment,update,update-keyvaluemap-in-an-environment,create-entry,create-an-entry-in-an-environment-scoped-kvm,update-entry,update-an-entry-in-an-environment-scoped-kvm,list-keys,list-keys-in-an-environment-scoped-keyvaluemap,push,push-keyvaluemap}
-        create (create-keyvaluemap-in-an-environment)
-                            Creates a key value map in an environment.
-        delete (delete-keyvaluemap-from-an-environment)
-                            Deletes a key/value map and all associated entries
-                            from an environment.
-        delete-entry (delete-keyvaluemap-entry-in-an-environment)
-                            Deletes a specific key/value map entry in an
-                            environment by name, along with associated entries.
-        get (get-keyvaluemap-in-an-environment)
-                            Gets a KeyValueMap (KVM) in an environment by name,
-                            along with the keys and values.
-        get-value (get-a-keys-value-in-an-environment-scoped-keyvaluemap)
-                            Gets the value of a key in an environment-scoped
-                            KeyValueMap (KVM).
-        list (list-keyvaluemaps-in-an-environment)
-                            Lists the name of all key/value maps in an environment
-                            and optionally returns an expanded view of all
-                            key/value maps for the environment.
-        update (update-keyvaluemap-in-an-environment)
-                            Note: This API is supported for Apigee Edge for
-                            Private Cloud only. For Apigee Edge for Public Cloud
-                            use Update an entry in an environment-scoped KVM.
-                            Updates an existing KeyValueMap in an environment.
-                            Does not override the existing map. Instead, this
-                            method updates the entries if they exist or adds them
-                            if not. It can take several minutes before the new
-                            value is visible to runtime traffic.
-        create-entry (create-an-entry-in-an-environment-scoped-kvm)
-                            Note: This API is supported for Apigee Edge for the
-                            Public Cloud only. Creates an entry in an existing
-                            KeyValueMap scoped to an environment. A key (name)
-                            cannot be larger than 2 KB. KVM names are case
-                            sensitive.
-        update-entry (update-an-entry-in-an-environment-scoped-kvm)
-                            Note: This API is supported for Apigee Edge for the
-                            Public Cloud only. Updates an entry in a KeyValueMap
-                            scoped to an environment. A key cannot be larger than
-                            2 KB. KVM names are case sensitive. Does not override
-                            the existing map. It can take several minutes before
-                            the new value is visible to runtime traffic.
-        list-keys (list-keys-in-an-environment-scoped-keyvaluemap)
-                            Note: This API is supported for Apigee Edge for the
-                            Public Cloud only. Lists keys in a KeyValueMap scoped
-                            to an environment. KVM names are case sensitive.
-        push (push-keyvaluemap)
-                            Push KeyValueMap to Apigee. This will create
-                            KeyValueMap/entries if they do not exist, update
-                            existing KeyValueMap/entries, and delete entries on
-                            Apigee that are not present in the request body.
+positional arguments:
+  {create,create-keyvaluemap-in-an-environment,delete,delete-keyvaluemap-from-an-environment,delete-entry,delete-keyvaluemap-entry-in-an-environment,get,get-keyvaluemap-in-an-environment,get-value,get-a-keys-value-in-an-environment-scoped-keyvaluemap,list,list-keyvaluemaps-in-an-environment,update,update-keyvaluemap-in-an-environment,create-entry,create-an-entry-in-an-environment-scoped-kvm,update-entry,update-an-entry-in-an-environment-scoped-kvm,list-keys,list-keys-in-an-environment-scoped-keyvaluemap,push,push-keyvaluemap}
+    create (create-keyvaluemap-in-an-environment)
+                        Creates a key value map in an environment.
+    delete (delete-keyvaluemap-from-an-environment)
+                        Deletes a key/value map and all associated entries
+                        from an environment.
+    delete-entry (delete-keyvaluemap-entry-in-an-environment)
+                        Deletes a specific key/value map entry in an
+                        environment by name, along with associated entries.
+    get (get-keyvaluemap-in-an-environment)
+                        Gets a KeyValueMap (KVM) in an environment by name,
+                        along with the keys and values.
+    get-value (get-a-keys-value-in-an-environment-scoped-keyvaluemap)
+                        Gets the value of a key in an environment-scoped
+                        KeyValueMap (KVM).
+    list (list-keyvaluemaps-in-an-environment)
+                        Lists the name of all key/value maps in an environment
+                        and optionally returns an expanded view of all
+                        key/value maps for the environment.
+    update (update-keyvaluemap-in-an-environment)
+                        Note: This API is supported for Apigee Edge for
+                        Private Cloud only. For Apigee Edge for Public Cloud
+                        use Update an entry in an environment-scoped KVM.
+                        Updates an existing KeyValueMap in an environment.
+                        Does not override the existing map. Instead, this
+                        method updates the entries if they exist or adds them
+                        if not. It can take several minutes before the new
+                        value is visible to runtime traffic.
+    create-entry (create-an-entry-in-an-environment-scoped-kvm)
+                        Note: This API is supported for Apigee Edge for the
+                        Public Cloud only. Creates an entry in an existing
+                        KeyValueMap scoped to an environment. A key (name)
+                        cannot be larger than 2 KB. KVM names are case
+                        sensitive.
+    update-entry (update-an-entry-in-an-environment-scoped-kvm)
+                        Note: This API is supported for Apigee Edge for the
+                        Public Cloud only. Updates an entry in a KeyValueMap
+                        scoped to an environment. A key cannot be larger than
+                        2 KB. KVM names are case sensitive. Does not override
+                        the existing map. It can take several minutes before
+                        the new value is visible to runtime traffic.
+    list-keys (list-keys-in-an-environment-scoped-keyvaluemap)
+                        Note: This API is supported for Apigee Edge for the
+                        Public Cloud only. Lists keys in a KeyValueMap scoped
+                        to an environment. KVM names are case sensitive.
+    push (push-keyvaluemap)
+                        Push KeyValueMap to Apigee. This will create
+                        KeyValueMap/entries if they do not exist, update
+                        existing KeyValueMap/entries, and delete entries on
+                        Apigee that are not present in the request body.
 
-    optional arguments:
-      -h, --help            show this help message and exit
+optional arguments:
+  -h, --help            show this help message and exit
 
 
 ^^^^^^^^
 Examples
 ^^^^^^^^
-
-For example, to create a key value map in an environment, create the request body::
-
-    $ body='{
-     "name" : "Map_name",
-     "encrypted" : "true",
-     "entry" : [
-      {
-       "name" : "Key1",
-       "value" : "value_one"
-      },
-      {
-       "name" : "Key2",
-       "value" : "value_two"
-      }
-     ]
-    }'
-
-Then run::
-
-    $ apigee kvms create -e [env] -b "$body"
 
 To ``push`` a key value map in a file to Apigee Edge, run::
 
@@ -368,13 +347,13 @@ To import and make API calls using the modules, do the following::
 
     from apigee.api.apis import Apis
 
-    class ApigeeAuth:
-        def __init__(self, username, password, mfa_secret):
-            self.username = username
-            self.password = password
-            self.mfa_secret = mfa_secret
+    class Struct:
+        def __init__(self, **entries): self.__dict__.update(entries)
 
-    auth = ApigeeAuth('[username]', '[password]', '[mfa_secret]')
+    auth = Struct(username='[username]', password='[password]', mfa_secret='[mfa_secret]')
+    # or use:
+    # auth = type('', (), dict(username='[username]', password='[password]', mfa_secret='[mfa_secret]'))()
+
     apis = Apis(auth, '[org]', '[api_name]')
 
     print(apis.list_api_proxy_revisions().text)
@@ -394,19 +373,6 @@ This will create the app specified in the ``[app_file]`` and restore the credent
 To get a developer app in the first place, run::
 
     $ apigee apps get -d [developer] -n [app_file]
-
-.. _`Suppressing retry messages`:
-
---------------------------
-Suppressing retry messages
---------------------------
-
-To suppress the retry message and response from printing to the console, set the following environment variables::
-
-    APIGEE_CLI_SUPPRESS_RETRY_MESSAGE=True
-    APIGEE_CLI_SUPPRESS_RETRY_RESPONSE=True
-
-This is useful if you want to reliably redirect JSON output to a file without retry messages showing up from time to time.
 
 .. _`Getting Help`:
 
