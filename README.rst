@@ -14,32 +14,6 @@ Documentation: `The Apigee Management API command-line interface documentation`_
                   {authorization,auth,configure,apis,deployments,deps,keyvaluemaps,kvms,developers,devs,apps,products,prods,targetservers,ts,maskconfigs,masks,permissions,perms,userroles,roles,caches}
                   ...
 
-    Apigee Management API command-line interface with multi-factor authentication
-
-    positional arguments:
-      {authorization,auth,configure,apis,deployments,deps,keyvaluemaps,kvms,developers,devs,apps,products,prods,targetservers,ts,maskconfigs,masks,permissions,perms,userroles,roles,caches}
-        authorization (auth)
-                            verify authorization
-        configure           configure credentials
-        apis                manage apis
-        deployments (deps)  see apis that are actively deployed
-        keyvaluemaps (kvms)
-                            manage keyvaluemaps
-        developers (devs)   manage developers
-        apps                manage developer apps
-        products (prods)    manage api products
-        targetservers (ts)  manage target servers
-        maskconfigs (masks)
-                            manage data masks
-        permissions (perms)
-                            manage permissions for a role
-        userroles (roles)   manage user roles
-        caches              manage caches
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      -V, --version         show program's version number and exit
-
 
 The apigee-cli package works on Python versions:
 
