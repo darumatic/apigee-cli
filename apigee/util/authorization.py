@@ -7,7 +7,7 @@ import jwt
 
 from apigee import *
 from apigee.api.developers import Developers
-from apigee.util import envvar_exists, mfa_with_pyotp
+from apigee.util import mfa_with_pyotp
 from apigee.util.os import makedirs
 
 def set_header(hdrs, args):
