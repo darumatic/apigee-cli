@@ -10,7 +10,7 @@ class ParserDeployments:
 
     def __init__(self, parser, **kwargs):
         self._parser = parser
-        self._parser_deployments = self._parser.add_parser('deployments', aliases=['deps'], help='see apis that are actively deployed').add_subparsers()
+        self._parser_deployments = self._parser.add_parser('deployments', aliases=['deps'], help='see API deployments').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
         self._create_parser()
 

@@ -14,7 +14,7 @@ class ParserApis:
 
     def __init__(self, parser, **kwargs):
         self._parser = parser
-        self._parser_apis = self._parser.add_parser('apis', help='manage apis').add_subparsers()
+        self._parser_apis = self._parser.add_parser('apis', help='manage APIs').add_subparsers()
         self._parent_parser = kwargs.get('parent_parser', ParentParser())
         self._dir_parser = kwargs.get('dir_parser', DirParser())
         self._environment_parser = kwargs.get('environment_parser', EnvironmentParser())
