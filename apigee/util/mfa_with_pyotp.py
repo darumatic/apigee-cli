@@ -30,17 +30,17 @@ def get_access_token(args):
         'Accept':'application/json;charset=utf-8',
         'Authorization':'Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0'
     }
-    post_body = 'username=' + urllib.parse.quote(APIGEE_USERNAME) + '&password=' + urllib.parse.quote(APIGEE_PASSWORD) + '&grant_type=password'
+    post_body = f'username={urllib.parse.quote(APIGEE_USERNAME)}&password={urllib.parse.quote(APIGEE_PASSWORD)}&grant_type=password'
     try:
-        response_post = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=post_headers, data=post_body)
+        response_post = session.post(f'{APIGEE_OAUTH_URL}?mfa_token={TOTP.now()}', headers=post_headers, data=post_body)
     except ConnectionError as ce:
         console.log(ce)
     try:
         response_post.json()['access_token']
     except KeyError as ke:
         if APIGEE_CLI_SUPPRESS_RETRY_MESSAGE not in (True, 'True', 'true', '1'):
-            console.log('retry http POST ' + APIGEE_OAUTH_URL)
-        response_post = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=post_headers, data=post_body)
+            console.log(f'retry http POST {APIGEE_OAUTH_URL}')
+        response_post = session.post(f'{APIGEE_OAUTH_URL}?mfa_token={TOTP.now()}', headers=post_headers, data=post_body)
         if APIGEE_CLI_SUPPRESS_RETRY_RESPONSE not in (True, 'True', 'true', '1'):
             console.log(response_post.json())
     return response_post.json()['access_token']
