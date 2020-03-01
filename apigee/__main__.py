@@ -41,7 +41,7 @@ def main():
     prefix_parser = PrefixParser(profile=parent_parser.profile)
 
     parser = argparse.ArgumentParser(prog=apigee.CMD, description=apigee.description)
-    parser.add_argument('-V', '--version', action='version', version=apigee.APP + ' ' + apigee.__version__)
+    parser.add_argument('-V', '--version', action='version', version=f'{apigee.APP} {apigee.__version__}')
     subparsers = parser.add_subparsers()
 
     ParserAuthorization(subparsers).parser
