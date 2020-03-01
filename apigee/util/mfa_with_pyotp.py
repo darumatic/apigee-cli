@@ -6,9 +6,7 @@ import urllib.request, urllib.parse, urllib.error
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
 
-from apigee import APIGEE_ADMIN_API_URL
-from apigee import APIGEE_CLI_SUPPRESS_RETRY_MESSAGE
-from apigee import APIGEE_CLI_SUPPRESS_RETRY_RESPONSE
+from apigee import *
 from apigee import APIGEE_OAUTH_URL
 from apigee import HTTP_MAX_RETRIES
 from apigee.util import console
@@ -27,22 +25,22 @@ def get_access_token(args):
     adapter = HTTPAdapter(max_retries=HTTP_MAX_RETRIES)
     session = requests.Session()
     session.mount('https://', adapter)
-    postHeaders = {
+    post_headers = {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
         'Accept':'application/json;charset=utf-8',
         'Authorization':'Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0'
     }
-    postBody = 'username=' + urllib.parse.quote(APIGEE_USERNAME) + '&password=' + urllib.parse.quote(APIGEE_PASSWORD) + '&grant_type=password'
+    post_body = 'username=' + urllib.parse.quote(APIGEE_USERNAME) + '&password=' + urllib.parse.quote(APIGEE_PASSWORD) + '&grant_type=password'
     try:
-        responsePost = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=postHeaders, data=postBody)
+        response_post = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=post_headers, data=post_body)
     except ConnectionError as ce:
         console.log(ce)
     try:
-        responsePost.json()['access_token']
+        response_post.json()['access_token']
     except KeyError as ke:
         if APIGEE_CLI_SUPPRESS_RETRY_MESSAGE not in (True, 'True', 'true', '1'):
             console.log('retry http POST ' + APIGEE_OAUTH_URL)
-        responsePost = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=postHeaders, data=postBody)
+        response_post = session.post(APIGEE_OAUTH_URL + '?mfa_token=' + TOTP.now(), headers=post_headers, data=post_body)
         if APIGEE_CLI_SUPPRESS_RETRY_RESPONSE not in (True, 'True', 'true', '1'):
-            console.log(responsePost.json())
-    return responsePost.json()['access_token']
+            console.log(response_post.json())
+    return response_post.json()['access_token']
