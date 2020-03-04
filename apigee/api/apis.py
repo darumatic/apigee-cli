@@ -209,12 +209,9 @@ class Apis(IApis, IPull):
             dict: list of revisions deleted or to be deleted
             (if ``dry_run`` is True).
         """
+        deployment_details = self.get_deployment_details(Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json())
         undeployed = self.get_undeployed_revisions(
-            self.list_api_proxy_revisions().json(),
-            self.get_deployed_revisions(
-                self.get_deployment_details(
-                    Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json())),
-            save_last=save_last)
+            self.list_api_proxy_revisions().json(), self.get_deployed_revisions(deployment_details), save_last=save_last)
         console.log('Undeployed revisions to be deleted:', undeployed)
         if dry_run:
             return undeployed
