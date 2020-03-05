@@ -11,10 +11,9 @@ from pathlib import Path
 
 class IApis:
 
-    def __init__(self, auth, org_name, api_name):
+    def __init__(self, auth, org_name):
         self._auth = auth
         self._org_name = org_name
-        self._api_name = api_name
 
     def __call__(self):
         pass
@@ -35,32 +34,24 @@ class IApis:
     def org_name(self, value):
         self._org_name = value
 
-    @property
-    def api_name(self):
-        return self._api_name
-
-    @api_name.setter
-    def api_name(self, value):
-        self._api_name = value
-
     @abstractmethod
-    def delete_api_proxy_revision(self, revision_number):
+    def delete_api_proxy_revision(self, api_name, revision_number):
         pass
 
     @abstractmethod
-    def deploy_api_proxy_revision(self, environment, revision_number, delay=0, override=False):
+    def deploy_api_proxy_revision(self, api_name, environment, revision_number, delay=0, override=False):
         pass
 
     @abstractmethod
-    def delete_undeployed_revisions(self, save_last=0, dry_run=False):
+    def delete_undeployed_revisions(self, api_name, save_last=0, dry_run=False):
         pass
 
     @abstractmethod
-    def export_api_proxy(self, revision_number, writezip=True, output_file=None):
+    def export_api_proxy(self, api_name, revision_number, write=True, output_file=None):
         pass
 
     @abstractmethod
-    def get_api_proxy(self):
+    def get_api_proxy(self, api_name):
         pass
 
     @abstractmethod
@@ -68,15 +59,15 @@ class IApis:
         pass
 
     @abstractmethod
-    def list_api_proxy_revisions(self):
+    def list_api_proxy_revisions(self, api_name):
         pass
 
     @abstractmethod
-    def undeploy_api_proxy_revision(self, environment, revision_number):
+    def undeploy_api_proxy_revision(self, api_name, environment, revision_number):
         pass
 
     @abstractmethod
-    def force_undeploy_api_proxy_revision(self, environment, revision_number):
+    def force_undeploy_api_proxy_revision(self, api_name, environment, revision_number):
         pass
 
 
@@ -99,7 +90,7 @@ class ApisSerializer:
 
 class IPull:
 
-    def __init__(self, auth, org_name, api_name, revision_number, environment, work_tree=None):
+    def __init__(self, auth, org_name, revision_number, environment, work_tree=None):
         self._auth = auth
         self._org_name = org_name
         if work_tree:
@@ -108,7 +99,6 @@ class IPull:
             self._work_tree = str(Path(work_tree).resolve())
         else:
             self._work_tree = os.getcwd()
-        self._api_name = api_name
         self._revision_number = revision_number
         self._environment = environment
         self._keyvaluemaps_dir = str(Path(self._work_tree) / 'keyvaluemaps' / environment)
@@ -134,14 +124,6 @@ class IPull:
     @org_name.setter
     def org_name(self, value):
         self._org_name = value
-
-    @property
-    def api_name(self):
-        return self._api_name
-
-    @api_name.setter
-    def api_name(self, value):
-        self._api_name = value
 
     @property
     def revision_number(self):
@@ -236,5 +218,5 @@ class IPull:
         pass
 
     @abstractmethod
-    def pull(self, environment, dependencies=[], force=False, prefix=None, basepath=None):
+    def pull(self, api_name, dependencies=[], force=False, prefix=None, basepath=None):
         pass

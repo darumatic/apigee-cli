@@ -32,27 +32,26 @@ class Apis(IApis, IPull):
     def __init__(self, *args, **kwargs):
         """Apis constructor
 
-        This constructor accepts a minimum of three positional arguments to
-        initialize the IApis constructor, and a minimum of five positional
+        This constructor accepts a minimum of two positional arguments to
+        initialize the IApis constructor, and a minimum of four positional
         arguments to initialize the IPull constructor.
 
         Args:
             auth: Apigee Edge credentials object.
             org_name: Apigee Edge organization.
-            api_name: API Proxy name.
             revision_number: API Proxy revison to ``pull`` from Apigee.
             environment: Apigee environment.
             work_tree (optional): Target working directory. Defaults to None.
             *args: Variable length argument list.
             **kwargs: Arbitrary keyword arguments.
         """
-        IApis.__init__(self, args[0], args[1], args[2])#auth, org_name, api_name
+        IApis.__init__(self, args[0], args[1])#auth, org_name
         try:
-            IPull.__init__(self, args[0], args[1], args[2], args[3], args[4], **kwargs)#auth, org_name, api_name, revision_number, environment, work_tree=None
+            IPull.__init__(self, args[0], args[1], args[2], args[3], **kwargs)#auth, org_name, revision_number, environment, work_tree=None
         except IndexError as ie:
             pass
 
-    def delete_api_proxy_revision(self, revision_number):
+    def delete_api_proxy_revision(self, api_name, revision_number):
         """Deletes a revision of an API proxy and all policies, resources,
         endpoints, and revisions associated with it.
 
@@ -64,14 +63,14 @@ class Apis(IApis, IPull):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/revisions/{revision_number}'
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{api_name}/revisions/{revision_number}'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def deploy_api_proxy_revision(self, environment, revision_number, delay=0, override=False):
+    def deploy_api_proxy_revision(self, api_name, environment, revision_number, delay=0, override=False):
         """Deploys a revision of an existing API proxy to an environment in an
         organization.
 
@@ -122,7 +121,7 @@ class Apis(IApis, IPull):
         Returns:
             requests.Response()
         """
-        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/apis/{self._api_name}/revisions/{revision_number}/deployments?delay={delay}"
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/apis/{api_name}/revisions/{revision_number}/deployments?delay={delay}"
         hdrs = authorization.set_header({'Accept': 'application/json',
                                          'Content-Type': 'application/x-www-form-urlencoded'},
                                         self._auth)
@@ -193,7 +192,7 @@ class Apis(IApis, IPull):
             return undeployed[:-save_last if save_last >= 0 else len(deployed)]
         return undeployed
 
-    def delete_undeployed_revisions(self, save_last=0, dry_run=False):
+    def delete_undeployed_revisions(self, api_name, save_last=0, dry_run=False):
         """Deletes all undeployed revisions of an API proxy and all policies,
         resources, and endpoints associated with it.
 
@@ -209,7 +208,7 @@ class Apis(IApis, IPull):
             dict: list of revisions deleted or to be deleted
             (if ``dry_run`` is True).
         """
-        deployment_details = self.get_deployment_details(Deployments(self._auth, self._org_name, self._api_name).get_api_proxy_deployment_details().json())
+        deployment_details = self.get_deployment_details(Deployments(self._auth, self._org_name, api_name).get_api_proxy_deployment_details().json())
         undeployed = self.get_undeployed_revisions(
             self.list_api_proxy_revisions().json(), self.get_deployed_revisions(deployment_details), save_last=save_last)
         console.log('Undeployed revisions to be deleted:', undeployed)
@@ -220,7 +219,7 @@ class Apis(IApis, IPull):
             self.delete_api_proxy_revision(rev)
         return undeployed
 
-    def export_api_proxy(self, revision_number, write=True, output_file=None):
+    def export_api_proxy(self, api_name, revision_number, write=True, output_file=None):
         """Outputs an API proxy revision as a ZIP formatted bundle of code and
         config files.
 
@@ -237,7 +236,7 @@ class Apis(IApis, IPull):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/revisions/{revision_number}?format=bundle'
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{api_name}/revisions/{revision_number}?format=bundle'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.get(uri, headers=hdrs)
@@ -246,7 +245,7 @@ class Apis(IApis, IPull):
             writezip(output_file, resp.content)
         return resp
 
-    def get_api_proxy(self):
+    def get_api_proxy(self, api_name):
         """Gets an API proxy by name, including a list of existing revisions of
         the proxy.
 
@@ -256,7 +255,7 @@ class Apis(IApis, IPull):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}'
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{api_name}'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.get(uri, headers=hdrs)
@@ -282,7 +281,7 @@ class Apis(IApis, IPull):
         resp.raise_for_status()
         return ApisSerializer().serialize_details(resp, 'json', prefix=prefix)
 
-    def list_api_proxy_revisions(self):
+    def list_api_proxy_revisions(self, api_name):
         """List all revisions for an API proxy.
 
         Args:
@@ -291,14 +290,14 @@ class Apis(IApis, IPull):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/revisions'
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{api_name}/revisions'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def undeploy_api_proxy_revision(self, environment, revision_number):
+    def undeploy_api_proxy_revision(self, api_name, environment, revision_number):
         """Undeploys an API proxy revision from an environment.
 
         You must specify the revision number of the API proxy because multiple
@@ -315,14 +314,14 @@ class Apis(IApis, IPull):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/apis/{self._api_name}/revisions/{revision_number}/deployments'
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/apis/{api_name}/revisions/{revision_number}/deployments'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def force_undeploy_api_proxy_revision(self, environment, revision_number):
+    def force_undeploy_api_proxy_revision(self, api_name, environment, revision_number):
         """Force the undeployment of the API proxy that is partially deployed.
 
         This can be necessary if the API proxy becomes partially deployed and
@@ -341,7 +340,7 @@ class Apis(IApis, IPull):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/revisions/{revision_number}/deployments?action=undeploy&env={environment}&force=true'
+        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{api_name}/revisions/{revision_number}/deployments?action=undeploy&env={environment}&force=true'
         hdrs = authorization.set_header({'Accept': 'application/json'},
                                         self._auth)
         resp = requests.delete(uri, headers=hdrs)
@@ -550,7 +549,7 @@ class Apis(IApis, IPull):
         console.log(current_basepath, '->', basepath)
         console.log('M  ', default_file)
 
-    def pull(self, dependencies=[], force=False, prefix=None, basepath=None):
+    def pull(self, api_name, dependencies=[], force=False, prefix=None, basepath=None):
         """Pull API Proxy revision and its dependencies from Apigee.
 
         Args:
@@ -568,8 +567,7 @@ class Apis(IApis, IPull):
             requests.Response(), list, list: exported API Proxy, KeyValueMaps,
             Targetservers
         """
-        apis = Apis(self._auth, self._org_name, self._api_name)
-        dependencies.append(self._api_name)
+        dependencies.append(api_name)
 
         makedirs(self._work_tree)
 
@@ -577,7 +575,7 @@ class Apis(IApis, IPull):
             paths_exist([self._zip_file, self._apiproxy_dir])
 
         console.log('Writing ZIP to', os.path.abspath(self._zip_file))
-        export = apis.export_api_proxy(self._revision_number, write=True, output_file=self._zip_file)
+        export = self.export_api_proxy(api_name, self._revision_number, write=True, output_file=self._zip_file)
 
         makedirs(self._apiproxy_dir)
 
