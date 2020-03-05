@@ -61,8 +61,7 @@ class Debugsessions(IDebugsessions):
 
     def get_debug_session_transaction_data(self, environment, api_name, revision_number, session_name, transaction_id):
         uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/apis/{api_name}/revisions/{revision_number}/debugsessions/{session_name}/data/{transaction_id}'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
+        hdrs = authorization.set_header({'Accept': 'application/xml'},
                                         self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
