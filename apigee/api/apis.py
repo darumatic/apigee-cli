@@ -188,9 +188,7 @@ class Apis(IApis, IPull):
         """
         undeployed = [int(rev) for rev in revisions if rev not in deployed]
         undeployed.sort()
-        if save_last:
-            return undeployed[:-save_last if save_last >= 0 else len(deployed)]
-        return undeployed
+        return undeployed[:-save_last if save_last > 0 else len(deployed)]
 
     def delete_undeployed_revisions(self, api_name, save_last=0, dry_run=False):
         """Deletes all undeployed revisions of an API proxy and all policies,
@@ -208,12 +206,10 @@ class Apis(IApis, IPull):
             dict: list of revisions deleted or to be deleted
             (if ``dry_run`` is True).
         """
-        deployment_details = self.get_deployment_details(Deployments(self._auth, self._org_name, api_name).get_api_proxy_deployment_details().json())
-        undeployed = self.get_undeployed_revisions(
-            self.list_api_proxy_revisions().json(), self.get_deployed_revisions(deployment_details), save_last=save_last)
+        details = self.get_deployment_details(Deployments(self._auth, self._org_name, api_name).get_api_proxy_deployment_details().json())
+        undeployed = self.get_undeployed_revisions(self.list_api_proxy_revisions(api_name).json(), self.get_deployed_revisions(details), save_last=save_last)
         console.log('Undeployed revisions to be deleted:', undeployed)
-        if dry_run:
-            return undeployed
+        if dry_run: return undeployed
         for rev in undeployed:
             console.log('Deleting revison', rev)
             self.delete_api_proxy_revision(rev)
@@ -241,8 +237,7 @@ class Apis(IApis, IPull):
                                         self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        if write:
-            writezip(output_file, resp.content)
+        if write: writezip(output_file, resp.content)
         return resp
 
     def get_api_proxy(self, api_name):
