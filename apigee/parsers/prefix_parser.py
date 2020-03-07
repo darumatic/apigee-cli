@@ -3,14 +3,14 @@ import argparse
 from apigee import APIGEE_CLI_PREFIX
 from apigee.util import authorization, console
 
-class PrefixParser:
 
+class PrefixParser:
     def __init__(self, **kwargs):
         self._parent_parser = argparse.ArgumentParser(add_help=False)
         # self._build_profile_argument()
         # self._profile = self._parent_parser.parse_known_args()[0].profile
-        self._profile = kwargs.get('profile', 'default')
-        self._prefix = authorization.get_credential(self._profile, 'prefix')
+        self._profile = kwargs.get("profile", "default")
+        self._prefix = authorization.get_credential(self._profile, "prefix")
         self._create_parser()
 
     @property
@@ -36,7 +36,11 @@ class PrefixParser:
     #     self._parent_parser.add_argument('-P', '--profile', action='store', help='name of credentials profile', default='default')
 
     def _build_prefix_argument(self):
-        self._parent_parser.add_argument('--prefix', help='prefix filter for apigee items', default=APIGEE_CLI_PREFIX if self._prefix is None else self._prefix)
+        self._parent_parser.add_argument(
+            "--prefix",
+            help="prefix filter for apigee items",
+            default=APIGEE_CLI_PREFIX if self._prefix is None else self._prefix,
+        )
 
     def _create_parser(self):
         self._build_prefix_argument()

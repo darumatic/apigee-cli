@@ -4,8 +4,8 @@
 import json
 from abc import ABC, abstractmethod
 
-class IKeyvaluemaps:
 
+class IKeyvaluemaps:
     def __init__(self, auth, org_name, map_name):
         self._auth = auth
         self._org_name = org_name
@@ -55,7 +55,9 @@ class IKeyvaluemaps:
         pass
 
     @abstractmethod
-    def get_a_keys_value_in_an_environment_scoped_keyvaluemap(self, environment, entry_name):
+    def get_a_keys_value_in_an_environment_scoped_keyvaluemap(
+        self, environment, entry_name
+    ):
         pass
 
     @abstractmethod
@@ -67,32 +69,39 @@ class IKeyvaluemaps:
         pass
 
     @abstractmethod
-    def create_an_entry_in_an_environment_scoped_kvm(self, environment, entry_name, entry_value):
+    def create_an_entry_in_an_environment_scoped_kvm(
+        self, environment, entry_name, entry_value
+    ):
         pass
 
     @abstractmethod
-    def update_an_entry_in_an_environment_scoped_kvm(self, environment, entry_name, updated_value):
+    def update_an_entry_in_an_environment_scoped_kvm(
+        self, environment, entry_name, updated_value
+    ):
         pass
 
     @abstractmethod
-    def list_keys_in_an_environment_scoped_keyvaluemap(self, environment, startkey, count):
+    def list_keys_in_an_environment_scoped_keyvaluemap(
+        self, environment, startkey, count
+    ):
         pass
 
     @abstractmethod
     def push_keyvaluemap(self, environment, file):
         pass
 
+
 class KeyvaluemapsSerializer:
     def serialize_details(self, maps, format, prefix=None):
         resp = maps
-        if format == 'text':
+        if format == "text":
             return maps.text
         maps = maps.json()
         if prefix:
             maps = [map for map in maps if map.startswith(prefix)]
-        if format == 'json':
+        if format == "json":
             return json.dumps(maps)
-        elif format == 'table':
+        elif format == "table":
             pass
         # else:
         #     raise ValueError(format)

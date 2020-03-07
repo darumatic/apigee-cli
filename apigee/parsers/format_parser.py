@@ -1,7 +1,7 @@
 import argparse
 
-class FormatParser:
 
+class FormatParser:
     def __init__(self):
         self._parent_parser = argparse.ArgumentParser(add_help=False)
         self._create_parser()
@@ -18,7 +18,9 @@ class FormatParser:
         return self._parent_parser
 
     def _build_format_argument(self):
-        self._parent_parser.add_argument('-F', '--format', action='store', help='output format type', required=False)
+        self._parent_parser.add_argument(
+            "-F", "--format", action="store", help="output format type", required=False
+        )
 
     def _create_parser(self):
         self._build_format_argument()

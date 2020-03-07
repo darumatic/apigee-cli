@@ -39,8 +39,8 @@ from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.apiproducts import IApiproducts, ApiproductsSerializer
 from apigee.util import authorization, console
 
-class Apiproducts(IApiproducts):
 
+class Apiproducts(IApiproducts):
     def __init__(self, *args, **kwargs):
         """Apiproducts constructor
 
@@ -65,10 +65,11 @@ class Apiproducts(IApiproducts):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apiproducts'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apiproducts"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -83,9 +84,8 @@ class Apiproducts(IApiproducts):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apiproducts/{self._apiproduct_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apiproducts/{self._apiproduct_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -99,14 +99,13 @@ class Apiproducts(IApiproducts):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apiproducts/{self._apiproduct_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apiproducts/{self._apiproduct_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_api_products(self, prefix=None, expand=False, count=1000, startkey=''):
+    def list_api_products(self, prefix=None, expand=False, count=1000, startkey=""):
         """Lists all API Products by name for an organization
 
         Args:
@@ -129,12 +128,11 @@ class Apiproducts(IApiproducts):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apiproducts?expand={expand}&count={count}&startKey={startkey}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apiproducts?expand={expand}&count={count}&startKey={startkey}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return ApiproductsSerializer().serialize_details(resp, 'json', prefix=prefix)
+        return ApiproductsSerializer().serialize_details(resp, "json", prefix=prefix)
 
     def update_api_product(self, request_body):
         """This method updates an existing API product
@@ -145,10 +143,11 @@ class Apiproducts(IApiproducts):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apiproducts/{self._apiproduct_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apiproducts/{self._apiproduct_name}"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -174,15 +173,15 @@ class Apiproducts(IApiproducts):
             body = f.read()
 
         apiproduct = json.loads(body)
-        self._apiproduct_name = apiproduct['name']
+        self._apiproduct_name = apiproduct["name"]
 
         try:
             self.get_api_product()
-            console.log('Updating', self._apiproduct_name)
+            console.log("Updating", self._apiproduct_name)
             console.log(self.update_api_product(body).text)
         except HTTPError as e:
             if e.response.status_code == 404:
-                console.log('Creating', self._apiproduct_name)
+                console.log("Creating", self._apiproduct_name)
                 console.log(self.create_api_product(body).text)
             else:
                 raise e

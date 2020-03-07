@@ -2,8 +2,8 @@ import argparse
 
 from apigee.util.types import ArgumentType
 
-class DirParser:
 
+class DirParser:
     def __init__(self):
         self._parent_parser = argparse.ArgumentParser(add_help=False)
         self._create_parser()
@@ -20,7 +20,14 @@ class DirParser:
         return self._parent_parser
 
     def _build_directory_argument(self):
-        self._parent_parser.add_argument('-d', '--directory', action='store', help='directory path', required=True, type=ArgumentType.isdir)
+        self._parent_parser.add_argument(
+            "-d",
+            "--directory",
+            action="store",
+            help="directory path",
+            required=True,
+            type=ArgumentType.isdir,
+        )
 
     def _create_parser(self):
         self._build_directory_argument()

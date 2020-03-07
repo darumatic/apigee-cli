@@ -11,6 +11,7 @@ from apigee import APIGEE_OAUTH_URL
 from apigee import HTTP_MAX_RETRIES
 from apigee.util import console
 
+
 def get_access_token(args):
     if args.mfa_secret is None:
         return
@@ -21,26 +22,34 @@ def get_access_token(args):
     try:
         TOTP.now()
     except binascii.Error as e:
-        sys.exit(f'{type(e).__name__}: {e}: Not a valid MFA key')
+        sys.exit(f"{type(e).__name__}: {e}: Not a valid MFA key")
     adapter = HTTPAdapter(max_retries=HTTP_MAX_RETRIES)
     session = requests.Session()
-    session.mount('https://', adapter)
+    session.mount("https://", adapter)
     post_headers = {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-        'Accept':'application/json;charset=utf-8',
-        'Authorization':'Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0'
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        "Accept": "application/json;charset=utf-8",
+        "Authorization": "Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0",
     }
-    post_body = f'username={urllib.parse.quote(APIGEE_USERNAME)}&password={urllib.parse.quote(APIGEE_PASSWORD)}&grant_type=password'
+    post_body = f"username={urllib.parse.quote(APIGEE_USERNAME)}&password={urllib.parse.quote(APIGEE_PASSWORD)}&grant_type=password"
     try:
-        response_post = session.post(f'{APIGEE_OAUTH_URL}?mfa_token={TOTP.now()}', headers=post_headers, data=post_body)
+        response_post = session.post(
+            f"{APIGEE_OAUTH_URL}?mfa_token={TOTP.now()}",
+            headers=post_headers,
+            data=post_body,
+        )
     except ConnectionError as ce:
         console.log(ce)
     try:
-        response_post.json()['access_token']
+        response_post.json()["access_token"]
     except KeyError as ke:
-        if APIGEE_CLI_SUPPRESS_RETRY_MESSAGE not in (True, 'True', 'true', '1'):
-            console.log(f'retry http POST {APIGEE_OAUTH_URL}')
-        response_post = session.post(f'{APIGEE_OAUTH_URL}?mfa_token={TOTP.now()}', headers=post_headers, data=post_body)
-        if APIGEE_CLI_SUPPRESS_RETRY_RESPONSE not in (True, 'True', 'true', '1'):
+        if APIGEE_CLI_SUPPRESS_RETRY_MESSAGE not in (True, "True", "true", "1"):
+            console.log(f"retry http POST {APIGEE_OAUTH_URL}")
+        response_post = session.post(
+            f"{APIGEE_OAUTH_URL}?mfa_token={TOTP.now()}",
+            headers=post_headers,
+            data=post_body,
+        )
+        if APIGEE_CLI_SUPPRESS_RETRY_RESPONSE not in (True, "True", "true", "1"):
             console.log(response_post.json())
-    return response_post.json()['access_token']
+    return response_post.json()["access_token"]

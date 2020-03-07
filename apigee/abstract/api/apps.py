@@ -7,8 +7,8 @@ https://apidocs.apigee.com/api/developer-app-keys
 import json
 from abc import ABC, abstractmethod
 
-class IApps:
 
+class IApps:
     def __init__(self, auth, org_name, app_name):
         self._auth = auth
         self._org_name = org_name
@@ -46,7 +46,7 @@ class IApps:
         pass
 
     @abstractmethod
-    def create_empty_developer_app(self, developer, display_name='', callback_url=''):
+    def create_empty_developer_app(self, developer, display_name="", callback_url=""):
         pass
 
     @abstractmethod
@@ -58,7 +58,9 @@ class IApps:
         pass
 
     @abstractmethod
-    def list_developer_apps(self, developer, prefix=None, expand=False, count=100, startkey=''):
+    def list_developer_apps(
+        self, developer, prefix=None, expand=False, count=100, startkey=""
+    ):
         pass
 
     @abstractmethod
@@ -66,7 +68,17 @@ class IApps:
         pass
 
     @abstractmethod
-    def create_a_consumer_key_and_secret(self, developer, consumer_key=None, consumer_secret=None, key_length=32, secret_length=32, key_suffix=None, key_delimiter='-', products=[]):
+    def create_a_consumer_key_and_secret(
+        self,
+        developer,
+        consumer_key=None,
+        consumer_secret=None,
+        key_length=32,
+        secret_length=32,
+        key_suffix=None,
+        key_delimiter="-",
+        products=[],
+    ):
         pass
 
     @abstractmethod
@@ -77,17 +89,18 @@ class IApps:
     def restore_app(self, file):
         pass
 
+
 class AppsSerializer:
     def serialize_details(self, apps, format, prefix=None):
         resp = apps
-        if format == 'text':
+        if format == "text":
             return apps.text
         apps = apps.json()
         if prefix:
             apps = [app for app in apps if app.startswith(prefix)]
-        if format == 'json':
+        if format == "json":
             return json.dumps(apps)
-        elif format == 'table':
+        elif format == "table":
             pass
         # else:
         #     raise ValueError(format)

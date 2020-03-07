@@ -32,6 +32,7 @@ from apigee.parsers.parser_debugsessions import ParserDebugsessions
 
 from apigee.util.exceptions import exception_handler
 
+
 @exception_handler
 def main():
     parent_parser = ParentParser()
@@ -42,30 +43,72 @@ def main():
     prefix_parser = PrefixParser(profile=parent_parser.profile)
 
     parser = argparse.ArgumentParser(prog=apigee.CMD, description=apigee.description)
-    parser.add_argument('-V', '--version', action='version', version=f'{apigee.APP} {apigee.__version__}')
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=f"{apigee.APP} {apigee.__version__}",
+    )
     subparsers = parser.add_subparsers()
 
     ParserAuthorization(subparsers).parser
     ParserConfigure(subparsers).parser
-    ParserApis(subparsers, parent_parser=parent_parser, dir_parser=dir_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
+    ParserApis(
+        subparsers,
+        parent_parser=parent_parser,
+        dir_parser=dir_parser,
+        environment_parser=environment_parser,
+        prefix_parser=prefix_parser,
+    ).parser
     ParserDeployments(subparsers, parent_parser=parent_parser).parser
-    ParserKeyvaluemaps(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
-    ParserDevelopers(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
-    ParserApps(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
-    ParserApiproducts(subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser).parser
-    ParserTargetservers(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
+    ParserKeyvaluemaps(
+        subparsers,
+        parent_parser=parent_parser,
+        file_parser=file_parser,
+        environment_parser=environment_parser,
+        prefix_parser=prefix_parser,
+    ).parser
+    ParserDevelopers(
+        subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser
+    ).parser
+    ParserApps(
+        subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser
+    ).parser
+    ParserApiproducts(
+        subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser
+    ).parser
+    ParserTargetservers(
+        subparsers,
+        parent_parser=parent_parser,
+        file_parser=file_parser,
+        environment_parser=environment_parser,
+        prefix_parser=prefix_parser,
+    ).parser
     ParserMaskconfigs(subparsers, parent_parser=parent_parser).parser
     ParserPermissions(subparsers, parent_parser=parent_parser).parser
     ParserUserroles(subparsers, parent_parser=parent_parser).parser
-    ParserCaches(subparsers, parent_parser=parent_parser, file_parser=file_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
-    ParserDebugsessions(subparsers, parent_parser=parent_parser, dir_parser=dir_parser, environment_parser=environment_parser, prefix_parser=prefix_parser).parser
+    ParserCaches(
+        subparsers,
+        parent_parser=parent_parser,
+        file_parser=file_parser,
+        environment_parser=environment_parser,
+        prefix_parser=prefix_parser,
+    ).parser
+    ParserDebugsessions(
+        subparsers,
+        parent_parser=parent_parser,
+        dir_parser=dir_parser,
+        environment_parser=environment_parser,
+        prefix_parser=prefix_parser,
+    ).parser
 
     args = parser.parse_args()
     try:
         func = args.func
     except AttributeError:
-        parser.error('too few arguments')
+        parser.error("too few arguments")
     func(args)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

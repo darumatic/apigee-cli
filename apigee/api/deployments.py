@@ -15,8 +15,8 @@ from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.deployments import IDeployments, DeploymentsSerializer
 from apigee.util import authorization, console
 
-class Deployments(IDeployments):
 
+class Deployments(IDeployments):
     def __init__(self, *args, **kwargs):
         """Deployments constructor
 
@@ -29,7 +29,14 @@ class Deployments(IDeployments):
         """
         super().__init__(*args, **kwargs)
 
-    def get_api_proxy_deployment_details(self, formatted=False, format='text', showindex=False, tablefmt='plain', revision_name_only=False):
+    def get_api_proxy_deployment_details(
+        self,
+        formatted=False,
+        format="text",
+        showindex=False,
+        tablefmt="plain",
+        revision_name_only=False,
+    ):
         """Gets details for a specific API proxy deployed in a given environment
 
         Args:
@@ -48,14 +55,15 @@ class Deployments(IDeployments):
             requests.Response(): Response if ``formatted`` is False,
             else return a ``formatted`` value.
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/deployments'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/deployments"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         if formatted:
             if revision_name_only:
                 # return DeploymentsSerializer().serialize_details(resp, 'table', max_colwidth=args.max_colwidth)
-                return DeploymentsSerializer().serialize_details(resp, format, showindex=showindex, tablefmt=tablefmt)
-            return DeploymentsSerializer().serialize_details(resp, 'text')
+                return DeploymentsSerializer().serialize_details(
+                    resp, format, showindex=showindex, tablefmt=tablefmt
+                )
+            return DeploymentsSerializer().serialize_details(resp, "text")
         return resp

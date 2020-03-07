@@ -19,8 +19,8 @@ from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.apps import IApps, AppsSerializer
 from apigee.util import authorization, console
 
-class Apps(IApps):
 
+class Apps(IApps):
     def __init__(self, *args, **kwargs):
         """Apiproducts constructor
 
@@ -68,10 +68,11 @@ class Apps(IApps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -97,14 +98,13 @@ class Apps(IApps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps/{self._app_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps/{self._app_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def create_empty_developer_app(self, developer, display_name='', callback_url=''):
+    def create_empty_developer_app(self, developer, display_name="", callback_url=""):
         """Creates an empty developer app.
 
         This method combines three API calls to Apigee:
@@ -125,30 +125,28 @@ class Apps(IApps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = {
-         "name" : self._app_name,
-         # "apiProducts": args.products,
-         "attributes" : [
-          {
-           "name" : "DisplayName",
-           "value" : display_name
-          }
-         ],
-         # "scopes" : args.scopes,
-         "callbackUrl" : callback_url
+            "name": self._app_name,
+            # "apiProducts": args.products,
+            "attributes": [{"name": "DisplayName", "value": display_name}],
+            # "scopes" : args.scopes,
+            "callbackUrl": callback_url,
         }
         if not display_name:
-            del body['attributes']
+            del body["attributes"]
         if not callback_url:
-            del body['callback_url']
+            del body["callback_url"]
         # body = {k: v for k, v in body.items() if v}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
-        self.delete_key_for_a_developer_app(developer, resp.json()['credentials'][0]['consumerKey'])
+        self.delete_key_for_a_developer_app(
+            developer, resp.json()["credentials"][0]["consumerKey"]
+        )
         return self.get_developer_app_details(developer)
 
     def get_developer_app_details(self, developer):
@@ -165,14 +163,15 @@ class Apps(IApps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps/{self._app_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps/{self._app_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_developer_apps(self, developer, prefix=None, expand=False, count=100, startkey=''):
+    def list_developer_apps(
+        self, developer, prefix=None, expand=False, count=100, startkey=""
+    ):
         """Lists all apps created by a developer in an organization, and
         optionally provides an expanded view of the apps.
 
@@ -199,16 +198,15 @@ class Apps(IApps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps'
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps"
         if expand:
-            uri += f'?expand={expand}'
+            uri += f"?expand={expand}"
         else:
-            uri += f'?count={count}&startKey={startkey}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+            uri += f"?count={count}&startKey={startkey}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return AppsSerializer().serialize_details(resp, 'json', prefix=prefix)
+        return AppsSerializer().serialize_details(resp, "json", prefix=prefix)
 
     def delete_key_for_a_developer_app(self, developer, consumer_key):
         """Deletes a consumer key that belongs to an app, and removes all API
@@ -223,15 +221,23 @@ class Apps(IApps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps/{self._app_name}/keys/{consumer_key}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps/{self._app_name}/keys/{consumer_key}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def create_a_consumer_key_and_secret(self, developer, consumer_key=None, consumer_secret=None, key_length=32,
-                                         secret_length=32, key_suffix=None, key_delimiter='-', products=[]):
+    def create_a_consumer_key_and_secret(
+        self,
+        developer,
+        consumer_key=None,
+        consumer_secret=None,
+        key_length=32,
+        secret_length=32,
+        key_suffix=None,
+        key_delimiter="-",
+        products=[],
+    ):
         """Creates a custom consumer key and secret for a developer app.
 
         This is particularly useful if you want to migrate existing consumer
@@ -261,31 +267,35 @@ class Apps(IApps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps/{self._app_name}/keys/create'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps/{self._app_name}/keys/create"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         # app = self.get_developer_app_details(developer)
         if not consumer_key:
-            consumer_key = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(key_length))
+            consumer_key = "".join(
+                random.SystemRandom().choice(string.ascii_letters + string.digits)
+                for _ in range(key_length)
+            )
         if not consumer_secret:
-            consumer_secret = ''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(secret_length))
+            consumer_secret = "".join(
+                random.SystemRandom().choice(string.ascii_letters + string.digits)
+                for _ in range(secret_length)
+            )
         if key_suffix:
             consumer_key += key_delimiter
             consumer_key += key_suffix
-        body = {
-          "consumerKey": consumer_key,
-          "consumerSecret": consumer_secret
-        }
+        body = {"consumerKey": consumer_key, "consumerSecret": consumer_secret}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         if products:
             console.log(resp.text)
-            consumer_key = resp.json()['consumerKey']
-            request_body = json.dumps({ "apiProducts": products,
-              "attributes": resp.json()['attributes']
-            })
-            console.log('Adding API Products', products, 'to consumerKey', consumer_key)
+            consumer_key = resp.json()["consumerKey"]
+            request_body = json.dumps(
+                {"apiProducts": products, "attributes": resp.json()["attributes"]}
+            )
+            console.log("Adding API Products", products, "to consumerKey", consumer_key)
             return self.add_api_product_to_key(developer, consumer_key, request_body)
         return resp
 
@@ -304,10 +314,11 @@ class Apps(IApps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps/{self._app_name}/keys/{consumer_key}'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/developers/{developer}/apps/{self._app_name}/keys/{consumer_key}"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -328,22 +339,27 @@ class Apps(IApps):
         Returns:
             requests.Response()
         """
-        with open(file, 'r') as f:
+        with open(file, "r") as f:
             app = json.loads(f.read())
-        self._app_name = app['name']
+        self._app_name = app["name"]
         request_body = {}
-        request_body['name'] = app['name']
-        request_body['attributes'] = app.get('attributes')
-        request_body['scopes'] = app.get('scopes')
-        request_body['callbackUrl'] = app.get('callbackUrl')
+        request_body["name"] = app["name"]
+        request_body["attributes"] = app.get("attributes")
+        request_body["scopes"] = app.get("scopes")
+        request_body["callbackUrl"] = app.get("callbackUrl")
         request_body = {k: v for k, v in request_body.items() if v}
-        resp = self.create_developer_app(app['developerId'], json.dumps(request_body))
-        consumer_key = resp.json()['credentials'][0]['consumerKey']
-        self.delete_key_for_a_developer_app(app['developerId'], consumer_key)
-        if app['credentials']:
-            for cred in app['credentials']:
-                consumer_key = cred['consumerKey']
-                consumer_secret = cred['consumerSecret']
-                products = [product['apiproduct'] for product in cred['apiProducts']]
-                resp = self.create_a_consumer_key_and_secret(app['developerId'], consumer_key=consumer_key, consumer_secret=consumer_secret, products=products)
-        return self.get_developer_app_details(app['developerId'])
+        resp = self.create_developer_app(app["developerId"], json.dumps(request_body))
+        consumer_key = resp.json()["credentials"][0]["consumerKey"]
+        self.delete_key_for_a_developer_app(app["developerId"], consumer_key)
+        if app["credentials"]:
+            for cred in app["credentials"]:
+                consumer_key = cred["consumerKey"]
+                consumer_secret = cred["consumerSecret"]
+                products = [product["apiproduct"] for product in cred["apiProducts"]]
+                resp = self.create_a_consumer_key_and_secret(
+                    app["developerId"],
+                    consumer_key=consumer_key,
+                    consumer_secret=consumer_secret,
+                    products=products,
+                )
+        return self.get_developer_app_details(app["developerId"])

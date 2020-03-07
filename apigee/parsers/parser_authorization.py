@@ -7,13 +7,15 @@ from apigee.util import authorization, console, mfa_with_pyotp
 
 from apigee.util import console
 
-class ParserAuthorization:
 
+class ParserAuthorization:
     def __init__(self, parser, **kwargs):
         self._parser = parser
-        self._parser_auth = self._parser.add_parser('authorization', aliases=['auth'], help='check auth').add_subparsers()
-        self._parent_parser = kwargs.get('parent_parser', ParentParser())
-        self._file_parser = kwargs.get('file_parser', FileParser())
+        self._parser_auth = self._parser.add_parser(
+            "authorization", aliases=["auth"], help="check auth"
+        ).add_subparsers()
+        self._parent_parser = kwargs.get("parent_parser", ParentParser())
+        self._file_parser = kwargs.get("file_parser", FileParser())
         self._create_parser()
 
     @property
@@ -51,7 +53,7 @@ class ParserAuthorization:
     def __call__(self):
         return self._parser
 
-    def authorization_with_prefix(self, auth, name, file=None, key='name'):
+    def authorization_with_prefix(self, auth, name, file=None, key="name"):
         if file:
             with open(file) as f:
                 attr = json.loads(f.read())[key]
@@ -59,20 +61,52 @@ class ParserAuthorization:
         return authorization.with_prefix(name, auth)
 
     def _build_access_token_argument(self):
-        parser = self._parser_auth.add_parser('access', aliases=['access-token'], help='get access token', parents=[self._parent_parser()])
-        parser.set_defaults(func=lambda args: console.log(mfa_with_pyotp.get_access_token(args)))
+        parser = self._parser_auth.add_parser(
+            "access",
+            aliases=["access-token"],
+            help="get access token",
+            parents=[self._parent_parser()],
+        )
+        parser.set_defaults(
+            func=lambda args: console.log(mfa_with_pyotp.get_access_token(args))
+        )
 
     def _build_verify_resource_file_argument(self):
-        parser = self._parser_auth.add_parser('file', aliases=['verify-resource-file'], parents=[self._parent_parser(), self._file_parser()],
-            help='verify user has authorization to access resource with prefix in file')
-        parser.add_argument('-k', '--key', action='store', help='key of attribute with prefix to verify', required=False, default='name')
-        parser.set_defaults(func=lambda args: console.log(self.authorization_with_prefix(args, None, file=args.file, key=args.key)))
+        parser = self._parser_auth.add_parser(
+            "file",
+            aliases=["verify-resource-file"],
+            parents=[self._parent_parser(), self._file_parser()],
+            help="verify user has authorization to access resource with prefix in file",
+        )
+        parser.add_argument(
+            "-k",
+            "--key",
+            action="store",
+            help="key of attribute with prefix to verify",
+            required=False,
+            default="name",
+        )
+        parser.set_defaults(
+            func=lambda args: console.log(
+                self.authorization_with_prefix(args, None, file=args.file, key=args.key)
+            )
+        )
 
     def _build_verify_resource_name_argument(self):
-        parser = self._parser_auth.add_parser('name', aliases=['verify-resource-name'], parents=[self._parent_parser()],
-            help='verify user has authorization to access resource with prefix in name')
-        parser.add_argument('-n', '--name', help='name of resource with prefix to verify', required=True)
-        parser.set_defaults(func=lambda args: console.log(self.authorization_with_prefix(args, args.name)))
+        parser = self._parser_auth.add_parser(
+            "name",
+            aliases=["verify-resource-name"],
+            parents=[self._parent_parser()],
+            help="verify user has authorization to access resource with prefix in name",
+        )
+        parser.add_argument(
+            "-n", "--name", help="name of resource with prefix to verify", required=True
+        )
+        parser.set_defaults(
+            func=lambda args: console.log(
+                self.authorization_with_prefix(args, args.name)
+            )
+        )
 
     def _create_parser(self):
         self._build_access_token_argument()

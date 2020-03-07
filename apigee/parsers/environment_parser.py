@@ -1,7 +1,7 @@
 import argparse
 
-class EnvironmentParser:
 
+class EnvironmentParser:
     def __init__(self):
         self._parent_parser = argparse.ArgumentParser(add_help=False)
         self._create_parser()
@@ -18,7 +18,9 @@ class EnvironmentParser:
         return self._parent_parser
 
     def _build_environment_argument(self):
-        self._parent_parser.add_argument('-e', '--environment', help='environment', required=True)
+        self._parent_parser.add_argument(
+            "-e", "--environment", help="environment", required=True
+        )
 
     def _create_parser(self):
         self._build_environment_argument()

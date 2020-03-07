@@ -1,2 +1,2 @@
 def isempty(s):
-    return s == '' or s.isspace()
+    return s == "" or s.isspace()

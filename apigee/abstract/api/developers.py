@@ -4,8 +4,8 @@
 import json
 from abc import ABC, abstractmethod
 
-class IDevelopers:
 
+class IDevelopers:
     def __init__(self, auth, org_name, developer_email):
         self._auth = auth
         self._org_name = org_name
@@ -39,7 +39,9 @@ class IDevelopers:
         pass
 
     @abstractmethod
-    def create_developer(self, first_name, last_name, user_name, attributes='{"attributes" : [ ]}'):
+    def create_developer(
+        self, first_name, last_name, user_name, attributes='{"attributes" : [ ]}'
+    ):
         pass
 
     @abstractmethod
@@ -86,17 +88,20 @@ class IDevelopers:
     def update_all_developer_attributes(self, request_body):
         pass
 
+
 class DevelopersSerializer:
     def serialize_details(self, developers, format, prefix=None):
         resp = developers
-        if format == 'text':
+        if format == "text":
             return developers.text
         developers = developers.json()
         if prefix:
-            developers = [developer for developer in developers if developer.startswith(prefix)]
-        if format == 'json':
+            developers = [
+                developer for developer in developers if developer.startswith(prefix)
+            ]
+        if format == "json":
             return json.dumps(developers)
-        elif format == 'table':
+        elif format == "table":
             pass
         # else:
         #     raise ValueError(format)

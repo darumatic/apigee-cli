@@ -1,13 +1,17 @@
 from os.path import dirname, basename, isfile, join
 import glob
+
 modules = glob.glob(join(dirname(__file__), "*.py"))
-__all__ = [basename(f)[:-3] for f in modules if isfile(f) and not f.endswith('__init__.py')]
+__all__ = [
+    basename(f)[:-3] for f in modules if isfile(f) and not f.endswith("__init__.py")
+]
 
 import functools
 import inspect
 import sys
 
 import apigee
+
 
 def envvar_exists(envvar):
     def actual_decorator(func):
@@ -16,8 +20,11 @@ def envvar_exists(envvar):
             if getattr(apigee, envvar) is not None:
                 result = func(*args, **kwargs)
                 return result
+
         return wrapper
+
     return actual_decorator
+
 
 # https://stackoverflow.com/a/15813469
 module = sys.modules[__name__]

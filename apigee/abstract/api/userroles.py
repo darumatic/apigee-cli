@@ -3,8 +3,8 @@
 
 from abc import ABC, abstractmethod
 
-class IUserroles:
 
+class IUserroles:
     def __init__(self, auth, org_name, role_name):
         self._auth = auth
         self._org_name = org_name
@@ -70,7 +70,7 @@ class IUserroles:
         pass
 
     @abstractmethod
-    def get_resource_permissions_for_a_specific_role(self, resource_path=''):
+    def get_resource_permissions_for_a_specific_role(self, resource_path=""):
         pass
 
     @abstractmethod
@@ -90,7 +90,9 @@ class IUserroles:
         pass
 
     @abstractmethod
-    def verify_a_user_roles_permission_on_a_specific_RBAC_resource(self, permission, resource_path):
+    def verify_a_user_roles_permission_on_a_specific_RBAC_resource(
+        self, permission, resource_path
+    ):
         pass
 
     @abstractmethod

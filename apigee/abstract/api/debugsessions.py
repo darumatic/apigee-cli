@@ -3,8 +3,8 @@
 
 from abc import ABC, abstractmethod
 
-class IDebugsessions:
 
+class IDebugsessions:
     def __init__(self, auth, org_name):
         self._auth = auth
         self._org_name = org_name
@@ -29,11 +29,21 @@ class IDebugsessions:
         self._org_name = value
 
     @abstractmethod
-    def create_a_debug_session(self, environment, api_name, revision_number, session_name, timeout=600, filter=''):
+    def create_a_debug_session(
+        self,
+        environment,
+        api_name,
+        revision_number,
+        session_name,
+        timeout=600,
+        filter="",
+    ):
         pass
 
     @abstractmethod
-    def delete_debug_session(self, environment, api_name, revision_number, session_name):
+    def delete_debug_session(
+        self, environment, api_name, revision_number, session_name
+    ):
         pass
 
     @abstractmethod
@@ -41,24 +51,29 @@ class IDebugsessions:
         pass
 
     @abstractmethod
-    def get_debug_session_transaction_IDs(self, environment, api_name, revision_number, session_name):
+    def get_debug_session_transaction_IDs(
+        self, environment, api_name, revision_number, session_name
+    ):
         pass
 
     @abstractmethod
-    def get_debug_session_transaction_data(self, environment, api_name, revision_number, session_name, transaction_id):
+    def get_debug_session_transaction_data(
+        self, environment, api_name, revision_number, session_name, transaction_id
+    ):
         pass
+
 
 class DebugsessionsSerializer:
     def serialize_details(self, sessions, format, prefix=None):
         resp = sessions
-        if format == 'text':
+        if format == "text":
             return sessions.text
         sessions = sessions.json()
         if prefix:
             sessions = [api for api in sessions if api.startswith(prefix)]
-        if format == 'json':
+        if format == "json":
             return json.dumps(sessions)
-        elif format == 'table':
+        elif format == "table":
             pass
         # else:
         #     raise ValueError(format)

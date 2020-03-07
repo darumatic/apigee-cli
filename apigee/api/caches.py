@@ -19,8 +19,8 @@ from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.caches import ICaches, CachesSerializer
 from apigee.util import authorization, console
 
-class Caches(ICaches):
 
+class Caches(ICaches):
     def __init__(self, *args, **kwargs):
         """Caches constructor
 
@@ -45,10 +45,11 @@ class Caches(ICaches):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches/{self._cache_name}/entries?action=clear'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/octet-stream'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches/{self._cache_name}/entries?action=clear"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/octet-stream"},
+            self._auth,
+        )
         resp = requests.post(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -64,10 +65,11 @@ class Caches(ICaches):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches/{self._cache_name}/entries/{entry}?action=clear'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/octet-stream'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches/{self._cache_name}/entries/{entry}?action=clear"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/octet-stream"},
+            self._auth,
+        )
         resp = requests.post(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -82,10 +84,11 @@ class Caches(ICaches):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches?name={self._cache_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches?name={self._cache_name}"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -103,9 +106,8 @@ class Caches(ICaches):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches/{self._cache_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches/{self._cache_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -121,12 +123,11 @@ class Caches(ICaches):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return CachesSerializer().serialize_details(resp, 'json', prefix=prefix)
+        return CachesSerializer().serialize_details(resp, "json", prefix=prefix)
 
     def update_a_cache_in_an_environment(self, environment, request_body):
         """Updates a cache in an environment.
@@ -144,10 +145,11 @@ class Caches(ICaches):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches/{self._cache_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches/{self._cache_name}"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -162,9 +164,8 @@ class Caches(ICaches):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches/{self._cache_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/caches/{self._cache_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -189,15 +190,17 @@ class Caches(ICaches):
             body = f.read()
 
         cache = json.loads(body)
-        self._cache_name = cache['name']
+        self._cache_name = cache["name"]
 
         try:
             self.get_information_about_a_cache(environment)
-            console.log('Updating', self._cache_name)
+            console.log("Updating", self._cache_name)
             console.log(self.update_a_cache_in_an_environment(environment, body).text)
         except HTTPError as e:
             if e.response.status_code == 404:
-                console.log('Creating', self._cache_name)
-                console.log(self.create_a_cache_in_an_environment(environment, body).text)
+                console.log("Creating", self._cache_name)
+                console.log(
+                    self.create_a_cache_in_an_environment(environment, body).text
+                )
             else:
                 raise e

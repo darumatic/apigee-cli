@@ -4,8 +4,8 @@
 import json
 from abc import ABC, abstractmethod
 
-class ICaches:
 
+class ICaches:
     def __init__(self, auth, org_name, cache_name):
         self._auth = auth
         self._org_name = org_name
@@ -70,17 +70,18 @@ class ICaches:
     def push_cache(self, environment, file):
         pass
 
+
 class CachesSerializer:
     def serialize_details(self, caches, format, prefix=None):
         resp = caches
-        if format == 'text':
+        if format == "text":
             return caches.text
         caches = caches.json()
         if prefix:
             caches = [cache for cache in caches if cache.startswith(prefix)]
-        if format == 'json':
+        if format == "json":
             return json.dumps(caches)
-        elif format == 'table':
+        elif format == "table":
             pass
         # else:
         #     raise ValueError(format)

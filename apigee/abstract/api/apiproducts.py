@@ -4,8 +4,8 @@
 import json
 from abc import ABC, abstractmethod
 
-class IApiproducts:
 
+class IApiproducts:
     def __init__(self, auth, org_name, apiproduct_name):
         self._auth = auth
         self._org_name = org_name
@@ -51,7 +51,7 @@ class IApiproducts:
         pass
 
     @abstractmethod
-    def list_api_products(self, prefix=None, expand=False, count=1000, startkey=''):
+    def list_api_products(self, prefix=None, expand=False, count=1000, startkey=""):
         pass
 
     @abstractmethod
@@ -62,17 +62,22 @@ class IApiproducts:
     def push_apiproducts(self, file):
         pass
 
+
 class ApiproductsSerializer:
     def serialize_details(self, apiproducts, format, prefix=None):
         resp = apiproducts
-        if format == 'text':
+        if format == "text":
             return apiproducts.text
         apiproducts = apiproducts.json()
         if prefix:
-            apiproducts = [apiproduct for apiproduct in apiproducts if apiproduct.startswith(prefix)]
-        if format == 'json':
+            apiproducts = [
+                apiproduct
+                for apiproduct in apiproducts
+                if apiproduct.startswith(prefix)
+            ]
+        if format == "json":
             return json.dumps(apiproducts)
-        elif format == 'table':
+        elif format == "table":
             pass
         # else:
         #     raise ValueError(format)

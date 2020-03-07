@@ -4,8 +4,8 @@
 import json
 from abc import ABC, abstractmethod
 
-class ITargetservers:
 
+class ITargetservers:
     def __init__(self, auth, org_name, targetserver_name):
         self._auth = auth
         self._org_name = org_name
@@ -62,17 +62,22 @@ class ITargetservers:
     def push_targetserver(self, environment, file):
         pass
 
+
 class TargetserversSerializer:
     def serialize_details(self, targetservers, format, prefix=None):
         resp = targetservers
-        if format == 'text':
+        if format == "text":
             return targetservers.text
         targetservers = targetservers.json()
         if prefix:
-            targetservers = [targetserver for targetserver in targetservers if targetserver.startswith(prefix)]
-        if format == 'json':
+            targetservers = [
+                targetserver
+                for targetserver in targetservers
+                if targetserver.startswith(prefix)
+            ]
+        if format == "json":
             return json.dumps(targetservers)
-        elif format == 'table':
+        elif format == "table":
             pass
         # else:
         #     raise ValueError(format)

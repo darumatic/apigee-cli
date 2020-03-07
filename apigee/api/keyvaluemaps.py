@@ -16,8 +16,8 @@ from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.keyvaluemaps import IKeyvaluemaps, KeyvaluemapsSerializer
 from apigee.util import authorization, console
 
-class Keyvaluemaps(IKeyvaluemaps):
 
+class Keyvaluemaps(IKeyvaluemaps):
     def __init__(self, *args, **kwargs):
         """Keyvaluemaps constructor
 
@@ -53,10 +53,11 @@ class Keyvaluemaps(IKeyvaluemaps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -72,9 +73,8 @@ class Keyvaluemaps(IKeyvaluemaps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -90,9 +90,8 @@ class Keyvaluemaps(IKeyvaluemaps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}/entries/{entry_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}/entries/{entry_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -112,14 +111,15 @@ class Keyvaluemaps(IKeyvaluemaps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def get_a_keys_value_in_an_environment_scoped_keyvaluemap(self, environment, entry_name):
+    def get_a_keys_value_in_an_environment_scoped_keyvaluemap(
+        self, environment, entry_name
+    ):
         """Gets the value of a key in an environment-scoped KeyValueMap (KVM).
 
         Args:
@@ -129,9 +129,8 @@ class Keyvaluemaps(IKeyvaluemaps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}/entries/{entry_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}/entries/{entry_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -150,12 +149,11 @@ class Keyvaluemaps(IKeyvaluemaps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return KeyvaluemapsSerializer().serialize_details(resp, 'json', prefix=prefix)
+        return KeyvaluemapsSerializer().serialize_details(resp, "json", prefix=prefix)
 
     def update_keyvaluemap_in_an_environment(self, environment, request_body):
         """Updates an existing KeyValueMap in an environment.
@@ -177,16 +175,19 @@ class Keyvaluemaps(IKeyvaluemaps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
 
-    def create_an_entry_in_an_environment_scoped_kvm(self, environment, entry_name, entry_value):
+    def create_an_entry_in_an_environment_scoped_kvm(
+        self, environment, entry_name, entry_value
+    ):
         """Creates an entry in an existing KeyValueMap scoped to an environment.
 
         Note: This API is supported for Apigee Edge for the Public Cloud only.
@@ -201,19 +202,19 @@ class Keyvaluemaps(IKeyvaluemaps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}/entries'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
-        body = {
-          'name' : entry_name,
-          'value' : entry_value
-        }
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}/entries"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
+        body = {"name": entry_name, "value": entry_value}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
 
-    def update_an_entry_in_an_environment_scoped_kvm(self, environment, entry_name, updated_value):
+    def update_an_entry_in_an_environment_scoped_kvm(
+        self, environment, entry_name, updated_value
+    ):
         """Updates an entry in a KeyValueMap scoped to an environment.
 
         Note: This API is supported for Apigee Edge for the Public Cloud only.
@@ -234,19 +235,19 @@ class Keyvaluemaps(IKeyvaluemaps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}/entries/{entry_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
-        body = {
-          'name' : entry_name,
-          'value' : updated_value
-        }
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}/entries/{entry_name}"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
+        body = {"name": entry_name, "value": updated_value}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
 
-    def list_keys_in_an_environment_scoped_keyvaluemap(self, environment, startkey, count):
+    def list_keys_in_an_environment_scoped_keyvaluemap(
+        self, environment, startkey, count
+    ):
         """Lists keys in a KeyValueMap scoped to an environment.
 
         Note: This API is supported for Apigee Edge for the Public Cloud only.
@@ -263,9 +264,8 @@ class Keyvaluemaps(IKeyvaluemaps):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}/keys?startkey={startkey}&count={count}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/keyvaluemaps/{self._map_name}/keys?startkey={startkey}&count={count}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         # return KeyvaluemapsSerializer().serialize_details(resp, 'json', prefix=prefix)
@@ -292,30 +292,46 @@ class Keyvaluemaps(IKeyvaluemaps):
             body = f.read()
 
         kvm = json.loads(body)
-        self._map_name = kvm['name']
+        self._map_name = kvm["name"]
 
         try:
-            keyvaluemap_in_an_environment = self.get_keyvaluemap_in_an_environment(environment).json()
-            keys = [entry['name'] for entry in kvm['entry']]
-            deleted = [entry for entry in keyvaluemap_in_an_environment['entry'] if entry['name'] not in keys]
-            console.log('Updating entries in', self._map_name)
-            for idx, entry in enumerate(tqdm(kvm['entry'])):
-                if entry not in keyvaluemap_in_an_environment['entry']:
+            keyvaluemap_in_an_environment = self.get_keyvaluemap_in_an_environment(
+                environment
+            ).json()
+            keys = [entry["name"] for entry in kvm["entry"]]
+            deleted = [
+                entry
+                for entry in keyvaluemap_in_an_environment["entry"]
+                if entry["name"] not in keys
+            ]
+            console.log("Updating entries in", self._map_name)
+            for idx, entry in enumerate(tqdm(kvm["entry"])):
+                if entry not in keyvaluemap_in_an_environment["entry"]:
                     try:
-                        self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry['name'])
-                        self.update_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
+                        self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(
+                            environment, entry["name"]
+                        )
+                        self.update_an_entry_in_an_environment_scoped_kvm(
+                            environment, entry["name"], entry["value"]
+                        )
                     except HTTPError as e:
                         if e.response.status_code == 404:
-                            self.create_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
+                            self.create_an_entry_in_an_environment_scoped_kvm(
+                                environment, entry["name"], entry["value"]
+                            )
                         else:
                             raise e
             if deleted:
-                console.log('Deleting entries in', self._map_name)
+                console.log("Deleting entries in", self._map_name)
                 for idx, entry in enumerate(tqdm(deleted)):
-                    self.delete_keyvaluemap_entry_in_an_environment(environment, entry['name'])
+                    self.delete_keyvaluemap_entry_in_an_environment(
+                        environment, entry["name"]
+                    )
         except HTTPError as e:
             if e.response.status_code == 404:
-                console.log('Creating', self._map_name)
-                console.log(self.create_keyvaluemap_in_an_environment(environment, body).text)
+                console.log("Creating", self._map_name)
+                console.log(
+                    self.create_keyvaluemap_in_an_environment(environment, body).text
+                )
             else:
                 raise e

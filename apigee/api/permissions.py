@@ -11,8 +11,8 @@ from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.permissions import IPermissions, PermissionsSerializer
 from apigee.util import authorization, console
 
-class Permissions(IPermissions):
 
+class Permissions(IPermissions):
     def __init__(self, *args, **kwargs):
         """Permissions constructor
 
@@ -34,16 +34,19 @@ class Permissions(IPermissions):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/userroles/{self._role_name}/resourcepermissions'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/userroles/{self._role_name}/resourcepermissions"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
 
-    def team_permissions(self, template_file, placeholder_key=None, placeholder_value=''):
+    def team_permissions(
+        self, template_file, placeholder_key=None, placeholder_value=""
+    ):
         """Creates permissions for a role using a template file.
 
         Args:
@@ -58,21 +61,26 @@ class Permissions(IPermissions):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/userroles/{self._role_name}/resourcepermissions'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/userroles/{self._role_name}/resourcepermissions"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         with open(template_file) as f:
             body = json.loads(f.read())
         if placeholder_key:
-            for idx, resource_permission in enumerate(body['resourcePermission']):
-                path = resource_permission['path']
-                body['resourcePermission'][idx]['path'] = path.replace(placeholder_key, placeholder_value)
+            for idx, resource_permission in enumerate(body["resourcePermission"]):
+                path = resource_permission["path"]
+                body["resourcePermission"][idx]["path"] = path.replace(
+                    placeholder_key, placeholder_value
+                )
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
 
-    def get_permissions(self, formatted=False, format='text', showindex=False, tablefmt='plain'):
+    def get_permissions(
+        self, formatted=False, format="text", showindex=False, tablefmt="plain"
+    ):
         """Gets permissions for a role.
 
         Args:
@@ -88,11 +96,12 @@ class Permissions(IPermissions):
             requests.Response(): Response if ``formatted`` is False, else return
             a ``formatted`` value.
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/o/{self._org_name}/userroles/{self._role_name}/permissions'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/o/{self._org_name}/userroles/{self._role_name}/permissions"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         if formatted:
-            return PermissionsSerializer().serialize_details(resp, format, showindex=showindex, tablefmt=tablefmt)
+            return PermissionsSerializer().serialize_details(
+                resp, format, showindex=showindex, tablefmt=tablefmt
+            )
         return resp

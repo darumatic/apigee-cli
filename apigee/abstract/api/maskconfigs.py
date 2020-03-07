@@ -4,8 +4,8 @@
 import json
 from abc import ABC, abstractmethod
 
-class IMaskconfigs:
 
+class IMaskconfigs:
     def __init__(self, auth, org_name, api_name):
         self._auth = auth
         self._org_name = org_name
@@ -62,17 +62,22 @@ class IMaskconfigs:
     def push_data_masks_for_an_api_proxy(self, file):
         pass
 
+
 class MaskconfigsSerializer:
     def serialize_details(self, maskconfigs, format, prefix=None):
         resp = maskconfigs
-        if format == 'text':
+        if format == "text":
             return maskconfigs.text
         maskconfigs = maskconfigs.json()
         if prefix:
-            maskconfigs = [maskconfig for maskconfig in maskconfigs if maskconfig.startswith(prefix)]
-        if format == 'json':
+            maskconfigs = [
+                maskconfig
+                for maskconfig in maskconfigs
+                if maskconfig.startswith(prefix)
+            ]
+        if format == "json":
             return json.dumps(maskconfigs)
-        elif format == 'table':
+        elif format == "table":
             pass
         # else:
         #     raise ValueError(format)

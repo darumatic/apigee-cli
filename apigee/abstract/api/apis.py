@@ -10,7 +10,6 @@ from pathlib import Path
 
 
 class IApis:
-
     def __init__(self, auth, org_name):
         self._auth = auth
         self._org_name = org_name
@@ -39,7 +38,9 @@ class IApis:
         pass
 
     @abstractmethod
-    def deploy_api_proxy_revision(self, api_name, environment, revision_number, delay=0, override=False):
+    def deploy_api_proxy_revision(
+        self, api_name, environment, revision_number, delay=0, override=False
+    ):
         pass
 
     @abstractmethod
@@ -74,14 +75,14 @@ class IApis:
 class ApisSerializer:
     def serialize_details(self, apis, format, prefix=None):
         resp = apis
-        if format == 'text':
+        if format == "text":
             return apis.text
         apis = apis.json()
         if prefix:
             apis = [api for api in apis if api.startswith(prefix)]
-        if format == 'json':
+        if format == "json":
             return json.dumps(apis)
-        elif format == 'table':
+        elif format == "table":
             pass
         # else:
         #     raise ValueError(format)
@@ -89,7 +90,6 @@ class ApisSerializer:
 
 
 class IPull:
-
     def __init__(self, auth, org_name, revision_number, environment, work_tree=None):
         self._auth = auth
         self._org_name = org_name
@@ -101,10 +101,14 @@ class IPull:
             self._work_tree = os.getcwd()
         self._revision_number = revision_number
         self._environment = environment
-        self._keyvaluemaps_dir = str(Path(self._work_tree) / 'keyvaluemaps' / environment)
-        self._targetservers_dir = str(Path(self._work_tree) / 'targetservers' / environment)
+        self._keyvaluemaps_dir = str(
+            Path(self._work_tree) / "keyvaluemaps" / environment
+        )
+        self._targetservers_dir = str(
+            Path(self._work_tree) / "targetservers" / environment
+        )
         self._apiproxy_dir = str(Path(self._work_tree) / api_name)
-        self._zip_file = str(Path(self._apiproxy_dir).with_suffix('.zip'))
+        self._zip_file = str(Path(self._apiproxy_dir).with_suffix(".zip"))
 
     def __call__(self, *args, **kwargs):
         self.pull(*args, **kwargs)
@@ -198,7 +202,9 @@ class IPull:
         pass
 
     @abstractmethod
-    def export_targetserver_dependencies(self, environment, target_servers, force=False):
+    def export_targetserver_dependencies(
+        self, environment, target_servers, force=False
+    ):
         pass
 
     @abstractmethod

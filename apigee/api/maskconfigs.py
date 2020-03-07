@@ -26,8 +26,8 @@ from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.maskconfigs import IMaskconfigs
 from apigee.util import authorization, console
 
-class Maskconfigs(IMaskconfigs):
 
+class Maskconfigs(IMaskconfigs):
     def __init__(self, *args, **kwargs):
         """Maskconfigs constructor
 
@@ -49,10 +49,11 @@ class Maskconfigs(IMaskconfigs):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -67,9 +68,8 @@ class Maskconfigs(IMaskconfigs):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs/{maskconfig_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs/{maskconfig_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -83,9 +83,8 @@ class Maskconfigs(IMaskconfigs):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs/{maskconfig_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs/{maskconfig_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -99,9 +98,8 @@ class Maskconfigs(IMaskconfigs):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/apis/{self._api_name}/maskconfigs"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -115,9 +113,8 @@ class Maskconfigs(IMaskconfigs):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/maskconfigs'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/maskconfigs"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -142,15 +139,15 @@ class Maskconfigs(IMaskconfigs):
             body = f.read()
 
         maskconfig = json.loads(body)
-        maskconfig_name = maskconfig['name']
+        maskconfig_name = maskconfig["name"]
 
         try:
             self.get_data_mask_details_for_an_api_proxy(maskconfig_name)
-            console.log('Updating', maskconfig_name, 'for', self._api_name)
+            console.log("Updating", maskconfig_name, "for", self._api_name)
             console.log(self.create_data_masks_for_an_api_proxy(body).text)
         except HTTPError as e:
             if e.response.status_code == 404:
-                console.log('Creating', maskconfig_name, 'for', self._api_name)
+                console.log("Creating", maskconfig_name, "for", self._api_name)
                 console.log(self.create_data_masks_for_an_api_proxy(body).text)
             else:
                 raise e

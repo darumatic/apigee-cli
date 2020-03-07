@@ -19,8 +19,8 @@ from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.targetservers import ITargetservers, TargetserversSerializer
 from apigee.util import authorization, console
 
-class Targetservers(ITargetservers):
 
+class Targetservers(ITargetservers):
     def __init__(self, *args, **kwargs):
         """Targetservers constructor
 
@@ -43,10 +43,11 @@ class Targetservers(ITargetservers):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/targetservers'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/targetservers"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -61,9 +62,8 @@ class Targetservers(ITargetservers):
         Returns:
             requests.Response(): Information about the deleted TargetServer.
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/targetservers/{self._targetserver_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/targetservers/{self._targetserver_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -79,12 +79,11 @@ class Targetservers(ITargetservers):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/targetservers'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/targetservers"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return TargetserversSerializer().serialize_details(resp, 'json', prefix=prefix)
+        return TargetserversSerializer().serialize_details(resp, "json", prefix=prefix)
 
     def get_targetserver(self, environment):
         """Returns a TargetServer definition.
@@ -95,9 +94,8 @@ class Targetservers(ITargetservers):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/targetservers/{self._targetserver_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/targetservers/{self._targetserver_name}"
+        hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -120,10 +118,11 @@ class Targetservers(ITargetservers):
         Returns:
             requests.Response()
         """
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/targetservers/{self._targetserver_name}'
-        hdrs = authorization.set_header({'Accept': 'application/json',
-                                         'Content-Type': 'application/json'},
-                                        self._auth)
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/environments/{environment}/targetservers/{self._targetserver_name}"
+        hdrs = authorization.set_header(
+            {"Accept": "application/json", "Content-Type": "application/json"},
+            self._auth,
+        )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -150,15 +149,15 @@ class Targetservers(ITargetservers):
             body = f.read()
 
         targetserver = json.loads(body)
-        self._targetserver_name = targetserver['name']
+        self._targetserver_name = targetserver["name"]
 
         try:
             self.get_targetserver(environment)
-            console.log('Updating', self._targetserver_name)
+            console.log("Updating", self._targetserver_name)
             console.log(self.update_a_targetserver(environment, body).text)
         except HTTPError as e:
             if e.response.status_code == 404:
-                console.log('Creating', self._targetserver_name)
+                console.log("Creating", self._targetserver_name)
                 console.log(self.create_a_targetserver(environment, body).text)
             else:
                 raise e
