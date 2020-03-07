@@ -11,7 +11,7 @@ Documentation: `The Apigee Management API command-line interface documentation`_
 ::
 
     usage: apigee [-h] [-V]
-                  {authorization,auth,configure,apis,deployments,deps,keyvaluemaps,kvms,developers,devs,apps,products,prods,targetservers,ts,maskconfigs,masks,permissions,perms,userroles,roles,caches}
+                  {authorization,auth,configure,apis,deployments,deps,keyvaluemaps,kvms,developers,devs,apps,products,prods,targetservers,ts,maskconfigs,masks,permissions,perms,userroles,roles,caches,debug,trace,debugsessions}
                   ...
 
 
