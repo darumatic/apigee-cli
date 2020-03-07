@@ -1,5 +1,5 @@
-Setting up your Apigee credentials
-==================================
+auth
+====
 
 The API modules read Apigee credentials from a single object that can be defined
 as follows::

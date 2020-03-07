@@ -92,6 +92,14 @@ apigee.parsers.parser\_configure module
    :undoc-members:
    :show-inheritance:
 
+apigee.parsers.parser\_debugsessions module
+-------------------------------------------
+
+.. automodule:: apigee.parsers.parser_debugsessions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.parsers.parser\_deployments module
 -----------------------------------------
 

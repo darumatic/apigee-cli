@@ -36,6 +36,14 @@ apigee.api.caches module
    :undoc-members:
    :show-inheritance:
 
+apigee.api.debugsessions module
+-------------------------------
+
+.. automodule:: apigee.api.debugsessions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.api.deploy module
 ------------------------
 

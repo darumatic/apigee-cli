@@ -20,6 +20,14 @@ apigee.util.configure module
    :undoc-members:
    :show-inheritance:
 
+apigee.util.console module
+--------------------------
+
+.. automodule:: apigee.util.console
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.util.exceptions module
 -----------------------------
 

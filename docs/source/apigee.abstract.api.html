@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>apigee.abstract.api package &mdash; apigee-cli 0.29.1 documentation</title>
+  <title>apigee.abstract.api package &mdash; apigee-cli 0.30.0 documentation</title>
   
 
   
@@ -87,7 +87,7 @@
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../auth.html">Setting up your Apigee credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auth.html">auth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="apigee.api.html">apigee.api package</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">apigee.abstract.api package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
@@ -95,6 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.abstract.api.apis">apigee.abstract.api.apis module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.abstract.api.apps">apigee.abstract.api.apps module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.abstract.api.caches">apigee.abstract.api.caches module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.abstract.api.debugsessions">apigee.abstract.api.debugsessions module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.abstract.api.deployments">apigee.abstract.api.deployments module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.abstract.api.developers">apigee.abstract.api.developers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.abstract.api.keyvaluemaps">apigee.abstract.api.keyvaluemaps module</a></li>
@@ -264,13 +265,8 @@
 
 <dl class="class">
 <dt id="apigee.abstract.api.apis.IApis">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.abstract.api.apis.</code><code class="sig-name descname">IApis</code><span class="sig-paren">(</span><em class="sig-param">auth</em>, <em class="sig-param">org_name</em>, <em class="sig-param">api_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.abstract.api.apis.</code><code class="sig-name descname">IApis</code><span class="sig-paren">(</span><em class="sig-param">auth</em>, <em class="sig-param">org_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="apigee.abstract.api.apis.IApis.api_name">
-<em class="property">property </em><code class="sig-name descname">api_name</code><a class="headerlink" href="#apigee.abstract.api.apis.IApis.api_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IApis.auth">
 <em class="property">property </em><code class="sig-name descname">auth</code><a class="headerlink" href="#apigee.abstract.api.apis.IApis.auth" title="Permalink to this definition">¶</a></dt>
@@ -278,32 +274,32 @@
 
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IApis.delete_api_proxy_revision">
-<em class="property">abstract </em><code class="sig-name descname">delete_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.delete_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">delete_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.delete_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IApis.delete_undeployed_revisions">
-<em class="property">abstract </em><code class="sig-name descname">delete_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param">save_last=0</em>, <em class="sig-param">dry_run=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.delete_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">delete_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">save_last=0</em>, <em class="sig-param">dry_run=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.delete_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IApis.deploy_api_proxy_revision">
-<em class="property">abstract </em><code class="sig-name descname">deploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">delay=0</em>, <em class="sig-param">override=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.deploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">deploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">environment</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">delay=0</em>, <em class="sig-param">override=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.deploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IApis.export_api_proxy">
-<em class="property">abstract </em><code class="sig-name descname">export_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">revision_number</em>, <em class="sig-param">writezip=True</em>, <em class="sig-param">output_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.export_api_proxy" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">export_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">write=True</em>, <em class="sig-param">output_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.export_api_proxy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IApis.force_undeploy_api_proxy_revision">
-<em class="property">abstract </em><code class="sig-name descname">force_undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.force_undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">force_undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">environment</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.force_undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IApis.get_api_proxy">
-<em class="property">abstract </em><code class="sig-name descname">get_api_proxy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.get_api_proxy" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">get_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">api_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.get_api_proxy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -313,7 +309,7 @@
 
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IApis.list_api_proxy_revisions">
-<em class="property">abstract </em><code class="sig-name descname">list_api_proxy_revisions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.list_api_proxy_revisions" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">list_api_proxy_revisions</code><span class="sig-paren">(</span><em class="sig-param">api_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.list_api_proxy_revisions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -323,20 +319,15 @@
 
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IApis.undeploy_api_proxy_revision">
-<em class="property">abstract </em><code class="sig-name descname">undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">environment</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IApis.undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="apigee.abstract.api.apis.IPull">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.abstract.api.apis.</code><code class="sig-name descname">IPull</code><span class="sig-paren">(</span><em class="sig-param">auth</em>, <em class="sig-param">org_name</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">environment</em>, <em class="sig-param">work_tree=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IPull" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.abstract.api.apis.</code><code class="sig-name descname">IPull</code><span class="sig-paren">(</span><em class="sig-param">auth</em>, <em class="sig-param">org_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">environment</em>, <em class="sig-param">work_tree=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IPull" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="apigee.abstract.api.apis.IPull.api_name">
-<em class="property">property </em><code class="sig-name descname">api_name</code><a class="headerlink" href="#apigee.abstract.api.apis.IPull.api_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IPull.apiproxy_dir">
 <em class="property">property </em><code class="sig-name descname">apiproxy_dir</code><a class="headerlink" href="#apigee.abstract.api.apis.IPull.apiproxy_dir" title="Permalink to this definition">¶</a></dt>
@@ -399,7 +390,7 @@
 
 <dl class="method">
 <dt id="apigee.abstract.api.apis.IPull.pull">
-<em class="property">abstract </em><code class="sig-name descname">pull</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">dependencies=[]</em>, <em class="sig-param">force=False</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">basepath=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IPull.pull" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">pull</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">dependencies=[]</em>, <em class="sig-param">force=False</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">basepath=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.apis.IPull.pull" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -583,6 +574,62 @@
 <dl class="method">
 <dt id="apigee.abstract.api.caches.ICaches.update_a_cache_in_an_environment">
 <em class="property">abstract </em><code class="sig-name descname">update_a_cache_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.caches.ICaches.update_a_cache_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.abstract.api.debugsessions">
+<span id="apigee-abstract-api-debugsessions-module"></span><h2>apigee.abstract.api.debugsessions module<a class="headerlink" href="#module-apigee.abstract.api.debugsessions" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://apidocs.apigee.com/api/debug-sessions">https://apidocs.apigee.com/api/debug-sessions</a></p>
+<dl class="class">
+<dt id="apigee.abstract.api.debugsessions.DebugsessionsSerializer">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.abstract.api.debugsessions.</code><code class="sig-name descname">DebugsessionsSerializer</code><a class="headerlink" href="#apigee.abstract.api.debugsessions.DebugsessionsSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="apigee.abstract.api.debugsessions.DebugsessionsSerializer.serialize_details">
+<code class="sig-name descname">serialize_details</code><span class="sig-paren">(</span><em class="sig-param">sessions</em>, <em class="sig-param">format</em>, <em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.debugsessions.DebugsessionsSerializer.serialize_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apigee.abstract.api.debugsessions.IDebugsessions">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.abstract.api.debugsessions.</code><code class="sig-name descname">IDebugsessions</code><span class="sig-paren">(</span><em class="sig-param">auth</em>, <em class="sig-param">org_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.debugsessions.IDebugsessions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="apigee.abstract.api.debugsessions.IDebugsessions.auth">
+<em class="property">property </em><code class="sig-name descname">auth</code><a class="headerlink" href="#apigee.abstract.api.debugsessions.IDebugsessions.auth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.abstract.api.debugsessions.IDebugsessions.create_a_debug_session">
+<em class="property">abstract </em><code class="sig-name descname">create_a_debug_session</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em>, <em class="sig-param">timeout=600</em>, <em class="sig-param">filter=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.debugsessions.IDebugsessions.create_a_debug_session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.abstract.api.debugsessions.IDebugsessions.delete_debug_session">
+<em class="property">abstract </em><code class="sig-name descname">delete_debug_session</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.debugsessions.IDebugsessions.delete_debug_session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.abstract.api.debugsessions.IDebugsessions.get_debug_session_transaction_IDs">
+<em class="property">abstract </em><code class="sig-name descname">get_debug_session_transaction_IDs</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.debugsessions.IDebugsessions.get_debug_session_transaction_IDs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.abstract.api.debugsessions.IDebugsessions.get_debug_session_transaction_data">
+<em class="property">abstract </em><code class="sig-name descname">get_debug_session_transaction_data</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em>, <em class="sig-param">transaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.debugsessions.IDebugsessions.get_debug_session_transaction_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.abstract.api.debugsessions.IDebugsessions.list_debug_sessions">
+<em class="property">abstract </em><code class="sig-name descname">list_debug_sessions</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.abstract.api.debugsessions.IDebugsessions.list_debug_sessions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apigee.abstract.api.debugsessions.IDebugsessions.org_name">
+<em class="property">property </em><code class="sig-name descname">org_name</code><a class="headerlink" href="#apigee.abstract.api.debugsessions.IDebugsessions.org_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
