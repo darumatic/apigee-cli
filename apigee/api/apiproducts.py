@@ -42,15 +42,6 @@ from apigee.util import authorization, console
 
 class Apiproducts(IApiproducts):
     def __init__(self, *args, **kwargs):
-        """Apiproducts constructor
-
-        Args:
-            auth: Apigee Edge credentials object.
-            org_name: Apigee Edge organization.
-            apiproduct_name: API Product name.
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
         super().__init__(*args, **kwargs)
 
     def create_api_product(self, request_body):

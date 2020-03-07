@@ -25,15 +25,6 @@ from apigee.util import authorization, console
 
 class Userroles(IUserroles):
     def __init__(self, *args, **kwargs):
-        """Userroles constructor
-
-        Args:
-            auth: Apigee Edge credentials object.
-            org_name: Apigee Edge organization.
-            role_name: The role name.
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
         super().__init__(*args, **kwargs)
 
     def add_a_user_to_a_role(self, user_email):

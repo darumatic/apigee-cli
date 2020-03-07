@@ -22,23 +22,6 @@ from apigee.util import authorization, console
 
 class Apps(IApps):
     def __init__(self, *args, **kwargs):
-        """Apiproducts constructor
-
-        Args:
-            auth: Apigee Edge credentials object.
-            org_name: Apigee Edge organization.
-            app_name: The name of the app. The name becomes the unique ID of the
-                app for this organization and developer.
-                Names must begin with an alphanumeric character and can contain
-                letters, numbers, spaces, and the following characters:
-                . _ # - $ %.
-                While you can use spaces in the name, you should instead use
-                camel case, underscores, or hyphens.
-                Otherwise, you will have to URL encode the app name when you
-                need to include it in the URL of other Edge API calls.
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
         super().__init__(*args, **kwargs)
 
     def create_developer_app(self, developer, request_body):

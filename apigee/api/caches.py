@@ -22,15 +22,6 @@ from apigee.util import authorization, console
 
 class Caches(ICaches):
     def __init__(self, *args, **kwargs):
-        """Caches constructor
-
-        Args:
-            auth: Apigee Edge credentials object.
-            org_name: Apigee Edge organization.
-            cache_name: The cache name.
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
         super().__init__(*args, **kwargs)
 
     def clear_all_cache_entries(self, environment):

@@ -19,15 +19,6 @@ from apigee.util import authorization, console
 
 class Developers(IDevelopers):
     def __init__(self, *args, **kwargs):
-        """Developers constructor
-
-        Args:
-            auth: Apigee Edge credentials object.
-            org_name: Apigee Edge organization.
-            developer_email: The developer's email address or ID.
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
         super().__init__(*args, **kwargs)
 
     def create_developer(

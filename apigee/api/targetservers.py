@@ -22,15 +22,6 @@ from apigee.util import authorization, console
 
 class Targetservers(ITargetservers):
     def __init__(self, *args, **kwargs):
-        """Targetservers constructor
-
-        Args:
-            auth: Apigee Edge credentials object.
-            org_name: Apigee Edge organization.
-            targetserver_name: The TargetSever name.
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
         super().__init__(*args, **kwargs)
 
     def create_a_targetserver(self, environment, request_body):

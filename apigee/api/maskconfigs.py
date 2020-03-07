@@ -29,15 +29,6 @@ from apigee.util import authorization, console
 
 class Maskconfigs(IMaskconfigs):
     def __init__(self, *args, **kwargs):
-        """Maskconfigs constructor
-
-        Args:
-            auth: Apigee Edge credentials object.
-            org_name: Apigee Edge organization.
-            api_name: The API Proxy name.
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
         super().__init__(*args, **kwargs)
 
     def create_data_masks_for_an_api_proxy(self, request_body):

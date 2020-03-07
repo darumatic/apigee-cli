@@ -28,21 +28,6 @@ from apigee.util.os import *
 
 class Apis(IApis, IPull):
     def __init__(self, *args, **kwargs):
-        """Apis constructor
-
-        This constructor accepts a minimum of two positional arguments to
-        initialize the IApis constructor, and a minimum of four positional
-        arguments to initialize the IPull constructor.
-
-        Args:
-            auth: Apigee Edge credentials object.
-            org_name: Apigee Edge organization.
-            revision_number: API Proxy revison to ``pull`` from Apigee.
-            environment: Apigee environment.
-            work_tree (optional): Target working directory. Defaults to None.
-            *args: Variable length argument list.
-            **kwargs: Arbitrary keyword arguments.
-        """
         IApis.__init__(self, args[0], args[1])  # auth, org_name
         try:
             IPull.__init__(
