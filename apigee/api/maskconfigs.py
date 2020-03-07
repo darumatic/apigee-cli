@@ -137,17 +137,14 @@ class Maskconfigs(IMaskconfigs):
         """
         with open(file) as f:
             body = f.read()
-
         maskconfig = json.loads(body)
         maskconfig_name = maskconfig["name"]
-
         try:
             self.get_data_mask_details_for_an_api_proxy(maskconfig_name)
             console.log("Updating", maskconfig_name, "for", self._api_name)
             console.log(self.create_data_masks_for_an_api_proxy(body).text)
         except HTTPError as e:
-            if e.response.status_code == 404:
-                console.log("Creating", maskconfig_name, "for", self._api_name)
-                console.log(self.create_data_masks_for_an_api_proxy(body).text)
-            else:
+            if e.response.status_code not in [404]:
                 raise e
+            console.log("Creating", maskconfig_name, "for", self._api_name)
+            console.log(self.create_data_masks_for_an_api_proxy(body).text)

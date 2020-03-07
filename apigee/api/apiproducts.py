@@ -171,17 +171,14 @@ class Apiproducts(IApiproducts):
         """
         with open(file) as f:
             body = f.read()
-
         apiproduct = json.loads(body)
         self._apiproduct_name = apiproduct["name"]
-
         try:
             self.get_api_product()
             console.log("Updating", self._apiproduct_name)
             console.log(self.update_api_product(body).text)
         except HTTPError as e:
-            if e.response.status_code == 404:
-                console.log("Creating", self._apiproduct_name)
-                console.log(self.create_api_product(body).text)
-            else:
+            if e.response.status_code not in [404]:
                 raise e
+            console.log("Creating", self._apiproduct_name)
+            console.log(self.create_api_product(body).text)

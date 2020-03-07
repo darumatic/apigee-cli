@@ -188,19 +188,14 @@ class Caches(ICaches):
         """
         with open(file) as f:
             body = f.read()
-
         cache = json.loads(body)
         self._cache_name = cache["name"]
-
         try:
             self.get_information_about_a_cache(environment)
             console.log("Updating", self._cache_name)
             console.log(self.update_a_cache_in_an_environment(environment, body).text)
         except HTTPError as e:
-            if e.response.status_code == 404:
-                console.log("Creating", self._cache_name)
-                console.log(
-                    self.create_a_cache_in_an_environment(environment, body).text
-                )
-            else:
+            if e.response.status_code not in [404]:
                 raise e
+            console.log("Creating", self._cache_name)
+            console.log(self.create_a_cache_in_an_environment(environment, body).text)

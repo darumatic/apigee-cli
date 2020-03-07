@@ -290,10 +290,8 @@ class Keyvaluemaps(IKeyvaluemaps):
         """
         with open(file) as f:
             body = f.read()
-
         kvm = json.loads(body)
         self._map_name = kvm["name"]
-
         try:
             keyvaluemap_in_an_environment = self.get_keyvaluemap_in_an_environment(
                 environment
@@ -315,12 +313,11 @@ class Keyvaluemaps(IKeyvaluemaps):
                             environment, entry["name"], entry["value"]
                         )
                     except HTTPError as e:
-                        if e.response.status_code == 404:
-                            self.create_an_entry_in_an_environment_scoped_kvm(
-                                environment, entry["name"], entry["value"]
-                            )
-                        else:
+                        if e.response.status_code not in [404]:
                             raise e
+                        self.create_an_entry_in_an_environment_scoped_kvm(
+                            environment, entry["name"], entry["value"]
+                        )
             if deleted:
                 console.log("Deleting entries in", self._map_name)
                 for idx, entry in enumerate(tqdm(deleted)):
@@ -328,10 +325,9 @@ class Keyvaluemaps(IKeyvaluemaps):
                         environment, entry["name"]
                     )
         except HTTPError as e:
-            if e.response.status_code == 404:
-                console.log("Creating", self._map_name)
-                console.log(
-                    self.create_keyvaluemap_in_an_environment(environment, body).text
-                )
-            else:
+            if e.response.status_code not in [404]:
                 raise e
+            console.log("Creating", self._map_name)
+            console.log(
+                self.create_keyvaluemap_in_an_environment(environment, body).text
+            )

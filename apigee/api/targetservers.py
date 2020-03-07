@@ -147,17 +147,14 @@ class Targetservers(ITargetservers):
         """
         with open(file) as f:
             body = f.read()
-
         targetserver = json.loads(body)
         self._targetserver_name = targetserver["name"]
-
         try:
             self.get_targetserver(environment)
             console.log("Updating", self._targetserver_name)
             console.log(self.update_a_targetserver(environment, body).text)
         except HTTPError as e:
-            if e.response.status_code == 404:
-                console.log("Creating", self._targetserver_name)
-                console.log(self.create_a_targetserver(environment, body).text)
-            else:
+            if e.response.status_code not in [404]:
                 raise e
+            console.log("Creating", self._targetserver_name)
+            console.log(self.create_a_targetserver(environment, body).text)
