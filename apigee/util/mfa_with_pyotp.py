@@ -11,7 +11,6 @@ from requests.packages.urllib3.util.retry import Retry
 from apigee import *
 from apigee import APIGEE_OAUTH_URL
 
-# from apigee import HTTP_MAX_RETRIES
 from apigee.util import console
 
 # http_client.HTTPConnection.debuglevel = 0
