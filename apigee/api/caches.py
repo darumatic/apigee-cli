@@ -174,8 +174,7 @@ class Caches(ICaches):
             None
 
         Raises:
-            HTTPError: If response status code is not successful or 404
-            (GET cache).
+            HTTPError: If response status code is not successful or 404.
         """
         with open(file) as f:
             body = f.read()

@@ -123,8 +123,7 @@ class Maskconfigs(IMaskconfigs):
             None
 
         Raises:
-            HTTPError: If response status code is not successful or 404
-            (GET data mask).
+            HTTPError: If response status code is not successful or 404.
         """
         with open(file) as f:
             body = f.read()

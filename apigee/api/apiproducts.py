@@ -157,8 +157,7 @@ class Apiproducts(IApiproducts):
             None
 
         Raises:
-            HTTPError: If response status code is not successful or 404
-            (GET API Product).
+            HTTPError: If response status code is not successful or 404.
         """
         with open(file) as f:
             body = f.read()
