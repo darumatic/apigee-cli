@@ -164,6 +164,22 @@ apigee.parsers.prefix\_parser module
    :undoc-members:
    :show-inheritance:
 
+apigee.parsers.silent\_parser module
+------------------------------------
+
+.. automodule:: apigee.parsers.silent_parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.parsers.verbose\_parser module
+-------------------------------------
+
+.. automodule:: apigee.parsers.verbose_parser
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------
