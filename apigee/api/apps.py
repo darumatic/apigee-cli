@@ -123,7 +123,7 @@ class Apps(IApps):
         if not display_name:
             del body["attributes"]
         if not callback_url:
-            del body["callback_url"]
+            del body["callbackUrl"]
         # body = {k: v for k, v in body.items() if v}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
