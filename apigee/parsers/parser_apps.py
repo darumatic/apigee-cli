@@ -5,6 +5,8 @@ from apigee.api.apps import Apps
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.prefix_parser import PrefixParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -20,6 +22,8 @@ class ParserApps:
         self._prefix_parser = kwargs.get(
             "prefix_parser", PrefixParser(profile="default")
         )
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -69,7 +73,11 @@ class ParserApps:
         create_developer_app = self._parser_apps.add_parser(
             "create",
             aliases=["create-developer-app"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Creates an app associated with a developer, associates the app with an API product, and auto-generates an API key for the app to use in calls to API proxies inside the API product.",
         )
         create_developer_app.add_argument(
@@ -90,7 +98,11 @@ class ParserApps:
         delete_developer_app = self._parser_apps.add_parser(
             "delete",
             aliases=["delete-developer-app"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Deletes a developer app.",
         )
         delete_developer_app.add_argument(
@@ -114,7 +126,11 @@ class ParserApps:
         create_empty_developer_app = self._parser_apps.add_parser(
             "create-empty",
             aliases=["create-empty-developer-app"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Creates an empty developer app.",
         )
         create_empty_developer_app.add_argument(
@@ -156,7 +172,11 @@ class ParserApps:
         create_a_consumer_key_and_secret = self._parser_apps.add_parser(
             "create-creds",
             aliases=["create-a-consumer-key-and-secret", "create-credentials"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys/secrets to Edge from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed.",
         )
         create_a_consumer_key_and_secret.add_argument(
@@ -225,7 +245,12 @@ class ParserApps:
         list_developer_apps = self._parser_apps.add_parser(
             "list",
             aliases=["list-developer-apps"],
-            parents=[self._parent_parser(), self._prefix_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._prefix_parser(),
+            ],
             help="Lists all apps created by a developer in an organization, and optionally provides an expanded view of the apps. All time values in the response are UNIX times. You can specify either the developer's email address or Edge ID.",
         )
         list_developer_apps.add_argument(
@@ -263,7 +288,11 @@ class ParserApps:
         get_developer_app_details = self._parser_apps.add_parser(
             "get",
             aliases=["get-developer-app-details"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Get the profile of a specific developer app. All times in the response are UNIX times. Note that the response contains a top-level attribute named accessType that is no longer used by Apigee.",
         )
         get_developer_app_details.add_argument(
@@ -284,7 +313,12 @@ class ParserApps:
         restore_app = self._parser_apps.add_parser(
             "restore",
             aliases=["restore-app"],
-            parents=[self._parent_parser(), self._file_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._file_parser(),
+            ],
             help="Restore developer app from a file.",
         )
         restore_app.set_defaults(

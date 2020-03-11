@@ -1,5 +1,4 @@
 import binascii
-import http.client as http_client
 import pyotp
 import requests
 import sys
@@ -12,14 +11,6 @@ from apigee import *
 from apigee import APIGEE_OAUTH_URL
 
 from apigee.util import console
-
-# http_client.HTTPConnection.debuglevel = 0
-
-# logging.basicConfig()
-# logging.getLogger().setLevel(logging.DEBUG)
-# requests_log = logging.getLogger("requests.packages.urllib3")
-# requests_log.setLevel(logging.DEBUG)
-# requests_log.propagate = True
 
 
 def get_access_token(

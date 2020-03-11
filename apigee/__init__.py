@@ -23,3 +23,6 @@ APIGEE_MFA_SECRET = getenv("APIGEE_MFA_SECRET")
 APIGEE_ADMIN_API_URL = "https://api.enterprise.apigee.com"
 APIGEE_OAUTH_URL = "https://login.apigee.com/oauth/token"
 APIGEE_ORG = getenv("APIGEE_ORG")
+
+APIGEE_CLI_TOGGLE_SILENT = False
+APIGEE_CLI_TOGGLE_VERBOSE = 0

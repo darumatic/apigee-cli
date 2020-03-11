@@ -14,6 +14,8 @@ from apigee.parsers.dir_parser import DirParser
 from apigee.parsers.format_parser import FormatParser
 from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.parsers.parser_authorization import ParserAuthorization
 from apigee.parsers.parser_configure import ParserConfigure
@@ -41,6 +43,8 @@ def main():
     format_parser = FormatParser()
     environment_parser = EnvironmentParser()
     prefix_parser = PrefixParser(profile=parent_parser.profile)
+    silent_parser = SilentParser()
+    verbose_parser = VerboseParser()
 
     parser = argparse.ArgumentParser(prog=apigee.CMD, description=apigee.description)
     parser.add_argument(
@@ -51,7 +55,9 @@ def main():
     )
     subparsers = parser.add_subparsers()
 
-    ParserAuthorization(subparsers).parser
+    ParserAuthorization(
+        subparsers, silent_parser=silent_parser, verbose_parser=verbose_parser,
+    ).parser
     ParserConfigure(subparsers).parser
     ParserApis(
         subparsers,
@@ -59,23 +65,44 @@ def main():
         dir_parser=dir_parser,
         environment_parser=environment_parser,
         prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
     ).parser
-    ParserDeployments(subparsers, parent_parser=parent_parser).parser
+    ParserDeployments(
+        subparsers,
+        parent_parser=parent_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
+    ).parser
     ParserKeyvaluemaps(
         subparsers,
         parent_parser=parent_parser,
         file_parser=file_parser,
         environment_parser=environment_parser,
         prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
     ).parser
     ParserDevelopers(
-        subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser
+        subparsers,
+        parent_parser=parent_parser,
+        prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
     ).parser
     ParserApps(
-        subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser
+        subparsers,
+        parent_parser=parent_parser,
+        prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
     ).parser
     ParserApiproducts(
-        subparsers, parent_parser=parent_parser, prefix_parser=prefix_parser
+        subparsers,
+        parent_parser=parent_parser,
+        prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
     ).parser
     ParserTargetservers(
         subparsers,
@@ -83,16 +110,35 @@ def main():
         file_parser=file_parser,
         environment_parser=environment_parser,
         prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
     ).parser
-    ParserMaskconfigs(subparsers, parent_parser=parent_parser).parser
-    ParserPermissions(subparsers, parent_parser=parent_parser).parser
-    ParserUserroles(subparsers, parent_parser=parent_parser).parser
+    ParserMaskconfigs(
+        subparsers,
+        parent_parser=parent_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
+    ).parser
+    ParserPermissions(
+        subparsers,
+        parent_parser=parent_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
+    ).parser
+    ParserUserroles(
+        subparsers,
+        parent_parser=parent_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
+    ).parser
     ParserCaches(
         subparsers,
         parent_parser=parent_parser,
         file_parser=file_parser,
         environment_parser=environment_parser,
         prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
     ).parser
     ParserDebugsessions(
         subparsers,
@@ -100,6 +146,8 @@ def main():
         dir_parser=dir_parser,
         environment_parser=environment_parser,
         prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
     ).parser
 
     args = parser.parse_args()

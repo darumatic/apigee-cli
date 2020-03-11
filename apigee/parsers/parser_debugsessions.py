@@ -6,6 +6,8 @@ from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.dir_parser import DirParser
 from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -24,6 +26,8 @@ class ParserDebugsessions:
         self._prefix_parser = kwargs.get(
             "prefix_parser", PrefixParser(profile="default")
         )
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -81,7 +85,12 @@ class ParserDebugsessions:
         parser = self._parser_debugsessions.add_parser(
             "create",
             aliases=["create-a-debug-session"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Create a debug session.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)
@@ -122,7 +131,12 @@ class ParserDebugsessions:
         parser = self._parser_debugsessions.add_parser(
             "delete",
             aliases=["delete-debug-session"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Deletes a debug session.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)
@@ -148,7 +162,12 @@ class ParserDebugsessions:
         parser = self._parser_debugsessions.add_parser(
             "list",
             aliases=["list-debug-sessions"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="List all debug sessions created by the Create Debugsessions Session API call or by the Trace tool in the Edge management UI.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)
@@ -167,7 +186,12 @@ class ParserDebugsessions:
         parser = self._parser_debugsessions.add_parser(
             "get-ids",
             aliases=["get-debug-session-transaction-IDs"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Retrieves a list of transaction IDs for a debug session that was created by the Create Debugsessions Session API call or by the Trace tool in the Edge management UI.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)
@@ -193,7 +217,12 @@ class ParserDebugsessions:
         parser = self._parser_debugsessions.add_parser(
             "get",
             aliases=["get-debug-session-transaction-data"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Get debug session transaction data.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)

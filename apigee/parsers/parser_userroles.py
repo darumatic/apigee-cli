@@ -4,6 +4,8 @@ from apigee.api.userroles import Userroles
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.prefix_parser import PrefixParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -15,6 +17,8 @@ class ParserUserroles:
             "userroles", aliases=["roles"], help="manage user roles"
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -49,7 +53,11 @@ class ParserUserroles:
             "add-user",
             aliases=["add-a-user-to-a-role"],
             help="Add a user to a role.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.add_argument(
@@ -68,7 +76,11 @@ class ParserUserroles:
             "add-permissions",
             aliases=["add-permissions-for-a-resource-to-a-user-role"],
             help="Add Permissions for Resource to a Role",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.add_argument("-b", "--body", help="request body", required=True)
@@ -85,7 +97,11 @@ class ParserUserroles:
             "add-permissions-multiple",
             aliases=["add-permissions-for-multiple-resources-to-a-user-role"],
             help="Adds multiple permissions to multiple resources simultaneously.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="name", required=True)
         parser.add_argument("-b", "--body", help="request body", required=True)
@@ -102,7 +118,11 @@ class ParserUserroles:
             "create",
             aliases=["create-a-user-role-in-an-organization"],
             help="Creates one ore more user roles in an organization.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument(
             "-n", "--name", nargs="+", help="list of role names", required=True
@@ -120,7 +140,11 @@ class ParserUserroles:
             "delete-permission",
             aliases=["delete-a-permission-for-a-resource"],
             help="Removes a permission from a resource for the role specified. Permissions are case sensitive. Specify the permission as get, put, or delete.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.add_argument("--permission", help="get, put, or delete", required=True)
@@ -138,7 +162,11 @@ class ParserUserroles:
             "delete-resource",
             aliases=["delete-resource-from-permissions"],
             help="Removes all permissions for a resource for the role specified. Permissions are case sensitive.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.add_argument("--resource-path", help="the resource path", required=True)
@@ -155,7 +183,11 @@ class ParserUserroles:
             "delete",
             aliases=["delete-a-user-role"],
             help="Deletes a role from an organization. Roles can only be deleted when no users are in the role.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.set_defaults(
@@ -169,7 +201,11 @@ class ParserUserroles:
             "get",
             aliases=["get-a-role"],
             help="Gets the name of a user role.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.set_defaults(
@@ -183,7 +219,11 @@ class ParserUserroles:
             "get-permissions",
             aliases=["get-resource-permissions-for-a-specific-role"],
             help="Gets a list of permissions associated with the specified resource.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.add_argument("--resource-path", help="the resource path", default="")
@@ -202,7 +242,11 @@ class ParserUserroles:
             "get-users",
             aliases=["get-users-for-a-role"],
             help="Returns a list of all system users associated with a role.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.set_defaults(
@@ -216,7 +260,11 @@ class ParserUserroles:
             "list-permissions",
             aliases=["list-permissions-for-a-resource"],
             help="Gets permissions for all resources associated with a user role.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.set_defaults(
@@ -232,7 +280,11 @@ class ParserUserroles:
             "list",
             aliases=["list-user-roles"],
             help="Gets a list of roles available to users in an organization.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.set_defaults(
             func=lambda args: console.log(
@@ -245,7 +297,11 @@ class ParserUserroles:
             "remove-user",
             aliases=["remove-user-membership-in-role"],
             help="Remove user membership in role.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.add_argument(
@@ -266,7 +322,11 @@ class ParserUserroles:
             "verify-permission",
             aliases=["verify-a-user-roles-permission-on-a-specific-RBAC-resource"],
             help="Verifies that a user role's permission on a specific resource exists. Returns a value of true or false.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.add_argument("--permission", help="get, put, or delete", required=True)
@@ -286,7 +346,11 @@ class ParserUserroles:
             "verify-membership",
             aliases=["verify-user-role-membership"],
             help="Verify user role membership.",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.add_argument("-n", "--name", help="the role name", required=True)
         parser.add_argument(

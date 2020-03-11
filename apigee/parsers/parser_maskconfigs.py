@@ -4,6 +4,8 @@ from apigee.api.maskconfigs import Maskconfigs
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -16,6 +18,8 @@ class ParserMaskconfigs:
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -57,7 +61,11 @@ class ParserMaskconfigs:
         create_data_masks_for_an_api_proxy = self._parser_maskconfigs.add_parser(
             "create-api",
             aliases=["create-data-masks-for-an-api-proxy"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Create a data mask for an API proxy. You can capture message content to assist in runtime debugging of APIs calls. In many cases, API traffic contains sensitive data, such credit cards or personally identifiable health information (PHI) that needs to filtered out of the captured message content. Data masks enable you to specify data that will be filtered out of trace sessions. Data masking is only enabled when a trace session (also called a 'debug' session) is enabled for an API proxy. If no trace session are enabled on an API proxy, then the data will not be masked.",
         )
         create_data_masks_for_an_api_proxy.add_argument(
@@ -78,7 +86,11 @@ class ParserMaskconfigs:
         delete_data_masks_for_an_api_proxy = self._parser_maskconfigs.add_parser(
             "delete-api",
             aliases=["delete-data-masks-for-an-api-proxy"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Delete a data mask for an API proxy.",
         )
         delete_data_masks_for_an_api_proxy.add_argument(
@@ -99,7 +111,11 @@ class ParserMaskconfigs:
         get_data_mask_details_for_an_api_proxy = self._parser_maskconfigs.add_parser(
             "get-api",
             aliases=["get-data-mask-details-for-an-api-proxy"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Get the details for a data mask for an API proxy.",
         )
         get_data_mask_details_for_an_api_proxy.add_argument(
@@ -120,7 +136,11 @@ class ParserMaskconfigs:
         list_data_masks_for_an_api_proxy = self._parser_maskconfigs.add_parser(
             "list-api",
             aliases=["list-data-masks-for-an-api-proxy"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="List all data masks for an API proxy.",
         )
         list_data_masks_for_an_api_proxy.add_argument(
@@ -138,7 +158,11 @@ class ParserMaskconfigs:
         list_data_masks_for_an_organization = self._parser_maskconfigs.add_parser(
             "list",
             aliases=["list-data-masks-for-an-organization"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="List all data masks for an organization.",
         )
         list_data_masks_for_an_organization.set_defaults(
@@ -153,7 +177,12 @@ class ParserMaskconfigs:
         push_data_masks_for_an_api_proxy = self._parser_maskconfigs.add_parser(
             "push",
             aliases=["push-data-masks-for-an-api-proxy"],
-            parents=[self._parent_parser(), self._file_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._file_parser(),
+            ],
             help="Push data mask for an API proxy to Apigee. This will create/update a data mask.",
         )
         push_data_masks_for_an_api_proxy.add_argument(

@@ -7,6 +7,8 @@ from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.dir_parser import DirParser
 from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -23,6 +25,8 @@ class ParserApis:
         self._prefix_parser = kwargs.get(
             "prefix_parser", PrefixParser(profile="default")
         )
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -82,6 +86,8 @@ class ParserApis:
             help="deploy apis",
             parents=[
                 self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
                 self._dir_parser(),
                 self._environment_parser(),
             ],
@@ -107,7 +113,11 @@ class ParserApis:
         delete_api_proxy_revision = self._parser_apis.add_parser(
             "delete-rev",
             aliases=["delete-api-proxy-revision", "delete-revision"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Deletes a revision of an API proxy and all policies, resources, endpoints, and revisions associated with it. The API proxy revision must be undeployed before you can delete it.",
         )
         delete_api_proxy_revision.add_argument(
@@ -128,7 +138,12 @@ class ParserApis:
         deploy_api_proxy_revision = self._parser_apis.add_parser(
             "deploy-rev",
             aliases=["deploy-api-proxy-revision", "deploy-revision"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Deploys a revision of an existing API proxy to an environment in an organization.",
         )
         deploy_api_proxy_revision.add_argument(
@@ -166,7 +181,11 @@ class ParserApis:
         delete_undeployed_revisions = self._parser_apis.add_parser(
             "clean",
             aliases=["delete-undeployed-revisions"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Deletes all undeployed revisions of an API proxy and all policies, resources, endpoints, and revisions associated with it.",
         )
         delete_undeployed_revisions.add_argument(
@@ -196,7 +215,11 @@ class ParserApis:
         export_api_proxy = self._parser_apis.add_parser(
             "export",
             aliases=["export-api-proxy"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Outputs an API proxy revision as a ZIP formatted bundle of code and config files. This enables local configuration and development, including attachment of policies and scripts.",
         )
         export_api_proxy.add_argument("-n", "--name", help="name", required=True)
@@ -219,7 +242,12 @@ class ParserApis:
     def _build_pull_argument(self):
         pull_api = self._parser_apis.add_parser(
             "pull",
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Pull API proxy revision as a ZIP formatted bundle along with KeyValueMap and TargetServer dependencies into the current working directory.",
         )
         pull_api.add_argument("-n", "--name", help="name", required=True)
@@ -255,7 +283,11 @@ class ParserApis:
         get_api_proxy = self._parser_apis.add_parser(
             "get",
             aliases=["get-api-proxy"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Gets an API proxy by name, including a list of existing revisions of the proxy.",
         )
         get_api_proxy.add_argument("-n", "--name", help="name", required=True)
@@ -269,7 +301,12 @@ class ParserApis:
         list_api_proxies = self._parser_apis.add_parser(
             "list",
             aliases=["list-api-proxies"],
-            parents=[self._parent_parser(), self._prefix_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._prefix_parser(),
+            ],
             help="Gets the names of all API proxies in an organization. The names correspond to the names defined in the configuration files for each API proxy.",
         )
         list_api_proxies.set_defaults(
@@ -282,7 +319,11 @@ class ParserApis:
         list_api_proxies = self._parser_apis.add_parser(
             "list-revs",
             aliases=["list-api-proxy-revisions", "list-revisions"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="List all revisions for an API proxy.",
         )
         list_api_proxies.add_argument("-n", "--name", help="name", required=True)
@@ -296,7 +337,12 @@ class ParserApis:
         undeploy_api_proxy_revision = self._parser_apis.add_parser(
             "undeploy-rev",
             aliases=["undeploy-api-proxy-revision", "undeploy-revision"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Undeploys an API proxy revision from an environment.",
         )
         undeploy_api_proxy_revision.add_argument(
@@ -319,7 +365,12 @@ class ParserApis:
         force_undeploy_api_proxy_revision = self._parser_apis.add_parser(
             "force-undeploy-rev",
             aliases=["force-undeploy-api-proxy-revision", "force-undeploy-revision"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Force the undeployment of the API proxy that is partially deployed.",
         )
         force_undeploy_api_proxy_revision.add_argument(

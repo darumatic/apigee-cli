@@ -6,6 +6,8 @@ from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -22,6 +24,8 @@ class ParserKeyvaluemaps:
         self._prefix_parser = kwargs.get(
             "prefix_parser", PrefixParser(profile="default")
         )
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -79,7 +83,12 @@ class ParserKeyvaluemaps:
         create_keyvaluemap_in_an_environment = self._parser_keyvaluemaps.add_parser(
             "create",
             aliases=["create-keyvaluemap-in-an-environment"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Creates a key value map in an environment.",
         )
         create_keyvaluemap_in_an_environment.add_argument(
@@ -97,7 +106,12 @@ class ParserKeyvaluemaps:
         delete_keyvaluemap_from_an_environment = self._parser_keyvaluemaps.add_parser(
             "delete",
             aliases=["delete-keyvaluemap-from-an-environment"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Deletes a key/value map and all associated entries from an environment.",
         )
         delete_keyvaluemap_from_an_environment.add_argument(
@@ -115,7 +129,12 @@ class ParserKeyvaluemaps:
         delete_keyvaluemap_entry_in_an_environment = self._parser_keyvaluemaps.add_parser(
             "delete-entry",
             aliases=["delete-keyvaluemap-entry-in-an-environment"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Deletes a specific key/value map entry in an environment by name, along with associated entries.",
         )
         delete_keyvaluemap_entry_in_an_environment.add_argument(
@@ -138,7 +157,12 @@ class ParserKeyvaluemaps:
         get_keyvaluemap_in_an_environment = self._parser_keyvaluemaps.add_parser(
             "get",
             aliases=["get-keyvaluemap-in-an-environment"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Gets a KeyValueMap (KVM) in an environment by name, along with the keys and values.",
         )
         get_keyvaluemap_in_an_environment.add_argument(
@@ -156,7 +180,12 @@ class ParserKeyvaluemaps:
         get_a_keys_value_in_an_environment_scoped_keyvaluemap = self._parser_keyvaluemaps.add_parser(
             "get-value",
             aliases=["get-a-keys-value-in-an-environment-scoped-keyvaluemap"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Gets the value of a key in an environment-scoped KeyValueMap (KVM).",
         )
         get_a_keys_value_in_an_environment_scoped_keyvaluemap.add_argument(
@@ -181,6 +210,8 @@ class ParserKeyvaluemaps:
             aliases=["list-keyvaluemaps-in-an-environment"],
             parents=[
                 self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
                 self._environment_parser(),
                 self._prefix_parser(),
             ],
@@ -198,7 +229,12 @@ class ParserKeyvaluemaps:
         update_keyvaluemap_in_an_environment = self._parser_keyvaluemaps.add_parser(
             "update",
             aliases=["update-keyvaluemap-in-an-environment"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Note: This API is supported for Apigee Edge for Private Cloud only. For Apigee Edge for Public Cloud use Update an entry in an environment-scoped KVM. Updates an existing KeyValueMap in an environment. Does not override the existing map. Instead, this method updates the entries if they exist or adds them if not. It can take several minutes before the new value is visible to runtime traffic.",
         )
         update_keyvaluemap_in_an_environment.add_argument(
@@ -219,7 +255,12 @@ class ParserKeyvaluemaps:
         create_an_entry_in_an_environment_scoped_kvm = self._parser_keyvaluemaps.add_parser(
             "create-entry",
             aliases=["create-an-entry-in-an-environment-scoped-kvm"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Note: This API is supported for Apigee Edge for the Public Cloud only. Creates an entry in an existing KeyValueMap scoped to an environment. A key (name) cannot be larger than 2 KB. KVM names are case sensitive.",
         )
         create_an_entry_in_an_environment_scoped_kvm.add_argument(
@@ -245,7 +286,12 @@ class ParserKeyvaluemaps:
         update_an_entry_in_an_environment_scoped_kvm = self._parser_keyvaluemaps.add_parser(
             "update-entry",
             aliases=["update-an-entry-in-an-environment-scoped-kvm"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Note: This API is supported for Apigee Edge for the Public Cloud only. Updates an entry in a KeyValueMap scoped to an environment. A key cannot be larger than 2 KB. KVM names are case sensitive. Does not override the existing map. It can take several minutes before the new value is visible to runtime traffic.",
         )
         update_an_entry_in_an_environment_scoped_kvm.add_argument(
@@ -273,6 +319,8 @@ class ParserKeyvaluemaps:
             aliases=["list-keys-in-an-environment-scoped-keyvaluemap"],
             parents=[
                 self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
                 self._environment_parser(),
                 self._prefix_parser(),
             ],
@@ -308,6 +356,8 @@ class ParserKeyvaluemaps:
             aliases=["push-keyvaluemap"],
             parents=[
                 self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
                 self._environment_parser(),
                 self._file_parser(),
             ],

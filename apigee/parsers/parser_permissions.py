@@ -3,6 +3,8 @@ import argparse
 from apigee.api.permissions import Permissions
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.parent_parser import ParentParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -15,6 +17,8 @@ class ParserPermissions:
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -56,7 +60,11 @@ class ParserPermissions:
         create_permissions = self._parser_permissions.add_parser(
             "create",
             aliases=["create-permissions"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Create permissions for a role.",
         )
         create_permissions.add_argument("-n", "--name", help="name", required=True)
@@ -75,7 +83,12 @@ class ParserPermissions:
         team_permissions = self._parser_permissions.add_parser(
             "template",
             aliases=["template-permissions", "team-permissions", "team"],
-            parents=[self._parent_parser(), self._file_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._file_parser(),
+            ],
             help="Create permissions for a role using a template file.",
         )
         team_permissions.add_argument(
@@ -108,7 +121,11 @@ class ParserPermissions:
         get_permissions = self._parser_permissions.add_parser(
             "get",
             aliases=["get-permissions"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Get permissions for a role.",
         )
         get_permissions.add_argument("-n", "--name", help="name", required=True)

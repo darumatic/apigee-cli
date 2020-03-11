@@ -6,6 +6,8 @@ from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -22,6 +24,8 @@ class ParserTargetservers:
         self._prefix_parser = kwargs.get(
             "prefix_parser", PrefixParser(profile="default")
         )
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -79,7 +83,12 @@ class ParserTargetservers:
         create_a_targetserver = self._parser_targetservers.add_parser(
             "create",
             aliases=["create-a-targetserver"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Create a TargetServer in the specified environment. TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services.",
         )
         create_a_targetserver.add_argument(
@@ -97,7 +106,12 @@ class ParserTargetservers:
         delete_a_targetserver = self._parser_targetservers.add_parser(
             "delete",
             aliases=["delete-a-targetserver"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Delete a TargetServer configuration from an environment. Returns information about the deleted TargetServer.",
         )
         delete_a_targetserver.add_argument("-n", "--name", help="name", required=True)
@@ -115,6 +129,8 @@ class ParserTargetservers:
             aliases=["list-targetservers-in-an-environment"],
             parents=[
                 self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
                 self._environment_parser(),
                 self._prefix_parser(),
             ],
@@ -134,7 +150,12 @@ class ParserTargetservers:
         get_targetserver = self._parser_targetservers.add_parser(
             "get",
             aliases=["get-targetserver"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Returns a TargetServer definition.",
         )
         get_targetserver.add_argument("-n", "--name", help="name", required=True)
@@ -150,7 +171,12 @@ class ParserTargetservers:
         update_a_targetserver = self._parser_targetservers.add_parser(
             "update",
             aliases=["update-a-targetserver"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Modifies an existing TargetServer.",
         )
         update_a_targetserver.add_argument("-n", "--name", help="name", required=True)
@@ -171,6 +197,8 @@ class ParserTargetservers:
             aliases=["push-targetserver"],
             parents=[
                 self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
                 self._environment_parser(),
                 self._file_parser(),
             ],

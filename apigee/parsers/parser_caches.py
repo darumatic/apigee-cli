@@ -6,6 +6,8 @@ from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.environment_parser import EnvironmentParser
 from apigee.parsers.prefix_parser import PrefixParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -22,6 +24,8 @@ class ParserCaches:
         self._prefix_parser = kwargs.get(
             "prefix_parser", PrefixParser(profile="default")
         )
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -79,7 +83,12 @@ class ParserCaches:
         parser = self._parser_caches.add_parser(
             "clear",
             aliases=["clear-all-cache-entries"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Clears all cache entries.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)
@@ -95,7 +104,12 @@ class ParserCaches:
         parser = self._parser_caches.add_parser(
             "clear-entry",
             aliases=["clear-a-cache-entry"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Clears a cache entry, which is identified by the full CacheKey prefix and value.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)
@@ -112,7 +126,12 @@ class ParserCaches:
         parser = self._parser_caches.add_parser(
             "create",
             aliases=["create-a-cache-in-an-environment"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Creates a cache in an environment. Caches are created per environment. For data segregation, a cache created in 'test', for example, cannot be accessed by API proxies deployed in 'prod'. The JSON object in the request body can be empty to create a cache with the default settings.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)
@@ -129,7 +148,12 @@ class ParserCaches:
         parser = self._parser_caches.add_parser(
             "get",
             aliases=["get-information-about-a-cache"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Gets information about a cache. The response might contain a property named persistent. That property is no longer used by Edge.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)
@@ -147,6 +171,8 @@ class ParserCaches:
             aliases=["list-caches-in-an-environment"],
             parents=[
                 self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
                 self._environment_parser(),
                 self._prefix_parser(),
             ],
@@ -164,7 +190,12 @@ class ParserCaches:
         parser = self._parser_caches.add_parser(
             "update",
             aliases=["update-a-cache-in-an-environment"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Updates a cache in an environment. You must specify the complete definition of the cache, including the properties that you want to change and the ones that retain their current value. Any properties omitted from the request body are reset to their default value. Use Get information about a cache to obtain an object containing the current value of all properties, then change only those that you want to update.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)
@@ -181,7 +212,12 @@ class ParserCaches:
         parser = self._parser_caches.add_parser(
             "delete",
             aliases=["delete-a-cache"],
-            parents=[self._parent_parser(), self._environment_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._environment_parser(),
+            ],
             help="Deletes a cache.",
         )
         parser.add_argument("-n", "--name", help="name", required=True)
@@ -197,6 +233,8 @@ class ParserCaches:
             aliases=["push-cache"],
             parents=[
                 self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
                 self._environment_parser(),
                 self._file_parser(),
             ],

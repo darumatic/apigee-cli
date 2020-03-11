@@ -3,6 +3,8 @@ import argparse
 from apigee.api.deployments import Deployments
 
 from apigee.parsers.parent_parser import ParentParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -14,6 +16,8 @@ class ParserDeployments:
             "deployments", aliases=["deps"], help="see API deployments"
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -47,7 +51,11 @@ class ParserDeployments:
         get_api_proxy_deployment_details = self._parser_deployments.add_parser(
             "get",
             aliases=["get-api-proxy-deployment-details"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Returns detail on all deployments of the API proxy for all environments. All deployments are listed in the test and prod environments, as well as other environments, if they exist.",
         )
         get_api_proxy_deployment_details.add_argument(

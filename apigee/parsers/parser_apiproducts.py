@@ -5,6 +5,8 @@ from apigee.api.apiproducts import Apiproducts
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
 from apigee.parsers.prefix_parser import PrefixParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
 
@@ -20,6 +22,8 @@ class ParserApiproducts:
         self._prefix_parser = kwargs.get(
             "prefix_parser", PrefixParser(profile="default")
         )
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -69,7 +73,11 @@ class ParserApiproducts:
         create_api_product = self._parser_apiproducts.add_parser(
             "create",
             aliases=["create-api-product"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Creates an API product in an organization.",
         )
         create_api_product.add_argument(
@@ -87,7 +95,11 @@ class ParserApiproducts:
         delete_api_product = self._parser_apiproducts.add_parser(
             "delete",
             aliases=["delete-api-product"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Deletes an API product from an organization.",
         )
         delete_api_product.add_argument("-n", "--name", help="name", required=True)
@@ -101,7 +113,12 @@ class ParserApiproducts:
         list_api_products = self._parser_apiproducts.add_parser(
             "list",
             aliases=["list-api-products"],
-            parents=[self._parent_parser(), self._prefix_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._prefix_parser(),
+            ],
             help="Get a list of all API product names for an organization.",
         )
         list_api_products.add_argument(
@@ -135,7 +152,11 @@ class ParserApiproducts:
         get_api_product = self._parser_apiproducts.add_parser(
             "get",
             aliases=["get-api-product"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help='Gets configuration data for an API product. The API product name required in the request URL is not the "Display Name" value displayed for the API product in the Edge UI. While they may be the same, they are not always the same depending on whether the API product was created via UI or API.',
         )
         get_api_product.add_argument("-n", "--name", help="name", required=True)
@@ -149,7 +170,11 @@ class ParserApiproducts:
         update_api_product = self._parser_apiproducts.add_parser(
             "update",
             aliases=["update-api-product"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="Updates an existing API product. You must include all required values, whether or not you are updating them, as well as any optional values that you are updating.",
         )
         update_api_product.add_argument("-n", "--name", help="name", required=True)
@@ -168,7 +193,12 @@ class ParserApiproducts:
         push_apiproducts = self._parser_apiproducts.add_parser(
             "push",
             aliases=["push-apiproducts"],
-            parents=[self._parent_parser(), self._file_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._file_parser(),
+            ],
             help="Push API product to Apigee. This will create/update an API product.",
         )
         push_apiproducts.set_defaults(

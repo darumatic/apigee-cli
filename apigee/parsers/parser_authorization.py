@@ -3,6 +3,8 @@ import json
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.file_parser import FileParser
+from apigee.parsers.silent_parser import SilentParser
+from apigee.parsers.verbose_parser import VerboseParser
 from apigee.util import authorization, console, mfa_with_pyotp
 
 from apigee.util import console
@@ -16,6 +18,8 @@ class ParserAuthorization:
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())
+        self._silent_parser = kwargs.get("silent_parser", SilentParser())
+        self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._create_parser()
 
     @property
@@ -65,7 +69,11 @@ class ParserAuthorization:
             "access",
             aliases=["access-token"],
             help="get access token",
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
         )
         parser.set_defaults(
             func=lambda args: console.log(mfa_with_pyotp.get_access_token(args))
@@ -75,7 +83,12 @@ class ParserAuthorization:
         parser = self._parser_auth.add_parser(
             "file",
             aliases=["verify-resource-file"],
-            parents=[self._parent_parser(), self._file_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+                self._file_parser(),
+            ],
             help="verify user has authorization to access resource with prefix in file",
         )
         parser.add_argument(
@@ -96,7 +109,11 @@ class ParserAuthorization:
         parser = self._parser_auth.add_parser(
             "name",
             aliases=["verify-resource-name"],
-            parents=[self._parent_parser()],
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
             help="verify user has authorization to access resource with prefix in name",
         )
         parser.add_argument(
