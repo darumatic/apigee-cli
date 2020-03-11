@@ -63,13 +63,11 @@ def get_access_token(
     try:
         response_post.json()["access_token"]
     except KeyError as ke:
-        if APIGEE_CLI_SUPPRESS_RETRY_MESSAGE not in (True, "True", "true", "1"):
-            console.log(f"retry http POST {APIGEE_OAUTH_URL}")
+        # console.log(f"retry http POST {APIGEE_OAUTH_URL}")
         response_post = session.post(
             f"{APIGEE_OAUTH_URL}?mfa_token={TOTP.now()}",
             headers=post_headers,
             data=post_body,
         )
-        if APIGEE_CLI_SUPPRESS_RETRY_RESPONSE not in (True, "True", "true", "1"):
-            console.log(response_post.json())
+        # console.log(response_post.json())
     return response_post.json()["access_token"]
