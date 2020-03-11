@@ -52,7 +52,8 @@ body = None
 
 
 class Struct:
-    def __init__(self, **entries): self.__dict__.update(entries)
+    def __init__(self, **entries):
+        self.__dict__.update(entries)
 
 
 def httpCall(verb, uri, headers, body):
@@ -196,7 +197,9 @@ def deploy(args):
     ShouldOverride = args.seamless_deploy
     # GracePeriod = 15
     # AccessToken = mfa_with_pyotp.get_access_token(args)
-    Auth = Struct(username=args.username, password=args.password, mfa_secret=args.mfa_secret)
+    Auth = Struct(
+        username=args.username, password=args.password, mfa_secret=args.mfa_secret
+    )
 
     # if UserPW == None or \
     #         (Directory == None and ZipFile == None) or \

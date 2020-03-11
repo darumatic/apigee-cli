@@ -1,18 +1,31 @@
 import binascii
+import http.client as http_client
 import pyotp
 import requests
 import sys
 import urllib.request, urllib.parse, urllib.error
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
+from requests.packages.urllib3.util.retry import Retry
 
 from apigee import *
 from apigee import APIGEE_OAUTH_URL
-from apigee import HTTP_MAX_RETRIES
+
+# from apigee import HTTP_MAX_RETRIES
 from apigee.util import console
 
+# http_client.HTTPConnection.debuglevel = 0
 
-def get_access_token(args):
+# logging.basicConfig()
+# logging.getLogger().setLevel(logging.DEBUG)
+# requests_log = logging.getLogger("requests.packages.urllib3")
+# requests_log.setLevel(logging.DEBUG)
+# requests_log.propagate = True
+
+
+def get_access_token(
+    args, retries=4, backoff_factor=0.3, status_forcelist=(500, 502, 504), session=None
+):
     if args.mfa_secret is None:
         return
     APIGEE_USERNAME = args.username
@@ -23,7 +36,14 @@ def get_access_token(args):
         TOTP.now()
     except binascii.Error as e:
         sys.exit(f"{type(e).__name__}: {e}: Not a valid MFA key")
-    adapter = HTTPAdapter(max_retries=HTTP_MAX_RETRIES)
+    retry = Retry(
+        total=retries,
+        read=retries,
+        connect=retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=status_forcelist,
+    )
+    adapter = HTTPAdapter(max_retries=retry)
     session = requests.Session()
     session.mount("https://", adapter)
     post_headers = {
