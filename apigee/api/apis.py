@@ -33,7 +33,7 @@ class Apis(IApis, IPull):
             IPull.__init__(
                 self, args[0], args[1], args[2], args[3], **kwargs
             )  # auth, org_name, revision_number, environment, work_tree=None
-        except IndexError as ie:
+        except IndexError:
             pass
 
     def delete_api_proxy_revision(self, api_name, revision_number):
@@ -528,7 +528,7 @@ class Apis(IApis, IPull):
         tree = et.parse(default_file)
         try:
             return tree.find(".//BasePath").text, default_file
-        except AttributeError as ae:
+        except AttributeError:
             sys.exit(f"No BasePath found in {default_file}")
 
     def set_apiproxy_basepath(self, basepath, file):
@@ -549,7 +549,7 @@ class Apis(IApis, IPull):
         current_basepath = None
         try:
             current_basepath = tree.find(".//BasePath").text
-        except AttributeError as ae:
+        except AttributeError:
             sys.exit(f"No BasePath found in {default_file}")
         with open(default_file, "r+") as f:
             body = f.read().replace(current_basepath, basepath)
