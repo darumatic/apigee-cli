@@ -14,7 +14,7 @@ import requests
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.developers import IDevelopers, DevelopersSerializer
-from apigee.util import authorization, console
+from apigee.util import authorization
 
 
 class Developers(IDevelopers):

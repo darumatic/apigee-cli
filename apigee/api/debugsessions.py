@@ -9,12 +9,11 @@ A session configured in Apigee Edge to record specified messages and associated
 pipeline processing metadata for debugging purposes
 """
 
-import json
 import requests
 
 from apigee import APIGEE_ADMIN_API_URL
-from apigee.abstract.api.debugsessions import IDebugsessions, DebugsessionsSerializer
-from apigee.util import authorization, console
+from apigee.abstract.api.debugsessions import IDebugsessions
+from apigee.util import authorization
 
 
 class Debugsessions(IDebugsessions):
