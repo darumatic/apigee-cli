@@ -262,6 +262,32 @@ class Keyvaluemaps(IKeyvaluemaps):
         # return KeyvaluemapsSerializer().serialize_details(resp, 'json', prefix=prefix)
         return resp
 
+    def _diff_kvms(self, kvm1, kvm2):
+        current_keys = [entry["name"] for entry in kvm1["entry"]]
+        deleted_keys = [
+            entry for entry in kvm2["entry"] if entry["name"] not in current_keys
+        ]
+        return current_keys, deleted_keys
+
+    def _create_or_update_entry(self, environment, entry):
+        try:
+            self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(
+                environment, entry["name"]
+            )
+            self.update_an_entry_in_an_environment_scoped_kvm(
+                environment, entry["name"], entry["value"]
+            )
+        except HTTPError as e:
+            if e.response.status_code not in [404]:
+                raise e
+            self.create_an_entry_in_an_environment_scoped_kvm(
+                environment, entry["name"], entry["value"]
+            )
+
+    def _delete_entries(self, environment, deleted_keys):
+        for idx, entry in enumerate(tqdm(deleted_keys)):
+            self.delete_keyvaluemap_entry_in_an_environment(environment, entry["name"])
+
     def push_keyvaluemap(self, environment, file):
         """Push KeyValueMap file to Apigee
 
@@ -280,40 +306,18 @@ class Keyvaluemaps(IKeyvaluemaps):
         """
         with open(file) as f:
             body = f.read()
-        kvm = json.loads(body)
-        self._map_name = kvm["name"]
+        loc_kvm = json.loads(body)
+        self._map_name = loc_kvm["name"]
         try:
-            keyvaluemap_in_an_environment = self.get_keyvaluemap_in_an_environment(
-                environment
-            ).json()
-            keys = [entry["name"] for entry in kvm["entry"]]
-            deleted = [
-                entry
-                for entry in keyvaluemap_in_an_environment["entry"]
-                if entry["name"] not in keys
-            ]
+            env_kvm = self.get_keyvaluemap_in_an_environment(environment).json()
+            _, deleted_keys = self._diff_kvms(loc_kvm, env_kvm)
             console.log("Updating entries in", self._map_name)
-            for idx, entry in enumerate(tqdm(kvm["entry"])):
-                if entry not in keyvaluemap_in_an_environment["entry"]:
-                    try:
-                        self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(
-                            environment, entry["name"]
-                        )
-                        self.update_an_entry_in_an_environment_scoped_kvm(
-                            environment, entry["name"], entry["value"]
-                        )
-                    except HTTPError as e:
-                        if e.response.status_code not in [404]:
-                            raise e
-                        self.create_an_entry_in_an_environment_scoped_kvm(
-                            environment, entry["name"], entry["value"]
-                        )
-            if deleted:
+            for idx, entry in enumerate(tqdm(loc_kvm["entry"])):
+                if entry not in env_kvm["entry"]:
+                    self._create_or_update_entry(environment, entry)
+            if deleted_keys:
                 console.log("Deleting entries in", self._map_name)
-                for idx, entry in enumerate(tqdm(deleted)):
-                    self.delete_keyvaluemap_entry_in_an_environment(
-                        environment, entry["name"]
-                    )
+                self._delete_entries(environment, deleted_keys)
         except HTTPError as e:
             if e.response.status_code not in [404]:
                 raise e
