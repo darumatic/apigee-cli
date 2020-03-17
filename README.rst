@@ -3,6 +3,7 @@ apigee-cli
 ==========
 
 |Upload Python Package badge|
+|Python package|
 
 This package provides a command-line interface for the Apigee Management API with multi-factor authentication.
 
@@ -54,6 +55,8 @@ Getting Help
 
 .. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
     :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
+.. |Python package| image:: https://github.com/mdelotavo/apigee-cli/workflows/Python%20package/badge.svg
+    :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Python+package%22
 .. _`Apigee Product Documentation`: https://apidocs.apigee.com/management/apis
 .. _`Permissions reference`: https://docs.apigee.com/api-platform/system-administration/permissions
 .. _`Add permissions to testing role`: https://docs.apigee.com/api-platform/system-administration/managing-roles-api#addpermissionstotestingrole
