@@ -581,6 +581,8 @@ class Apis(IApis, IPull):
 
         makedirs(self._work_tree)
 
+        self.apiproxy_dir = api_name
+
         if not force:
             paths_exist([self._zip_file, self._apiproxy_dir])
 

@@ -107,7 +107,8 @@ class IPull:
         self._targetservers_dir = str(
             Path(self._work_tree) / "targetservers" / environment
         )
-        self._apiproxy_dir = str(Path(self._work_tree) / api_name)
+        # self._apiproxy_dir = str(Path(self._work_tree) / api_name)
+        self._apiproxy_dir = str(Path(self._work_tree))
         self._zip_file = str(Path(self._apiproxy_dir).with_suffix(".zip"))
 
     def __call__(self, *args, **kwargs):
