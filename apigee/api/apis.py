@@ -380,7 +380,9 @@ class Apis(IApis, IPull):
                 pass
         return keyvaluemaps
 
-    def export_keyvaluemap_dependencies(self, environment, keyvaluemaps, force=False):
+    def export_keyvaluemap_dependencies(
+        self, environment, keyvaluemaps, force=False, expc_verbosity=1
+    ):
         """Exports KeyValueMaps from Apigee.
 
         Args:
@@ -398,18 +400,12 @@ class Apis(IApis, IPull):
             keyvaluemap_file = str(Path(self._keyvaluemaps_dir) / keyvaluemap)
             if not force:
                 path_exists(keyvaluemap_file)
-            console.log(
-                "Pulling",
-                keyvaluemap,
-                "and writing to",
-                os.path.abspath(keyvaluemap_file),
-            )
             resp = (
                 Keyvaluemaps(self._auth, self._org_name, keyvaluemap)
                 .get_keyvaluemap_in_an_environment(environment)
                 .text
             )
-            console.log(resp)
+            console.log(resp, expc_verbosity=1)
             with open(keyvaluemap_file, "w") as f:
                 f.write(resp)
 
@@ -433,7 +429,9 @@ class Apis(IApis, IPull):
                 pass
         return targetservers
 
-    def export_targetserver_dependencies(self, environment, targetservers, force=False):
+    def export_targetserver_dependencies(
+        self, environment, targetservers, force=False, expc_verbosity=1
+    ):
         """Exports Targetservers from Apigee.
 
         Args:
@@ -451,18 +449,12 @@ class Apis(IApis, IPull):
             targetserver_file = str(Path(self._targetservers_dir) / targetserver)
             if not force:
                 path_exists(targetserver_file)
-            console.log(
-                "Pulling",
-                targetserver,
-                "and writing to",
-                os.path.abspath(targetserver_file),
-            )
             resp = (
                 Targetservers(self._auth, self._org_name, targetserver)
                 .get_targetserver(environment)
                 .text
             )
-            console.log(resp)
+            console.log(resp, expc_verbosity=1)
             with open(targetserver_file, "w") as f:
                 f.write(resp)
 
@@ -487,7 +479,7 @@ class Apis(IApis, IPull):
             if old in body:
                 with open(file, "w") as nf:
                     nf.write(body.replace(old, new))
-                console.log("M  ", os.path.abspath(file))
+                console.log("M  ", os.path.relpath(file))
 
     def prefix_dependencies_in_work_tree(self, dependencies, prefix):
         """Adds a prefix string to all instances of the specified strings within
@@ -508,7 +500,6 @@ class Apis(IApis, IPull):
         for filename in Path(directory).resolve().rglob("*"):
             if not filename.is_dir() and ".git" not in splitpath(str(filename)):
                 files.append(str(filename))
-        console.log("Prefixing", dependencies, "with", prefix)
         for f in files:
             for dep in dependencies:
                 self.replace_substring(f, dep, prefix + dep)
@@ -559,7 +550,7 @@ class Apis(IApis, IPull):
             f.write(body)
             f.truncate()
         console.log(current_basepath, "->", basepath)
-        console.log("M  ", default_file)
+        console.log("M  ", os.path.relpath(default_file))
 
     def pull(self, api_name, dependencies=[], force=False, prefix=None, basepath=None):
         """Pull API Proxy revision and its dependencies from Apigee.
@@ -588,16 +579,12 @@ class Apis(IApis, IPull):
         if not force:
             paths_exist([self._zip_file, self._apiproxy_dir])
 
-        console.log("Writing ZIP to", os.path.abspath(self._zip_file))
         export = self.export_api_proxy(
             api_name, self._revision_number, fs_write=True, output_file=self._zip_file
         )
 
         makedirs(self._apiproxy_dir)
 
-        console.log(
-            "Extracting", self._zip_file, "in", os.path.abspath(self._apiproxy_dir)
-        )
         extractzip(self._zip_file, self._apiproxy_dir)
 
         os.remove(self._zip_file)
@@ -606,7 +593,6 @@ class Apis(IApis, IPull):
 
         keyvaluemaps = self.get_keyvaluemap_dependencies(files)
 
-        console.log("KeyValueMap dependencies found:", keyvaluemaps)
         dependencies.extend(keyvaluemaps)
 
         self.export_keyvaluemap_dependencies(
@@ -615,7 +601,6 @@ class Apis(IApis, IPull):
 
         targetservers = self.get_targetserver_dependencies(files)
 
-        console.log("TargetServer dependencies found:", targetservers)
         dependencies.extend(targetservers)
 
         self.export_targetserver_dependencies(
