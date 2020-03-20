@@ -231,7 +231,7 @@ class ParserApis:
             func=lambda args: Apis(args, args.org).export_api_proxy(
                 args.name,
                 args.revision_number,
-                write=True,
+                fs_write=True,
                 output_file=args.output_file
                 if args.output_file
                 else f"{args.name}.zip",

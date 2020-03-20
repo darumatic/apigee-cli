@@ -215,7 +215,9 @@ class Apis(IApis, IPull):
             self.delete_api_proxy_revision(rev)
         return undeployed
 
-    def export_api_proxy(self, api_name, revision_number, write=True, output_file=None):
+    def export_api_proxy(
+        self, api_name, revision_number, fs_write=True, write=True, output_file=None
+    ):
         """Outputs an API proxy revision as a ZIP formatted bundle of code and
         config files.
 
@@ -236,7 +238,7 @@ class Apis(IApis, IPull):
         hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        if write:
+        if fs_write and write:
             writezip(output_file, resp.content)
         return resp
 
@@ -588,7 +590,7 @@ class Apis(IApis, IPull):
 
         console.log("Writing ZIP to", os.path.abspath(self._zip_file))
         export = self.export_api_proxy(
-            api_name, self._revision_number, write=True, output_file=self._zip_file
+            api_name, self._revision_number, fs_write=True, output_file=self._zip_file
         )
 
         makedirs(self._apiproxy_dir)

@@ -48,7 +48,9 @@ class IApis:
         pass
 
     @abstractmethod
-    def export_api_proxy(self, api_name, revision_number, write=True, output_file=None):
+    def export_api_proxy(
+        self, api_name, revision_number, fs_write=True, write=True, output_file=None
+    ):
         pass
 
     @abstractmethod
