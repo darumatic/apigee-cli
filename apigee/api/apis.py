@@ -179,7 +179,7 @@ class Apis(IApis, IPull):
         """
         undeployed = [int(rev) for rev in revisions if rev not in deployed]
         undeployed.sort()
-        return undeployed[: -save_last if save_last > 0 else len(deployed)]
+        return undeployed[: -save_last if save_last > 0 else len(undeployed)]
 
     def delete_undeployed_revisions(self, api_name, save_last=0, dry_run=False):
         """Deletes all undeployed revisions of an API proxy and all policies,
@@ -212,7 +212,7 @@ class Apis(IApis, IPull):
             return undeployed
         for rev in undeployed:
             console.log("Deleting revison", rev)
-            self.delete_api_proxy_revision(rev)
+            self.delete_api_proxy_revision(api_name, rev)
         return undeployed
 
     def export_api_proxy(
