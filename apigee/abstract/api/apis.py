@@ -109,6 +109,7 @@ class IPull:
         self._targetservers_dir = str(
             Path(self._work_tree) / "targetservers" / environment
         )
+        self._caches_dir = str(Path(self._work_tree) / "caches" / environment)
         # self._apiproxy_dir = str(Path(self._work_tree) / api_name)
         self._apiproxy_dir = str(Path(self._work_tree))
         self._zip_file = str(Path(self._apiproxy_dir).with_suffix(".zip"))
@@ -171,6 +172,14 @@ class IPull:
     @targetservers_dir.setter
     def targetservers_dir(self, value):
         self._targetservers_dir = str(Path(self._work_tree) / value / environment)
+
+    @property
+    def caches_dir(self):
+        return self._caches_dir
+
+    @caches_dir.setter
+    def caches_dir(self, value):
+        self._caches_dir = str(Path(self._work_tree) / value / environment)
 
     @property
     def apiproxy_dir(self):

@@ -19,6 +19,7 @@ from pathlib import Path
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.apis import IApis, ApisSerializer, IPull
+from apigee.api.caches import Caches
 from apigee.api.deployments import Deployments
 from apigee.api.keyvaluemaps import Keyvaluemaps
 from apigee.api.targetservers import Targetservers
@@ -458,6 +459,60 @@ class Apis(IApis, IPull):
             with open(targetserver_file, "w") as f:
                 f.write(resp)
 
+    def get_cache_dependencies(self, files):
+        """Gets all caches referenced in an API Proxy.
+
+        The following cache policies are parsed for <CacheResource>:
+          - PopulateCache
+          - LookupCache
+          - InvalidateCache
+          - ResponseCache
+
+        Args:
+            files (list): List of API Proxy files.
+
+        Returns:
+            list
+        """
+        caches = []
+        for f in files:
+            try:
+                name = et.parse(f).find(".//CacheResource").text
+                if name and name not in caches:
+                    caches.append(name)
+            except:
+                pass
+        return caches
+
+    def export_cache_dependencies(
+        self, environment, caches, force=False, expc_verbosity=1
+    ):
+        """Exports Caches from Apigee.
+
+        Args:
+            environment (str): Apigee environment.
+            caches (list): List of caches to GET from Apigee.
+            force (bool, optional): If True, overwrite existing files in the
+                current working directory.
+                Defaults to False.
+
+        Returns:
+            None
+        """
+        makedirs(self._caches_dir)
+        for cache in caches:
+            cache_file = str(Path(self._caches_dir) / cache)
+            if not force:
+                path_exists(cache_file)
+            resp = (
+                Caches(self._auth, self._org_name, cache)
+                .get_information_about_a_cache(environment)
+                .text
+            )
+            console.log(resp, expc_verbosity=1)
+            with open(cache_file, "w") as f:
+                f.write(resp)
+
     def replace_substring(self, file, old, new):
         """Replaces old string in file with new string.
 
@@ -568,7 +623,7 @@ class Apis(IApis, IPull):
 
         Returns:
             requests.Response(), list, list: exported API Proxy, KeyValueMaps,
-            Targetservers
+            Targetservers, Caches
         """
         dependencies.append(api_name)
 
@@ -592,20 +647,20 @@ class Apis(IApis, IPull):
         files = self.get_apiproxy_files(self._apiproxy_dir)
 
         keyvaluemaps = self.get_keyvaluemap_dependencies(files)
-
         dependencies.extend(keyvaluemaps)
-
         self.export_keyvaluemap_dependencies(
             self._environment, keyvaluemaps, force=force
         )
 
         targetservers = self.get_targetserver_dependencies(files)
-
         dependencies.extend(targetservers)
-
         self.export_targetserver_dependencies(
             self._environment, targetservers, force=force
         )
+
+        caches = self.get_cache_dependencies(files)
+        dependencies.extend(caches)
+        self.export_cache_dependencies(self._environment, caches, force=force)
 
         if prefix:
             self.prefix_dependencies_in_work_tree(set(dependencies), prefix)
@@ -614,4 +669,4 @@ class Apis(IApis, IPull):
             _, file = self.get_apiproxy_basepath(self._apiproxy_dir)
             self.set_apiproxy_basepath(basepath, file)
 
-        return export, keyvaluemaps, targetservers
+        return export, keyvaluemaps, targetservers, caches
