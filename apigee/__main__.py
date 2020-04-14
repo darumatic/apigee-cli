@@ -31,6 +31,7 @@ from apigee.parsers.parser_permissions import ParserPermissions
 from apigee.parsers.parser_userroles import ParserUserroles
 from apigee.parsers.parser_caches import ParserCaches
 from apigee.parsers.parser_debugsessions import ParserDebugsessions
+from apigee.parsers.parser_sharedflows import ParserSharedflows
 
 from apigee.util.exceptions import exception_handler
 
@@ -141,6 +142,15 @@ def main():
         verbose_parser=verbose_parser,
     ).parser
     ParserDebugsessions(
+        subparsers,
+        parent_parser=parent_parser,
+        dir_parser=dir_parser,
+        environment_parser=environment_parser,
+        prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
+    ).parser
+    ParserSharedflows(
         subparsers,
         parent_parser=parent_parser,
         dir_parser=dir_parser,
