@@ -14,3 +14,14 @@ class ArgumentType:
         if os.path.isdir(d):
             return d
         raise argparse.ArgumentTypeError("not a directory")
+
+    @staticmethod
+    def ispath(f):
+        if os.path.exists(f):
+            return f
+        raise argparse.ArgumentTypeError("not a valid path")
+
+
+class Struct:
+    def __init__(self, **entries):
+        self.__dict__.update(entries)

@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import sys
@@ -48,3 +49,30 @@ def touch(path):
         os.makedirs(os.path.split(path)[0])
     except FileExistsError:
         pass
+
+
+def isfile(f):
+    return os.path.isfile(f)
+
+
+def isdir(d):
+    return os.path.isdir(d)
+
+
+def read_file(file, type="text"):
+    with open(file, "r") as f:
+        if type == "json":
+            return json.loads(f.read())
+        return f.read()
+
+
+def write_file(content, path, fs_write=True):
+    if not fs_write:
+        return
+    touch(path)
+    with open(path, "w") as f:
+        try:
+            f.write(content)
+        except TypeError:
+            if isinstance(content, dict) or isinstance(content, list):
+                f.write(json.dumps(content))

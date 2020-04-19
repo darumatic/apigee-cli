@@ -17,7 +17,11 @@ class Stats(IStats):
         super().__init__(*args, **kwargs)
 
     def get_license_utilization(
-        self, time_range, environments=["test", "prod"], tzo=None, api_calls_per_year=10000000000
+        self,
+        time_range,
+        environments=["test", "prod"],
+        tzo=None,
+        api_calls_per_year=10000000000,
     ):
         metrics = {}
         for env in environments:
@@ -46,8 +50,12 @@ class Stats(IStats):
         console.log(t)
         console.log()
         total = sum(metrics.values())
-        console.log(f"Total API calls for specified time range ({time_range}): {total:,}")
-        utilization = total*100 / api_calls_per_year
-        console.log(f"Utilization % for specified time range ({time_range}): {utilization}%")
+        console.log(
+            f"Total API calls for specified time range ({time_range}): {total:,}"
+        )
+        utilization = total * 100 / api_calls_per_year
+        console.log(
+            f"Utilization % for specified time range ({time_range}): {utilization}%"
+        )
         console.log()
         return t

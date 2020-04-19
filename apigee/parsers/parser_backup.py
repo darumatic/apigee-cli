@@ -1,6 +1,6 @@
 import argparse
 
-from apigee.api.stats import Stats
+from apigee.api.backup_and_restore import backup
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.environment_parser import EnvironmentParser
@@ -9,14 +9,12 @@ from apigee.parsers.silent_parser import SilentParser
 from apigee.parsers.verbose_parser import VerboseParser
 
 from apigee.util import console
+from apigee.util.authorization import gen_auth
 
 
-class ParserStats:
+class ParserBackup:
     def __init__(self, parser, **kwargs):
         self._parser = parser
-        self._parser_stats = self._parser.add_parser(
-            "stats", help="access metrics collected by Apigee Edge"
-        ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._environment_parser = kwargs.get("environment_parser", EnvironmentParser())
         self._prefix_parser = kwargs.get(
@@ -24,6 +22,15 @@ class ParserStats:
         )
         self._silent_parser = kwargs.get("silent_parser", SilentParser())
         self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
+        self._parser_backup = self._parser.add_parser(
+            "backup",
+            help="admin backup",
+            parents=[
+                self._parent_parser(),
+                self._silent_parser(),
+                self._verbose_parser(),
+            ],
+        )
         self._create_parser()
 
     @property
@@ -35,12 +42,12 @@ class ParserStats:
         self._parser = value
 
     @property
-    def parser_stats(self):
-        return self._parser_stats
+    def parser_backup(self):
+        return self._parser_backup
 
-    @parser_stats.setter
-    def parser_stats(self, value):
-        self._parser_stats = value
+    @parser_backup.setter
+    def parser_backup(self, value):
+        self._parser_backup = value
 
     @property
     def parent_parser(self):
@@ -69,43 +76,18 @@ class ParserStats:
     def __call__(self):
         return self._parser
 
-    def _build_get_license_utilization_argument(self):
-        parser = self._parser_stats.add_parser(
-            "get-license-utilization",
-            parents=[
-                self._parent_parser(),
-                self._silent_parser(),
-                self._verbose_parser(),
-            ],
-            help="Gets current license utilization per environment.",
+    def _build_backup_argument(self):
+        self._parser_backup.add_argument(
+            "--environments", nargs="+", help="list of environments", required=True
         )
-        parser.add_argument(
-            "-e",
-            "--environments",
-            help="list of environments",
-            nargs="+",
-            required=True,
-        )
-        parser.add_argument(
-            "--time-range",
-            help="time range e.g. '01/01/2020 00:00~04/01/2020 00:00'",
-            required=True,
-        )
-        parser.add_argument("--tzo", help="tzo", type=int, default=None)
-        parser.add_argument(
-            "--api-calls-per-year",
-            help="Apigee license per year (API Calls). Default is 10,000,000,000.",
-            type=int,
-            default=10000000000,
-        )
-        parser.set_defaults(
-            func=lambda args: Stats(args, args.org).get_license_utilization(
-                args.time_range,
+        self._parser_backup.set_defaults(
+            func=lambda args: backup(
+                gen_auth(args.username, args.password, args.mfa_secret),
+                args.org,
                 environments=args.environments,
-                tzo=args.tzo,
-                api_calls_per_year=args.api_calls_per_year,
+                fs_write=True,
             )
         )
 
     def _create_parser(self):
-        self._build_get_license_utilization_argument()
+        self._build_backup_argument()

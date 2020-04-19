@@ -9,6 +9,7 @@ from apigee import *
 from apigee.api.developers import Developers
 from apigee.util import mfa_with_pyotp
 from apigee.util.os import makedirs
+from apigee.util.types import Struct
 
 
 def set_header(hdrs, args):
@@ -66,3 +67,7 @@ def with_prefix(
     raise Exception(
         f"401 Client Error: Unauthorized for team: {str(allowed)}\nAttempted to access resource: {name}"
     )
+
+
+def gen_auth(username, password, mfa_secret):
+    return Struct(username=username, password=password, mfa_secret=mfa_secret)

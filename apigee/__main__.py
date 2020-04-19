@@ -33,6 +33,8 @@ from apigee.parsers.parser_caches import ParserCaches
 from apigee.parsers.parser_debugsessions import ParserDebugsessions
 from apigee.parsers.parser_sharedflows import ParserSharedflows
 from apigee.parsers.parser_stats import ParserStats
+from apigee.parsers.parser_backup import ParserBackup
+from apigee.parsers.parser_restore import ParserRestore
 
 from apigee.util.exceptions import exception_handler
 
@@ -161,6 +163,22 @@ def main():
         verbose_parser=verbose_parser,
     ).parser
     ParserStats(
+        subparsers,
+        parent_parser=parent_parser,
+        environment_parser=environment_parser,
+        prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
+    ).parser
+    ParserBackup(
+        subparsers,
+        parent_parser=parent_parser,
+        environment_parser=environment_parser,
+        prefix_parser=prefix_parser,
+        silent_parser=silent_parser,
+        verbose_parser=verbose_parser,
+    ).parser
+    ParserRestore(
         subparsers,
         parent_parser=parent_parser,
         environment_parser=environment_parser,

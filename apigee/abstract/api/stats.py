@@ -30,7 +30,13 @@ class IStats:
         self._org_name = value
 
     @abstractmethod
-    def get_license_utilization(self, time_range, environments=["test", "prod"], tzo=None, api_calls_per_year=10000000000):
+    def get_license_utilization(
+        self,
+        time_range,
+        environments=["test", "prod"],
+        tzo=None,
+        api_calls_per_year=10000000000,
+    ):
         pass
 
 
