@@ -3,7 +3,9 @@ apigee-cli
 ==========
 
 |Upload Python Package badge|
-|Python package|
+|Python package badge|
+
+**DISCLAIMER:** This package is highly experimental and conventions will probably break down across modules...
 
 This package provides a command-line interface for the Apigee Management API with multi-factor authentication.
 
@@ -12,7 +14,7 @@ Documentation: `The Apigee Management API command-line interface documentation`_
 ::
 
     usage: apigee [-h] [-V]
-                  {authorization,auth,configure,apis,deployments,deps,keyvaluemaps,kvms,developers,devs,apps,products,prods,targetservers,ts,maskconfigs,masks,permissions,perms,userroles,roles,caches,debug,trace,debugsessions,sharedflows,sf,stats}
+                  {authorization,auth,configure,apis,deployments,deps,keyvaluemaps,kvms,developers,devs,apps,products,prods,targetservers,ts,maskconfigs,masks,permissions,perms,userroles,roles,caches,debug,trace,debugsessions,sharedflows,sf,stats,backup,restore}
                   ...
 
 
@@ -55,7 +57,7 @@ Getting Help
 
 .. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
     :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
-.. |Python package| image:: https://github.com/mdelotavo/apigee-cli/workflows/Python%20package/badge.svg
+.. |Python package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Python%20package/badge.svg
     :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Python+package%22
 .. _`Apigee Product Documentation`: https://apidocs.apigee.com/management/apis
 .. _`Permissions reference`: https://docs.apigee.com/api-platform/system-administration/permissions
