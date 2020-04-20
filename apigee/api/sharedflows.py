@@ -3,6 +3,7 @@
 
 import json
 import requests
+from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.sharedflows import ISharedflows, SharedflowsSerializer
