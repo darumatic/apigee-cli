@@ -54,9 +54,13 @@ class Sharedflows(ISharedflows):
     ):
         # we need to undeploy existing deployed revisions in the target environment first,
         # otherwise each revision will remain deployed (will not undeploy with each new revision)
-        self.undeploy_shared_flow_revisions_in_environment(
-            environment, shared_flow_name
-        )
+        try:
+            self.get_a_shared_flow(shared_flow_name)
+            self.undeploy_shared_flow_revisions_in_environment(
+                environment, shared_flow_name
+            )
+        except HTTPError:
+            pass
         if shared_flow_file:
             revision_number = int(
                 self.import_a_shared_flow(shared_flow_file, shared_flow_name).json()[
