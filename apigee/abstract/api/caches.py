@@ -83,6 +83,8 @@ class CachesSerializer:
             return json.dumps(caches)
         elif format == "table":
             pass
+        elif format == "dict":
+            return caches
         # else:
         #     raise ValueError(format)
         return resp

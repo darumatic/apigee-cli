@@ -1,6 +1,6 @@
 import argparse
 
-from apigee.api.backup_and_restore import backup
+from apigee.api.backup import Backup
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.environment_parser import EnvironmentParser
@@ -24,11 +24,12 @@ class ParserBackup:
         self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._parser_backup = self._parser.add_parser(
             "backup",
-            help="admin backup",
+            help="",
             parents=[
                 self._parent_parser(),
                 self._silent_parser(),
                 self._verbose_parser(),
+                self._prefix_parser(),
             ],
         )
         self._create_parser()
@@ -80,12 +81,32 @@ class ParserBackup:
         self._parser_backup.add_argument(
             "--environments", nargs="+", help="list of environments", required=True
         )
+        self._parser_backup.add_argument(
+            "--target-directory", help="target directory", default=None
+        )
+        self._parser_backup.add_argument(
+            "--resources",
+            nargs="+",
+            choices=(
+                "apis",
+                "keyvaluemaps",
+                "targetservers",
+                "caches",
+                "developers",
+                "apiproducts",
+                "apps",
+                "userroles",
+            ),
+            help="resources to back up. default is all.",
+            default=None,
+        )
         self._parser_backup.set_defaults(
-            func=lambda args: backup(
-                gen_auth(args.username, args.password, args.mfa_secret),
+            func=lambda args: Backup(
+                gen_auth(args.username, args.password, args.mfa_secret,),
                 args.org,
-                environments=args.environments,
-                fs_write=True,
+                target_directory=args.target_directory,
+            ).backup(
+                environments=args.environments, prefix=args.prefix, fs_write=True, resources=args.resources
             )
         )
 

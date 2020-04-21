@@ -102,6 +102,8 @@ class AppsSerializer:
             return json.dumps(apps)
         elif format == "table":
             pass
+        elif format == "dict":
+            return apps
         # else:
         #     raise ValueError(format)
         return resp

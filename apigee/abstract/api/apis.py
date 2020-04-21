@@ -86,6 +86,8 @@ class ApisSerializer:
             return json.dumps(apis)
         elif format == "table":
             pass
+        elif format == "dict":
+            return apis
         # else:
         #     raise ValueError(format)
         return resp

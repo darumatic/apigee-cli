@@ -103,7 +103,7 @@ class Caches(ICaches):
         resp.raise_for_status()
         return resp
 
-    def list_caches_in_an_environment(self, environment, prefix=None):
+    def list_caches_in_an_environment(self, environment, prefix=None, format="json"):
         """List caches in an environment.
 
         Args:
@@ -118,7 +118,7 @@ class Caches(ICaches):
         hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return CachesSerializer().serialize_details(resp, "json", prefix=prefix)
+        return CachesSerializer().serialize_details(resp, format, prefix=prefix)
 
     def update_a_cache_in_an_environment(self, environment, request_body):
         """Updates a cache in an environment.

@@ -1,6 +1,6 @@
 import argparse
 
-from apigee.api import backup_and_restore as bar
+from apigee.api.restore import Restore
 
 from apigee.parsers.parent_parser import ParentParser
 from apigee.parsers.environment_parser import EnvironmentParser
@@ -80,10 +80,8 @@ class ParserRestore:
                 self._parent_parser(),
                 self._silent_parser(),
                 self._verbose_parser(),
+                self._environment_parser()
             ],
-        )
-        parser.add_argument(
-            "--environments", help="list of environments", required=True
         )
         parser.add_argument(
             "-d", "--directory", help="directory of key value maps", required=True
@@ -97,9 +95,9 @@ class ParserRestore:
             help="check which key value maps will be restored",
         )
         parser.set_defaults(
-            func=lambda args: bar.restore_kvms(
-                gen_auth(args.username, args.password, args.mfa_secret),
-                args.org,
+            func=lambda args: Restore(
+                gen_auth(args.username, args.password, args.mfa_secret), args.org
+            ).restore_kvms(
                 args.environments,
                 args.directory,
                 snapshot=read_file(args.snapshot_file),
@@ -116,9 +114,9 @@ class ParserRestore:
                 self._parent_parser(),
                 self._silent_parser(),
                 self._verbose_parser(),
+                self._environment_parser()
             ],
         )
-        parser.add_argument("--environment", help="list of environments", required=True)
         parser.add_argument(
             "-d", "--directory", help="directory of target servers", required=True
         )
@@ -131,9 +129,9 @@ class ParserRestore:
             help="check which target servers will be restored",
         )
         parser.set_defaults(
-            func=lambda args: bar.restore_targetservers(
-                gen_auth(args.username, args.password, args.mfa_secret),
-                args.org,
+            func=lambda args: Restore(
+                gen_auth(args.username, args.password, args.mfa_secret), args.org
+            ).restore_targetservers(
                 args.environment,
                 args.directory,
                 snapshot=read_file(args.snapshot_file),
@@ -149,9 +147,9 @@ class ParserRestore:
                 self._parent_parser(),
                 self._silent_parser(),
                 self._verbose_parser(),
+                self._environment_parser()
             ],
         )
-        parser.add_argument("--environment", help="list of environments", required=True)
         parser.add_argument(
             "-d", "--directory", help="directory of caches", required=True
         )
@@ -164,9 +162,9 @@ class ParserRestore:
             help="check which caches will be restored",
         )
         parser.set_defaults(
-            func=lambda args: bar.restore_caches(
-                gen_auth(args.username, args.password, args.mfa_secret),
-                args.org,
+            func=lambda args: Restore(
+                gen_auth(args.username, args.password, args.mfa_secret), args.org
+            ).restore_caches(
                 args.environment,
                 args.directory,
                 snapshot=read_file(args.snapshot_file),
@@ -197,9 +195,9 @@ class ParserRestore:
             help="check which developers will be restored",
         )
         parser.set_defaults(
-            func=lambda args: bar.restore_developers(
-                gen_auth(args.username, args.password, args.mfa_secret),
-                args.org,
+            func=lambda args: Restore(
+                gen_auth(args.username, args.password, args.mfa_secret), args.org
+            ).restore_developers(
                 args.directory,
                 snapshot=read_file(args.snapshot_file),
                 dry_run=args.dry_run,
@@ -229,9 +227,9 @@ class ParserRestore:
             help="check which API products will be restored",
         )
         parser.set_defaults(
-            func=lambda args: bar.restore_products(
-                gen_auth(args.username, args.password, args.mfa_secret),
-                args.org,
+            func=lambda args: Restore(
+                gen_auth(args.username, args.password, args.mfa_secret), args.org
+            ).restore_products(
                 args.directory,
                 snapshot=read_file(args.snapshot_file),
                 dry_run=args.dry_run,
@@ -260,12 +258,10 @@ class ParserRestore:
             help="check which developer apps will be restored",
         )
         parser.set_defaults(
-            func=lambda args: bar.restore_apps(
-                gen_auth(args.username, args.password, args.mfa_secret),
-                args.org,
-                args.directory,
-                args.snapshot_dir,
-                dry_run=args.dry_run,
+            func=lambda args: Restore(
+                gen_auth(args.username, args.password, args.mfa_secret), args.org
+            ).restore_apps(
+                args.directory, args.snapshot_dir, dry_run=args.dry_run,
             )
         )
 
@@ -292,9 +288,9 @@ class ParserRestore:
             help="check which developer apps will be restored",
         )
         parser.set_defaults(
-            func=lambda args: bar.restore_roles(
-                gen_auth(args.username, args.password, args.mfa_secret),
-                args.org,
+            func=lambda args: Restore(
+                gen_auth(args.username, args.password, args.mfa_secret), args.org
+            ).restore_roles(
                 args.directory,
                 snapshot=read_file(args.snapshot_file),
                 dry_run=args.dry_run,

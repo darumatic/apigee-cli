@@ -103,6 +103,8 @@ class DevelopersSerializer:
             return json.dumps(developers)
         elif format == "table":
             pass
+        elif format == "dict":
+            return developers
         # else:
         #     raise ValueError(format)
         return resp

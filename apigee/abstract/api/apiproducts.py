@@ -79,6 +79,8 @@ class ApiproductsSerializer:
             return json.dumps(apiproducts)
         elif format == "table":
             pass
+        elif format == "dict":
+            return apiproducts
         # else:
         #     raise ValueError(format)
         return resp

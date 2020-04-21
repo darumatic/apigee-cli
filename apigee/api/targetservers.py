@@ -59,7 +59,9 @@ class Targetservers(ITargetservers):
         resp.raise_for_status()
         return resp
 
-    def list_targetservers_in_an_environment(self, environment, prefix=None):
+    def list_targetservers_in_an_environment(
+        self, environment, prefix=None, format="json"
+    ):
         """List all TargetServers in an environment.
 
         Args:
@@ -74,7 +76,7 @@ class Targetservers(ITargetservers):
         hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return TargetserversSerializer().serialize_details(resp, "json", prefix=prefix)
+        return TargetserversSerializer().serialize_details(resp, format, prefix=prefix)
 
     def get_targetserver(self, environment):
         """Returns a TargetServer definition.

@@ -17,6 +17,7 @@ import string
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.apps import IApps, AppsSerializer
+from apigee.api.developers import Developers
 from apigee.util import authorization, console
 
 
@@ -153,7 +154,13 @@ class Apps(IApps):
         return resp
 
     def list_developer_apps(
-        self, developer, prefix=None, expand=False, count=100, startkey=""
+        self,
+        developer,
+        prefix=None,
+        expand=False,
+        count=100,
+        startkey="",
+        format="json",
     ):
         """Lists all apps created by a developer in an organization, and
         optionally provides an expanded view of the apps.
@@ -189,7 +196,24 @@ class Apps(IApps):
         hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return AppsSerializer().serialize_details(resp, "json", prefix=prefix)
+        return AppsSerializer().serialize_details(resp, format, prefix=prefix)
+
+    def list_apps_for_all_developers(
+        self, prefix=None, expand=False, count=100, startkey="", format="dict"
+    ):
+        apps = {}
+        for dev in Developers(self._auth, self._org_name, None).list_developers(
+            prefix=prefix, expand=expand, count=count, startkey=startkey, format="dict"
+        ):
+            apps[dev] = self.list_developer_apps(
+                dev,
+                prefix=None,
+                expand=expand,
+                count=1000,
+                startkey=startkey,
+                format=format,
+            )
+        return apps
 
     def delete_key_for_a_developer_app(self, developer, consumer_key):
         """Deletes a consumer key that belongs to an app, and removes all API

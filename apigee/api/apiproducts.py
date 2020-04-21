@@ -96,7 +96,9 @@ class Apiproducts(IApiproducts):
         resp.raise_for_status()
         return resp
 
-    def list_api_products(self, prefix=None, expand=False, count=1000, startkey=""):
+    def list_api_products(
+        self, prefix=None, expand=False, count=1000, startkey="", format="json"
+    ):
         """Lists all API Products by name for an organization
 
         Args:
@@ -123,7 +125,7 @@ class Apiproducts(IApiproducts):
         hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return ApiproductsSerializer().serialize_details(resp, "json", prefix=prefix)
+        return ApiproductsSerializer().serialize_details(resp, format, prefix=prefix)
 
     def update_api_product(self, request_body):
         """This method updates an existing API product

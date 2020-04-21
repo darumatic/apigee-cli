@@ -126,7 +126,9 @@ class Keyvaluemaps(IKeyvaluemaps):
         resp.raise_for_status()
         return resp
 
-    def list_keyvaluemaps_in_an_environment(self, environment, prefix=None):
+    def list_keyvaluemaps_in_an_environment(
+        self, environment, prefix=None, format="json"
+    ):
         """Lists the name of all key/value maps in an environment.
 
         Optionally returns an expanded view of all key/value maps for the
@@ -144,7 +146,7 @@ class Keyvaluemaps(IKeyvaluemaps):
         hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return KeyvaluemapsSerializer().serialize_details(resp, "json", prefix=prefix)
+        return KeyvaluemapsSerializer().serialize_details(resp, format, prefix=prefix)
 
     def update_keyvaluemap_in_an_environment(self, environment, request_body):
         """Updates an existing KeyValueMap in an environment.

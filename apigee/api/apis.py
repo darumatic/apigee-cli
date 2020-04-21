@@ -261,7 +261,7 @@ class Apis(IApis, IPull):
         resp.raise_for_status()
         return resp
 
-    def list_api_proxies(self, prefix=None):
+    def list_api_proxies(self, prefix=None, format="json"):
         """Gets the names of all API proxies in an organization.
 
         The names correspond to the names defined in the configuration files for
@@ -277,7 +277,7 @@ class Apis(IApis, IPull):
         hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return ApisSerializer().serialize_details(resp, "json", prefix=prefix)
+        return ApisSerializer().serialize_details(resp, format, prefix=prefix)
 
     def list_api_proxy_revisions(self, api_name):
         """List all revisions for an API proxy.

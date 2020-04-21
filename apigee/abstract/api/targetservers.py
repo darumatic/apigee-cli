@@ -79,6 +79,8 @@ class TargetserversSerializer:
             return json.dumps(targetservers)
         elif format == "table":
             pass
+        elif format == "dict":
+            return targetservers
         # else:
         #     raise ValueError(format)
         return resp

@@ -103,6 +103,8 @@ class KeyvaluemapsSerializer:
             return json.dumps(maps)
         elif format == "table":
             pass
+        elif format == "dict":
+            return maps
         # else:
         #     raise ValueError(format)
         return resp

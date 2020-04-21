@@ -132,7 +132,9 @@ class Developers(IDevelopers):
         resp.raise_for_status()
         return resp
 
-    def list_developers(self, prefix=None, expand=False, count=100, startkey=""):
+    def list_developers(
+        self, prefix=None, expand=False, count=100, startkey="", format="json"
+    ):
         """Lists all developers in an organization by email address.
 
         This call does not list any company developers who are a part of the
@@ -167,7 +169,7 @@ class Developers(IDevelopers):
         hdrs = authorization.set_header({"Accept": "application/json"}, self._auth)
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        return DevelopersSerializer().serialize_details(resp, "json", prefix=prefix)
+        return DevelopersSerializer().serialize_details(resp, format, prefix=prefix)
 
     def set_developer_status(self, action):
         """Sets a developer's status to active or inactive for a specific
