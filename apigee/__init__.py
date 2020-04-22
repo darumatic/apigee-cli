@@ -9,9 +9,14 @@ long_description = (
 
 Getting Help:
 
-    Homepage: https://pypi.org/project/apigeecli/
-    Apigee Product Documentation: https://apidocs.apigee.com/management/apis
-    The Apigee Management API command-line interface documentation: https://mdelotavo.github.io/apigee-cli/
+    Homepage:
+        https://pypi.org/project/apigeecli/
+
+    Apigee Product Documentation:
+        https://apidocs.apigee.com/management/apis
+
+    The Apigee Management API command-line interface documentation:
+        https://mdelotavo.github.io/apigee-cli/
     """
 )
 
