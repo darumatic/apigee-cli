@@ -216,7 +216,7 @@ class Restore:
         users = read_file(file, type="json")
         for user in users:
             Userroles(self._auth, self._org_name, role_name).add_a_user_to_a_role(user)
-        return _get_users_for_a_role(role_name)
+        return self._get_users_for_a_role(role_name)
 
     def restore_roles(self, directory, snapshot=[], dry_run=False):
         if not snapshot:
