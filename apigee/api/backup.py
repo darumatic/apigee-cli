@@ -203,7 +203,7 @@ class Backup:
     ):
         struct.products = Apiproducts(
             self._auth, self._org_name, None
-        ).list_api_products(prefix=None, format="dict")
+        ).list_api_products(prefix=prefix, format="dict")
         write_file(
             struct.products,
             str(
