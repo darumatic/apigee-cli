@@ -5,7 +5,9 @@ apigee-cli
 |Upload Python Package badge|
 |Python package badge|
 
-**DISCLAIMER:** This package is highly experimental and conventions will probably break down across modules...
+**DISCLAIMER:**
+    - This package is highly experimental and conventions will probably break down across modules
+    - This is not an officially supported Google product
 
 This package provides a command-line interface for the Apigee Management API with multi-factor authentication.
 
