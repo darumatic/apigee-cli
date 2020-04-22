@@ -21,7 +21,7 @@ class ParserConfigure:
 
     def _build_parser_configure_argument(self):
         parser_configure = self._parser.add_parser(
-            "configure", help="configure credentials"
+            "configure", help="Configure Apigee Edge credentials."
         )
         parser_configure.add_argument(
             "-P", "--profile", help="name of profile to create", default="default"

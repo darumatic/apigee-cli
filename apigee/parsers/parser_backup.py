@@ -24,7 +24,7 @@ class ParserBackup:
         self._verbose_parser = kwargs.get("verbose_parser", VerboseParser())
         self._parser_backup = self._parser.add_parser(
             "backup",
-            help="",
+            help="Downloads Apigee Edge configuration files for API Proxies, key value maps, target servers, caches, developers, API products, developer apps, and user roles (including permissions and associated users).",
             parents=[
                 self._parent_parser(),
                 self._silent_parser(),

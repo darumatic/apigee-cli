@@ -17,7 +17,7 @@ class ParserSharedflows:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_sharedflows = self._parser.add_parser(
-            "sharedflows", aliases=["sf"], help="manage shared flows"
+            "sharedflows", aliases=["sf"], help="APIs to manage shared flows and flow hooks."
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())

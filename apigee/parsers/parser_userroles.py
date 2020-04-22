@@ -14,7 +14,7 @@ class ParserUserroles:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_userroles = self._parser.add_parser(
-            "userroles", aliases=["roles"], help="manage user roles"
+            "userroles", aliases=["roles"], help="Roles for users in an organization on Apigee Edge. User roles form the basis of role-based access in Apigee Edge. Users are associated with one or more userroles. Each userrole defines a set of permissions (GET, PUT, DELETE) on RBAC resources (defined by URI paths)."
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._silent_parser = kwargs.get("silent_parser", SilentParser())

@@ -16,7 +16,7 @@ class ParserTargetservers:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_targetservers = self._parser.add_parser(
-            "targetservers", aliases=["ts"], help="manage target servers"
+            "targetservers", aliases=["ts"], help="TargetServers are used to decouple TargetEndpoint HTTPTargetConnections from concrete URLs for backend services."
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())

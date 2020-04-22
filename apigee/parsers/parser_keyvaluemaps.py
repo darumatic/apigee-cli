@@ -16,7 +16,7 @@ class ParserKeyvaluemaps:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_keyvaluemaps = self._parser.add_parser(
-            "keyvaluemaps", aliases=["kvms"], help="manage keyvaluemaps"
+            "keyvaluemaps", aliases=["kvms"], help="Key/value maps at the environment scope can be accessed by any API proxy in the environment (such as test or prod). In the management UI (APIs > Environment Configuration), key/value maps are at the environment scope."
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())

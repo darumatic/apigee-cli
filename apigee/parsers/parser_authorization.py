@@ -14,7 +14,7 @@ class ParserAuthorization:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_auth = self._parser.add_parser(
-            "authorization", aliases=["auth"], help=""
+            "authorization", aliases=["auth"], help="Custom authorization commands. More information on the use cases for these commands are yet to be documented."
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())

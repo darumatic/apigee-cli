@@ -15,7 +15,7 @@ class ParserApps:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_apps = self._parser.add_parser(
-            "apps", help="manage developer apps"
+            "apps", help="Management APIs available for working with developer apps."
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())
