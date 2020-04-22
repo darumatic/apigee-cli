@@ -301,34 +301,34 @@ class Backup:
                 self.snapshot_apis(
                     struct, prefix=prefix, fs_write=fs_write,
                 )
-            if resource == "keyvaluemaps":
+            elif resource == "keyvaluemaps":
                 for env in environments:
                     self.snapshot_kvms(
                         struct, environment=env, prefix=prefix, fs_write=fs_write,
                     )
-            if resource == "targetservers":
+            elif resource == "targetservers":
                 for env in environments:
                     self.snapshot_targetservers(
                         struct, environment=env, prefix=prefix, fs_write=fs_write,
                     )
-            if resource == "caches":
+            elif resource == "caches":
                 for env in environments:
                     self.snapshot_caches(
                         struct, environment=env, prefix=prefix, fs_write=fs_write,
                     )
-            if resource == "developers":
+            elif resource == "developers":
                 self.snapshot_developers(
                     struct, prefix=prefix, fs_write=fs_write,
                 )
-            if resource == "apiproducts":
+            elif resource == "apiproducts":
                 self.snapshot_products(
                     struct, prefix=prefix, fs_write=fs_write,
                 )
-            if resource == "apps":
+            elif resource == "apps":
                 self.snapshot_apps(
                     struct, prefix=prefix, fs_write=fs_write,
                 )
-            if resource == "userroles":
+            elif resource == "userroles":
                 self.snapshot_roles(
                     struct, prefix=prefix, fs_write=fs_write,
                 )
@@ -508,26 +508,26 @@ class Backup:
                 self.backup_apis(
                     curr_snapshot, prefix=prefix, fs_write=fs_write,
                 )
-            if resource == "keyvaluemaps":
+            elif resource == "keyvaluemaps":
                 for env in environments:
                     self.backup_kvms(
                         curr_snapshot, env, prefix=prefix, fs_write=fs_write,
                     )
-            if resource == "targetservers":
+            elif resource == "targetservers":
                 for env in environments:
                     self.backup_targetservers(
                         curr_snapshot, env, prefix=prefix, fs_write=fs_write,
                     )
-            if resource == "caches":
+            elif resource == "caches":
                 for env in environments:
                     self.backup_caches(
                         curr_snapshot, env, prefix=prefix, fs_write=fs_write,
                     )
-            if resource == "developers":
+            elif resource == "developers":
                 self.backup_developers(curr_snapshot, prefix=prefix, fs_write=fs_write)
-            if resource == "apiproducts":
+            elif resource == "apiproducts":
                 self.backup_products(curr_snapshot, prefix=prefix, fs_write=fs_write)
-            if resource == "apps":
+            elif resource == "apps":
                 self.backup_apps(curr_snapshot, prefix=prefix, fs_write=fs_write)
-            if resource == "userroles":
+            elif resource == "userroles":
                 self.backup_roles(curr_snapshot, prefix=prefix, fs_write=fs_write)
