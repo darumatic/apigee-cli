@@ -51,11 +51,11 @@ class Stats(IStats):
         console.log()
         total = sum(metrics.values())
         console.log(
-            f"Total API calls for specified time range ({time_range}): {total:,}"
+            f"Total API calls: {total:,}"
         )
         utilization = total * 100 / api_calls_per_year
         console.log(
-            f"Utilization % for specified time range ({time_range}): {utilization}%"
+            f"Utilization: {utilization}%"
         )
         console.log()
         return t
