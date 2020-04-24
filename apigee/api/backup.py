@@ -23,6 +23,17 @@ from apigee.util.types import Struct
 
 
 class Backup:
+    RESOURCES = (
+        "apis",
+        "keyvaluemaps",
+        "targetservers",
+        "caches",
+        "developers",
+        "apiproducts",
+        "apps",
+        "userroles",
+    )
+
     def __init__(
         self, auth, org_name, target_directory=None, snapshots_dir="snapshots"
     ):
@@ -44,16 +55,6 @@ class Backup:
             apps={},
             products=[],
             roles=[],
-        )
-        self._resources = (
-            "apis",
-            "keyvaluemaps",
-            "targetservers",
-            "caches",
-            "developers",
-            "apiproducts",
-            "apps",
-            "userroles",
         )
 
     @property
@@ -293,7 +294,7 @@ class Backup:
     ):
         struct = self._struct
         if not resources:
-            resources = self._resources
+            resources = self.RESOURCES
         for resource in resources:
             if resource == "apis":
                 self.snapshot_apis(
@@ -488,7 +489,7 @@ class Backup:
             resources=resources,
         )
         if not resources:
-            resources = self._resources
+            resources = self.RESOURCES
         for resource in resources:
             if resource == "apis":
                 self.backup_apis(

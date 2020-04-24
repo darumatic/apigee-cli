@@ -10,12 +10,13 @@ from apigee.util.os import makedirs
 
 
 class Configure:
+    KEY_LIST = ("username", "password", "mfa_secret", "org", "prefix")
+
     def __init__(self, args):
         self._args = args
         self._profile = args.profile
         self._config = configparser.ConfigParser()
         self._config.read(APIGEE_CLI_CREDENTIALS_FILE)
-        self.KEY_LIST = ("username", "password", "mfa_secret", "org", "prefix")
         try:
             self._profile_dict = dict(self._config._sections[self._profile])
             for key in self.KEY_LIST:
