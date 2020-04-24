@@ -6,6 +6,7 @@ import time
 import jwt
 
 from apigee import *
+
 # from apigee.api.developers import Developers
 from apigee.util import mfa_with_pyotp
 from apigee.util.os import makedirs
@@ -56,6 +57,7 @@ def with_prefix(
     name, args, attribute_name=APIGEE_CLI_AUTHORIZATION_DEVELOPER_ATTRIBUTE
 ):
     from apigee.api.developers import Developers
+
     team = (
         Developers(args, args.org, args.username)
         .get_developer_attribute(attribute_name)

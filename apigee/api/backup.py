@@ -35,6 +35,16 @@ class Backup:
             self._target_directory = str(Path(target_directory).resolve())
         else:
             self._target_directory = os.getcwd()
+        self._struct = Struct(
+            apis={},
+            kvms={},
+            targetservers={},
+            caches={},
+            developers=[],
+            apps={},
+            products=[],
+            roles=[],
+        )
 
     @property
     def auth(self):
@@ -271,45 +281,18 @@ class Backup:
     def snapshot(
         self, environments=["test", "prod"], prefix=None, fs_write=False, resources=None
     ):
-        struct = Struct(
-            apis={},
-            kvms={},
-            targetservers={},
-            caches={},
-            developers=[],
-            apps={},
-            products=[],
-            roles=[],
-        )
+        struct = self._struct
         if not resources:
-            self.snapshot_apis(
-                struct, prefix=prefix, fs_write=fs_write,
+            resources = (
+                "apis",
+                "keyvaluemaps",
+                "targetservers",
+                "caches",
+                "developers",
+                "apiproducts",
+                "apps",
+                "userroles",
             )
-            for env in tqdm(environments, desc="/keyvaluemaps snapshot"):
-                self.snapshot_kvms(
-                    struct, environment=env, prefix=prefix, fs_write=fs_write,
-                )
-            for env in tqdm(environments, desc="/targetservers snapshot"):
-                self.snapshot_targetservers(
-                    struct, environment=env, prefix=prefix, fs_write=fs_write,
-                )
-            for env in tqdm(environments, desc="/caches snapshot"):
-                self.snapshot_caches(
-                    struct, environment=env, prefix=prefix, fs_write=fs_write,
-                )
-            self.snapshot_developers(
-                struct, prefix=prefix, fs_write=fs_write,
-            )
-            self.snapshot_products(
-                struct, prefix=prefix, fs_write=fs_write,
-            )
-            self.snapshot_apps(
-                struct, prefix=prefix, fs_write=fs_write,
-            )
-            self.snapshot_roles(
-                struct, prefix=prefix, fs_write=fs_write,
-            )
-            return struct
         for resource in resources:
             if resource == "apis":
                 self.snapshot_apis(
@@ -504,24 +487,16 @@ class Backup:
             resources=resources,
         )
         if not resources:
-            self.backup_apis(
-                curr_snapshot, prefix=prefix, fs_write=fs_write,
+            resources = (
+                "apis",
+                "keyvaluemaps",
+                "targetservers",
+                "caches",
+                "developers",
+                "apiproducts",
+                "apps",
+                "userroles",
             )
-            for env in environments:
-                self.backup_kvms(
-                    curr_snapshot, env, prefix=prefix, fs_write=fs_write,
-                )
-                self.backup_targetservers(
-                    curr_snapshot, env, prefix=prefix, fs_write=fs_write,
-                )
-                self.backup_caches(
-                    curr_snapshot, env, prefix=prefix, fs_write=fs_write,
-                )
-            self.backup_developers(curr_snapshot, prefix=prefix, fs_write=fs_write)
-            self.backup_products(curr_snapshot, prefix=prefix, fs_write=fs_write)
-            self.backup_apps(curr_snapshot, prefix=prefix, fs_write=fs_write)
-            self.backup_roles(curr_snapshot, prefix=prefix, fs_write=fs_write)
-            return
         for resource in resources:
             if resource == "apis":
                 self.backup_apis(
