@@ -4,8 +4,7 @@ __version__ = "0.36.2"
 description = (
     "Apigee Management API command-line interface with multi-factor authentication"
 )
-long_description = (
-    """Apigee Management API command-line interface with multi-factor authentication
+long_description = """Apigee Management API command-line interface with multi-factor authentication
 
 Getting Help:
 
@@ -18,7 +17,6 @@ Getting Help:
     The Apigee Management API command-line interface documentation:
         https://mdelotavo.github.io/apigee-cli/
     """
-)
 
 import json
 from os import getenv

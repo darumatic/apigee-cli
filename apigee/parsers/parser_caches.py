@@ -16,7 +16,8 @@ class ParserCaches:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_caches = self._parser.add_parser(
-            "caches", help="A lightweight persistence store that can be used by policies or code executing on the Apigee Edge. To support data segregation, cache resources are scoped to environments."
+            "caches",
+            help="A lightweight persistence store that can be used by policies or code executing on the Apigee Edge. To support data segregation, cache resources are scoped to environments.",
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())

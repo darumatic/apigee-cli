@@ -17,7 +17,8 @@ class ParserApis:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_apis = self._parser.add_parser(
-            "apis", help="The proxy APIs let you perform operations on API proxies, such as create, delete, update, and deploy."
+            "apis",
+            help="The proxy APIs let you perform operations on API proxies, such as create, delete, update, and deploy.",
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._dir_parser = kwargs.get("dir_parser", DirParser())

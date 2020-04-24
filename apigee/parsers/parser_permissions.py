@@ -13,7 +13,9 @@ class ParserPermissions:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_permissions = self._parser.add_parser(
-            "permissions", aliases=["perms"], help="Permissions for roles in an organization on Apigee Edge."
+            "permissions",
+            aliases=["perms"],
+            help="Permissions for roles in an organization on Apigee Edge.",
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())

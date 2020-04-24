@@ -15,7 +15,8 @@ class ParserStats:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_stats = self._parser.add_parser(
-            "stats", help="A source of metrics collected by Apigee Edge that measure API consumption and performance, used to build Analytics reports."
+            "stats",
+            help="A source of metrics collected by Apigee Edge that measure API consumption and performance, used to build Analytics reports.",
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._environment_parser = kwargs.get("environment_parser", EnvironmentParser())

@@ -13,7 +13,9 @@ class ParserDeployments:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_deployments = self._parser.add_parser(
-            "deployments", aliases=["deps"], help="API proxies that are actively deployed in environments on Apigee Edge."
+            "deployments",
+            aliases=["deps"],
+            help="API proxies that are actively deployed in environments on Apigee Edge.",
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._silent_parser = kwargs.get("silent_parser", SilentParser())

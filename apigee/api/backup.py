@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 from requests.exceptions import HTTPError
 
+from tqdm import tqdm
+
 from apigee.api.apis import Apis
 from apigee.api.keyvaluemaps import Keyvaluemaps
 from apigee.api.targetservers import Targetservers
@@ -87,8 +89,11 @@ class Backup:
     def snapshot_apis(
         self, struct, prefix=None, fs_write=False,
     ):
-        for api in Apis(self._auth, self._org_name, None).list_api_proxies(
-            prefix=prefix, format="dict"
+        for api in tqdm(
+            Apis(self._auth, self._org_name, None).list_api_proxies(
+                prefix=prefix, format="dict"
+            ),
+            desc="/apis snapshot",
         ):
             struct.apis[api] = (
                 Apis(self._auth, self._org_name, None).get_api_proxy(api).json()
@@ -185,17 +190,18 @@ class Backup:
         struct.developers = Developers(
             self._auth, self._org_name, None
         ).list_developers(prefix=prefix, format="dict")
-        write_file(
-            struct.developers,
-            str(
-                Path(self._target_directory)
-                / self._org_name
-                / self._snapshots_dir
-                / "developers"
-                / "developers.json"
-            ),
-            fs_write=fs_write,
-        )
+        for i in tqdm(range(1), desc="/developers snapshot"):
+            write_file(
+                struct.developers,
+                str(
+                    Path(self._target_directory)
+                    / self._org_name
+                    / self._snapshots_dir
+                    / "developers"
+                    / "developers.json"
+                ),
+                fs_write=fs_write,
+            )
         return struct
 
     def snapshot_products(
@@ -204,17 +210,18 @@ class Backup:
         struct.products = Apiproducts(
             self._auth, self._org_name, None
         ).list_api_products(prefix=prefix, format="dict")
-        write_file(
-            struct.products,
-            str(
-                Path(self._target_directory)
-                / self._org_name
-                / self._snapshots_dir
-                / "apiproducts"
-                / "apiproducts.json"
-            ),
-            fs_write=fs_write,
-        )
+        for i in tqdm(range(1), desc="/apiproducts snapshot"):
+            write_file(
+                struct.products,
+                str(
+                    Path(self._target_directory)
+                    / self._org_name
+                    / self._snapshots_dir
+                    / "apiproducts"
+                    / "apiproducts.json"
+                ),
+                fs_write=fs_write,
+            )
         return struct
 
     def snapshot_apps(
@@ -222,20 +229,20 @@ class Backup:
     ):
         struct.apps = Apps(
             self._auth, self._org_name, None
-        ).list_apps_for_all_developers(prefix=prefix, format="dict")
-        for k, v in struct.apps.items():
-            if v:
-                write_file(
-                    v,
-                    str(
-                        Path(self._target_directory)
-                        / self._org_name
-                        / self._snapshots_dir
-                        / "apps"
-                        / (k + ".json")
-                    ),
-                    fs_write=fs_write,
-                )
+        ).list_apps_for_all_developers(prefix=prefix, format="dict", progress_bar=True)
+        struct.apps = {k: v for k, v in struct.apps.items() if v}
+        for k, v in tqdm(struct.apps.items(), desc="/apps snapshot"):
+            write_file(
+                v,
+                str(
+                    Path(self._target_directory)
+                    / self._org_name
+                    / self._snapshots_dir
+                    / "apps"
+                    / (k + ".json")
+                ),
+                fs_write=fs_write,
+            )
         return struct
 
     def snapshot_roles(
@@ -244,17 +251,21 @@ class Backup:
         struct.roles = (
             Userroles(self._auth, self._org_name, None).list_user_roles().json()
         )
-        write_file(
-            struct.roles,
-            str(
-                Path(self._target_directory)
-                / self._org_name
-                / self._snapshots_dir
-                / "userroles"
-                / "userroles.json"
-            ),
-            fs_write=fs_write,
-        )
+        # TODO: use a UserrolesSerializer
+        if prefix:
+            struct.roles = [role for role in struct.roles if role.startswith(prefix)]
+        for i in tqdm(range(1), desc="/userroles snapshot"):
+            write_file(
+                struct.roles,
+                str(
+                    Path(self._target_directory)
+                    / self._org_name
+                    / self._snapshots_dir
+                    / "userroles"
+                    / "userroles.json"
+                ),
+                fs_write=fs_write,
+            )
         return struct
 
     def snapshot(
@@ -274,13 +285,15 @@ class Backup:
             self.snapshot_apis(
                 struct, prefix=prefix, fs_write=fs_write,
             )
-            for env in environments:
+            for env in tqdm(environments, desc="/keyvaluemaps snapshot"):
                 self.snapshot_kvms(
                     struct, environment=env, prefix=prefix, fs_write=fs_write,
                 )
+            for env in tqdm(environments, desc="/targetservers snapshot"):
                 self.snapshot_targetservers(
                     struct, environment=env, prefix=prefix, fs_write=fs_write,
                 )
+            for env in tqdm(environments, desc="/caches snapshot"):
                 self.snapshot_caches(
                     struct, environment=env, prefix=prefix, fs_write=fs_write,
                 )
@@ -303,17 +316,17 @@ class Backup:
                     struct, prefix=prefix, fs_write=fs_write,
                 )
             elif resource == "keyvaluemaps":
-                for env in environments:
+                for env in tqdm(environments, desc="/keyvaluemaps snapshot"):
                     self.snapshot_kvms(
                         struct, environment=env, prefix=prefix, fs_write=fs_write,
                     )
             elif resource == "targetservers":
-                for env in environments:
+                for env in tqdm(environments, desc="/targetservers snapshot"):
                     self.snapshot_targetservers(
                         struct, environment=env, prefix=prefix, fs_write=fs_write,
                     )
             elif resource == "caches":
-                for env in environments:
+                for env in tqdm(environments, desc="/caches snapshot"):
                     self.snapshot_caches(
                         struct, environment=env, prefix=prefix, fs_write=fs_write,
                     )
@@ -336,7 +349,7 @@ class Backup:
         return struct
 
     def backup_apis(self, snapshot, prefix=None, fs_write=True):
-        for api, metadata in snapshot.apis.items():
+        for api, metadata in tqdm(snapshot.apis.items(), desc="/apis export"):
             for rev in metadata["revision"]:
                 output_dir = str(
                     Path(self._target_directory) / self._org_name / "apis" / api / rev
@@ -353,7 +366,7 @@ class Backup:
     def backup_kvms(
         self, snapshot, environment, prefix=None, fs_write=True,
     ):
-        for kvm in snapshot.kvms[environment]:
+        for kvm in tqdm(snapshot.kvms[environment], desc="/keyvaluemaps export"):
             write_file(
                 Keyvaluemaps(self._auth, self._org_name, kvm)
                 .get_keyvaluemap_in_an_environment(environment)
@@ -372,7 +385,9 @@ class Backup:
     def backup_targetservers(
         self, snapshot, environment, prefix=None, fs_write=True,
     ):
-        for targetserver in snapshot.targetservers[environment]:
+        for targetserver in tqdm(
+            snapshot.targetservers[environment], desc="/targetservers export"
+        ):
             write_file(
                 Targetservers(self._auth, self._org_name, targetserver)
                 .get_targetserver(environment)
@@ -391,7 +406,7 @@ class Backup:
     def backup_caches(
         self, snapshot, environment, prefix=None, fs_write=True,
     ):
-        for cache in snapshot.caches[environment]:
+        for cache in tqdm(snapshot.caches[environment], desc="/caches export"):
             write_file(
                 Caches(self._auth, self._org_name, cache)
                 .get_information_about_a_cache(environment)
@@ -408,7 +423,7 @@ class Backup:
         return snapshot
 
     def backup_developers(self, snapshot, prefix=None, fs_write=True):
-        for dev in snapshot.developers:
+        for dev in tqdm(snapshot.developers, desc="/developers export"):
             write_file(
                 Developers(self._auth, self._org_name, dev).get_developer().text,
                 str(
@@ -422,7 +437,7 @@ class Backup:
         return snapshot
 
     def backup_products(self, snapshot, prefix=None, fs_write=True):
-        for product in snapshot.products:
+        for product in tqdm(snapshot.products, desc="/apiproducts export"):
             write_file(
                 Apiproducts(self._auth, self._org_name, product).get_api_product().text,
                 str(
@@ -436,7 +451,7 @@ class Backup:
         return snapshot
 
     def backup_apps(self, snapshot, prefix=None, fs_write=True):
-        for dev, apps in snapshot.apps.items():
+        for dev, apps in tqdm(snapshot.apps.items(), desc="/apps export"):
             for app in apps:
                 write_file(
                     Apps(self._auth, self._org_name, app)
@@ -454,7 +469,7 @@ class Backup:
         return snapshot
 
     def backup_roles(self, snapshot, prefix=None, fs_write=True):
-        for role in snapshot.roles:
+        for role in tqdm(snapshot.roles, desc="/userroles export"):
             write_file(
                 self._get_users_for_a_role(role),
                 str(
@@ -483,7 +498,10 @@ class Backup:
         self, environments=["test", "prod"], prefix=None, fs_write=True, resources=None
     ):
         curr_snapshot = self.snapshot(
-            environments=environments, prefix=prefix, fs_write=fs_write, resources=resources
+            environments=environments,
+            prefix=prefix,
+            fs_write=fs_write,
+            resources=resources,
         )
         if not resources:
             self.backup_apis(

@@ -15,7 +15,9 @@ class ParserApiproducts:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_apiproducts = self._parser.add_parser(
-            "apiproducts", aliases=["apiprods", "prods", "products"], help="API products enable you to bundle and distribute your APIs to multiple developer groups simultaneously, without having to modify code."
+            "apiproducts",
+            aliases=["apiprods", "prods", "products"],
+            help="API products enable you to bundle and distribute your APIs to multiple developer groups simultaneously, without having to modify code.",
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
         self._file_parser = kwargs.get("file_parser", FileParser())

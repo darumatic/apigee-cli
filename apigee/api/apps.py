@@ -15,8 +15,11 @@ import random
 import requests
 import string
 
+from tqdm import tqdm
+
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.apps import IApps, AppsSerializer
+
 # from apigee.api.developers import Developers
 from apigee.util import authorization, console
 
@@ -199,13 +202,27 @@ class Apps(IApps):
         return AppsSerializer().serialize_details(resp, format, prefix=prefix)
 
     def list_apps_for_all_developers(
-        self, prefix=None, expand=False, count=1000, startkey="", format="dict"
+        self,
+        prefix=None,
+        expand=False,
+        count=1000,
+        startkey="",
+        format="dict",
+        progress_bar=False,
     ):
         apps = {}
         from apigee.api.developers import Developers
-        for dev in Developers(self._auth, self._org_name, None).list_developers(
+
+        list_of_developers = list_of_developers = Developers(
+            self._auth, self._org_name, None
+        ).list_developers(
             prefix=None, expand=expand, count=count, startkey=startkey, format="dict"
-        ):
+        )
+        if progress_bar:
+            list_of_developers = tqdm(
+                list_of_developers, desc="List apps for developers"
+            )
+        for dev in list_of_developers:
             apps[dev] = self.list_developer_apps(
                 dev,
                 prefix=prefix,

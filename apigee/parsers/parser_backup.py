@@ -106,7 +106,10 @@ class ParserBackup:
                 args.org,
                 target_directory=args.target_directory,
             ).backup(
-                environments=args.environments, prefix=args.prefix, fs_write=True, resources=args.resources
+                environments=args.environments,
+                prefix=args.prefix,
+                fs_write=True,
+                resources=args.resources,
             )
         )
 

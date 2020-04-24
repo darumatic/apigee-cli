@@ -51,7 +51,11 @@ def main():
     silent_parser = SilentParser()
     verbose_parser = VerboseParser()
 
-    parser = argparse.ArgumentParser(prog=apigee.CMD, description=apigee.long_description, formatter_class=RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        prog=apigee.CMD,
+        description=apigee.long_description,
+        formatter_class=RawDescriptionHelpFormatter,
+    )
     parser.add_argument(
         "-V",
         "--version",
