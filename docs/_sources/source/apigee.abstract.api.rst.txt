@@ -84,6 +84,22 @@ apigee.abstract.api.permissions module
    :undoc-members:
    :show-inheritance:
 
+apigee.abstract.api.sharedflows module
+--------------------------------------
+
+.. automodule:: apigee.abstract.api.sharedflows
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.abstract.api.stats module
+--------------------------------
+
+.. automodule:: apigee.abstract.api.stats
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.abstract.api.targetservers module
 ----------------------------------------
 

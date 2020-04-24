@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Quickstart &mdash; apigee-cli 0.31.0 documentation</title>
+  <title>Quickstart &mdash; apigee-cli 0.x.x documentation</title>
   
 
   
@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -429,7 +429,7 @@ Deleting entries in test-kvm
 </div>
 <p>As you can see, this command will update existing entries and delete those that are not present in the request body.
 If the key value map or entry does not exist, a new one will be created.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">push</span></code> subcommand is also available for <code class="docutils literal notranslate"><span class="pre">targetservers</span></code>, <code class="docutils literal notranslate"><span class="pre">caches</span></code>, <code class="docutils literal notranslate"><span class="pre">products</span></code> and <code class="docutils literal notranslate"><span class="pre">maskconfigs</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">push</span></code> subcommand is also available for <code class="docutils literal notranslate"><span class="pre">targetservers</span></code>, <code class="docutils literal notranslate"><span class="pre">caches</span></code>, <code class="docutils literal notranslate"><span class="pre">apiproducts</span></code> and <code class="docutils literal notranslate"><span class="pre">maskconfigs</span></code>.</p>
 </div>
 </div>
 <div class="section" id="getting-permissions-for-a-role">
@@ -489,7 +489,7 @@ If the key value map or entry does not exist, a new one will be created.</p>
 
 <span class="n">apis</span> <span class="o">=</span> <span class="n">Apis</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="s1">&#39;[org]&#39;</span><span class="p">,</span> <span class="s1">&#39;[api_name]&#39;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">apis</span><span class="o">.</span><span class="n">list_api_proxy_revisions</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">apis</span><span class="o">.</span><span class="n">list_api_proxy_revisions</span><span class="p">(</span><span class="s1">&#39;[api_name]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -28,6 +28,14 @@ apigee.api.apps module
    :undoc-members:
    :show-inheritance:
 
+apigee.api.backup module
+------------------------
+
+.. automodule:: apigee.api.backup
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.api.caches module
 ------------------------
 
@@ -88,6 +96,30 @@ apigee.api.permissions module
 -----------------------------
 
 .. automodule:: apigee.api.permissions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.api.restore module
+-------------------------
+
+.. automodule:: apigee.api.restore
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.api.sharedflows module
+-----------------------------
+
+.. automodule:: apigee.api.sharedflows
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.api.stats module
+-----------------------
+
+.. automodule:: apigee.api.stats
    :members:
    :undoc-members:
    :show-inheritance:

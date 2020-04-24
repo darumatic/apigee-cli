@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>apigee.util package &mdash; apigee-cli 0.31.0 documentation</title>
+  <title>apigee.util package &mdash; apigee-cli 0.x.x documentation</title>
   
 
   
@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -167,131 +167,167 @@
 </div>
 <div class="section" id="module-apigee.util.authorization">
 <span id="apigee-util-authorization-module"></span><h2>apigee.util.authorization module<a class="headerlink" href="#module-apigee.util.authorization" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
+<dt id="apigee.util.authorization.gen_auth">
+<code class="sig-prename descclassname">apigee.util.authorization.</code><code class="sig-name descname">gen_auth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">mfa_secret</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.authorization.gen_auth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="apigee.util.authorization.get_credential">
-<code class="sig-prename descclassname">apigee.util.authorization.</code><code class="sig-name descname">get_credential</code><span class="sig-paren">(</span><em class="sig-param">section</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.authorization.get_credential" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.authorization.</code><code class="sig-name descname">get_credential</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">section</span></em>, <em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.authorization.get_credential" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.authorization.set_header">
-<code class="sig-prename descclassname">apigee.util.authorization.</code><code class="sig-name descname">set_header</code><span class="sig-paren">(</span><em class="sig-param">hdrs</em>, <em class="sig-param">args</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.authorization.set_header" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.authorization.</code><code class="sig-name descname">set_header</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hdrs</span></em>, <em class="sig-param"><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.authorization.set_header" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.authorization.with_prefix">
-<code class="sig-prename descclassname">apigee.util.authorization.</code><code class="sig-name descname">with_prefix</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">args</em>, <em class="sig-param">attribute_name='team'</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.authorization.with_prefix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.authorization.</code><code class="sig-name descname">with_prefix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">args</span></em>, <em class="sig-param"><span class="n">attribute_name</span><span class="o">=</span><span class="default_value">'team'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.authorization.with_prefix" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="module-apigee.util.configure">
 <span id="apigee-util-configure-module"></span><h2>apigee.util.configure module<a class="headerlink" href="#module-apigee.util.configure" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.util.configure.Configure">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.util.configure.</code><code class="sig-name descname">Configure</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.configure.Configure" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.util.configure.</code><code class="sig-name descname">Configure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.configure.Configure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-apigee.util.console">
 <span id="apigee-util-console-module"></span><h2>apigee.util.console module<a class="headerlink" href="#module-apigee.util.console" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.console.log">
-<code class="sig-prename descclassname">apigee.util.console.</code><code class="sig-name descname">log</code><span class="sig-paren">(</span><em class="sig-param">*message</em>, <em class="sig-param">status=None</em>, <em class="sig-param">silent=False</em>, <em class="sig-param">curr_verbosity=0</em>, <em class="sig-param">expc_verbosity=0</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.console.log" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.console.</code><code class="sig-name descname">log</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">message</span></em>, <em class="sig-param"><span class="n">status</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">silent</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">curr_verbosity</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">expc_verbosity</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.console.log" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="module-apigee.util.exceptions">
 <span id="apigee-util-exceptions-module"></span><h2>apigee.util.exceptions module<a class="headerlink" href="#module-apigee.util.exceptions" title="Permalink to this headline">¶</a></h2>
-<dl class="exception">
+<dl class="py exception">
 <dt id="apigee.util.exceptions.CustomError">
 <em class="property">exception </em><code class="sig-prename descclassname">apigee.util.exceptions.</code><code class="sig-name descname">CustomError</code><a class="headerlink" href="#apigee.util.exceptions.CustomError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.exceptions.exception_handler">
-<code class="sig-prename descclassname">apigee.util.exceptions.</code><code class="sig-name descname">exception_handler</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.exceptions.exception_handler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.exceptions.</code><code class="sig-name descname">exception_handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.exceptions.exception_handler" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="module-apigee.util.mfa_with_pyotp">
 <span id="apigee-util-mfa-with-pyotp-module"></span><h2>apigee.util.mfa_with_pyotp module<a class="headerlink" href="#module-apigee.util.mfa_with_pyotp" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.mfa_with_pyotp.get_access_token">
-<code class="sig-prename descclassname">apigee.util.mfa_with_pyotp.</code><code class="sig-name descname">get_access_token</code><span class="sig-paren">(</span><em class="sig-param">args</em>, <em class="sig-param">retries=4</em>, <em class="sig-param">backoff_factor=0.3</em>, <em class="sig-param">status_forcelist=(500</em>, <em class="sig-param">502</em>, <em class="sig-param">504)</em>, <em class="sig-param">session=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.mfa_with_pyotp.get_access_token" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.mfa_with_pyotp.</code><code class="sig-name descname">get_access_token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em>, <em class="sig-param"><span class="n">retries</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">backoff_factor</span><span class="o">=</span><span class="default_value">0.3</span></em>, <em class="sig-param"><span class="n">status_forcelist</span><span class="o">=</span><span class="default_value">500, 502, 504</span></em>, <em class="sig-param"><span class="n">session</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.mfa_with_pyotp.get_access_token" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="module-apigee.util.os">
 <span id="apigee-util-os-module"></span><h2>apigee.util.os module<a class="headerlink" href="#module-apigee.util.os" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.os.extractzip">
-<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">extractzip</code><span class="sig-paren">(</span><em class="sig-param">source</em>, <em class="sig-param">dest</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.extractzip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">extractzip</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">source</span></em>, <em class="sig-param"><span class="n">dest</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.extractzip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
+<dt id="apigee.util.os.isdir">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">isdir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">d</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.isdir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="apigee.util.os.isfile">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">isfile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.isfile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="apigee.util.os.makedirs">
-<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">makedirs</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.makedirs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">makedirs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.makedirs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.os.path_exists">
-<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">path_exists</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.path_exists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">path_exists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.path_exists" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.os.paths_exist">
-<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">paths_exist</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.paths_exist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">paths_exist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.paths_exist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
+<dt id="apigee.util.os.read_file">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">read_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em>, <em class="sig-param"><span class="n">type</span><span class="o">=</span><span class="default_value">'text'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.read_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="apigee.util.os.splitpath">
-<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">splitpath</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">delimiter='[/\\\\]'</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.splitpath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">splitpath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">delimiter</span><span class="o">=</span><span class="default_value">'[/\\\\]'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.splitpath" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.os.touch">
-<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">touch</code><span class="sig-paren">(</span><em class="sig-param">path</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.touch" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">touch</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.touch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
+<dt id="apigee.util.os.write_file">
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">write_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.write_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="apigee.util.os.writezip">
-<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">writezip</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">content</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.writezip" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.os.</code><code class="sig-name descname">writezip</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em>, <em class="sig-param"><span class="n">content</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.os.writezip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="module-apigee.util.string">
 <span id="apigee-util-string-module"></span><h2>apigee.util.string module<a class="headerlink" href="#module-apigee.util.string" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.string.isempty">
-<code class="sig-prename descclassname">apigee.util.string.</code><code class="sig-name descname">isempty</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.string.isempty" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.string.</code><code class="sig-name descname">isempty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.string.isempty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="module-apigee.util.types">
 <span id="apigee-util-types-module"></span><h2>apigee.util.types module<a class="headerlink" href="#module-apigee.util.types" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.util.types.ArgumentType">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.util.types.</code><code class="sig-name descname">ArgumentType</code><a class="headerlink" href="#apigee.util.types.ArgumentType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.util.types.ArgumentType.isdir">
-<em class="property">static </em><code class="sig-name descname">isdir</code><span class="sig-paren">(</span><em class="sig-param">d</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.types.ArgumentType.isdir" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">isdir</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">d</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.types.ArgumentType.isdir" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.util.types.ArgumentType.isfile">
-<em class="property">static </em><code class="sig-name descname">isfile</code><span class="sig-paren">(</span><em class="sig-param">f</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.types.ArgumentType.isfile" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">isfile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.types.ArgumentType.isfile" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt id="apigee.util.types.ArgumentType.ispath">
+<em class="property">static </em><code class="sig-name descname">ispath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">f</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.types.ArgumentType.ispath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="apigee.util.types.Struct">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.util.types.</code><code class="sig-name descname">Struct</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">entries</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.types.Struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-apigee.util">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apigee.util" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.util.envvar_exists">
-<code class="sig-prename descclassname">apigee.util.</code><code class="sig-name descname">envvar_exists</code><span class="sig-paren">(</span><em class="sig-param">envvar</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.envvar_exists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.util.</code><code class="sig-name descname">envvar_exists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">envvar</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.util.envvar_exists" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

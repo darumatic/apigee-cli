@@ -6,21 +6,12 @@
 Welcome to the Apigee Management API command-line interface documentation!
 ==========================================================================
 
-|Upload Python Package badge|
-
-The package can be found here:
-
-* `GitHub`_
-* `Python Package Index (PyPI)`_
-
-.. note::
-   * Many of the docstrings in the ``apigee.api.*`` modules have been taken
-     directly from the `Apigee Product Documentation`_ with a few modifications,
-     as many methods have a one-to-one mapping with the Apigee Edge APIs.
+.. include:: ../README.rst
 
 .. toctree::
    :maxdepth: 1
    :caption: Getting started
+   :hidden:
 
    installation
    quickstart
@@ -28,6 +19,7 @@ The package can be found here:
 .. toctree::
    :maxdepth: 1
    :caption: API
+   :hidden:
 
    auth
    source/apigee.api
@@ -37,6 +29,7 @@ The package can be found here:
 .. toctree::
    :maxdepth: 2
    :caption: Guide
+   :hidden:
 
    license
    disclaimer
@@ -50,9 +43,3 @@ Indices and tables
    :caption: Indices and tables
 
 * :ref:`modindex`
-
-.. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
-    :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
-.. _`GitHub`: https://github.com/mdelotavo/apigee-cli
-.. _`Python Package Index (PyPI)`: https://pypi.org/project/apigeecli/
-.. _`Apigee Product Documentation`: https://apidocs.apigee.com/management/apis

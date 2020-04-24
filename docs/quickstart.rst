@@ -283,7 +283,7 @@ This will display a loading bar output like so::
 As you can see, this command will update existing entries and delete those that are not present in the request body.
 If the key value map or entry does not exist, a new one will be created.
 
-The ``push`` subcommand is also available for ``targetservers``, ``caches``, ``products`` and ``maskconfigs``.
+The ``push`` subcommand is also available for ``targetservers``, ``caches``, ``apiproducts`` and ``maskconfigs``.
 
 
 .. _`Getting permissions for a role`:
@@ -356,7 +356,7 @@ To import and make API calls using the modules, do the following::
 
     apis = Apis(auth, '[org]', '[api_name]')
 
-    print(apis.list_api_proxy_revisions().text)
+    print(apis.list_api_proxy_revisions('[api_name]').text)
 
 .. _`Restoring Developer Apps`:
 

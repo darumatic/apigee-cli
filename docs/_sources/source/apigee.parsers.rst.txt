@@ -76,6 +76,14 @@ apigee.parsers.parser\_authorization module
    :undoc-members:
    :show-inheritance:
 
+apigee.parsers.parser\_backup module
+------------------------------------
+
+.. automodule:: apigee.parsers.parser_backup
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.parsers.parser\_caches module
 ------------------------------------
 
@@ -136,6 +144,30 @@ apigee.parsers.parser\_permissions module
 -----------------------------------------
 
 .. automodule:: apigee.parsers.parser_permissions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.parsers.parser\_restore module
+-------------------------------------
+
+.. automodule:: apigee.parsers.parser_restore
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.parsers.parser\_sharedflows module
+-----------------------------------------
+
+.. automodule:: apigee.parsers.parser_sharedflows
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.parsers.parser\_stats module
+-----------------------------------
+
+.. automodule:: apigee.parsers.parser_stats
    :members:
    :undoc-members:
    :show-inheritance:

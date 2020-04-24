@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>apigee.api package &mdash; apigee-cli 0.31.0 documentation</title>
+  <title>apigee.api package &mdash; apigee-cli 0.x.x documentation</title>
   
 
   
@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -93,6 +93,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.apiproducts">apigee.api.apiproducts module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.apis">apigee.api.apis module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.apps">apigee.api.apps module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.backup">apigee.api.backup module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.caches">apigee.api.caches module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.debugsessions">apigee.api.debugsessions module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.deploy">apigee.api.deploy module</a></li>
@@ -101,6 +102,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.keyvaluemaps">apigee.api.keyvaluemaps module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.maskconfigs">apigee.api.maskconfigs module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.permissions">apigee.api.permissions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.restore">apigee.api.restore module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.sharedflows">apigee.api.sharedflows module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.stats">apigee.api.stats module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.targetservers">apigee.api.targetservers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api.userroles">apigee.api.userroles module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-apigee.api">Module contents</a></li>
@@ -210,13 +214,13 @@ multiple API products without requiring multiple keys. Also, a key can be
 ‘promoted’ from one API product to another. This enables you to promote
 developers from ‘free’ to ‘premium’ API products seamlessly and without user
 interruption.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.apiproducts.Apiproducts">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.apiproducts.</code><code class="sig-name descname">Apiproducts</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.apiproducts.</code><code class="sig-name descname">Apiproducts</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.apiproducts.IApiproducts" title="apigee.abstract.api.apiproducts.IApiproducts"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apiproducts.IApiproducts</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apiproducts.Apiproducts.create_api_product">
-<code class="sig-name descname">create_api_product</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.create_api_product" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_api_product</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.create_api_product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an API product</p>
 <p>A list of API resources (URIs) combined with Quota settings that you can
 use to deliver customized API bundles to your developers.</p>
@@ -230,7 +234,7 @@ use to deliver customized API bundles to your developers.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apiproducts.Apiproducts.delete_api_product">
 <code class="sig-name descname">delete_api_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.delete_api_product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes an API Product</p>
@@ -244,7 +248,7 @@ use to deliver customized API bundles to your developers.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apiproducts.Apiproducts.get_api_product">
 <code class="sig-name descname">get_api_product</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.get_api_product" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets an API Product</p>
@@ -258,9 +262,9 @@ use to deliver customized API bundles to your developers.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apiproducts.Apiproducts.list_api_products">
-<code class="sig-name descname">list_api_products</code><span class="sig-paren">(</span><em class="sig-param">prefix=None</em>, <em class="sig-param">expand=False</em>, <em class="sig-param">count=1000</em>, <em class="sig-param">startkey=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.list_api_products" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_api_products</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">expand</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">count</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">startkey</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'json'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.list_api_products" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lists all API Products by name for an organization</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -288,9 +292,9 @@ The API product name is case sensitive.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apiproducts.Apiproducts.push_apiproducts">
-<code class="sig-name descname">push_apiproducts</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.push_apiproducts" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">push_apiproducts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.push_apiproducts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Push API product file to Apigee</p>
 <p>This will create an API product if it does not exist and update if it
 does.</p>
@@ -307,9 +311,9 @@ does.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apiproducts.Apiproducts.update_api_product">
-<code class="sig-name descname">update_api_product</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.update_api_product" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_api_product</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apiproducts.Apiproducts.update_api_product" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method updates an existing API product</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -334,13 +338,13 @@ API proxies decouple the app-facing API from your backend services, shielding
 those apps from backend code changes.
 As you make backend changes to your services, apps continue to call the same API
 without any interruption.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.apis.Apis">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.apis.</code><code class="sig-name descname">Apis</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.apis.</code><code class="sig-name descname">Apis</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.apis.IApis" title="apigee.abstract.api.apis.IApis"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apis.IApis</span></code></a>, <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.apis.IPull" title="apigee.abstract.api.apis.IPull"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apis.IPull</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.delete_api_proxy_revision">
-<code class="sig-name descname">delete_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.delete_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.delete_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a revision of an API proxy and all policies, resources,
 endpoints, and revisions associated with it.</p>
 <p>The API proxy revision must be undeployed before you can delete it.</p>
@@ -354,9 +358,9 @@ endpoints, and revisions associated with it.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.delete_undeployed_revisions">
-<code class="sig-name descname">delete_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">save_last=0</em>, <em class="sig-param">dry_run=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.delete_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">save_last</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.delete_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes all undeployed revisions of an API proxy and all policies,
 resources, and endpoints associated with it.</p>
 <dl class="field-list simple">
@@ -380,9 +384,9 @@ Defaults to False.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.deploy_api_proxy_revision">
-<code class="sig-name descname">deploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">environment</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">delay=0</em>, <em class="sig-param">override=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.deploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">deploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">revision_number</span></em>, <em class="sig-param"><span class="n">delay</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">override</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.deploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deploys a revision of an existing API proxy to an environment in an
 organization.</p>
 <p>API proxies cannot be invoked until they have been deployed to an
@@ -439,9 +443,9 @@ the existing revision is undeployed.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.export_api_proxy">
-<code class="sig-name descname">export_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">write=True</em>, <em class="sig-param">output_file=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_api_proxy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_api_proxy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">write</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">output_file</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_api_proxy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Outputs an API proxy revision as a ZIP formatted bundle of code and
 config files.</p>
 <p>This enables local configuration and development, including attachment
@@ -462,9 +466,29 @@ Defaults to None.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="apigee.api.apis.Apis.export_cache_dependencies">
+<code class="sig-name descname">export_cache_dependencies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">caches</span></em>, <em class="sig-param"><span class="n">force</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">expc_verbosity</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_cache_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports Caches from Apigee.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>environment</strong> (<em>str</em>) – Apigee environment.</p></li>
+<li><p><strong>caches</strong> (<em>list</em>) – List of caches to GET from Apigee.</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, overwrite existing files in the
+current working directory.
+Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.export_keyvaluemap_dependencies">
-<code class="sig-name descname">export_keyvaluemap_dependencies</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">keyvaluemaps</em>, <em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_keyvaluemap_dependencies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_keyvaluemap_dependencies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">keyvaluemaps</span></em>, <em class="sig-param"><span class="n">force</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">expc_verbosity</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_keyvaluemap_dependencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exports KeyValueMaps from Apigee.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -482,9 +506,9 @@ Defaults to False.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.export_targetserver_dependencies">
-<code class="sig-name descname">export_targetserver_dependencies</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">targetservers</em>, <em class="sig-param">force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_targetserver_dependencies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_targetserver_dependencies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">targetservers</span></em>, <em class="sig-param"><span class="n">force</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">expc_verbosity</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.export_targetserver_dependencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exports Targetservers from Apigee.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -502,9 +526,9 @@ Defaults to False.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.force_undeploy_api_proxy_revision">
-<code class="sig-name descname">force_undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">environment</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.force_undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">force_undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">revision_number</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.force_undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
 <dd><p>Force the undeployment of the API proxy that is partially deployed.</p>
 <p>This can be necessary if the API proxy becomes partially deployed and
 must be undeployed, then redeployed.</p>
@@ -525,9 +549,9 @@ if the proxy base path is different.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.gen_deployment_detail">
-<code class="sig-name descname">gen_deployment_detail</code><span class="sig-paren">(</span><em class="sig-param">deployment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.gen_deployment_detail" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">gen_deployment_detail</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">deployment</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.gen_deployment_detail" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates deployment detail</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -539,9 +563,9 @@ if the proxy base path is different.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.get_api_proxy">
-<code class="sig-name descname">get_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">api_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_api_proxy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_api_proxy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_api_proxy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets an API proxy by name, including a list of existing revisions of
 the proxy.</p>
 <dl class="field-list simple">
@@ -554,9 +578,9 @@ the proxy.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.get_apiproxy_basepath">
-<code class="sig-name descname">get_apiproxy_basepath</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_apiproxy_basepath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_apiproxy_basepath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_apiproxy_basepath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the basepath of an API Proxy by parsing an <code class="docutils literal notranslate"><span class="pre">apiproxy</span></code> bundle
 directory.</p>
 <dl class="field-list simple">
@@ -575,9 +599,9 @@ directory.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.get_apiproxy_files">
-<code class="sig-name descname">get_apiproxy_files</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_apiproxy_files" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_apiproxy_files</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_apiproxy_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the paths of all <code class="docutils literal notranslate"><span class="pre">apiproxy</span></code> bundle files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -592,9 +616,32 @@ directory.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="apigee.api.apis.Apis.get_cache_dependencies">
+<code class="sig-name descname">get_cache_dependencies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_cache_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all caches referenced in an API Proxy.</p>
+<dl class="simple">
+<dt>The following cache policies are parsed for &lt;CacheResource&gt;:</dt><dd><ul class="simple">
+<li><p>PopulateCache</p></li>
+<li><p>LookupCache</p></li>
+<li><p>InvalidateCache</p></li>
+<li><p>ResponseCache</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>files</strong> (<em>list</em>) – List of API Proxy files.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.get_deployed_revisions">
-<code class="sig-name descname">get_deployed_revisions</code><span class="sig-paren">(</span><em class="sig-param">details</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_deployed_revisions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_deployed_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">details</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_deployed_revisions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets list of deployed revisions from deployment details.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -606,9 +653,9 @@ directory.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.get_deployment_details">
-<code class="sig-name descname">get_deployment_details</code><span class="sig-paren">(</span><em class="sig-param">details</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_deployment_details" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_deployment_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">details</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_deployment_details" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets deployment details</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -620,9 +667,9 @@ directory.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.get_keyvaluemap_dependencies">
-<code class="sig-name descname">get_keyvaluemap_dependencies</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_keyvaluemap_dependencies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_keyvaluemap_dependencies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_keyvaluemap_dependencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all <code class="docutils literal notranslate"><span class="pre">mapIdentifier</span></code> names for all <code class="docutils literal notranslate"><span class="pre">KeyValueMapOperations</span></code>
 XML files.</p>
 <p>This will automatically ignore files that are not
@@ -637,9 +684,9 @@ XML files.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.get_targetserver_dependencies">
-<code class="sig-name descname">get_targetserver_dependencies</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_targetserver_dependencies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_targetserver_dependencies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_targetserver_dependencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all <code class="docutils literal notranslate"><span class="pre">Server</span></code> values used in an API Proxy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -651,9 +698,9 @@ XML files.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.get_undeployed_revisions">
-<code class="sig-name descname">get_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param">revisions</em>, <em class="sig-param">deployed</em>, <em class="sig-param">save_last=0</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">revisions</span></em>, <em class="sig-param"><span class="n">deployed</span></em>, <em class="sig-param"><span class="n">save_last</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.get_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets list of undeployed revisions by comparing all API Proxy
 revisions with currently deployed revisons.</p>
 <dl class="field-list simple">
@@ -671,9 +718,9 @@ Defaults to 0.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.list_api_proxies">
-<code class="sig-name descname">list_api_proxies</code><span class="sig-paren">(</span><em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.list_api_proxies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_api_proxies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'json'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.list_api_proxies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the names of all API proxies in an organization.</p>
 <p>The names correspond to the names defined in the configuration files for
 each API proxy.</p>
@@ -687,9 +734,9 @@ each API proxy.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.list_api_proxy_revisions">
-<code class="sig-name descname">list_api_proxy_revisions</code><span class="sig-paren">(</span><em class="sig-param">api_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.list_api_proxy_revisions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_api_proxy_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.list_api_proxy_revisions" title="Permalink to this definition">¶</a></dt>
 <dd><p>List all revisions for an API proxy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -701,9 +748,9 @@ each API proxy.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.prefix_dependencies_in_work_tree">
-<code class="sig-name descname">prefix_dependencies_in_work_tree</code><span class="sig-paren">(</span><em class="sig-param">dependencies</em>, <em class="sig-param">prefix</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.prefix_dependencies_in_work_tree" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">prefix_dependencies_in_work_tree</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dependencies</span></em>, <em class="sig-param"><span class="n">prefix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.prefix_dependencies_in_work_tree" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a prefix string to all instances of the specified strings within
 the current working directory (recursively).</p>
 <p>This will ignore paths with <code class="docutils literal notranslate"><span class="pre">.git</span></code>.</p>
@@ -720,9 +767,9 @@ the current working directory (recursively).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.pull">
-<code class="sig-name descname">pull</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">dependencies=[]</em>, <em class="sig-param">force=False</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">basepath=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.pull" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">pull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">dependencies</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">force</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">basepath</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.pull" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pull API Proxy revision and its dependencies from Apigee.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -740,7 +787,7 @@ Defaults to None.</p></li>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>exported API Proxy, KeyValueMaps,
-Targetservers</p>
+Targetservers, Caches</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>requests.Response(), list, list</p>
@@ -748,9 +795,9 @@ Targetservers</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.replace_substring">
-<code class="sig-name descname">replace_substring</code><span class="sig-paren">(</span><em class="sig-param">file</em>, <em class="sig-param">old</em>, <em class="sig-param">new</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.replace_substring" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">replace_substring</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em>, <em class="sig-param"><span class="n">old</span></em>, <em class="sig-param"><span class="n">new</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.replace_substring" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces old string in file with new string.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -766,9 +813,9 @@ Targetservers</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.set_apiproxy_basepath">
-<code class="sig-name descname">set_apiproxy_basepath</code><span class="sig-paren">(</span><em class="sig-param">basepath</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.set_apiproxy_basepath" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_apiproxy_basepath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">basepath</span></em>, <em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.set_apiproxy_basepath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the basepath of an API Proxy file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -786,9 +833,9 @@ Targetservers</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apis.Apis.undeploy_api_proxy_revision">
-<code class="sig-name descname">undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param">api_name</em>, <em class="sig-param">environment</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">revision_number</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apis.Apis.undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
 <dd><p>Undeploys an API proxy revision from an environment.</p>
 <p>You must specify the revision number of the API proxy because multiple
 revisions of the same API Proxy can be deployed in the same environment
@@ -820,13 +867,13 @@ API.</p>
 Apps are registered with an organization to obtain credentials that enable
 access to one or more API products (or, a set of URIs). The default app profile
 can be extended by using custom attributes.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.apps.Apps">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.apps.</code><code class="sig-name descname">Apps</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.apps.</code><code class="sig-name descname">Apps</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.apps.IApps" title="apigee.abstract.api.apps.IApps"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.apps.IApps</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apps.Apps.add_api_product_to_key">
-<code class="sig-name descname">add_api_product_to_key</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">consumer_key</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.add_api_product_to_key" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_api_product_to_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">developer</span></em>, <em class="sig-param"><span class="n">consumer_key</span></em>, <em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.add_api_product_to_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds an API product to a developer app key, enabling the app that
 holds the key to access the API resources bundled in the API product.</p>
 <p>You can also use this API to add attributes to the key.</p>
@@ -845,9 +892,9 @@ to.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apps.Apps.create_a_consumer_key_and_secret">
-<code class="sig-name descname">create_a_consumer_key_and_secret</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">consumer_key=None</em>, <em class="sig-param">consumer_secret=None</em>, <em class="sig-param">key_length=32</em>, <em class="sig-param">secret_length=32</em>, <em class="sig-param">key_suffix=None</em>, <em class="sig-param">key_delimiter='-'</em>, <em class="sig-param">products=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_a_consumer_key_and_secret" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_a_consumer_key_and_secret</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">developer</span></em>, <em class="sig-param"><span class="n">consumer_key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">consumer_secret</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key_length</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">secret_length</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">key_suffix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key_delimiter</span><span class="o">=</span><span class="default_value">'-'</span></em>, <em class="sig-param"><span class="n">products</span><span class="o">=</span><span class="default_value">[]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_a_consumer_key_and_secret" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a custom consumer key and secret for a developer app.</p>
 <p>This is particularly useful if you want to migrate existing consumer
 keys/secrets to Edge from another system.</p>
@@ -880,9 +927,9 @@ consumer key and secret.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apps.Apps.create_developer_app">
-<code class="sig-name descname">create_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_developer_app" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_developer_app</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">developer</span></em>, <em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_developer_app" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an app associated with a developer, associates the app with
 an API product, and auto-generates an API key for the app to use in
 calls to API proxies inside the API product.</p>
@@ -911,9 +958,9 @@ to stay the same over time.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apps.Apps.create_empty_developer_app">
-<code class="sig-name descname">create_empty_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">display_name=''</em>, <em class="sig-param">callback_url=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_empty_developer_app" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_empty_developer_app</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">developer</span></em>, <em class="sig-param"><span class="n">display_name</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">callback_url</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.create_empty_developer_app" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an empty developer app.</p>
 <dl class="simple">
 <dt>This method combines three API calls to Apigee:</dt><dd><ol class="arabic simple">
@@ -942,9 +989,9 @@ apps.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apps.Apps.delete_developer_app">
-<code class="sig-name descname">delete_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.delete_developer_app" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_developer_app</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">developer</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.delete_developer_app" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a developer app.</p>
 <dl class="simple">
 <dt>Note the following:</dt><dd><ul class="simple">
@@ -970,9 +1017,9 @@ and are not guaranteed to stay the same over time.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apps.Apps.delete_key_for_a_developer_app">
-<code class="sig-name descname">delete_key_for_a_developer_app</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">consumer_key</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.delete_key_for_a_developer_app" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_key_for_a_developer_app</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">developer</span></em>, <em class="sig-param"><span class="n">consumer_key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.delete_key_for_a_developer_app" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a consumer key that belongs to an app, and removes all API
 products associated with the app.</p>
 <p>Once deleted, the consumer key cannot be used to access any APIs.</p>
@@ -989,9 +1036,9 @@ products associated with the app.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apps.Apps.get_developer_app_details">
-<code class="sig-name descname">get_developer_app_details</code><span class="sig-paren">(</span><em class="sig-param">developer</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.get_developer_app_details" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_developer_app_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">developer</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.get_developer_app_details" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the profile of a specific developer app.</p>
 <p>All times in the response are UNIX times.</p>
 <p>Note that the response contains a top-level attribute named accessType
@@ -1006,9 +1053,14 @@ that is no longer used by Apigee.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="apigee.api.apps.Apps.list_apps_for_all_developers">
+<code class="sig-name descname">list_apps_for_all_developers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">expand</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">count</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">startkey</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'dict'</span></em>, <em class="sig-param"><span class="n">progress_bar</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.list_apps_for_all_developers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="apigee.api.apps.Apps.list_developer_apps">
-<code class="sig-name descname">list_developer_apps</code><span class="sig-paren">(</span><em class="sig-param">developer</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">expand=False</em>, <em class="sig-param">count=100</em>, <em class="sig-param">startkey=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.list_developer_apps" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_developer_apps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">developer</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">expand</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">count</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">startkey</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'json'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.list_developer_apps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lists all apps created by a developer in an organization, and
 optionally provides an expanded view of the apps.</p>
 <p>All time values in the response are UNIX times.</p>
@@ -1038,9 +1090,9 @@ company app that the list will start with.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.apps.Apps.restore_app">
-<code class="sig-name descname">restore_app</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.restore_app" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">restore_app</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.apps.Apps.restore_app" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore developer app file to Apigee.</p>
 <dl class="simple">
 <dt>This method combines four different types of API calls to Apigee:</dt><dd><ol class="arabic simple">
@@ -1064,6 +1116,125 @@ company app that the list will start with.</p></li>
 </dd></dl>
 
 </div>
+<div class="section" id="module-apigee.api.backup">
+<span id="apigee-api-backup-module"></span><h2>apigee.api.backup module<a class="headerlink" href="#module-apigee.api.backup" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="apigee.api.backup.Backup">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.backup.</code><code class="sig-name descname">Backup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">org_name</span></em>, <em class="sig-param"><span class="n">target_directory</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">snapshots_dir</span><span class="o">=</span><span class="default_value">'snapshots'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.auth">
+<em class="property">property </em><code class="sig-name descname">auth</code><a class="headerlink" href="#apigee.api.backup.Backup.auth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.backup">
+<code class="sig-name descname">backup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environments</span><span class="o">=</span><span class="default_value">['test', 'prod']</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">resources</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.backup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.backup_apis">
+<code class="sig-name descname">backup_apis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">snapshot</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.backup_apis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.backup_apps">
+<code class="sig-name descname">backup_apps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">snapshot</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.backup_apps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.backup_caches">
+<code class="sig-name descname">backup_caches</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">snapshot</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.backup_caches" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.backup_developers">
+<code class="sig-name descname">backup_developers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">snapshot</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.backup_developers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.backup_kvms">
+<code class="sig-name descname">backup_kvms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">snapshot</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.backup_kvms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.backup_products">
+<code class="sig-name descname">backup_products</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">snapshot</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.backup_products" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.backup_roles">
+<code class="sig-name descname">backup_roles</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">snapshot</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.backup_roles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.backup_targetservers">
+<code class="sig-name descname">backup_targetservers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">snapshot</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.backup_targetservers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.org_name">
+<em class="property">property </em><code class="sig-name descname">org_name</code><a class="headerlink" href="#apigee.api.backup.Backup.org_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.snapshot">
+<code class="sig-name descname">snapshot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environments</span><span class="o">=</span><span class="default_value">['test', 'prod']</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">resources</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.snapshot_apis">
+<code class="sig-name descname">snapshot_apis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">struct</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.snapshot_apis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.snapshot_apps">
+<code class="sig-name descname">snapshot_apps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">struct</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.snapshot_apps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.snapshot_caches">
+<code class="sig-name descname">snapshot_caches</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">struct</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.snapshot_caches" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.snapshot_developers">
+<code class="sig-name descname">snapshot_developers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">struct</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.snapshot_developers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.snapshot_kvms">
+<code class="sig-name descname">snapshot_kvms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">struct</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.snapshot_kvms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.snapshot_products">
+<code class="sig-name descname">snapshot_products</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">struct</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.snapshot_products" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.snapshot_roles">
+<code class="sig-name descname">snapshot_roles</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">struct</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.snapshot_roles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.snapshot_targetservers">
+<code class="sig-name descname">snapshot_targetservers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">struct</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.backup.Backup.snapshot_targetservers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.snapshots_dir">
+<em class="property">property </em><code class="sig-name descname">snapshots_dir</code><a class="headerlink" href="#apigee.api.backup.Backup.snapshots_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.backup.Backup.target_directory">
+<em class="property">property </em><code class="sig-name descname">target_directory</code><a class="headerlink" href="#apigee.api.backup.Backup.target_directory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-apigee.api.caches">
 <span id="apigee-api-caches-module"></span><h2>apigee.api.caches module<a class="headerlink" href="#module-apigee.api.caches" title="Permalink to this headline">¶</a></h2>
 <p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/caches">https://apidocs.apigee.com/api/caches</a></p>
@@ -1072,13 +1243,13 @@ company app that the list will start with.</p></li>
 <p>A lightweight persistence store that can be used by policies or code executing
 on the Apigee Edge.</p>
 <p>To support data segregation, cache resources are scoped to environments.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.caches.Caches">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.caches.</code><code class="sig-name descname">Caches</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.caches.</code><code class="sig-name descname">Caches</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.caches.ICaches" title="apigee.abstract.api.caches.ICaches"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.caches.ICaches</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.caches.Caches.clear_a_cache_entry">
-<code class="sig-name descname">clear_a_cache_entry</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.clear_a_cache_entry" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clear_a_cache_entry</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">entry</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.clear_a_cache_entry" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clears a cache entry, which is identified by the full CacheKey prefix
 and value.</p>
 <dl class="field-list simple">
@@ -1094,9 +1265,9 @@ and value.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.caches.Caches.clear_all_cache_entries">
-<code class="sig-name descname">clear_all_cache_entries</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.clear_all_cache_entries" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clear_all_cache_entries</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.clear_all_cache_entries" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clears all entries from the specified cache.</p>
 <p>Entries to be cleared can be scoped by CacheKey prefix by using the
 ‘prefix’ parameter.</p>
@@ -1110,9 +1281,9 @@ and value.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.caches.Caches.create_a_cache_in_an_environment">
-<code class="sig-name descname">create_a_cache_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.create_a_cache_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_a_cache_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.create_a_cache_in_an_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a cache in an environment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1127,9 +1298,9 @@ and value.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.caches.Caches.delete_a_cache">
-<code class="sig-name descname">delete_a_cache</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.delete_a_cache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_a_cache</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.delete_a_cache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a cache.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1141,9 +1312,9 @@ and value.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.caches.Caches.get_information_about_a_cache">
-<code class="sig-name descname">get_information_about_a_cache</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.get_information_about_a_cache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_information_about_a_cache</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.get_information_about_a_cache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets information about a cache.</p>
 <p>The response might contain a property named <code class="docutils literal notranslate"><span class="pre">persistent</span></code>.
 That property is no longer used by Edge.</p>
@@ -1157,9 +1328,9 @@ That property is no longer used by Edge.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.caches.Caches.list_caches_in_an_environment">
-<code class="sig-name descname">list_caches_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.list_caches_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_caches_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'json'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.list_caches_in_an_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>List caches in an environment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1175,9 +1346,9 @@ Defaults to None.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.caches.Caches.push_cache">
-<code class="sig-name descname">push_cache</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.push_cache" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">push_cache</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.push_cache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Push cache file to Apigee</p>
 <p>This will create a cache if it does not exist and update if it does.</p>
 <dl class="field-list simple">
@@ -1196,9 +1367,9 @@ Defaults to None.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.caches.Caches.update_a_cache_in_an_environment">
-<code class="sig-name descname">update_a_cache_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.update_a_cache_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_a_cache_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.caches.Caches.update_a_cache_in_an_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates a cache in an environment.</p>
 <p>You must specify the complete definition of the cache,
 including the properties that you want to change and the ones that
@@ -1228,33 +1399,33 @@ value.</p>
 <p>API Resource Path: /debugsessions</p>
 <p>A session configured in Apigee Edge to record specified messages and associated
 pipeline processing metadata for debugging purposes</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.debugsessions.Debugsessions">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.debugsessions.</code><code class="sig-name descname">Debugsessions</code><span class="sig-paren">(</span><em class="sig-param">auth</em>, <em class="sig-param">org_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.debugsessions.</code><code class="sig-name descname">Debugsessions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">org_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.debugsessions.IDebugsessions" title="apigee.abstract.api.debugsessions.IDebugsessions"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.debugsessions.IDebugsessions</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.debugsessions.Debugsessions.create_a_debug_session">
-<code class="sig-name descname">create_a_debug_session</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em>, <em class="sig-param">timeout=600</em>, <em class="sig-param">filter=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.create_a_debug_session" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_a_debug_session</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em>, <em class="sig-param"><span class="n">session_name</span></em>, <em class="sig-param"><span class="n">timeout</span><span class="o">=</span><span class="default_value">600</span></em>, <em class="sig-param"><span class="n">filter</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.create_a_debug_session" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.debugsessions.Debugsessions.delete_debug_session">
-<code class="sig-name descname">delete_debug_session</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.delete_debug_session" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_debug_session</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em>, <em class="sig-param"><span class="n">session_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.delete_debug_session" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.debugsessions.Debugsessions.get_debug_session_transaction_IDs">
-<code class="sig-name descname">get_debug_session_transaction_IDs</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.get_debug_session_transaction_IDs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_debug_session_transaction_IDs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em>, <em class="sig-param"><span class="n">session_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.get_debug_session_transaction_IDs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.debugsessions.Debugsessions.get_debug_session_transaction_data">
-<code class="sig-name descname">get_debug_session_transaction_data</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em>, <em class="sig-param">session_name</em>, <em class="sig-param">transaction_id</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.get_debug_session_transaction_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_debug_session_transaction_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em>, <em class="sig-param"><span class="n">session_name</span></em>, <em class="sig-param"><span class="n">transaction_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.get_debug_session_transaction_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.debugsessions.Debugsessions.list_debug_sessions">
-<code class="sig-name descname">list_debug_sessions</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">api_name</em>, <em class="sig-param">revision_number</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.list_debug_sessions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_debug_sessions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.debugsessions.Debugsessions.list_debug_sessions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1262,50 +1433,50 @@ pipeline processing metadata for debugging purposes</p>
 </div>
 <div class="section" id="module-apigee.api.deploy">
 <span id="apigee-api-deploy-module"></span><h2>apigee.api.deploy module<a class="headerlink" href="#module-apigee.api.deploy" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.deploy.Struct">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">Struct</code><span class="sig-paren">(</span><em class="sig-param">**entries</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.Struct" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">Struct</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">entries</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.Struct" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.api.deploy.deploy">
-<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">deploy</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.deploy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">deploy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.deploy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.api.deploy.getDeployments">
 <code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">getDeployments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.getDeployments" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.api.deploy.getElementText">
-<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">getElementText</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.getElementText" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">getElementText</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.getElementText" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.api.deploy.getElementVal">
-<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">getElementVal</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.getElementVal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">getElementVal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.getElementVal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.api.deploy.httpCall">
-<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">httpCall</code><span class="sig-paren">(</span><em class="sig-param">verb</em>, <em class="sig-param">uri</em>, <em class="sig-param">headers</em>, <em class="sig-param">body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.httpCall" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">httpCall</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">verb</span></em>, <em class="sig-param"><span class="n">uri</span></em>, <em class="sig-param"><span class="n">headers</span></em>, <em class="sig-param"><span class="n">body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.httpCall" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.api.deploy.main">
 <code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.main" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.api.deploy.pathContainsDot">
-<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">pathContainsDot</code><span class="sig-paren">(</span><em class="sig-param">p</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.pathContainsDot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">pathContainsDot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">p</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.pathContainsDot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="apigee.api.deploy.printDeployments">
-<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">printDeployments</code><span class="sig-paren">(</span><em class="sig-param">dep</em>, <em class="sig-param">check_revision=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.printDeployments" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.api.deploy.</code><code class="sig-name descname">printDeployments</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dep</span></em>, <em class="sig-param"><span class="n">check_revision</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deploy.printDeployments" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -1315,13 +1486,13 @@ pipeline processing metadata for debugging purposes</p>
 <p>API Platform Base Path: <a class="reference external" href="https://api.enterprise.apigee.com/v1/o">https://api.enterprise.apigee.com/v1/o</a>/{org_name}</p>
 <p>API Resource Path: /apis/{api_name}/deployments</p>
 <p>API proxies that are actively deployed in environments on Apigee Edge.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.deployments.Deployments">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.deployments.</code><code class="sig-name descname">Deployments</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deployments.Deployments" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.deployments.</code><code class="sig-name descname">Deployments</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deployments.Deployments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.deployments.IDeployments" title="apigee.abstract.api.deployments.IDeployments"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.deployments.IDeployments</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.deployments.Deployments.get_api_proxy_deployment_details">
-<code class="sig-name descname">get_api_proxy_deployment_details</code><span class="sig-paren">(</span><em class="sig-param">formatted=False</em>, <em class="sig-param">format='text'</em>, <em class="sig-param">showindex=False</em>, <em class="sig-param">tablefmt='plain'</em>, <em class="sig-param">revision_name_only=False</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deployments.Deployments.get_api_proxy_deployment_details" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_api_proxy_deployment_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">formatted</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'text'</span></em>, <em class="sig-param"><span class="n">showindex</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">tablefmt</span><span class="o">=</span><span class="default_value">'plain'</span></em>, <em class="sig-param"><span class="n">revision_name_only</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.deployments.Deployments.get_api_proxy_deployment_details" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets details for a specific API proxy deployed in a given environment</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1358,13 +1529,13 @@ else return a <code class="docutils literal notranslate"><span class="pre">forma
 <p>API Resource Path: /developers</p>
 <p>Developers implement client/consumer apps and must be registered with an
 organization on Apigee Edge.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.developers.Developers">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.developers.</code><code class="sig-name descname">Developers</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.developers.</code><code class="sig-name descname">Developers</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.developers.IDevelopers" title="apigee.abstract.api.developers.IDevelopers"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.developers.IDevelopers</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.create_developer">
-<code class="sig-name descname">create_developer</code><span class="sig-paren">(</span><em class="sig-param">first_name</em>, <em class="sig-param">last_name</em>, <em class="sig-param">user_name</em>, <em class="sig-param">attributes='{&quot;attributes&quot; : [ ]}'</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.create_developer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_developer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">first_name</span></em>, <em class="sig-param"><span class="n">last_name</span></em>, <em class="sig-param"><span class="n">user_name</span></em>, <em class="sig-param"><span class="n">attributes</span><span class="o">=</span><span class="default_value">'{&quot;attributes&quot; : [ ]}'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.create_developer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a profile for a developer in an organization.</p>
 <p>Once created, the developer can register an app and receive an API key.</p>
 <p>The developer is always created with a status of active.</p>
@@ -1384,7 +1555,7 @@ Defaults to ‘{“attributes” : [ ]}’.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.delete_developer">
 <code class="sig-name descname">delete_developer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.delete_developer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a developer from an organization.</p>
@@ -1417,9 +1588,9 @@ guaranteed to stay the same over time.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.delete_developer_attribute">
-<code class="sig-name descname">delete_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param">attribute_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.delete_developer_attribute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attribute_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.delete_developer_attribute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a developer attribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1431,7 +1602,7 @@ guaranteed to stay the same over time.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.get_all_developer_attributes">
 <code class="sig-name descname">get_all_developer_attributes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_all_developer_attributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of all developer attributes.</p>
@@ -1445,7 +1616,7 @@ guaranteed to stay the same over time.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.get_developer">
 <code class="sig-name descname">get_developer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the profile for a developer by email address or ID.</p>
@@ -1469,9 +1640,9 @@ first 100 apps.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.get_developer_attribute">
-<code class="sig-name descname">get_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param">attribute_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer_attribute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attribute_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer_attribute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value of a developer attribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1483,9 +1654,9 @@ first 100 apps.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.get_developer_by_app">
-<code class="sig-name descname">get_developer_by_app</code><span class="sig-paren">(</span><em class="sig-param">app_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer_by_app" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_developer_by_app</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">app_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.get_developer_by_app" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the developer profile by app name.</p>
 <p>The profile retrieved is for the developer associated with the app in
 the organization.
@@ -1500,9 +1671,9 @@ All time values are UNIX time values.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.list_developers">
-<code class="sig-name descname">list_developers</code><span class="sig-paren">(</span><em class="sig-param">prefix=None</em>, <em class="sig-param">expand=False</em>, <em class="sig-param">count=100</em>, <em class="sig-param">startkey=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.list_developers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_developers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">expand</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">count</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">startkey</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'json'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.list_developers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lists all developers in an organization by email address.</p>
 <p>This call does not list any company developers who are a part of the
 designated organization.</p>
@@ -1540,9 +1711,9 @@ developer that the list will start with.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.set_developer_status">
-<code class="sig-name descname">set_developer_status</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.set_developer_status" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_developer_status</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">action</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.set_developer_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a developer’s status to active or inactive for a specific
 organization.</p>
 <p>Run this API for each organization where you want to change the
@@ -1566,9 +1737,9 @@ and create apps. The new keys that get created just won’t work.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.update_a_developer_attribute">
-<code class="sig-name descname">update_a_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param">attribute_name</em>, <em class="sig-param">updated_value</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_a_developer_attribute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_a_developer_attribute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attribute_name</span></em>, <em class="sig-param"><span class="n">updated_value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_a_developer_attribute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the value of a developer attribute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1583,9 +1754,9 @@ and create apps. The new keys that get created just won’t work.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.update_all_developer_attributes">
-<code class="sig-name descname">update_all_developer_attributes</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_all_developer_attributes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_all_developer_attributes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_all_developer_attributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates or creates developer attributes.</p>
 <p>This API replaces the current list of attributes with the attributes
 specified in the request body.
@@ -1601,9 +1772,9 @@ existing attributes by omitting them from the request body.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.developers.Developers.update_developer">
-<code class="sig-name descname">update_developer</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_developer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_developer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.developers.Developers.update_developer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update an existing developer profile.</p>
 <p>To add new values or update existing values, submit the new or updated
 portion of the developer profile along with the rest of the developer
@@ -1629,13 +1800,13 @@ without the attributes that you want to delete.</p>
 <p>The Key/Value maps API lets you create and manage collections of arbitrary
 key/value pairs at the environment scope (for example, test or prod) for
 longer-term data persistence.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.keyvaluemaps.</code><code class="sig-name descname">Keyvaluemaps</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.keyvaluemaps.</code><code class="sig-name descname">Keyvaluemaps</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.keyvaluemaps.IKeyvaluemaps" title="apigee.abstract.api.keyvaluemaps.IKeyvaluemaps"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.keyvaluemaps.IKeyvaluemaps</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.create_an_entry_in_an_environment_scoped_kvm">
-<code class="sig-name descname">create_an_entry_in_an_environment_scoped_kvm</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry_name</em>, <em class="sig-param">entry_value</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.create_an_entry_in_an_environment_scoped_kvm" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_an_entry_in_an_environment_scoped_kvm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">entry_name</span></em>, <em class="sig-param"><span class="n">entry_value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.create_an_entry_in_an_environment_scoped_kvm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an entry in an existing KeyValueMap scoped to an environment.</p>
 <p>Note: This API is supported for Apigee Edge for the Public Cloud only.</p>
 <p>A key (name) cannot be larger than 2 KB. KVM names are case sensitive.</p>
@@ -1653,9 +1824,9 @@ longer-term data persistence.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.create_keyvaluemap_in_an_environment">
-<code class="sig-name descname">create_keyvaluemap_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.create_keyvaluemap_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_keyvaluemap_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.create_keyvaluemap_in_an_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a key value map in an environment.</p>
 <p>A key value map is a simple structure for persistently storing
 name/value pairs as entries in a named map.
@@ -1680,9 +1851,9 @@ payload.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_entry_in_an_environment">
-<code class="sig-name descname">delete_keyvaluemap_entry_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_entry_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_keyvaluemap_entry_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">entry_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_entry_in_an_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a specific key/value map entry in an environment by name,
 along with associated entries.</p>
 <dl class="field-list simple">
@@ -1698,9 +1869,9 @@ along with associated entries.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_from_an_environment">
-<code class="sig-name descname">delete_keyvaluemap_from_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_from_an_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_keyvaluemap_from_an_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.delete_keyvaluemap_from_an_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a key/value map and all associated entries from an
 environment.</p>
 <dl class="field-list simple">
@@ -1713,9 +1884,9 @@ environment.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap">
-<code class="sig-name descname">get_a_keys_value_in_an_environment_scoped_keyvaluemap</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_a_keys_value_in_an_environment_scoped_keyvaluemap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">entry_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the value of a key in an environment-scoped KeyValueMap (KVM).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1730,9 +1901,9 @@ environment.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.get_keyvaluemap_in_an_environment">
-<code class="sig-name descname">get_keyvaluemap_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.get_keyvaluemap_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_keyvaluemap_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.get_keyvaluemap_in_an_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a KeyValueMap (KVM) in an environment by name, along with the
 keys and values.</p>
 <p>KVM names are case sensitive.</p>
@@ -1748,9 +1919,9 @@ keys in a KVM.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap">
-<code class="sig-name descname">list_keys_in_an_environment_scoped_keyvaluemap</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">startkey</em>, <em class="sig-param">count</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_keys_in_an_environment_scoped_keyvaluemap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">startkey</span></em>, <em class="sig-param"><span class="n">count</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.list_keys_in_an_environment_scoped_keyvaluemap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lists keys in a KeyValueMap scoped to an environment.</p>
 <p>Note: This API is supported for Apigee Edge for the Public Cloud only.</p>
 <dl class="field-list simple">
@@ -1771,9 +1942,9 @@ filtering.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.list_keyvaluemaps_in_an_environment">
-<code class="sig-name descname">list_keyvaluemaps_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.list_keyvaluemaps_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_keyvaluemaps_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'json'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.list_keyvaluemaps_in_an_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Lists the name of all key/value maps in an environment.</p>
 <p>Optionally returns an expanded view of all key/value maps for the
 environment.</p>
@@ -1791,9 +1962,9 @@ Defaults to None.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.push_keyvaluemap">
-<code class="sig-name descname">push_keyvaluemap</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.push_keyvaluemap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">push_keyvaluemap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.push_keyvaluemap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Push KeyValueMap file to Apigee</p>
 <p>This will create a KeyValueMap if it does not exist and update if it
 does.</p>
@@ -1813,9 +1984,9 @@ does.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm">
-<code class="sig-name descname">update_an_entry_in_an_environment_scoped_kvm</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">entry_name</em>, <em class="sig-param">updated_value</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_an_entry_in_an_environment_scoped_kvm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">entry_name</span></em>, <em class="sig-param"><span class="n">updated_value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.update_an_entry_in_an_environment_scoped_kvm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates an entry in a KeyValueMap scoped to an environment.</p>
 <p>Note: This API is supported for Apigee Edge for the Public Cloud only.</p>
 <p>A key cannot be larger than 2 KB. KVM names are case sensitive.</p>
@@ -1838,9 +2009,9 @@ traffic.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.keyvaluemaps.Keyvaluemaps.update_keyvaluemap_in_an_environment">
-<code class="sig-name descname">update_keyvaluemap_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.update_keyvaluemap_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_keyvaluemap_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.keyvaluemaps.Keyvaluemaps.update_keyvaluemap_in_an_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates an existing KeyValueMap in an environment.</p>
 <p>Note: This API is supported for Apigee Edge for Private Cloud only.
 For Apigee Edge for Public Cloud use Update an entry in an
@@ -1880,13 +2051,13 @@ Mask configurations enable you to specify data that will be filtered out of
 trace sessions.
 Masking configurations can be set globally (at the organization-level) or
 locally (at the API proxy level).</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.maskconfigs.Maskconfigs">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.maskconfigs.</code><code class="sig-name descname">Maskconfigs</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.maskconfigs.</code><code class="sig-name descname">Maskconfigs</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.maskconfigs.IMaskconfigs" title="apigee.abstract.api.maskconfigs.IMaskconfigs"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.maskconfigs.IMaskconfigs</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.create_data_masks_for_an_api_proxy">
-<code class="sig-name descname">create_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.create_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.create_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a data mask for an API proxy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1898,9 +2069,9 @@ locally (at the API proxy level).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.delete_data_masks_for_an_api_proxy">
-<code class="sig-name descname">delete_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">maskconfig_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.delete_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">maskconfig_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.delete_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a data mask for an API proxy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1912,9 +2083,9 @@ locally (at the API proxy level).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.get_data_mask_details_for_an_api_proxy">
-<code class="sig-name descname">get_data_mask_details_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">maskconfig_name</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.get_data_mask_details_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_data_mask_details_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">maskconfig_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.get_data_mask_details_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the details for a data mask for an API proxy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1926,7 +2097,7 @@ locally (at the API proxy level).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_api_proxy">
 <code class="sig-name descname">list_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
 <dd><p>List all data masks for an API proxy.</p>
@@ -1940,7 +2111,7 @@ locally (at the API proxy level).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_organization">
 <code class="sig-name descname">list_data_masks_for_an_organization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.list_data_masks_for_an_organization" title="Permalink to this definition">¶</a></dt>
 <dd><p>List all data masks for an organization.</p>
@@ -1954,9 +2125,9 @@ locally (at the API proxy level).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.maskconfigs.Maskconfigs.push_data_masks_for_an_api_proxy">
-<code class="sig-name descname">push_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.push_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">push_data_masks_for_an_api_proxy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.maskconfigs.Maskconfigs.push_data_masks_for_an_api_proxy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Push data mask file to Apigee</p>
 <p>This will create a data mask if it does not exist and update if it does.</p>
 <dl class="field-list simple">
@@ -1982,13 +2153,13 @@ locally (at the API proxy level).</p>
 <span id="apigee-api-permissions-module"></span><h2>apigee.api.permissions module<a class="headerlink" href="#module-apigee.api.permissions" title="Permalink to this headline">¶</a></h2>
 <p>Source: <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/permissions">https://docs.apigee.com/api-platform/system-administration/permissions</a></p>
 <p>Manage permissions that you can assign to a role by using the Edge API.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.permissions.Permissions">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.permissions.</code><code class="sig-name descname">Permissions</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.permissions.</code><code class="sig-name descname">Permissions</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.permissions.IPermissions" title="apigee.abstract.api.permissions.IPermissions"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.permissions.IPermissions</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.permissions.Permissions.create_permissions">
-<code class="sig-name descname">create_permissions</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.create_permissions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_permissions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.create_permissions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates permissions for a role.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2000,9 +2171,9 @@ locally (at the API proxy level).</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.permissions.Permissions.get_permissions">
-<code class="sig-name descname">get_permissions</code><span class="sig-paren">(</span><em class="sig-param">formatted=False</em>, <em class="sig-param">format='text'</em>, <em class="sig-param">showindex=False</em>, <em class="sig-param">tablefmt='plain'</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.get_permissions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_permissions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">formatted</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'text'</span></em>, <em class="sig-param"><span class="n">showindex</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">tablefmt</span><span class="o">=</span><span class="default_value">'plain'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.get_permissions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets permissions for a role.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2026,9 +2197,9 @@ a <code class="docutils literal notranslate"><span class="pre">formatted</span><
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.permissions.Permissions.team_permissions">
-<code class="sig-name descname">team_permissions</code><span class="sig-paren">(</span><em class="sig-param">template_file</em>, <em class="sig-param">placeholder_key=None</em>, <em class="sig-param">placeholder_value=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.team_permissions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">team_permissions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">template_file</span></em>, <em class="sig-param"><span class="n">placeholder_key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">placeholder_value</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.permissions.Permissions.team_permissions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates permissions for a role using a template file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2051,6 +2222,150 @@ Default to ‘’.</p></li>
 </dd></dl>
 
 </div>
+<div class="section" id="module-apigee.api.restore">
+<span id="apigee-api-restore-module"></span><h2>apigee.api.restore module<a class="headerlink" href="#module-apigee.api.restore" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="apigee.api.restore.Restore">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.restore.</code><code class="sig-name descname">Restore</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">org_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.restore.Restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.auth">
+<em class="property">property </em><code class="sig-name descname">auth</code><a class="headerlink" href="#apigee.api.restore.Restore.auth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.org_name">
+<em class="property">property </em><code class="sig-name descname">org_name</code><a class="headerlink" href="#apigee.api.restore.Restore.org_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.restore_apps">
+<code class="sig-name descname">restore_apps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">snapshot_dir</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.restore.Restore.restore_apps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.restore_caches">
+<code class="sig-name descname">restore_caches</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">snapshot</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.restore.Restore.restore_caches" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.restore_developers">
+<code class="sig-name descname">restore_developers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">snapshot</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.restore.Restore.restore_developers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.restore_kvms">
+<code class="sig-name descname">restore_kvms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">snapshot</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.restore.Restore.restore_kvms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.restore_permissions">
+<code class="sig-name descname">restore_permissions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">role_name</span></em>, <em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.restore.Restore.restore_permissions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.restore_products">
+<code class="sig-name descname">restore_products</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">snapshot</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.restore.Restore.restore_products" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.restore_roles">
+<code class="sig-name descname">restore_roles</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">snapshot</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.restore.Restore.restore_roles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.restore_targetservers">
+<code class="sig-name descname">restore_targetservers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">snapshot</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.restore.Restore.restore_targetservers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.restore.Restore.restore_users">
+<code class="sig-name descname">restore_users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">role_name</span></em>, <em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.restore.Restore.restore_users" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.sharedflows">
+<span id="apigee-api-sharedflows-module"></span><h2>apigee.api.sharedflows module<a class="headerlink" href="#module-apigee.api.sharedflows" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://apidocs.apigee.com/api-reference/content/shared-flows-and-flow-hooks-management-api">https://apidocs.apigee.com/api-reference/content/shared-flows-and-flow-hooks-management-api</a></p>
+<dl class="py class">
+<dt id="apigee.api.sharedflows.Sharedflows">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.sharedflows.</code><code class="sig-name descname">Sharedflows</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.sharedflows.ISharedflows" title="apigee.abstract.api.sharedflows.ISharedflows"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.sharedflows.ISharedflows</span></code></a></p>
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.delete_a_shared_flow">
+<code class="sig-name descname">delete_a_shared_flow</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shared_flow_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.delete_a_shared_flow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.deploy_a_shared_flow">
+<code class="sig-name descname">deploy_a_shared_flow</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">shared_flow_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em>, <em class="sig-param"><span class="n">override</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">delay</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">shared_flow_file</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.deploy_a_shared_flow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.get_a_list_of_shared_flows">
+<code class="sig-name descname">get_a_list_of_shared_flows</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.get_a_list_of_shared_flows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.get_a_shared_flow">
+<code class="sig-name descname">get_a_shared_flow</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shared_flow_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.get_a_shared_flow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.get_deployment_environments_for_shared_flows">
+<code class="sig-name descname">get_deployment_environments_for_shared_flows</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shared_flow_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.get_deployment_environments_for_shared_flows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.get_shared_flow_deployments">
+<code class="sig-name descname">get_shared_flow_deployments</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shared_flow_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.get_shared_flow_deployments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.get_shared_flow_revisions">
+<code class="sig-name descname">get_shared_flow_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shared_flow_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.get_shared_flow_revisions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.get_the_shared_flow_attached_to_a_flow_hook">
+<code class="sig-name descname">get_the_shared_flow_attached_to_a_flow_hook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">flow_hook</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.get_the_shared_flow_attached_to_a_flow_hook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.import_a_shared_flow">
+<code class="sig-name descname">import_a_shared_flow</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shared_flow_file</span></em>, <em class="sig-param"><span class="n">shared_flow_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.import_a_shared_flow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.undeploy_a_shared_flow">
+<code class="sig-name descname">undeploy_a_shared_flow</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">shared_flow_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.undeploy_a_shared_flow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.api.sharedflows.Sharedflows.undeploy_shared_flow_revisions_in_environment">
+<code class="sig-name descname">undeploy_shared_flow_revisions_in_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">shared_flow_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.sharedflows.Sharedflows.undeploy_shared_flow_revisions_in_environment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.api.stats">
+<span id="apigee-api-stats-module"></span><h2>apigee.api.stats module<a class="headerlink" href="#module-apigee.api.stats" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://apidocs.apigee.com/api/stats">https://apidocs.apigee.com/api/stats</a></p>
+<dl class="py class">
+<dt id="apigee.api.stats.Stats">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.stats.</code><code class="sig-name descname">Stats</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.stats.Stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.stats.IStats" title="apigee.abstract.api.stats.IStats"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.stats.IStats</span></code></a></p>
+<dl class="py method">
+<dt id="apigee.api.stats.Stats.get_license_utilization">
+<code class="sig-name descname">get_license_utilization</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">time_range</span></em>, <em class="sig-param"><span class="n">environments</span><span class="o">=</span><span class="default_value">['test', 'prod']</span></em>, <em class="sig-param"><span class="n">tzo</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">api_calls_per_year</span><span class="o">=</span><span class="default_value">10000000000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.stats.Stats.get_license_utilization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-apigee.api.targetservers">
 <span id="apigee-api-targetservers-module"></span><h2>apigee.api.targetservers module<a class="headerlink" href="#module-apigee.api.targetservers" title="Permalink to this headline">¶</a></h2>
 <p>Source: <a class="reference external" href="https://apidocs.apigee.com/api/api_resources/51-targetservers">https://apidocs.apigee.com/api/api_resources/51-targetservers</a></p>
@@ -2061,13 +2376,13 @@ one or more ‘named’ TargetSevers.
 Using TargetServers, you can create an HTTPTargetConnection that calls a
 different backend server based on the environment where the API proxy is
 deployed.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.targetservers.Targetservers">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.targetservers.</code><code class="sig-name descname">Targetservers</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.targetservers.</code><code class="sig-name descname">Targetservers</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.targetservers.ITargetservers" title="apigee.abstract.api.targetservers.ITargetservers"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.targetservers.ITargetservers</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.targetservers.Targetservers.create_a_targetserver">
-<code class="sig-name descname">create_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.create_a_targetserver" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.create_a_targetserver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a TargetServer in the specified environment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2082,9 +2397,9 @@ deployed.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.targetservers.Targetservers.delete_a_targetserver">
-<code class="sig-name descname">delete_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.delete_a_targetserver" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.delete_a_targetserver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a TargetServer configuration from an environment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2099,9 +2414,9 @@ deployed.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.targetservers.Targetservers.get_targetserver">
-<code class="sig-name descname">get_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.get_targetserver" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_targetserver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.get_targetserver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a TargetServer definition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2113,9 +2428,9 @@ deployed.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.targetservers.Targetservers.list_targetservers_in_an_environment">
-<code class="sig-name descname">list_targetservers_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.list_targetservers_in_an_environment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">list_targetservers_in_an_environment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'json'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.list_targetservers_in_an_environment" title="Permalink to this definition">¶</a></dt>
 <dd><p>List all TargetServers in an environment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2131,9 +2446,9 @@ Defaults to None.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.targetservers.Targetservers.push_targetserver">
-<code class="sig-name descname">push_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">file</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.push_targetserver" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">push_targetserver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.push_targetserver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Push TargetSever file to Apigee</p>
 <p>This will create a TargetSever if it does not exist and update if it
 does.</p>
@@ -2153,9 +2468,9 @@ does.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.targetservers.Targetservers.update_a_targetserver">
-<code class="sig-name descname">update_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param">environment</em>, <em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.update_a_targetserver" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_a_targetserver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.targetservers.Targetservers.update_a_targetserver" title="Permalink to this definition">¶</a></dt>
 <dd><p>Modifies an existing TargetServer.</p>
 <p>Note: In the request body when Content-Type is set to application/json,
 use the element sSLInfo in the request body, not SSLInfo (note the
@@ -2190,83 +2505,83 @@ The case does not matter if Content-Type is application/xml.</p>
 <p>Users are associated with one or more userroles. Each userrole defines a set of
 permissions (GET, PUT, DELETE) on RBAC resources (defined by URI paths).</p>
 <p>A userrole is scoped to an organization.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="apigee.api.userroles.Userroles">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.api.userroles.</code><code class="sig-name descname">Userroles</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.api.userroles.</code><code class="sig-name descname">Userroles</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="apigee.abstract.api.html#apigee.abstract.api.userroles.IUserroles" title="apigee.abstract.api.userroles.IUserroles"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.abstract.api.userroles.IUserroles</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.add_a_user_to_a_role">
-<code class="sig-name descname">add_a_user_to_a_role</code><span class="sig-paren">(</span><em class="sig-param">user_email</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.add_a_user_to_a_role" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_a_user_to_a_role</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_email</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.add_a_user_to_a_role" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.add_permissions_for_a_resource_to_a_user_role">
-<code class="sig-name descname">add_permissions_for_a_resource_to_a_user_role</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.add_permissions_for_a_resource_to_a_user_role" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_permissions_for_a_resource_to_a_user_role</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.add_permissions_for_a_resource_to_a_user_role" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.add_permissions_for_multiple_resources_to_a_user_role">
-<code class="sig-name descname">add_permissions_for_multiple_resources_to_a_user_role</code><span class="sig-paren">(</span><em class="sig-param">request_body</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.add_permissions_for_multiple_resources_to_a_user_role" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_permissions_for_multiple_resources_to_a_user_role</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">request_body</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.add_permissions_for_multiple_resources_to_a_user_role" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.create_a_user_role_in_an_organization">
 <code class="sig-name descname">create_a_user_role_in_an_organization</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.create_a_user_role_in_an_organization" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.delete_a_permission_for_a_resource">
-<code class="sig-name descname">delete_a_permission_for_a_resource</code><span class="sig-paren">(</span><em class="sig-param">permission</em>, <em class="sig-param">resource_path</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.delete_a_permission_for_a_resource" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_a_permission_for_a_resource</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">permission</span></em>, <em class="sig-param"><span class="n">resource_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.delete_a_permission_for_a_resource" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.delete_a_user_role">
 <code class="sig-name descname">delete_a_user_role</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.delete_a_user_role" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.delete_resource_from_permissions">
-<code class="sig-name descname">delete_resource_from_permissions</code><span class="sig-paren">(</span><em class="sig-param">resource_path</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.delete_resource_from_permissions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_resource_from_permissions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resource_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.delete_resource_from_permissions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.get_a_role">
 <code class="sig-name descname">get_a_role</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.get_a_role" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.get_resource_permissions_for_a_specific_role">
-<code class="sig-name descname">get_resource_permissions_for_a_specific_role</code><span class="sig-paren">(</span><em class="sig-param">resource_path=''</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.get_resource_permissions_for_a_specific_role" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_resource_permissions_for_a_specific_role</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">resource_path</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.get_resource_permissions_for_a_specific_role" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.get_users_for_a_role">
 <code class="sig-name descname">get_users_for_a_role</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.get_users_for_a_role" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.list_permissions_for_a_resource">
 <code class="sig-name descname">list_permissions_for_a_resource</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.list_permissions_for_a_resource" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.list_user_roles">
 <code class="sig-name descname">list_user_roles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.list_user_roles" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.remove_user_membership_in_role">
-<code class="sig-name descname">remove_user_membership_in_role</code><span class="sig-paren">(</span><em class="sig-param">user_email</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.remove_user_membership_in_role" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">remove_user_membership_in_role</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_email</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.remove_user_membership_in_role" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.verify_a_user_roles_permission_on_a_specific_RBAC_resource">
-<code class="sig-name descname">verify_a_user_roles_permission_on_a_specific_RBAC_resource</code><span class="sig-paren">(</span><em class="sig-param">permission</em>, <em class="sig-param">resource_path</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.verify_a_user_roles_permission_on_a_specific_RBAC_resource" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">verify_a_user_roles_permission_on_a_specific_RBAC_resource</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">permission</span></em>, <em class="sig-param"><span class="n">resource_path</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.verify_a_user_roles_permission_on_a_specific_RBAC_resource" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="apigee.api.userroles.Userroles.verify_user_role_membership">
-<code class="sig-name descname">verify_user_role_membership</code><span class="sig-paren">(</span><em class="sig-param">user_email</em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.verify_user_role_membership" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">verify_user_role_membership</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_email</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.api.userroles.Userroles.verify_user_role_membership" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
