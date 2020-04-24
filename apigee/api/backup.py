@@ -45,6 +45,16 @@ class Backup:
             products=[],
             roles=[],
         )
+        self._resources = (
+            "apis",
+            "keyvaluemaps",
+            "targetservers",
+            "caches",
+            "developers",
+            "apiproducts",
+            "apps",
+            "userroles",
+        )
 
     @property
     def auth(self):
@@ -283,16 +293,7 @@ class Backup:
     ):
         struct = self._struct
         if not resources:
-            resources = (
-                "apis",
-                "keyvaluemaps",
-                "targetservers",
-                "caches",
-                "developers",
-                "apiproducts",
-                "apps",
-                "userroles",
-            )
+            resources = self._resources
         for resource in resources:
             if resource == "apis":
                 self.snapshot_apis(
@@ -487,16 +488,7 @@ class Backup:
             resources=resources,
         )
         if not resources:
-            resources = (
-                "apis",
-                "keyvaluemaps",
-                "targetservers",
-                "caches",
-                "developers",
-                "apiproducts",
-                "apps",
-                "userroles",
-            )
+            resources = self._resources
         for resource in resources:
             if resource == "apis":
                 self.backup_apis(
