@@ -213,7 +213,7 @@ class Apps(IApps):
         apps = {}
         from apigee.api.developers import Developers
 
-        list_of_developers = list_of_developers = Developers(
+        list_of_developers = Developers(
             self._auth, self._org_name, None
         ).list_developers(
             prefix=None, expand=expand, count=count, startkey=startkey, format="dict"
