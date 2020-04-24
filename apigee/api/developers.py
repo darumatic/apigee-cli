@@ -133,7 +133,7 @@ class Developers(IDevelopers):
         return resp
 
     def list_developers(
-        self, prefix=None, expand=False, count=100, startkey="", format="json"
+        self, prefix=None, expand=False, count=1000, startkey="", format="json"
     ):
         """Lists all developers in an organization by email address.
 

@@ -59,7 +59,7 @@ class IApps:
 
     @abstractmethod
     def list_developer_apps(
-        self, developer, prefix=None, expand=False, count=100, startkey=""
+        self, developer, prefix=None, expand=False, count=1000, startkey=""
     ):
         pass
 

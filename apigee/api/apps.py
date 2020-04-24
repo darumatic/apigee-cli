@@ -17,7 +17,7 @@ import string
 
 from apigee import APIGEE_ADMIN_API_URL
 from apigee.abstract.api.apps import IApps, AppsSerializer
-from apigee.api.developers import Developers
+# from apigee.api.developers import Developers
 from apigee.util import authorization, console
 
 
@@ -158,7 +158,7 @@ class Apps(IApps):
         developer,
         prefix=None,
         expand=False,
-        count=100,
+        count=1000,
         startkey="",
         format="json",
     ):
@@ -199,17 +199,18 @@ class Apps(IApps):
         return AppsSerializer().serialize_details(resp, format, prefix=prefix)
 
     def list_apps_for_all_developers(
-        self, prefix=None, expand=False, count=100, startkey="", format="dict"
+        self, prefix=None, expand=False, count=1000, startkey="", format="dict"
     ):
         apps = {}
+        from apigee.api.developers import Developers
         for dev in Developers(self._auth, self._org_name, None).list_developers(
-            prefix=prefix, expand=expand, count=count, startkey=startkey, format="dict"
+            prefix=None, expand=expand, count=count, startkey=startkey, format="dict"
         ):
             apps[dev] = self.list_developer_apps(
                 dev,
-                prefix=None,
+                prefix=prefix,
                 expand=expand,
-                count=1000,
+                count=count,
                 startkey=startkey,
                 format=format,
             )

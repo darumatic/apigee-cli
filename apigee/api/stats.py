@@ -57,5 +57,4 @@ class Stats(IStats):
         console.log(
             f"Utilization: {utilization}%"
         )
-        console.log()
         return t

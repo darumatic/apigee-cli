@@ -224,17 +224,18 @@ class Backup:
             self._auth, self._org_name, None
         ).list_apps_for_all_developers(prefix=prefix, format="dict")
         for k, v in struct.apps.items():
-            write_file(
-                v,
-                str(
-                    Path(self._target_directory)
-                    / self._org_name
-                    / self._snapshots_dir
-                    / "apps"
-                    / (k + ".json")
-                ),
-                fs_write=fs_write,
-            )
+            if v:
+                write_file(
+                    v,
+                    str(
+                        Path(self._target_directory)
+                        / self._org_name
+                        / self._snapshots_dir
+                        / "apps"
+                        / (k + ".json")
+                    ),
+                    fs_write=fs_write,
+                )
         return struct
 
     def snapshot_roles(

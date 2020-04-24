@@ -16,8 +16,8 @@ class ParserDebugsessions:
     def __init__(self, parser, **kwargs):
         self._parser = parser
         self._parser_debugsessions = self._parser.add_parser(
-            "debug",
-            aliases=["trace", "debugsessions"],
+            "debugsessions",
+            aliases=["debug", "trace"],
             help="Manage sessions configured in Apigee Edge to record specified messages and associated pipeline processing metadata for debugging purposes",
         ).add_subparsers()
         self._parent_parser = kwargs.get("parent_parser", ParentParser())
