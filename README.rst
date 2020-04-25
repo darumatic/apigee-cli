@@ -155,9 +155,10 @@ paths).
 ------------------
 optional arguments
 ------------------
-  -h, --help            show this help message and exit
-  -V, --version         show program's version number and exit
-
+-h, --help            show this help message and exit
+-V, --version         show program's version number and exit
+--silent              toggle silent output
+-v, --verbose         toggle verbose output
 
 ------------
 Installation
