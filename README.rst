@@ -60,6 +60,11 @@ Delete all undeployed revisions of an API proxy::
 
     apigee apis clean --name API_NAME
 
+options:
+
+--save-last N         denotes not to delete the N most recent revisions
+--dry-run             show revisions to be deleted but do not delete
+
 ``apps``
 ^^^^^
 Management APIs available for working with developer
