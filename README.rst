@@ -25,7 +25,7 @@ Documentation: `The Apigee Management API command-line interface documentation`_
 --------------------
 positional arguments
 --------------------
-This sections lists some useful commands. To find more commands use the ``-h, --help`` flag.
+This section lists some useful commands. To find more commands use the ``-h, --help`` flag.
 
 ``apiproducts (apiprods, prods, products)``
 ^^^^^
