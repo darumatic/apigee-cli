@@ -9,13 +9,13 @@ apigee-cli
 |License|
 
 **DISCLAIMER:**
-    - This package is highly experimental and conventions will probably break down across modules
+    - This package is highly experimental and conventions will probably break down across modules (mainly so I can play around with learning Python)
     - This is not an officially supported Google product
     - Features are added as needed based on client requests
     - This package is highly experimental. *It's important so I said it twice.*
 
 **MAJOR CHANGES COMING SOON (MAYBE):**
-    - I have been working on migrating from ``argparse`` to ``click`` for the command-line interface (CLI) API. This includes simplifying the package architecture for better readability, testability and overall maintainability. The external behaviour of the CLI should not change (with the exception of a few nuances). If this continues to go well, I will be applying the changes in a future update.
+    - I have been working on migrating from ``argparse`` to ``click`` for the command-line interface (CLI) API. This includes simplifying the package architecture for better readability, testability and overall maintainability. The external behaviour of the CLI should not change much (with the exception of a few nuances). If this continues to go well, I will be applying the changes in a future update.
     - Plans for a stable release ``1.0.0`` towards the end of the year.
     - Unit tests
 
