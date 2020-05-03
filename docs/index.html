@@ -184,95 +184,167 @@
           <span class="o">...</span>
 </pre></div>
 </div>
-<dl>
-<dt>positional arguments:</dt><dd><dl class="simple">
-<dt>apiproducts (apiprods, prods, products)</dt><dd><p>API products enable you to bundle and distribute your
+<div class="section" id="positional-arguments">
+<h3>positional arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h3>
+<p>This section lists some useful commands. To find more commands use the <code class="docutils literal notranslate"><span class="pre">-h,</span> <span class="pre">--help</span></code> flag.</p>
+<div class="section" id="apiproducts-apiprods-prods-products">
+<h4><code class="docutils literal notranslate"><span class="pre">apiproducts</span> <span class="pre">(apiprods,</span> <span class="pre">prods,</span> <span class="pre">products)</span></code><a class="headerlink" href="#apiproducts-apiprods-prods-products" title="Permalink to this headline">¶</a></h4>
+<p>API products enable you to bundle and distribute your
 APIs to multiple developer groups simultaneously,
 without having to modify code.</p>
-</dd>
-<dt>apis</dt><dd><p>The proxy APIs let you perform operations on API
+</div>
+<div class="section" id="apis">
+<h4><code class="docutils literal notranslate"><span class="pre">apis</span></code><a class="headerlink" href="#apis" title="Permalink to this headline">¶</a></h4>
+<p>The proxy APIs let you perform operations on API
 proxies, such as create, delete, update, and deploy.</p>
+<p>Upload and deploy an <code class="docutils literal notranslate"><span class="pre">apiproxy/</span></code> bundle:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">apis</span> <span class="n">deploy</span> <span class="o">--</span><span class="n">directory</span> <span class="n">APIPROXY_BUNDLE</span> <span class="o">--</span><span class="n">environment</span> <span class="n">ENVIRONMENT</span> <span class="o">--</span><span class="n">name</span> <span class="n">API_NAME</span>
+</pre></div>
+</div>
+<p>List the names of all API proxies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">apis</span> <span class="nb">list</span>
+</pre></div>
+</div>
+<p>Download an API proxy revision, along with any referenced key/value maps, target servers and caches:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">apis</span> <span class="n">pull</span> \
+    <span class="o">--</span><span class="n">environment</span> <span class="n">ENVIRONMENT</span> \
+    <span class="o">--</span><span class="n">name</span> <span class="n">API_NAME</span> \
+    <span class="o">--</span><span class="n">revision</span><span class="o">-</span><span class="n">number</span> <span class="n">REVISION_NUMBER</span> \
+    <span class="o">--</span><span class="n">work</span><span class="o">-</span><span class="n">tree</span> <span class="n">TARGET_DIRECTORY</span>
+</pre></div>
+</div>
+<p>Delete all undeployed revisions of an API proxy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">apis</span> <span class="n">clean</span> <span class="o">--</span><span class="n">name</span> <span class="n">API_NAME</span>
+</pre></div>
+</div>
+<p>options:</p>
+<dl class="option-list">
+<dt><kbd><span class="option">--save-last <var>N</var></span></kbd></dt>
+<dd><p>denotes not to delete the N most recent revisions</p>
 </dd>
-<dt>apps</dt><dd><p>Management APIs available for working with developer
+<dt><kbd><span class="option">--dry-run</span></kbd></dt>
+<dd><p>show revisions to be deleted but do not delete</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="apps">
+<h4><code class="docutils literal notranslate"><span class="pre">apps</span></code><a class="headerlink" href="#apps" title="Permalink to this headline">¶</a></h4>
+<p>Management APIs available for working with developer
 apps.</p>
-</dd>
-<dt>authorization (auth)</dt><dd><p>Custom authorization commands. More information on the
+</div>
+<div class="section" id="authorization-auth">
+<h4><code class="docutils literal notranslate"><span class="pre">authorization</span> <span class="pre">(auth)</span></code><a class="headerlink" href="#authorization-auth" title="Permalink to this headline">¶</a></h4>
+<p>Custom authorization commands. More information on the
 use cases for these commands are yet to be documented.</p>
-</dd>
-<dt>backup</dt><dd><p>Downloads Apigee Edge configuration files for API
+</div>
+<div class="section" id="backup">
+<h4><code class="docutils literal notranslate"><span class="pre">backup</span></code><a class="headerlink" href="#backup" title="Permalink to this headline">¶</a></h4>
+<p>Downloads Apigee Edge configuration files for API
 proxies, key value maps, target servers, caches,
 developers, API products, developer apps, and user
 roles (including permissions and associated users).</p>
-</dd>
-<dt>caches</dt><dd><p>A lightweight persistence store that can be used by
+</div>
+<div class="section" id="caches">
+<h4><code class="docutils literal notranslate"><span class="pre">caches</span></code><a class="headerlink" href="#caches" title="Permalink to this headline">¶</a></h4>
+<p>A lightweight persistence store that can be used by
 policies or code executing on the Apigee Edge. To
 support data segregation, cache resources are scoped
 to environments.</p>
-</dd>
-<dt>configure</dt><dd><p>Configure Apigee Edge credentials.</p>
-</dd>
-<dt>debug (trace, debugsessions)</dt><dd><p>Manage sessions configured in Apigee Edge to record
+</div>
+<div class="section" id="configure">
+<h4><code class="docutils literal notranslate"><span class="pre">configure</span></code><a class="headerlink" href="#configure" title="Permalink to this headline">¶</a></h4>
+<p>Configure Apigee Edge credentials.</p>
+</div>
+<div class="section" id="debug-trace-debugsessions">
+<h4><code class="docutils literal notranslate"><span class="pre">debug</span> <span class="pre">(trace,</span> <span class="pre">debugsessions)</span></code><a class="headerlink" href="#debug-trace-debugsessions" title="Permalink to this headline">¶</a></h4>
+<p>Manage sessions configured in Apigee Edge to record
 specified messages and associated pipeline processing
 metadata for debugging purposes</p>
-</dd>
-<dt>deployments (deps)</dt><dd><p>API proxies that are actively deployed in environments
+</div>
+<div class="section" id="deployments-deps">
+<h4><code class="docutils literal notranslate"><span class="pre">deployments</span> <span class="pre">(deps)</span></code><a class="headerlink" href="#deployments-deps" title="Permalink to this headline">¶</a></h4>
+<p>API proxies that are actively deployed in environments
 on Apigee Edge.</p>
-</dd>
-<dt>developers (devs)</dt><dd><p>Developers implement client/consumer apps and must be
+</div>
+<div class="section" id="developers-devs">
+<h4><code class="docutils literal notranslate"><span class="pre">developers</span> <span class="pre">(devs)</span></code><a class="headerlink" href="#developers-devs" title="Permalink to this headline">¶</a></h4>
+<p>Developers implement client/consumer apps and must be
 registered with an organization on Apigee Edge.</p>
-</dd>
-<dt>keyvaluemaps (kvms)</dt><dd><p>Key/value maps at the environment scope can be
+</div>
+<div class="section" id="keyvaluemaps-kvms">
+<h4><code class="docutils literal notranslate"><span class="pre">keyvaluemaps</span> <span class="pre">(kvms)</span></code><a class="headerlink" href="#keyvaluemaps-kvms" title="Permalink to this headline">¶</a></h4>
+<p>Key/value maps at the environment scope can be
 accessed by any API proxy in the environment (such as
 test or prod). In the management UI (APIs &gt;
 Environment Configuration), key/value maps are at the
 environment scope.</p>
-</dd>
-<dt>maskconfigs (masks)</dt><dd><p>Specify data that will be filtered out of trace
+</div>
+<div class="section" id="maskconfigs-masks">
+<h4><code class="docutils literal notranslate"><span class="pre">maskconfigs</span> <span class="pre">(masks)</span></code><a class="headerlink" href="#maskconfigs-masks" title="Permalink to this headline">¶</a></h4>
+<p>Specify data that will be filtered out of trace
 sessions.</p>
-</dd>
-<dt>permissions (perms)</dt><dd><p>Permissions for roles in an organization on Apigee
+</div>
+<div class="section" id="permissions-perms">
+<h4><code class="docutils literal notranslate"><span class="pre">permissions</span> <span class="pre">(perms)</span></code><a class="headerlink" href="#permissions-perms" title="Permalink to this headline">¶</a></h4>
+<p>Permissions for roles in an organization on Apigee
 Edge.</p>
-</dd>
-<dt>restore</dt><dd><p>Restore specific resources from backups generated by
+</div>
+<div class="section" id="restore">
+<h4><code class="docutils literal notranslate"><span class="pre">restore</span></code><a class="headerlink" href="#restore" title="Permalink to this headline">¶</a></h4>
+<p>Restore specific resources from backups generated by
 the backup command.</p>
-</dd>
-<dt>sharedflows (sf)</dt><dd><p>APIs to manage shared flows and flow hooks.</p>
-</dd>
-<dt>stats</dt><dd><p>A source of metrics collected by Apigee Edge that
+</div>
+<div class="section" id="sharedflows-sf">
+<h4><code class="docutils literal notranslate"><span class="pre">sharedflows</span> <span class="pre">(sf)</span></code><a class="headerlink" href="#sharedflows-sf" title="Permalink to this headline">¶</a></h4>
+<p>APIs to manage shared flows and flow hooks.</p>
+</div>
+<div class="section" id="stats">
+<h4><code class="docutils literal notranslate"><span class="pre">stats</span></code><a class="headerlink" href="#stats" title="Permalink to this headline">¶</a></h4>
+<p>A source of metrics collected by Apigee Edge that
 measure API consumption and performance, used to build
 Analytics reports.</p>
-</dd>
-<dt>targetservers (ts)</dt><dd><p>TargetServers are used to decouple TargetEndpoint
+</div>
+<div class="section" id="targetservers-ts">
+<h4><code class="docutils literal notranslate"><span class="pre">targetservers</span> <span class="pre">(ts)</span></code><a class="headerlink" href="#targetservers-ts" title="Permalink to this headline">¶</a></h4>
+<p>TargetServers are used to decouple TargetEndpoint
 HTTPTargetConnections from concrete URLs for backend
 services.</p>
-</dd>
-<dt>userroles (roles)</dt><dd><p>Roles for users in an organization on Apigee Edge.
+</div>
+<div class="section" id="userroles-roles">
+<h4><code class="docutils literal notranslate"><span class="pre">userroles</span> <span class="pre">(roles)</span></code><a class="headerlink" href="#userroles-roles" title="Permalink to this headline">¶</a></h4>
+<p>Roles for users in an organization on Apigee Edge.
 User roles form the basis of role-based access in
 Apigee Edge. Users are associated with one or more
 userroles. Each userrole defines a set of permissions
 (GET, PUT, DELETE) on RBAC resources (defined by URI
 paths).</p>
-</dd>
-</dl>
-</dd>
-<dt>optional arguments:</dt><dd><dl class="option-list">
+</div>
+</div>
+<div class="section" id="optional-arguments">
+<h3>optional arguments<a class="headerlink" href="#optional-arguments" title="Permalink to this headline">¶</a></h3>
+<dl class="option-list">
 <dt><kbd><span class="option">-h</span>, <span class="option">--help</span></kbd></dt>
 <dd><p>show this help message and exit</p>
 </dd>
 <dt><kbd><span class="option">-V</span>, <span class="option">--version</span></kbd></dt>
 <dd><p>show program’s version number and exit</p>
 </dd>
-</dl>
+<dt><kbd><span class="option">--silent</span></kbd></dt>
+<dd><p>toggle silent output</p>
+</dd>
+<dt><kbd><span class="option">-v</span>, <span class="option">--verbose</span></kbd></dt>
+<dd><p>toggle verbose output</p>
 </dd>
 </dl>
+</div>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
 <p>The apigee-cli package works on Python versions:</p>
 <ul class="simple">
 <li><p>3.6.x and greater</p></li>
 <li><p>3.7.x and greater</p></li>
 <li><p>3.8.x and greater</p></li>
 </ul>
-<div class="section" id="installation">
-<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
 <p>The easiest way to install apigee-cli is to use <a class="reference external" href="http://www.pip-installer.org/en/latest/">pip</a> in a <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install apigeecli
 </pre></div>

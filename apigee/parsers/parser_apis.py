@@ -249,7 +249,7 @@ class ParserApis:
                 self._verbose_parser(),
                 self._environment_parser(),
             ],
-            help="Pull API proxy revision as a ZIP formatted bundle along with KeyValueMap and TargetServer dependencies into the current working directory.",
+            help="Downloads an API proxy revision, along with any referenced key/value maps, target servers and caches into the current working directory.",
         )
         pull_api.add_argument("-n", "--name", help="name", required=True)
         pull_api.add_argument(
