@@ -34,6 +34,79 @@ apigee-cli
       userroles      Roles for users in an organization on Apigee Edge.
 
 
+------------
+Installation
+------------
+
+The easiest way to install apigee-cli is to use `pip`_ in a ``virtualenv``::
+
+    $ pip install apigeecli
+
+or, if you are not installing in a ``virtualenv``, to install globally::
+
+    $ sudo pip install apigeecli
+
+or for your user::
+
+    $ pip install --user apigeecli
+
+If you have the apigee-cli installed and want to upgrade to the latest version
+you can run::
+
+    $ pip install --upgrade apigeecli
+
+---------------
+Getting Started
+---------------
+
+Before using apigee-cli, you need to tell it about your Apigee Edge credentials.  You
+can do this in three ways:
+
+* Environment variables
+* Config file
+* Command-line arguments
+
+The quickest way to get started is to run the ``apigee configure`` command::
+
+    $ apigee configure
+    Apigee username (email) []: my_email
+    Apigee password []: my_pass
+    Apigee MFA key (optional) []: my_key
+    Default Apigee organization (recommended) []: my_org
+    Default team/resource prefix (optional) []: team_prefix
+
+
+To use environment variables, do the following::
+
+    $ export APIGEE_USERNAME=<my_email>
+    $ export APIGEE_PASSWORD=<my_pass>
+    $ export APIGEE_MFA_SECRET=<my_key>
+    $ export APIGEE_ORG=<my_org>
+    $ export APIGEE_CLI_PREFIX=<my_prefix>
+
+
+To use the configuration file, create an INI formatted file like this::
+
+    [default]
+    username = my_email
+    org = my_org
+    mfa_secret = my_key
+    prefix = my_prefix
+    password = my_pass
+
+    [produser]
+    org = my_org
+    username = my_email
+    password = my_pass
+    mfa_secret = my_key
+
+and place it in ``~/.apigee/credentials``.
+
+As you can see, you can have multiple ``profiles`` defined in the configuration file. You can then specify which
+profile to use by using the ``-P/--profile`` option. If no profile is specified
+the ``default`` profile is used.
+
+
 .. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
     :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
 .. |Python package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Python%20package/badge.svg
