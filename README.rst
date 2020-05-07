@@ -106,6 +106,15 @@ As you can see, you can have multiple ``profiles`` defined in the configuration 
 profile to use by using the ``-P/--profile`` option. If no profile is specified
 the ``default`` profile is used.
 
+------------	
+Getting Help	
+------------	
+
+* `The Apigee Management API command-line interface documentation`_	
+* `Apigee Product Documentation`_	
+* `GitHub`_	
+
+
 
 .. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
     :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
