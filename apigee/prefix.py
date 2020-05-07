@@ -16,6 +16,7 @@ def common_prefix_options(func):
                 profile = sys.argv[i+1]
             except IndexError:
                 pass
+    profile_dict = {}
     try:
         profile_dict = dict(config._sections[profile])
     except KeyError:

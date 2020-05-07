@@ -69,10 +69,10 @@ def common_auth_options(func):
         func = click.option('-o', '--org', default=org,
                             show_default='current org')(func)
     elif org_envvar:
-        func = click.option('-mfa', '--mfa-secret', default=org_envvar,
+        func = click.option('-o', '--org', default=org_envvar,
                             show_default='current org')(func)
     else:
-        func = click.option('-mfa', '--mfa-secret', required=True)(func)
+        func = click.option('-o', '--org', required=True)(func)
     func = click.option("-P", "--profile", help="name of the user profile to authenticate with",
                         default=profile, show_default=True)(func)
     return func
@@ -136,8 +136,8 @@ def get_credential(section, key):
     except:
         return
 
-def set_header(auth, headers={}):
-    if auth.mfa_secret:
+def set_header(auth_obj, headers={}):
+    if auth_obj.mfa_secret:
         access_token = ""
         make_dirs(APIGEE_CLI_DIRECTORY)
         try:
@@ -150,16 +150,16 @@ def set_header(auth, headers={}):
                 decoded = jwt.decode(access_token, verify=False)
                 if (
                     decoded["exp"] < int(time.time())
-                    or decoded["email"] != auth.username
+                    or decoded["email"] != auth_obj.username
                 ):
                     access_token = ""
         if not access_token:
-            access_token = get_access_token(auth)
+            access_token = get_access_token(auth_obj)
             with open(APIGEE_CLI_ACCESS_TOKEN_FILE, "w") as f:
                 f.write(access_token)
         headers["Authorization"] = f"Bearer {access_token}"
     else:
-        headers["Authorization"] = "Basic " + base64.b64encode((f"{auth.username}:{auth.password}").encode()).decode()
+        headers["Authorization"] = "Basic " + base64.b64encode((f"{auth_obj.username}:{auth_obj.password}").encode()).decode()
     return headers
 
 def auth_with_prefix(auth_obj, org, name, file=None, key="name"):
