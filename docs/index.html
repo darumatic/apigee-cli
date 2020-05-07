@@ -163,11 +163,113 @@
 <div class="section" id="apigee-cli">
 <h2>apigee-cli<a class="headerlink" href="#apigee-cli" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Usage: apigee [OPTIONS] COMMAND [ARGS]...
+
+  Welcome to the Apigee Management API command-line interface!
+
+  Docs:    https://mdelotavo.github.io/apigee-cli/
+  PyPI:    https://pypi.org/project/apigeecli/
+  GitHub:  https://github.com/mdelotavo/apigee-cli
+
+Options:
+  -V, --version  Show the version and exit.
+  -h, --help     Show this message and exit.
+
+Commands:
+  apiproducts    API products enable you to bundle and distribute your APIs...
+  apis           The proxy APIs let you perform operations on API proxies,...
+  apps           Management APIs available for working with developer apps.
+  auth           Custom authorization commands.
+  caches         A lightweight persistence store that can be used by...
+  configure      Configure Apigee Edge credentials.
+  deployments    API proxies that are actively deployed in environments on...
+  developers     Developers implement client/consumer apps and must be...
+  keyvaluemaps   Key/value maps at the environment scope can be accessed by...
+  maskconfigs    Specify data that will be filtered out of trace sessions.
+  permissions    Permissions for roles in an organization on Apigee Edge.
+  targetservers  TargetServers are used to decouple TargetEndpoint...
+  userroles      Roles for users in an organization on Apigee Edge.
+</pre></div>
+</div>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>The easiest way to install apigee-cli is to use <a class="reference external" href="http://www.pip-installer.org/en/latest/">pip</a> in a <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install apigeecli
+</pre></div>
+</div>
+<p>or, if you are not installing in a <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code>, to install globally:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip install apigeecli
+</pre></div>
+</div>
+<p>or for your user:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install --user apigeecli
+</pre></div>
+</div>
+<p>If you have the apigee-cli installed and want to upgrade to the latest version
+you can run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install --upgrade apigeecli
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-started">
+<h3>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h3>
+<p>Before using apigee-cli, you need to tell it about your Apigee Edge credentials.  You
+can do this in three ways:</p>
+<ul class="simple">
+<li><p>Environment variables</p></li>
+<li><p>Config file</p></li>
+<li><p>Command-line arguments</p></li>
+</ul>
+<p>The quickest way to get started is to run the <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">configure</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee configure
+Apigee username (email) []: my_email
+Apigee password []: my_pass
+Apigee MFA key (optional) []: my_key
+Default Apigee organization (recommended) []: my_org
+Default team/resource prefix (optional) []: team_prefix
+</pre></div>
+</div>
+<p>To use environment variables, do the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_USERNAME=&lt;my_email&gt;
+$ export APIGEE_PASSWORD=&lt;my_pass&gt;
+$ export APIGEE_MFA_SECRET=&lt;my_key&gt;
+$ export APIGEE_ORG=&lt;my_org&gt;
+$ export APIGEE_CLI_PREFIX=&lt;my_prefix&gt;
+</pre></div>
+</div>
+<p>To use the configuration file, create an INI formatted file like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">default</span><span class="p">]</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">my_email</span>
+<span class="n">org</span> <span class="o">=</span> <span class="n">my_org</span>
+<span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">my_key</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="n">my_prefix</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">my_pass</span>
+
+<span class="p">[</span><span class="n">produser</span><span class="p">]</span>
+<span class="n">org</span> <span class="o">=</span> <span class="n">my_org</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">my_email</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">my_pass</span>
+<span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">my_key</span>
+</pre></div>
+</div>
+<p>and place it in <code class="docutils literal notranslate"><span class="pre">~/.apigee/credentials</span></code>.</p>
+<p>As you can see, you can have multiple <code class="docutils literal notranslate"><span class="pre">profiles</span></code> defined in the configuration file. You can then specify which
+profile to use by using the <code class="docutils literal notranslate"><span class="pre">-P/--profile</span></code> option. If no profile is specified
+the <code class="docutils literal notranslate"><span class="pre">default</span></code> profile is used.</p>
+</div>
+<div class="section" id="getting-help">
+<h3>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://mdelotavo.github.io/apigee-cli/index.html">The Apigee Management API command-line interface documentation</a></p></li>
+<li><p><a class="reference external" href="https://apidocs.apigee.com/management/apis">Apigee Product Documentation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/mdelotavo/apigee-cli">GitHub</a></p></li>
+</ul>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
+</div>
 </div>
 </div>
 </div>
