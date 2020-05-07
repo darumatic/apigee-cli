@@ -1,204 +1,81 @@
 #!/usr/bin/env python
-"""apigee"""
+# __main__.py
 
-import argparse
-import json
-from argparse import RawDescriptionHelpFormatter
+import codecs
+import configparser
+import os
+import re
+import requests
+import sys
+import time
+from functools import update_wrapper
 
-import apigee
+import click
+# from click_aliases import ClickAliasedGroup
 
-from apigee.util import *
+from apigee import APP
+from apigee import CMD
+from apigee import __version__ as version
+from apigee.apiproducts.commands import apiproducts
+from apigee.apis.commands import apis
+from apigee.apps.commands import apps
+from apigee.auth import auth
+from apigee.caches.commands import caches
+from apigee.cls import AliasedGroup
+from apigee.configure.commands import configure
+from apigee.deployments.commands import deployments
+from apigee.developers.commands import developers
+from apigee.exception import exception_handler
+from apigee.keyvaluemaps.commands import keyvaluemaps
+from apigee.maskconfigs.commands import maskconfigs
+from apigee.permissions.commands import permissions
+from apigee.targetservers.commands import targetservers
+from apigee.userroles.commands import userroles
+from apigee.utils import show_message
 
-from apigee.parsers.parent_parser import ParentParser
-from apigee.parsers.file_parser import FileParser
-from apigee.parsers.dir_parser import DirParser
-from apigee.parsers.format_parser import FormatParser
-from apigee.parsers.environment_parser import EnvironmentParser
-from apigee.parsers.prefix_parser import PrefixParser
-from apigee.parsers.silent_parser import SilentParser
-from apigee.parsers.verbose_parser import VerboseParser
+CONTEXT_SETTINGS = dict(
+    help_option_names=["-h", "--help"]
+)
 
-from apigee.parsers.parser_authorization import ParserAuthorization
-from apigee.parsers.parser_configure import ParserConfigure
-from apigee.parsers.parser_apis import ParserApis
-from apigee.parsers.parser_deployments import ParserDeployments
-from apigee.parsers.parser_keyvaluemaps import ParserKeyvaluemaps
-from apigee.parsers.parser_developers import ParserDevelopers
-from apigee.parsers.parser_apps import ParserApps
-from apigee.parsers.parser_apiproducts import ParserApiproducts
-from apigee.parsers.parser_targetservers import ParserTargetservers
-from apigee.parsers.parser_maskconfigs import ParserMaskconfigs
-from apigee.parsers.parser_permissions import ParserPermissions
-from apigee.parsers.parser_userroles import ParserUserroles
-from apigee.parsers.parser_caches import ParserCaches
-from apigee.parsers.parser_debugsessions import ParserDebugsessions
-from apigee.parsers.parser_sharedflows import ParserSharedflows
-from apigee.parsers.parser_stats import ParserStats
-from apigee.parsers.parser_backup import ParserBackup
-from apigee.parsers.parser_restore import ParserRestore
 
-from apigee.util.exceptions import exception_handler
+@click.group(context_settings=CONTEXT_SETTINGS, cls=AliasedGroup, invoke_without_command=False, chain=False)
+# @click.group(context_settings=CONTEXT_SETTINGS, cls=ClickAliasedGroup, invoke_without_command=False, chain=False)
+@click.version_option(version, '-V', '--version')
+@click.pass_context
+def cli(ctx):
+    """Welcome to the Apigee Management API command-line interface!
 
+    \b
+    Docs:    https://mdelotavo.github.io/apigee-cli/
+    PyPI:    https://pypi.org/project/apigeecli/
+    GitHub:  https://github.com/mdelotavo/apigee-cli
+
+    \f
+
+    :param click.core.Context ctx: Click context.
+    """
+    # ensure that ctx.obj exists and is a dict (in case `cli()` is called
+    # by means other than the `if` block below)
+    ctx.ensure_object(dict)
 
 @exception_handler
 def main():
-    parent_parser = ParentParser()
-    file_parser = FileParser()
-    dir_parser = DirParser()
-    format_parser = FormatParser()
-    environment_parser = EnvironmentParser()
-    prefix_parser = PrefixParser(profile=parent_parser.profile)
-    silent_parser = SilentParser()
-    verbose_parser = VerboseParser()
-
-    parser = argparse.ArgumentParser(
-        prog=apigee.CMD,
-        description=apigee.long_description,
-        formatter_class=RawDescriptionHelpFormatter,
-    )
-    parser.add_argument(
-        "-V",
-        "--version",
-        action="version",
-        version=f"{apigee.APP} {apigee.__version__}",
-    )
-    subparsers = parser.add_subparsers()
-
-    ParserApiproducts(
-        subparsers,
-        parent_parser=parent_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserApis(
-        subparsers,
-        parent_parser=parent_parser,
-        dir_parser=dir_parser,
-        environment_parser=environment_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserApps(
-        subparsers,
-        parent_parser=parent_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserAuthorization(
-        subparsers, silent_parser=silent_parser, verbose_parser=verbose_parser,
-    ).parser
-    ParserBackup(
-        subparsers,
-        parent_parser=parent_parser,
-        environment_parser=environment_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserCaches(
-        subparsers,
-        parent_parser=parent_parser,
-        file_parser=file_parser,
-        environment_parser=environment_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserConfigure(subparsers).parser
-    ParserDebugsessions(
-        subparsers,
-        parent_parser=parent_parser,
-        dir_parser=dir_parser,
-        environment_parser=environment_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserDeployments(
-        subparsers,
-        parent_parser=parent_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserDevelopers(
-        subparsers,
-        parent_parser=parent_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserKeyvaluemaps(
-        subparsers,
-        parent_parser=parent_parser,
-        file_parser=file_parser,
-        environment_parser=environment_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserMaskconfigs(
-        subparsers,
-        parent_parser=parent_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserPermissions(
-        subparsers,
-        parent_parser=parent_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserRestore(
-        subparsers,
-        parent_parser=parent_parser,
-        environment_parser=environment_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserSharedflows(
-        subparsers,
-        parent_parser=parent_parser,
-        dir_parser=dir_parser,
-        environment_parser=environment_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserStats(
-        subparsers,
-        parent_parser=parent_parser,
-        environment_parser=environment_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserTargetservers(
-        subparsers,
-        parent_parser=parent_parser,
-        file_parser=file_parser,
-        environment_parser=environment_parser,
-        prefix_parser=prefix_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-    ParserUserroles(
-        subparsers,
-        parent_parser=parent_parser,
-        silent_parser=silent_parser,
-        verbose_parser=verbose_parser,
-    ).parser
-
-    args = parser.parse_args()
-    try:
-        func = args.func
-    except AttributeError:
-        parser.error("too few arguments")
-    func(args)
+    cli.add_command(configure)
+    cli.add_command(deployments)
+    cli.add_command(caches)
+    cli.add_command(keyvaluemaps)
+    cli.add_command(targetservers)
+    cli.add_command(apis)
+    cli.add_command(apiproducts)
+    cli.add_command(apps)
+    cli.add_command(developers)
+    cli.add_command(auth)
+    cli.add_command(maskconfigs)
+    cli.add_command(userroles)
+    cli.add_command(permissions)
+    cli(prog_name=CMD, obj={})
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    # cli() # pragma: no cover
+    main() # pragma: no cover

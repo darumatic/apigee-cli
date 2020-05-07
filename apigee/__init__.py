@@ -1,22 +1,10 @@
 APP = "apigeecli"
 CMD = "apigee"
-__version__ = "0.37.4"
+__version__ = "0.38.0"
 description = (
     "Apigee Management API command-line interface with multi-factor authentication"
 )
-long_description = """Apigee Management API command-line interface with multi-factor authentication
-
-Getting Help:
-
-    Homepage:
-        https://pypi.org/project/apigeecli/
-
-    Apigee Product Documentation:
-        https://apidocs.apigee.com/management/apis
-
-    The Apigee Management API command-line interface documentation:
-        https://mdelotavo.github.io/apigee-cli/
-    """
+long_description = """Apigee Management API command-line interface with multi-factor authentication"""
 
 import json
 from os import getenv
