@@ -4,6 +4,36 @@ apigee-cli
 
 |License|
 
+.. code-block:: text
+
+    Usage: apigee [OPTIONS] COMMAND [ARGS]...
+
+      Welcome to the Apigee Management API command-line interface!
+
+      Docs:    https://mdelotavo.github.io/apigee-cli/
+      PyPI:    https://pypi.org/project/apigeecli/
+      GitHub:  https://github.com/mdelotavo/apigee-cli
+
+    Options:
+      -V, --version  Show the version and exit.
+      -h, --help     Show this message and exit.
+
+    Commands:
+      apiproducts    API products enable you to bundle and distribute your APIs...
+      apis           The proxy APIs let you perform operations on API proxies,...
+      apps           Management APIs available for working with developer apps.
+      auth           Custom authorization commands.
+      caches         A lightweight persistence store that can be used by...
+      configure      Configure Apigee Edge credentials.
+      deployments    API proxies that are actively deployed in environments on...
+      developers     Developers implement client/consumer apps and must be...
+      keyvaluemaps   Key/value maps at the environment scope can be accessed by...
+      maskconfigs    Specify data that will be filtered out of trace sessions.
+      permissions    Permissions for roles in an organization on Apigee Edge.
+      targetservers  TargetServers are used to decouple TargetEndpoint...
+      userroles      Roles for users in an organization on Apigee Edge.
+
+
 .. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
     :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
 .. |Python package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Python%20package/badge.svg
