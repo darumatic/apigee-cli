@@ -222,4 +222,4 @@ limitations under the License.
 
 Contact
 =======
-Question? Please contact Matthew Delotavo <matthew@darumatic.com>
+Questions? Please contact Matthew Delotavo <matthew@darumatic.com>
