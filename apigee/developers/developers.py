@@ -185,20 +185,3 @@ class Developers:
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
-
-    @staticmethod
-    def with_prefix(
-        auth_obj, org, name, attribute_name=APIGEE_CLI_AUTHORIZATION_DEVELOPER_ATTRIBUTE
-    ):
-        team = (
-            Developers(auth_obj, org, auth_obj.username)
-            .get_developer_attribute(attribute_name)
-            .json()["value"]
-        )
-        allowed = team.split(",")
-        for prefix in allowed:
-            if name.startswith(prefix):
-                return name
-        raise Exception(
-            f"401 Client Error: Unauthorized for team: {str(allowed)}\nAttempted to access resource: {name}"
-        )

@@ -21,6 +21,7 @@ from apigee.cls import AliasedGroup
 from apigee.types import Struct
 from apigee.utils import make_dirs
 # from apigee.prefix import common_prefix_options
+from apigee.prefix import auth_with_prefix as with_prefix
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
@@ -163,12 +164,11 @@ def set_header(auth_obj, headers={}):
     return headers
 
 def auth_with_prefix(auth_obj, org, name, file=None, key="name"):
-    from apigee.developers.developers import Developers
     if file:
         with open(file) as f:
             attr = json.loads(f.read())[key]
-        return Developers.with_prefix(auth_obj, org, attr)
-    return Developers.with_prefix(auth_obj, org, name)
+        return with_prefix(auth_obj, org, attr)
+    return with_prefix(auth_obj, org, name)
 
 @click.command(help="Custom authorization commands. More information on the use cases for these commands are yet to be documented.", cls=AliasedGroup)
 def auth():
