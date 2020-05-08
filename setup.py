@@ -49,6 +49,7 @@ SETUP_ARGS = dict(
         "pyjwt"
     ],
     project_urls={"Documentation": "https://mdelotavo.github.io/apigee-cli/index.html"},
+    python_requires=">=3.6",
 )
 
 if __name__ == '__main__':
