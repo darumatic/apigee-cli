@@ -7,6 +7,7 @@ from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
+
 @click.group(help="API products enable you to bundle and distribute your APIs to multiple developer groups simultaneously, without having to modify code.")
 def apiproducts():
     pass

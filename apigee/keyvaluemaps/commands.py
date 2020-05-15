@@ -7,6 +7,7 @@ from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
+
 @click.group(help="Key/value maps at the environment scope can be accessed by any API proxy in the environment (such as test or prod). In the management UI (APIs > Environment Configuration), key/value maps are at the environment scope.")
 def keyvaluemaps():
     pass

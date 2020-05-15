@@ -7,6 +7,7 @@ from apigee.maskconfigs.maskconfigs import Maskconfigs
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
+
 @click.group(help="Specify data that will be filtered out of trace sessions.")
 def maskconfigs():
     pass

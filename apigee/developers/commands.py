@@ -7,6 +7,7 @@ from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
+
 @click.group(help="Developers implement client/consumer apps and must be registered with an organization on Apigee Edge.")
 def developers():
     pass

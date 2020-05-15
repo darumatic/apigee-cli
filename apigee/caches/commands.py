@@ -7,6 +7,7 @@ from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
+
 @click.group(help="A lightweight persistence store that can be used by policies or code executing on the Apigee Edge. To support data segregation, cache resources are scoped to environments.")
 def caches():
     pass
