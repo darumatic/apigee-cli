@@ -186,7 +186,7 @@ class Keyvaluemaps:
             self.create_an_entry_in_an_environment_scoped_kvm(environment, entry["name"], entry["value"])
 
     def _delete_entries(self, environment, deleted_keys):
-        for idx, entry in enumerate(tqdm(deleted_keys)):
+        for idx, entry in enumerate(tqdm(deleted_keys, desc='Deleting', unit='entries')):
             self.delete_keyvaluemap_entry_in_an_environment(environment, entry["name"])
 
     def push_keyvaluemap(self, environment, file):
@@ -197,12 +197,13 @@ class Keyvaluemaps:
         try:
             env_kvm = self.get_keyvaluemap_in_an_environment(environment).json()
             _, deleted_keys = self._diff_kvms(loc_kvm, env_kvm)
-            console.echo(f"Updating entries in {self._map_name}")
-            for idx, entry in enumerate(tqdm(loc_kvm["entry"])):
-                if entry not in env_kvm["entry"]:
-                    self._create_or_update_entry(environment, entry)
+            updated_loc_kvm = {"entry": [entry for entry in loc_kvm["entry"] if entry not in env_kvm["entry"]]}
+            if updated_loc_kvm["entry"]:
+                for entry in tqdm(updated_loc_kvm["entry"], desc='Updating', unit='entries'):
+                        self._create_or_update_entry(environment, entry)
+            else:
+                console.echo("All entries up-to-date")
             if deleted_keys:
-                console.echo(f"Deleting entries in {self._map_name}")
                 self._delete_entries(environment, deleted_keys)
         except HTTPError as e:
             if e.response.status_code != 404:
