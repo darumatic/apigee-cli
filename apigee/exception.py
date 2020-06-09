@@ -6,6 +6,14 @@ from apigee import APIGEE_CLI_EXCEPTION_LOG_FILE, console
 from apigee.utils import touch
 
 
+class InvalidApisException(Exception):
+    pass
+
+
+class NotYetImplementedException(Exception):
+    pass
+
+
 def exception_handler(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
