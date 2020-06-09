@@ -17,16 +17,16 @@ DELETE_A_CACHE_PATH = '{api_url}/v1/organizations/{org}/environments/{environmen
 class CachesSerializer:
     def serialize_details(self, caches, format, prefix=None):
         resp = caches
-        if format == "text":
+        if format == 'text':
             return caches.text
         caches = caches.json()
         if prefix:
             caches = [cache for cache in caches if cache.startswith(prefix)]
-        if format == "json":
+        if format == 'json':
             return json.dumps(caches)
-        elif format == "table":
+        elif format == 'table':
             pass
-        elif format == "dict":
+        elif format == 'dict':
             return caches
         # else:
         #     raise ValueError(format)
@@ -34,7 +34,6 @@ class CachesSerializer:
 
 
 class Caches:
-
     def __init__(self, auth, org_name, cache_name):
         self._auth = auth
         self._org_name = org_name
@@ -69,30 +68,21 @@ class Caches:
 
     def clear_all_cache_entries(self, environment):
         uri = CLEAR_ALL_CACHE_ENTRIES_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._cache_name)
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/octet-stream"},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/octet-stream'})
         resp = requests.post(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def clear_a_cache_entry(self, environment, entry):
         uri = CLEAR_A_CACHE_ENTRY_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._cache_name, entry=entry)
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/octet-stream"},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/octet-stream'})
         resp = requests.post(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def create_a_cache_in_an_environment(self, environment, request_body):
         uri = CREATE_A_CACHE_IN_AN_ENVIRONMENT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._cache_name)
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -100,24 +90,21 @@ class Caches:
 
     def get_information_about_a_cache(self, environment):
         uri = GET_INFORMATION_ABOUT_A_CACHE_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._cache_name)
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_caches_in_an_environment(self, environment, prefix=None, format="json"):
+    def list_caches_in_an_environment(self, environment, prefix=None, format='json'):
         uri = LIST_CACHES_IN_AN_ENVIRONMENT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment)
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return CachesSerializer().serialize_details(resp, format, prefix=prefix)
 
     def update_a_cache_in_an_environment(self, environment, request_body):
         uri = UPDATE_A_CACHE_IN_AN_ENVIRONMENT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._cache_name)
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -125,7 +112,7 @@ class Caches:
 
     def delete_a_cache(self, environment):
         uri = DELETE_A_CACHE_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._cache_name)
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -134,13 +121,13 @@ class Caches:
         with open(file) as f:
             body = f.read()
         cache = json.loads(body)
-        self._cache_name = cache["name"]
+        self._cache_name = cache['name']
         try:
             self.get_information_about_a_cache(environment)
-            console.echo(f"Updating {self._cache_name}")
+            console.echo(f'Updating {self._cache_name}')
             console.echo(self.update_a_cache_in_an_environment(environment, body).text)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
-            console.echo(f"Creating {self._cache_name}")
+            console.echo(f'Creating {self._cache_name}')
             console.echo(self.create_a_cache_in_an_environment(environment, body).text)

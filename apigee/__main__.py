@@ -11,6 +11,7 @@ import time
 from functools import update_wrapper
 
 import click
+
 # from click_aliases import ClickAliasedGroup
 
 from apigee import APP
@@ -20,6 +21,7 @@ from apigee.apiproducts.commands import apiproducts
 from apigee.apis.commands import apis
 from apigee.apps.commands import apps
 from apigee.auth import auth
+from apigee.backups.commands import backups
 from apigee.caches.commands import caches
 from apigee.cls import AliasedGroup
 from apigee.configure.commands import configure
@@ -33,9 +35,7 @@ from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
 from apigee.utils import show_message
 
-CONTEXT_SETTINGS = dict(
-    help_option_names=["-h", "--help"]
-)
+CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
 @click.group(context_settings=CONTEXT_SETTINGS, cls=AliasedGroup, invoke_without_command=False, chain=False)
@@ -58,8 +58,10 @@ def cli(ctx):
     # by means other than the `if` block below)
     ctx.ensure_object(dict)
 
+
 @exception_handler
 def main():
+    cli.add_command(backups)
     cli.add_command(configure)
     cli.add_command(deployments)
     cli.add_command(caches)
@@ -78,4 +80,4 @@ def main():
 
 if __name__ == '__main__':
     # cli() # pragma: no cover
-    main() # pragma: no cover
+    main()  # pragma: no cover

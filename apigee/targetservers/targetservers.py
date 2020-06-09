@@ -15,20 +15,16 @@ UPDATE_A_TARGETSERVER_PATH = '{api_url}/v1/organizations/{org}/environments/{env
 class TargetserversSerializer:
     def serialize_details(self, targetservers, format, prefix=None):
         resp = targetservers
-        if format == "text":
+        if format == 'text':
             return targetservers.text
         targetservers = targetservers.json()
         if prefix:
-            targetservers = [
-                targetserver
-                for targetserver in targetservers
-                if targetserver.startswith(prefix)
-            ]
-        if format == "json":
+            targetservers = [targetserver for targetserver in targetservers if targetserver.startswith(prefix)]
+        if format == 'json':
             return json.dumps(targetservers)
-        elif format == "table":
+        elif format == 'table':
             pass
-        elif format == "dict":
+        elif format == 'dict':
             return targetservers
         # else:
         #     raise ValueError(format)
@@ -36,7 +32,6 @@ class TargetserversSerializer:
 
 
 class Targetservers:
-
     def __init__(self, auth, org_name, targetserver_name):
         self._auth = auth
         self._org_name = org_name
@@ -71,10 +66,7 @@ class Targetservers:
 
     def create_a_targetserver(self, environment, request_body):
         uri = CREATE_A_TARGETSERVER_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment)
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -82,33 +74,28 @@ class Targetservers:
 
     def delete_a_targetserver(self, environment):
         uri = DELETE_A_TARGETSERVER_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name)
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_targetservers_in_an_environment(
-        self, environment, prefix=None, format="json"
-    ):
+    def list_targetservers_in_an_environment(self, environment, prefix=None, format='json'):
         uri = LIST_TARGETSERVERS_IN_AN_ENVIRONMENT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment)
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return TargetserversSerializer().serialize_details(resp, format, prefix=prefix)
 
     def get_targetserver(self, environment):
         uri = GET_TARGETSERVER_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name)
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def update_a_targetserver(self, environment, request_body):
         uri = UPDATE_A_TARGETSERVER_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name)
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -118,13 +105,13 @@ class Targetservers:
         with open(file) as f:
             body = f.read()
         targetserver = json.loads(body)
-        self._targetserver_name = targetserver["name"]
+        self._targetserver_name = targetserver['name']
         try:
             self.get_targetserver(environment)
-            console.echo(f"Updating {self._targetserver_name}")
+            console.echo(f'Updating {self._targetserver_name}')
             console.echo(self.update_a_targetserver(environment, body).text)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
-            console.echo(f"Creating {self._targetserver_name}")
+            console.echo(f'Creating {self._targetserver_name}')
             console.echo(self.create_a_targetserver(environment, body).text)

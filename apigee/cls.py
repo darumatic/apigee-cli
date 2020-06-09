@@ -2,13 +2,11 @@ import click
 
 
 class AliasedGroup(click.Group):
-
     def get_command(self, ctx, cmd_name):
         rv = click.Group.get_command(self, ctx, cmd_name)
         if rv is not None:
             return rv
-        matches = [x for x in self.list_commands(ctx)
-                   if x.startswith(cmd_name)]
+        matches = [x for x in self.list_commands(ctx) if x.startswith(cmd_name)]
         if not matches:
             return None
         elif len(matches) == 1:
@@ -28,7 +26,6 @@ class OptionEatAll(click.Option):
         self._eat_all_parser = None
 
     def add_to_parser(self, parser, ctx):
-
         def parser_process(value, state):
             # method to hook to the parser.process
             done = False
