@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Quickstart &mdash; apigee-cli 0.x.x documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="auth" href="auth.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> apigee-cli
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-an-oauth-access-token">Getting an OAuth Access Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-help">Getting Help</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="auth.html">auth</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Apache License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="disclaimer.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="help.html">Need Help</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">apigee-cli</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Quickstart</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="getting-started">
+<span id="id1"></span><h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>Before using apigee-cli, you need to tell it about your Apigee Edge credentials.  You
+can do this in three ways:</p>
+<ul class="simple">
+<li><p>Environment variables</p></li>
+<li><p>Config file</p></li>
+<li><p>Command-line arguments</p></li>
+</ul>
+<p>The quickest way to get started is to run the <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">configure</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee configure
+Apigee username (email) []: my_email
+Apigee password []: my_pass
+Apigee MFA key (optional) []: my_key
+Default Apigee organization (recommended) []: my_org
+Default team/resource prefix (optional) []: team_prefix
+</pre></div>
+</div>
+<p>To use environment variables, do the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_USERNAME=&lt;my_email&gt;
+$ export APIGEE_PASSWORD=&lt;my_pass&gt;
+$ export APIGEE_MFA_SECRET=&lt;my_key&gt;
+$ export APIGEE_ORG=&lt;my_org&gt;
+$ export APIGEE_CLI_PREFIX=&lt;my_prefix&gt;
+</pre></div>
+</div>
+<p>To use the configuration file, create an INI formatted file like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">default</span><span class="p">]</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">my_email</span>
+<span class="n">org</span> <span class="o">=</span> <span class="n">my_org</span>
+<span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">my_key</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="n">my_prefix</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">my_pass</span>
+
+<span class="p">[</span><span class="n">produser</span><span class="p">]</span>
+<span class="n">org</span> <span class="o">=</span> <span class="n">my_org</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">my_email</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">my_pass</span>
+<span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">my_key</span>
+</pre></div>
+</div>
+<p>and place it in <code class="docutils literal notranslate"><span class="pre">~/.apigee/credentials</span></code>.</p>
+<p>As you can see, you can have multiple <code class="docutils literal notranslate"><span class="pre">profiles</span></code> defined in the configuration file. You can then specify which
+profile to use by using the <code class="docutils literal notranslate"><span class="pre">-P/--profile</span></code> option. If no profile is specified
+the <code class="docutils literal notranslate"><span class="pre">default</span></code> profile is used.</p>
+</div>
+<div class="section" id="getting-an-oauth-access-token">
+<span id="id2"></span><h2>Getting an OAuth Access Token<a class="headerlink" href="#getting-an-oauth-access-token" title="Permalink to this headline">¶</a></h2>
+<p>To get an OAuth access token, configure an MFA key, then run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee auth access-token
+</pre></div>
+</div>
+<p>This will return <code class="docutils literal notranslate"><span class="pre">None</span></code> if an MFA key is not set.</p>
+</div>
+<div class="section" id="getting-help">
+<span id="id3"></span><h2>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://apidocs.apigee.com/management/apis">Apigee Product Documentation</a></p></li>
+<li><p><a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/permissions">Permissions reference</a></p></li>
+<li><p><a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/managing-roles-api#addpermissionstotestingrole">Add permissions to testing role</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="auth.html" class="btn btn-neutral float-right" title="auth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Matthew Delotavo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
