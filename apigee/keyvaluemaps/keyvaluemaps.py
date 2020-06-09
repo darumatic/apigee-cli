@@ -1,11 +1,10 @@
 import json
+
 import requests
 from requests.exceptions import HTTPError
-
 from tqdm import tqdm
 
-from apigee import APIGEE_ADMIN_API_URL
-from apigee import auth, console
+from apigee import APIGEE_ADMIN_API_URL, auth, console
 
 CREATE_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps'
 DELETE_KEYVALUEMAP_FROM_AN_ENVIRONMENT_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}'

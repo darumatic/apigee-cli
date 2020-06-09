@@ -8,7 +8,6 @@ import json
 from os import getenv
 from pathlib import Path
 
-
 # auth
 APIGEE_USERNAME = getenv('APIGEE_USERNAME')
 APIGEE_PASSWORD = getenv('APIGEE_PASSWORD')

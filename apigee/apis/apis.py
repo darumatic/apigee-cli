@@ -1,17 +1,18 @@
 import json
 import os
-import requests
 import sys
 import xml.etree.ElementTree as et
 from pathlib import Path
 
-from apigee import APIGEE_ADMIN_API_URL
-from apigee import auth, console
+import requests
+
+from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.caches.caches import Caches
 from apigee.deployments.deployments import Deployments
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.targetservers.targetservers import Targetservers
-from apigee.utils import extract_zip, make_dirs, path_exists, paths_exist, split_path, write_zip
+from apigee.utils import (extract_zip, make_dirs, path_exists, paths_exist,
+                          split_path, write_zip)
 
 DELETE_API_PROXY_REVISION_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}'
 DEPLOY_API_PROXY_REVISION_PATH = (

@@ -1,13 +1,12 @@
 import json
 import random
-import requests
 import string
-from requests.exceptions import HTTPError
 
+import requests
+from requests.exceptions import HTTPError
 from tqdm import tqdm
 
-from apigee import APIGEE_ADMIN_API_URL
-from apigee import auth, console
+from apigee import APIGEE_ADMIN_API_URL, auth, console
 
 CREATE_DEVELOPER_APP_PATH = '{api_url}/v1/organizations/{org}/developers/{developer}/apps'
 DELETE_DEVELOPER_APP_PATH = '{api_url}/v1/organizations/{org}/developers/{developer}/apps/{name}'

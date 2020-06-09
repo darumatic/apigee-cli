@@ -1,10 +1,9 @@
 import json
-import requests
 
+import requests
 from tabulate import tabulate
 
-from apigee import APIGEE_ADMIN_API_URL
-from apigee import auth
+from apigee import APIGEE_ADMIN_API_URL, auth
 
 CREATE_PERMISSIONS_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}/resourcepermissions'
 TEAM_PERMISSIONS_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}/resourcepermissions'

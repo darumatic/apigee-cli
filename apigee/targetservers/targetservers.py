@@ -1,9 +1,9 @@
 import json
+
 import requests
 from requests.exceptions import HTTPError
 
-from apigee import APIGEE_ADMIN_API_URL
-from apigee import auth, console
+from apigee import APIGEE_ADMIN_API_URL, auth, console
 
 CREATE_A_TARGETSERVER_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers'
 DELETE_A_TARGETSERVER_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}'

@@ -1,8 +1,8 @@
 import click
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
 from apigee.apiproducts.apiproducts import Apiproducts
+from apigee.auth import common_auth_options, gen_auth
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options

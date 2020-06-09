@@ -2,7 +2,8 @@ import configparser
 
 import click
 
-from apigee import APIGEE_CLI_CREDENTIALS_FILE, APIGEE_CLI_AUTHORIZATION_DEVELOPER_ATTRIBUTE
+from apigee import (APIGEE_CLI_AUTHORIZATION_DEVELOPER_ATTRIBUTE,
+                    APIGEE_CLI_CREDENTIALS_FILE)
 from apigee.developers.developers import Developers
 
 

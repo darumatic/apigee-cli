@@ -1,11 +1,13 @@
 import json
 import random
-import requests
 import string
+
+import requests
 from requests.exceptions import HTTPError
 
-from apigee import APIGEE_ADMIN_API_URL, APIGEE_CLI_AUTHORIZATION_DEVELOPER_ATTRIBUTE
-from apigee import auth, console
+from apigee import (APIGEE_ADMIN_API_URL,
+                    APIGEE_CLI_AUTHORIZATION_DEVELOPER_ATTRIBUTE, auth,
+                    console)
 
 CREATE_DEVELOPER_PATH = '{api_url}/v1/organizations/{org}/developers'
 DELETE_DEVELOPER_PATH = '{api_url}/v1/organizations/{org}/developers/{developer_email}'

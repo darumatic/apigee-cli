@@ -1,9 +1,9 @@
 import builtins
 import http.client as http_client
 import logging
-import requests
 
 import click
+import requests
 
 
 def verbose_callback(ctx, param, value):

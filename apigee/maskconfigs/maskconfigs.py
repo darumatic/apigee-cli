@@ -1,9 +1,9 @@
 import json
+
 import requests
 from requests.exceptions import HTTPError
 
-from apigee import APIGEE_ADMIN_API_URL
-from apigee import auth, console
+from apigee import APIGEE_ADMIN_API_URL, auth, console
 
 CREATE_DATA_MASKS_FOR_AN_API_PROXY_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs'
 DELETE_DATA_MASKS_FOR_AN_API_PROXY_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs/{maskconfig_name}'

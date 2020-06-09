@@ -2,8 +2,7 @@ import functools
 import logging
 import sys
 
-from apigee import APIGEE_CLI_EXCEPTION_LOG_FILE
-from apigee import console
+from apigee import APIGEE_CLI_EXCEPTION_LOG_FILE, console
 from apigee.utils import touch
 
 

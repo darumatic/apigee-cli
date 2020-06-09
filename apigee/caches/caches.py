@@ -1,9 +1,9 @@
 import json
+
 import requests
 from requests.exceptions import HTTPError
 
-from apigee import APIGEE_ADMIN_API_URL
-from apigee import auth, console
+from apigee import APIGEE_ADMIN_API_URL, auth, console
 
 CLEAR_ALL_CACHE_ENTRIES_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/caches/{name}/entries?action=clear'
 CLEAR_A_CACHE_ENTRY_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/caches/{name}/entries/{entry}?action=clear'

@@ -5,17 +5,14 @@ import codecs
 import configparser
 import os
 import re
-import requests
 import sys
 import time
 from functools import update_wrapper
 
 import click
+import requests
 
-# from click_aliases import ClickAliasedGroup
-
-from apigee import APP
-from apigee import CMD
+from apigee import APP, CMD
 from apigee import __version__ as version
 from apigee.apiproducts.commands import apiproducts
 from apigee.apis.commands import apis
@@ -34,6 +31,9 @@ from apigee.permissions.commands import permissions
 from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
 from apigee.utils import show_message
+
+# from click_aliases import ClickAliasedGroup
+
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 

@@ -1,8 +1,8 @@
 import json
+
 import requests
 
-from apigee import APIGEE_ADMIN_API_URL
-from apigee import auth
+from apigee import APIGEE_ADMIN_API_URL, auth
 
 ADD_A_USER_TO_A_ROLE_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}/users?id={user_email}'
 ADD_PERMISSIONS_FOR_A_RESOURCE_TO_A_USER_ROLE_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions'

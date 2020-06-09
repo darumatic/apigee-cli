@@ -15,10 +15,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import io
 import base64
 import getopt
 import http.client
+import io
 import json
 import os
 import re
@@ -27,9 +27,7 @@ import urllib.parse
 import xml.dom.minidom
 import zipfile
 
-from apigee import APIGEE_ADMIN_API_URL
-
-from apigee import auth, console
+from apigee import APIGEE_ADMIN_API_URL, auth, console
 
 ApigeeHost = APIGEE_ADMIN_API_URL
 UserPW = None

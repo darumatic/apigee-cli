@@ -3,27 +3,28 @@ import binascii
 import configparser
 import json
 import os
-import pyotp
-import requests
 import sys
 import time
-import urllib.request, urllib.parse, urllib.error
+import urllib.error
+import urllib.parse
+import urllib.request
+
+import click
+import jwt
+import pyotp
+import requests
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
 from requests.packages.urllib3.util.retry import Retry
 
-import click
-import jwt
-
-from apigee import APIGEE_OAUTH_URL, APIGEE_CLI_DIRECTORY, APIGEE_CLI_ACCESS_TOKEN_FILE, APIGEE_CLI_CREDENTIALS_FILE
-from apigee import console
+from apigee import (APIGEE_CLI_ACCESS_TOKEN_FILE, APIGEE_CLI_CREDENTIALS_FILE,
+                    APIGEE_CLI_DIRECTORY, APIGEE_OAUTH_URL, console)
 from apigee.cls import AliasedGroup
-from apigee.types import Struct
-from apigee.utils import make_dirs
-
 # from apigee.prefix import common_prefix_options
 from apigee.prefix import auth_with_prefix as with_prefix
 from apigee.silent import common_silent_options
+from apigee.types import Struct
+from apigee.utils import make_dirs
 from apigee.verbose import common_verbose_options
 
 

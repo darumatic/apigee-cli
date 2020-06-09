@@ -1,10 +1,10 @@
 import configparser
+import sys
 
 import click
 from click_aliases import ClickAliasedGroup
 
-from apigee import APIGEE_CLI_DIRECTORY
-from apigee import APIGEE_CLI_CREDENTIALS_FILE
+from apigee import APIGEE_CLI_CREDENTIALS_FILE, APIGEE_CLI_DIRECTORY
 from apigee.utils import make_dirs
 
 
@@ -20,7 +20,6 @@ KEY_LIST = ('username', 'password', 'mfa_secret', 'org', 'prefix')
 config = configparser.ConfigParser()
 config.read(APIGEE_CLI_CREDENTIALS_FILE)
 profile = 'default'
-import sys
 
 for i, arg in enumerate(sys.argv):
     if arg == '-P' or arg == '--profile':
