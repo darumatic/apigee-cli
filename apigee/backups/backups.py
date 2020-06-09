@@ -56,11 +56,10 @@ class Backups:
 
     def _progress_callback(self, desc=''):
         if not isinstance(self.progress_bar, tqdm):
-            self.progress_bar = tqdm(total=self.snapshot_size, unit='files', bar_format='{l_bar}{bar:32}{r_bar}{bar:-10b}', initial=1, leave=False)
-        else:
-            if desc:
-                self.progress_bar.set_description(desc)
-            self.progress_bar.update(1)
+            self.progress_bar = tqdm(total=self.snapshot_size, unit='files', bar_format='{l_bar}{bar:32}{r_bar}{bar:-10b}', leave=False)
+        if desc:
+            self.progress_bar.set_description(desc)
+        self.progress_bar.update(1)
 
     def download_apis_snapshot(self):
         for api in Apis(self.auth, self.org_name, None).list_api_proxies(prefix=self.prefix, format='dict'):
