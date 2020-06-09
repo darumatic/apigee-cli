@@ -22,9 +22,6 @@ Welcome to the Apigee Management API command-line interface documentation!
    :hidden:
 
    auth
-   source/apigee.api
-   source/apigee.abstract.api
-   source/apigee.parsers
 
 .. toctree::
    :maxdepth: 2

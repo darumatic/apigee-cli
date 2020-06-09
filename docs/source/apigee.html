@@ -185,6 +185,13 @@
 <li class="toctree-l2"><a class="reference internal" href="apigee.apps.html#module-apigee.apps">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="apigee.backups.html">apigee.backups package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups.backups">apigee.backups.backups module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups.commands">apigee.backups.commands module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.backups.html#module-apigee.backups">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="apigee.caches.html">apigee.caches package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="apigee.caches.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.caches.html#module-apigee.caches.caches">apigee.caches.caches module</a></li>
@@ -318,12 +325,24 @@
 <span id="apigee-console-module"></span><h2>apigee.console module<a class="headerlink" href="#module-apigee.console" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="apigee.console.echo">
-<code class="sig-prename descclassname">apigee.console.</code><code class="sig-name descname">echo</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">message</span></em>, <em class="sig-param"><span class="n">status</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">silent</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">curr_verbosity</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">expc_verbosity</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.console.echo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.console.</code><code class="sig-name descname">echo</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">message</span></em>, <em class="sig-param"><span class="n">status</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">silent</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">curr_verbosity</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">expc_verbosity</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">end</span><span class="o">=</span><span class="default_value">'\n'</span></em>, <em class="sig-param"><span class="n">flush</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.console.echo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="module-apigee.exception">
 <span id="apigee-exception-module"></span><h2>apigee.exception module<a class="headerlink" href="#module-apigee.exception" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="apigee.exception.InvalidApisException">
+<em class="property">exception </em><code class="sig-prename descclassname">apigee.exception.</code><code class="sig-name descname">InvalidApisException</code><a class="headerlink" href="#apigee.exception.InvalidApisException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="apigee.exception.NotYetImplementedException">
+<em class="property">exception </em><code class="sig-prename descclassname">apigee.exception.</code><code class="sig-name descname">NotYetImplementedException</code><a class="headerlink" href="#apigee.exception.NotYetImplementedException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
 <dl class="py function">
 <dt id="apigee.exception.exception_handler">
 <code class="sig-prename descclassname">apigee.exception.</code><code class="sig-name descname">exception_handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.exception.exception_handler" title="Permalink to this definition">¶</a></dt>
@@ -332,6 +351,11 @@
 </div>
 <div class="section" id="module-apigee.prefix">
 <span id="apigee-prefix-module"></span><h2>apigee.prefix module<a class="headerlink" href="#module-apigee.prefix" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="apigee.prefix.auth_with_prefix">
+<code class="sig-prename descclassname">apigee.prefix.</code><code class="sig-name descname">auth_with_prefix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth_obj</span></em>, <em class="sig-param"><span class="n">org</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">attribute_name</span><span class="o">=</span><span class="default_value">'team'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.prefix.auth_with_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py function">
 <dt id="apigee.prefix.common_prefix_options">
 <code class="sig-prename descclassname">apigee.prefix.</code><code class="sig-name descname">common_prefix_options</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.prefix.common_prefix_options" title="Permalink to this definition">¶</a></dt>
@@ -395,6 +419,11 @@
 <dl class="py function">
 <dt id="apigee.utils.read_file">
 <code class="sig-prename descclassname">apigee.utils.</code><code class="sig-name descname">read_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em>, <em class="sig-param"><span class="n">type</span><span class="o">=</span><span class="default_value">'text'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.read_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="apigee.utils.resolve_target_directory">
+<code class="sig-prename descclassname">apigee.utils.</code><code class="sig-name descname">resolve_target_directory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">target_directory</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.utils.resolve_target_directory" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">

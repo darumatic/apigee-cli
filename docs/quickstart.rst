@@ -17,7 +17,7 @@ can do this in three ways:
 The quickest way to get started is to run the ``apigee configure`` command::
 
     $ apigee configure
-    Apigee username (email) [None]: my_email
+    Apigee username (email) []: my_email
     Apigee password []: my_pass
     Apigee MFA key (optional) []: my_key
     Default Apigee organization (recommended) []: my_org

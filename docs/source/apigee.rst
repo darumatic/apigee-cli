@@ -10,6 +10,7 @@ Subpackages
    apigee.apiproducts
    apigee.apis
    apigee.apps
+   apigee.backups
    apigee.caches
    apigee.configure
    apigee.deployments
