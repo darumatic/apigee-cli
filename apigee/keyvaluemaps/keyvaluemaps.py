@@ -186,7 +186,7 @@ class Keyvaluemaps:
             self.create_an_entry_in_an_environment_scoped_kvm(environment, entry["name"], entry["value"])
 
     def _delete_entries(self, environment, deleted_keys):
-        for idx, entry in enumerate(tqdm(deleted_keys, desc='Deleting', unit='entries')):
+        for idx, entry in enumerate(tqdm(deleted_keys, desc='Deleting', unit='entries', bar_format='{l_bar}{bar:32}{r_bar}{bar:-10b}')):
             self.delete_keyvaluemap_entry_in_an_environment(environment, entry["name"])
 
     def push_keyvaluemap(self, environment, file):
@@ -199,7 +199,7 @@ class Keyvaluemaps:
             _, deleted_keys = self._diff_kvms(loc_kvm, env_kvm)
             updated_loc_kvm = {"entry": [entry for entry in loc_kvm["entry"] if entry not in env_kvm["entry"]]}
             if updated_loc_kvm["entry"]:
-                for entry in tqdm(updated_loc_kvm["entry"], desc='Updating', unit='entries'):
+                for entry in tqdm(updated_loc_kvm["entry"], desc='Updating', unit='entries', bar_format='{l_bar}{bar:32}{r_bar}{bar:-10b}'):
                         self._create_or_update_entry(environment, entry)
             else:
                 console.echo("All entries up-to-date")
