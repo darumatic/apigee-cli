@@ -176,6 +176,19 @@ class Backups:
         write_file(self.snapshot_data.apiproducts, path, fs_write=self.fs_write)
         return self.snapshot_data.apiproducts
 
+    def download_apiproducts(self):
+        for apiproduct in self.snapshot_data.apiproducts:
+            try:
+                write_file(
+                    Apiproducts(self.auth, self.org_name, apiproduct).get_api_product().text,
+                    str(Path(self.target_directory) / self.org_name / 'apiproducts' / (apiproduct + '.json')),
+                    fs_write=self.fs_write,
+                )
+            except HTTPError as e:
+                console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for API Product ({apiproduct})')
+            self._progress_callback(desc='API Products')
+        return self.snapshot_data.apiproducts
+
     def download_apps_snapshot(self, expand=False, count=1000, startkey=""):
         self.snapshot_data.apps = Apps(self.auth, self.org_name, None).list_apps_for_all_developers(
             Developers(self.auth, self.org_name, None).list_developers(prefix=None, expand=expand, count=count, startkey=startkey, format='dict'),
@@ -260,7 +273,7 @@ class Backups:
         if 'developers' in self.apis:
             self.download_developers()
         if 'apiproducts' in self.apis:
-            raise NotYetImplementedError
+            self.download_apiproducts()
         if 'apps' in self.apis:
             raise NotYetImplementedError
         if 'userroles' in self.apis:
