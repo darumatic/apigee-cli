@@ -13,6 +13,7 @@ from apigee.caches.caches import Caches
 from apigee.developers.developers import Developers
 from apigee.exceptions import InvalidApisError, NotYetImplementedError
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
+from apigee.permissions.permissions import Permissions
 from apigee.targetservers.targetservers import Targetservers
 from apigee.types import Struct
 from apigee.userroles.userroles import Userroles
@@ -223,6 +224,33 @@ class Backups:
         write_file(self.snapshot_data.userroles, path, fs_write=self.fs_write)
         return self.snapshot_data.userroles
 
+    def _get_users_for_a_role(self, role_name):
+        return Userroles(self.auth, self.org_name, role_name).get_users_for_a_role().text
+
+    def _get_permissions(self, role_name):
+        return Permissions(self.auth, self.org_name, role_name).get_permissions(formatted=True, format='text')
+
+    def download_userroles(self):
+        for userrole in self.snapshot_data.userroles:
+            try:
+                write_file(
+                    self._get_users_for_a_role(userrole),
+                    str(Path(self.target_directory) / self.org_name / 'userroles' / userrole / 'users.json'),
+                    fs_write=self.fs_write,
+                )
+            except HTTPError as e:
+                console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for User Role ({userrole}) users')
+            try:
+                write_file(
+                    self._get_permissions(userrole),
+                    str(Path(self.target_directory) / self.org_name / 'userroles' / userrole / 'resource_permissions.json'),
+                    fs_write=self.fs_write,
+                )
+            except HTTPError as e:
+                console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for User Role ({userrole}) resource permissions')
+            self._progress_callback(desc='User Roles')
+        return self.snapshot_data.userroles
+
     def _calculate_snapshot_size(self):
         count = 0
         for x in self.snapshot_data.__dict__:
@@ -292,7 +320,7 @@ class Backups:
         if 'apps' in self.apis:
             self.download_apps()
         if 'userroles' in self.apis:
-            raise NotYetImplementedError
+            self.download_userroles()
         self.progress_bar.close()
         console.echo('Done.')
         return self.snapshot_data
