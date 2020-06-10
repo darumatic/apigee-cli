@@ -11,7 +11,7 @@ from apigee.apis.apis import Apis
 from apigee.apps.apps import Apps
 from apigee.caches.caches import Caches
 from apigee.developers.developers import Developers
-from apigee.exception import InvalidApisException, NotYetImplementedException
+from apigee.exceptions import InvalidApisError, NotYetImplementedError
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.targetservers.targetservers import Targetservers
 from apigee.types import Struct
@@ -48,10 +48,10 @@ class Backups:
     @apis.setter
     def apis(self, value):
         if not value:
-            raise InvalidApisException
+            raise InvalidApisError
         for t in value:
             if t not in self.APIS:
-                raise InvalidApisException
+                raise InvalidApisError
         self._apis = value
 
     def _progress_callback(self, desc=''):
@@ -234,13 +234,13 @@ class Backups:
         if 'caches' in self.apis:
             self.download_caches()
         if 'developers' in self.apis:
-            raise NotYetImplementedException
+            raise NotYetImplementedError
         if 'apiproducts' in self.apis:
-            raise NotYetImplementedException
+            raise NotYetImplementedError
         if 'apps' in self.apis:
-            raise NotYetImplementedException
+            raise NotYetImplementedError
         if 'userroles' in self.apis:
-            raise NotYetImplementedException
+            raise NotYetImplementedError
         self.progress_bar.close()
         console.echo('Done.')
         return self.snapshot_data

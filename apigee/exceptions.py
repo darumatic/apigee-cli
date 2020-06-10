@@ -6,11 +6,11 @@ from apigee import APIGEE_CLI_EXCEPTION_LOG_FILE, console
 from apigee.utils import touch
 
 
-class InvalidApisException(Exception):
+class InvalidApisError(Exception):
     pass
 
 
-class NotYetImplementedException(Exception):
+class NotYetImplementedError(Exception):
     pass
 
 

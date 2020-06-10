@@ -24,7 +24,7 @@ from apigee.cls import AliasedGroup
 from apigee.configure.commands import configure
 from apigee.deployments.commands import deployments
 from apigee.developers.commands import developers
-from apigee.exception import exception_handler
+from apigee.exceptions import exception_handler
 from apigee.keyvaluemaps.commands import keyvaluemaps
 from apigee.maskconfigs.commands import maskconfigs
 from apigee.permissions.commands import permissions
