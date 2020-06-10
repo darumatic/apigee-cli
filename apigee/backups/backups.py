@@ -65,8 +65,11 @@ class Backups:
     def download_apis_snapshot(self):
         for api in Apis(self.auth, self.org_name, None).list_api_proxies(prefix=self.prefix, format='dict'):
             self.snapshot_data.apis[api] = Apis(self.auth, self.org_name, None).get_api_proxy(api).json()
-            path = str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'apis' / (api + '.json'))
-            write_file(self.snapshot_data.apis[api], path, fs_write=self.fs_write)
+            write_file(
+                self.snapshot_data.apis[api],
+                str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'apis' / (api + '.json')),
+                fs_write=self.fs_write,
+            )
         return self.snapshot_data.apis
 
     def download_apis(self):
@@ -91,16 +94,22 @@ class Backups:
                 )
             except HTTPError:
                 self.snapshot_data.keyvaluemaps[environment] = []
-            path = str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'keyvaluemaps' / environment / 'keyvaluemaps.json')
-            write_file(self.snapshot_data.keyvaluemaps[environment], path, fs_write=self.fs_write)
+            write_file(
+                self.snapshot_data.keyvaluemaps[environment],
+                str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'keyvaluemaps' / environment / 'keyvaluemaps.json'),
+                fs_write=self.fs_write,
+            )
         return self.snapshot_data.keyvaluemaps
 
     def download_keyvaluemaps(self):
         for environment in self.environments:
             for kvm in self.snapshot_data.keyvaluemaps[environment]:
-                path = str(Path(self.target_directory) / self.org_name / 'keyvaluemaps' / environment / (kvm + '.json'))
                 try:
-                    write_file(Keyvaluemaps(self.auth, self.org_name, kvm).get_keyvaluemap_in_an_environment(environment).text, path, fs_write=True)
+                    write_file(
+                        Keyvaluemaps(self.auth, self.org_name, kvm).get_keyvaluemap_in_an_environment(environment).text,
+                        str(Path(self.target_directory) / self.org_name / 'keyvaluemaps' / environment / (kvm + '.json')),
+                        fs_write=True,
+                    )
                 except HTTPError as e:
                     console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for KVM ({kvm})')
                 self._progress_callback(desc='KeyValueMaps')
@@ -114,16 +123,22 @@ class Backups:
                 )
             except HTTPError:
                 self.snapshot_data.targetservers[environment] = []
-            path = str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'targetservers' / environment / 'targetservers.json')
-            write_file(self.snapshot_data.targetservers[environment], path, fs_write=self.fs_write)
+            write_file(
+                self.snapshot_data.targetservers[environment],
+                str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'targetservers' / environment / 'targetservers.json'),
+                fs_write=self.fs_write,
+            )
         return self.snapshot_data.targetservers
 
     def download_targetservers(self):
         for environment in self.environments:
             for targetserver in self.snapshot_data.targetservers[environment]:
-                path = str(Path(self.target_directory) / self.org_name / 'targetservers' / environment / (targetserver + '.json'))
                 try:
-                    write_file(Targetservers(self.auth, self.org_name, targetserver).get_targetserver(environment).text, path, fs_write=True)
+                    write_file(
+                        Targetservers(self.auth, self.org_name, targetserver).get_targetserver(environment).text,
+                        str(Path(self.target_directory) / self.org_name / 'targetservers' / environment / (targetserver + '.json')),
+                        fs_write=True,
+                    )
                 except HTTPError as e:
                     console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for TargetServer ({targetserver})')
                 self._progress_callback(desc='TargetServers')
@@ -137,16 +152,22 @@ class Backups:
                 )
             except HTTPError:
                 self.snapshot_data.caches[environment] = []
-            path = str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'caches' / environment / 'caches.json')
-            write_file(self.snapshot_data.caches[environment], path, fs_write=self.fs_write)
+            write_file(
+                self.snapshot_data.caches[environment],
+                str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'caches' / environment / 'caches.json'),
+                fs_write=self.fs_write,
+            )
         return self.snapshot_data.caches
 
     def download_caches(self):
         for environment in self.environments:
             for cache in self.snapshot_data.caches[environment]:
-                path = str(Path(self.target_directory) / self.org_name / 'caches' / environment / (cache + '.json'))
                 try:
-                    write_file(Caches(self.auth, self.org_name, cache).get_information_about_a_cache(environment).text, path, fs_write=True)
+                    write_file(
+                        Caches(self.auth, self.org_name, cache).get_information_about_a_cache(environment).text,
+                        str(Path(self.target_directory) / self.org_name / 'caches' / environment / (cache + '.json')),
+                        fs_write=True,
+                    )
                 except HTTPError as e:
                     console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for Cache ({cache})')
                 self._progress_callback(desc='Caches')
@@ -154,8 +175,11 @@ class Backups:
 
     def download_developers_snapshot(self):
         self.snapshot_data.developers = Developers(self.auth, self.org_name, None).list_developers(prefix=self.prefix, format='dict')
-        path = str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'developers' / 'developers.json')
-        write_file(self.snapshot_data.developers, path, fs_write=self.fs_write)
+        write_file(
+            self.snapshot_data.developers,
+            str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'developers' / 'developers.json'),
+            fs_write=self.fs_write,
+        )
         return self.snapshot_data.developers
 
     def download_developers(self):
@@ -173,8 +197,11 @@ class Backups:
 
     def download_apiproducts_snapshot(self):
         self.snapshot_data.apiproducts = Apiproducts(self.auth, self.org_name, None).list_api_products(prefix=self.prefix, format='dict')
-        path = str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'apiproducts' / 'apiproducts.json')
-        write_file(self.snapshot_data.apiproducts, path, fs_write=self.fs_write)
+        write_file(
+            self.snapshot_data.apiproducts,
+            str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'apiproducts' / 'apiproducts.json'),
+            fs_write=self.fs_write,
+        )
         return self.snapshot_data.apiproducts
 
     def download_apiproducts(self):
@@ -198,8 +225,9 @@ class Backups:
         )
         self.snapshot_data.apps = {k: v for k, v in self.snapshot_data.apps.items() if v}
         for app, details in self.snapshot_data.apps.items():
-            path = str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'apps' / (app + '.json'))
-            write_file(details, path, fs_write=self.fs_write)
+            write_file(
+                details, str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'apps' / (app + '.json')), fs_write=self.fs_write
+            )
         return self.snapshot_data.apps
 
     def download_apps(self):
@@ -220,8 +248,11 @@ class Backups:
         self.snapshot_data.userroles = Userroles(self.auth, self.org_name, None).list_user_roles().json()
         if self.prefix:
             self.snapshot_data.userroles = [role for role in self.snapshot_data.userroles if role.startswith(self.prefix)]
-        path = str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'userroles' / 'userroles.json')
-        write_file(self.snapshot_data.userroles, path, fs_write=self.fs_write)
+        write_file(
+            self.snapshot_data.userroles,
+            str(Path(self.target_directory) / self.org_name / self.SNAPSHOTS_DIRECTORY_NAME / 'userroles' / 'userroles.json'),
+            fs_write=self.fs_write,
+        )
         return self.snapshot_data.userroles
 
     def _get_users_for_a_role(self, role_name):
