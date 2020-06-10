@@ -201,6 +201,20 @@ class Backups:
             write_file(details, path, fs_write=self.fs_write)
         return self.snapshot_data.apps
 
+    def download_apps(self):
+        for developer, apps in self.snapshot_data.apps.items():
+            for app in apps:
+                try:
+                    write_file(
+                        Apps(self.auth, self.org_name, app).get_developer_app_details(developer).text,
+                        str(Path(self.target_directory) / self.org_name / 'apps' / developer / (app + '.json')),
+                        fs_write=self.fs_write,
+                    )
+                except HTTPError as e:
+                    console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for Developer App ({app})')
+                self._progress_callback(desc='Developer Apps')
+        return self.snapshot_data.apps
+
     def download_userroles_snapshot(self):
         self.snapshot_data.userroles = Userroles(self.auth, self.org_name, None).list_user_roles().json()
         if self.prefix:
@@ -218,7 +232,8 @@ class Backups:
                 for environment_bound_api, listing in self.snapshot_data.__dict__[x].items():
                     count += len(listing)
             elif x == 'apps':
-                count += len(self.snapshot_data.apps)
+                for developer, apps in self.snapshot_data.apps.items():
+                    count += len(apps)
             elif isinstance(self.snapshot_data.__dict__[x], list):
                 count += len(self.snapshot_data.__dict__[x])
         return count
@@ -275,7 +290,7 @@ class Backups:
         if 'apiproducts' in self.apis:
             self.download_apiproducts()
         if 'apps' in self.apis:
-            raise NotYetImplementedError
+            self.download_apps()
         if 'userroles' in self.apis:
             raise NotYetImplementedError
         self.progress_bar.close()
