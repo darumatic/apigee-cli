@@ -88,5 +88,6 @@ def write_file(content, path, fs_write=True):
 
 
 def write_zip(file, content):
+    touch(file)
     with open(file, 'wb') as f:
         f.write(content)

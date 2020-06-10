@@ -73,10 +73,12 @@ class Backups:
             for revision in metadata['revision']:
                 output_dir = str(Path(self.target_directory) / self.org_name / 'apis' / api / revision)
                 output_zip = str(Path(output_dir) / (api + '.zip'))
-                touch(output_zip)
-                Apis(self.auth, self.org_name, None).export_api_proxy(api, revision, fs_write=True, output_file=output_zip)
-                extract_zip(output_zip, output_dir)
-                os.remove(output_zip)
+                try:
+                    Apis(self.auth, self.org_name, None).export_api_proxy(api, revision, fs_write=True, output_file=output_zip)
+                    extract_zip(output_zip, output_dir)
+                    os.remove(output_zip)
+                except HTTPError as e:
+                    console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for API Proxy ({api}, revision {revision})')
             self._progress_callback(desc='APIs')
         return self.snapshot_data.apis
 
@@ -96,7 +98,10 @@ class Backups:
         for environment in self.environments:
             for kvm in self.snapshot_data.keyvaluemaps[environment]:
                 path = str(Path(self.target_directory) / self.org_name / 'keyvaluemaps' / environment / (kvm + '.json'))
-                write_file(Keyvaluemaps(self.auth, self.org_name, kvm).get_keyvaluemap_in_an_environment(environment).text, path, fs_write=True)
+                try:
+                    write_file(Keyvaluemaps(self.auth, self.org_name, kvm).get_keyvaluemap_in_an_environment(environment).text, path, fs_write=True)
+                except HTTPError as e:
+                    console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for KVM ({kvm})')
                 self._progress_callback(desc='KeyValueMaps')
         return self.snapshot_data.keyvaluemaps
 
@@ -116,7 +121,10 @@ class Backups:
         for environment in self.environments:
             for targetserver in self.snapshot_data.targetservers[environment]:
                 path = str(Path(self.target_directory) / self.org_name / 'targetservers' / environment / (targetserver + '.json'))
-                write_file(Targetservers(self.auth, self.org_name, targetserver).get_targetserver(environment).text, path, fs_write=True)
+                try:
+                    write_file(Targetservers(self.auth, self.org_name, targetserver).get_targetserver(environment).text, path, fs_write=True)
+                except HTTPError as e:
+                    console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for TargetServer ({targetserver})')
                 self._progress_callback(desc='TargetServers')
         return self.snapshot_data.targetservers
 
@@ -136,7 +144,10 @@ class Backups:
         for environment in self.environments:
             for cache in self.snapshot_data.caches[environment]:
                 path = str(Path(self.target_directory) / self.org_name / 'caches' / environment / (cache + '.json'))
-                write_file(Caches(self.auth, self.org_name, cache).get_information_about_a_cache(environment).text, path, fs_write=True)
+                try:
+                    write_file(Caches(self.auth, self.org_name, cache).get_information_about_a_cache(environment).text, path, fs_write=True)
+                except HTTPError as e:
+                    console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for Cache ({cache})')
                 self._progress_callback(desc='Caches')
         return self.snapshot_data.caches
 
