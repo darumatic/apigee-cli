@@ -61,20 +61,26 @@ def cli(ctx):
 
 @exception_handler
 def main():
-    cli.add_command(backups)
-    cli.add_command(configure)
-    cli.add_command(deployments)
-    cli.add_command(caches)
-    cli.add_command(keyvaluemaps)
-    cli.add_command(targetservers)
-    cli.add_command(apis)
-    cli.add_command(apiproducts)
-    cli.add_command(apps)
-    cli.add_command(developers)
-    cli.add_command(auth)
-    cli.add_command(maskconfigs)
-    cli.add_command(userroles)
-    cli.add_command(permissions)
+    cli_commands = (
+        backups,
+        configure,
+        deployments,
+        caches,
+        keyvaluemaps,
+        targetservers,
+        apis,
+        apiproducts,
+        apps,
+        developers,
+        auth,
+        maskconfigs,
+        userroles,
+        permissions,
+    )
+
+    for command in cli_commands:
+        cli.add_command(command)
+
     cli(prog_name=CMD, obj={})
 
 
