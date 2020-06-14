@@ -28,6 +28,7 @@ from apigee.exceptions import exception_handler
 from apigee.keyvaluemaps.commands import keyvaluemaps
 from apigee.maskconfigs.commands import maskconfigs
 from apigee.permissions.commands import permissions
+from apigee.sharedflows.commands import sharedflows
 from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
 from apigee.utils import show_message
@@ -76,6 +77,7 @@ def main():
         maskconfigs,
         userroles,
         permissions,
+        sharedflows,
     )
 
     for command in cli_commands:
