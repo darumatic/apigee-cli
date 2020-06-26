@@ -1,4 +1,6 @@
 import functools
+import inspect
+import json
 import logging
 import sys
 
@@ -28,7 +30,19 @@ def exception_handler(func):
             f_handler.setFormatter(formatter)
             logging.getLogger("").addHandler(f_handler)
             logging.error('Exception occurred', exc_info=True)
-            sys.exit(f'An exception of type {type(e).__name__} occurred. Arguments:\n{e}')
+            frm = inspect.trace()[-1]
+            mod = inspect.getmodule(frm[0])
+            modname = mod.__name__ if mod else frm[1]
+            error_message = {
+               "Exception":{
+                  "detail":{
+                     "errorcode":f"{modname}.{type(e).__name__}"
+                  },
+                  "exceptionstring":f"{e}"
+               }
+            }
+            # sys.exit(f'An exception of type {type(e).__name__} occurred. Arguments:\n{e}')
+            sys.exit(json.dumps(error_message, indent=4))
         except KeyboardInterrupt as ki:
             console.echo()
             sys.exit(130)

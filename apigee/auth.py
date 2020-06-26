@@ -108,16 +108,16 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
     try:
         return response_post.json()['access_token']
     except KeyError as ke:
-        errmsg = {
+        error_message = {
            "Exception":{
               "detail":{
-                 "errorcode":f"auth.getaccesstoken.{type(ke).__name__}",
+                 "errorcode":f"apigee.auth.get_access_token.{type(ke).__name__}",
                  # "errorstring":f"{ke}"
               },
               "exceptionstring":"Double check your credentials and try again."
            }
         }
-        sys.exit(json.dumps(errmsg, indent=4))
+        sys.exit(json.dumps(error_message, indent=4))
 
 
 def get_credential(section, key):
