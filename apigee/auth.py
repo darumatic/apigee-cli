@@ -105,7 +105,19 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
         response_post.json()['access_token']
     except KeyError as ke:
         response_post = session.post(f'{APIGEE_OAUTH_URL}?mfa_token={totp.now()}', headers=post_headers, data=post_body)
-    return response_post.json()['access_token']
+    try:
+        return response_post.json()['access_token']
+    except KeyError as ke:
+        errmsg = {
+           "Exception":{
+              "detail":{
+                 "errorcode":f"auth.getaccesstoken.{type(ke).__name__}",
+                 # "errorstring":f"{ke}"
+              },
+              "exceptionstring":"Double check your credentials and try again."
+           }
+        }
+        sys.exit(json.dumps(errmsg, indent=4))
 
 
 def get_credential(section, key):
