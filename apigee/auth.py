@@ -208,11 +208,11 @@ def auth():
     pass
 
 
-@auth.command()
+@auth.command(name='get-access-token', help='request a fresh access token')
 @common_auth_options
 @common_verbose_options
 @common_silent_options
-def access_token(username, password, mfa_secret, token, zonename, org, profile, **kwargs):
+def get_access_token_command(username, password, mfa_secret, token, zonename, org, profile, **kwargs):
     console.echo(get_access_token(gen_auth(username, password, mfa_secret, token, zonename)))
 
 
