@@ -240,6 +240,13 @@
 <li class="toctree-l2"><a class="reference internal" href="apigee.permissions.html#module-apigee.permissions">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="apigee.sharedflows.html">apigee.sharedflows package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apigee.sharedflows.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.sharedflows.html#module-apigee.sharedflows.commands">apigee.sharedflows.commands module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.sharedflows.html#module-apigee.sharedflows.sharedflows">apigee.sharedflows.sharedflows module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apigee.sharedflows.html#module-apigee.sharedflows">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="apigee.targetservers.html">apigee.targetservers package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="apigee.targetservers.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="apigee.targetservers.html#module-apigee.targetservers.commands">apigee.targetservers.commands module</a></li>
@@ -274,7 +281,7 @@
 
 <dl class="py function">
 <dt id="apigee.auth.gen_auth">
-<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">gen_auth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">mfa_secret</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.gen_auth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">gen_auth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">password</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mfa_secret</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">token</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">zonename</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.gen_auth" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -329,23 +336,23 @@
 <dd></dd></dl>
 
 </div>
-<div class="section" id="module-apigee.exception">
-<span id="apigee-exception-module"></span><h2>apigee.exception module<a class="headerlink" href="#module-apigee.exception" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-apigee.exceptions">
+<span id="apigee-exceptions-module"></span><h2>apigee.exceptions module<a class="headerlink" href="#module-apigee.exceptions" title="Permalink to this headline">¶</a></h2>
 <dl class="py exception">
-<dt id="apigee.exception.InvalidApisException">
-<em class="property">exception </em><code class="sig-prename descclassname">apigee.exception.</code><code class="sig-name descname">InvalidApisException</code><a class="headerlink" href="#apigee.exception.InvalidApisException" title="Permalink to this definition">¶</a></dt>
+<dt id="apigee.exceptions.InvalidApisError">
+<em class="property">exception </em><code class="sig-prename descclassname">apigee.exceptions.</code><code class="sig-name descname">InvalidApisError</code><a class="headerlink" href="#apigee.exceptions.InvalidApisError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 <dl class="py exception">
-<dt id="apigee.exception.NotYetImplementedError">
-<em class="property">exception </em><code class="sig-prename descclassname">apigee.exception.</code><code class="sig-name descname">NotYetImplementedError</code><a class="headerlink" href="#apigee.exception.NotYetImplementedError" title="Permalink to this definition">¶</a></dt>
+<dt id="apigee.exceptions.NotYetImplementedError">
+<em class="property">exception </em><code class="sig-prename descclassname">apigee.exceptions.</code><code class="sig-name descname">NotYetImplementedError</code><a class="headerlink" href="#apigee.exceptions.NotYetImplementedError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="apigee.exception.exception_handler">
-<code class="sig-prename descclassname">apigee.exception.</code><code class="sig-name descname">exception_handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.exception.exception_handler" title="Permalink to this definition">¶</a></dt>
+<dt id="apigee.exceptions.exception_handler">
+<code class="sig-prename descclassname">apigee.exceptions.</code><code class="sig-name descname">exception_handler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.exceptions.exception_handler" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

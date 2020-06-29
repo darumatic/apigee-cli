@@ -18,6 +18,7 @@ Subpackages
    apigee.keyvaluemaps
    apigee.maskconfigs
    apigee.permissions
+   apigee.sharedflows
    apigee.targetservers
    apigee.userroles
 
@@ -48,10 +49,10 @@ apigee.console module
    :undoc-members:
    :show-inheritance:
 
-apigee.exception module
------------------------
+apigee.exceptions module
+------------------------
 
-.. automodule:: apigee.exception
+.. automodule:: apigee.exceptions
    :members:
    :undoc-members:
    :show-inheritance:

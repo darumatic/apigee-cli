@@ -180,6 +180,7 @@ Commands:
   apis           The proxy APIs let you perform operations on API proxies,...
   apps           Management APIs available for working with developer apps.
   auth           Custom authorization commands.
+  backups        Download configuration files from Apigee that can later be...
   caches         A lightweight persistence store that can be used by...
   configure      Configure Apigee Edge credentials.
   deployments    API proxies that are actively deployed in environments on...
@@ -187,6 +188,7 @@ Commands:
   keyvaluemaps   Key/value maps at the environment scope can be accessed by...
   maskconfigs    Specify data that will be filtered out of trace sessions.
   permissions    Permissions for roles in an organization on Apigee Edge.
+  sharedflows    You can use the following APIs to manage shared flows and...
   targetservers  TargetServers are used to decouple TargetEndpoint...
   userroles      Roles for users in an organization on Apigee Edge.
 </pre></div>
@@ -225,14 +227,18 @@ can do this in three ways:</p>
 Apigee username (email) []: my_email
 Apigee password []: my_pass
 Apigee MFA key (optional) []: my_key
+Identity zone name (to support SAML authentication) []:
+Use OAuth, no MFA (optional)? [y/N]: n
 Default Apigee organization (recommended) []: my_org
-Default team/resource prefix (optional) []: team_prefix
+Default team/resource prefix (optional) []:
 </pre></div>
 </div>
 <p>To use environment variables, do the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_USERNAME=&lt;my_email&gt;
 $ export APIGEE_PASSWORD=&lt;my_pass&gt;
 $ export APIGEE_MFA_SECRET=&lt;my_key&gt;
+$ export APIGEE_ZONENAME=&lt;my_zonename&gt;
+$ export APIGEE_IS_TOKEN=&lt;bool&gt;
 $ export APIGEE_ORG=&lt;my_org&gt;
 $ export APIGEE_CLI_PREFIX=&lt;my_prefix&gt;
 </pre></div>

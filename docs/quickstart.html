@@ -180,14 +180,18 @@ can do this in three ways:</p>
 Apigee username (email) []: my_email
 Apigee password []: my_pass
 Apigee MFA key (optional) []: my_key
+Identity zone name (to support SAML authentication) []:
+Use OAuth, no MFA (optional)? [y/N]: n
 Default Apigee organization (recommended) []: my_org
-Default team/resource prefix (optional) []: team_prefix
+Default team/resource prefix (optional) []:
 </pre></div>
 </div>
 <p>To use environment variables, do the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_USERNAME=&lt;my_email&gt;
 $ export APIGEE_PASSWORD=&lt;my_pass&gt;
 $ export APIGEE_MFA_SECRET=&lt;my_key&gt;
+$ export APIGEE_ZONENAME=&lt;my_zonename&gt;
+$ export APIGEE_IS_TOKEN=&lt;bool&gt;
 $ export APIGEE_ORG=&lt;my_org&gt;
 $ export APIGEE_CLI_PREFIX=&lt;my_prefix&gt;
 </pre></div>
@@ -215,7 +219,7 @@ the <code class="docutils literal notranslate"><span class="pre">default</span><
 <div class="section" id="getting-an-oauth-access-token">
 <span id="id2"></span><h2>Getting an OAuth Access Token<a class="headerlink" href="#getting-an-oauth-access-token" title="Permalink to this headline">¶</a></h2>
 <p>To get an OAuth access token, configure an MFA key, then run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee auth access-token
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee auth get-access-token
 </pre></div>
 </div>
 <p>This will return <code class="docutils literal notranslate"><span class="pre">None</span></code> if an MFA key is not set.</p>
