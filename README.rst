@@ -75,7 +75,7 @@ The quickest way to get started is to run the ``apigee configure`` command::
     Apigee password []: my_pass
     Apigee MFA key (optional) []: my_key
     Identity zone name (to support SAML authentication) []:
-    Use OAuth, no MFA (select Y if you previously entered an identity zone name)? [Y/n]: n
+    Use OAuth, no MFA (optional)? [y/N]: n
     Default Apigee organization (recommended) []: my_org
     Default team/resource prefix (optional) []:
 
@@ -112,13 +112,13 @@ As you can see, you can have multiple ``profiles`` defined in the configuration 
 profile to use by using the ``-P/--profile`` option. If no profile is specified
 the ``default`` profile is used.
 
-------------	
-Getting Help	
-------------	
+------------
+Getting Help
+------------
 
-* `The Apigee Management API command-line interface documentation`_	
-* `Apigee Product Documentation`_	
-* `GitHub`_	
+* `The Apigee Management API command-line interface documentation`_
+* `Apigee Product Documentation`_
+* `GitHub`_
 
 
 
