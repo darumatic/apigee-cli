@@ -16,9 +16,9 @@ def backups():
     pass
 
 
-def _take_snapshot(username, password, mfa_secret, org, profile, target_directory, prefix, environments, apis, **kwargs):
+def _take_snapshot(username, password, mfa_secret, token, zonename, org, profile, target_directory, prefix, environments, apis, **kwargs):
     return Backups(
-        gen_auth(username, password, mfa_secret), org, target_directory, prefix=prefix, fs_write=True, apis=apis, environments=environments
+        gen_auth(username, password, mfa_secret, token, zonename), org, target_directory, prefix=prefix, fs_write=True, apis=apis, environments=environments
     ).take_snapshot()
 
 

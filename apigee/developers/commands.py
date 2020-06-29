@@ -13,8 +13,14 @@ def developers():
     pass
 
 
-def _create_developer(username, password, mfa_secret, org, profile, name, first_name, last_name, user_name, attributes='{"attributes" : [ ]}', **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, name).create_developer(first_name, last_name, user_name, attributes=attributes).text
+def _create_developer(
+    username, password, mfa_secret, token, zonename, org, profile, name, first_name, last_name, user_name, attributes='{"attributes" : [ ]}', **kwargs
+):
+    return (
+        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .create_developer(first_name, last_name, user_name, attributes=attributes)
+        .text
+    )
 
 
 @developers.command(help='Creates a profile for a developer in an organization. Once created, the developer can register an app and receive an API key.')
@@ -30,8 +36,8 @@ def create(*args, **kwargs):
     console.echo(_create_developer(*args, **kwargs))
 
 
-def _delete_developer(username, password, mfa_secret, org, profile, name, **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, name).delete_developer().text
+def _delete_developer(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).delete_developer().text
 
 
 @developers.command(
@@ -45,8 +51,8 @@ def delete(*args, **kwargs):
     console.echo(_delete_developer(*args, **kwargs))
 
 
-def _get_developer(username, password, mfa_secret, org, profile, name, **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, name).get_developer().text
+def _get_developer(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_developer().text
 
 
 @developers.command(
@@ -60,8 +66,8 @@ def get(*args, **kwargs):
     console.echo(_get_developer(*args, **kwargs))
 
 
-def _get_developer_by_app(username, password, mfa_secret, org, profile, app_name, **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, None).get_developer_by_app(app_name).text
+def _get_developer_by_app(username, password, mfa_secret, token, zonename, org, profile, app_name, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, None).get_developer_by_app(app_name).text
 
 
 @developers.command(
@@ -75,8 +81,10 @@ def get_by_app(*args, **kwargs):
     console.echo(_get_developer_by_app(*args, **kwargs))
 
 
-def _list_developers(username, password, mfa_secret, org, profile, prefix=None, expand=False, count=1000, startkey="", **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, None).list_developers(prefix=prefix, expand=expand, count=count, startkey=startkey)
+def _list_developers(username, password, mfa_secret, token, zonename, org, profile, prefix=None, expand=False, count=1000, startkey="", **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_developers(
+        prefix=prefix, expand=expand, count=count, startkey=startkey
+    )
 
 
 @developers.command(
@@ -101,8 +109,8 @@ def list(*args, **kwargs):
     console.echo(_list_developers(*args, **kwargs))
 
 
-def _set_developer_status(username, password, mfa_secret, org, profile, name, action, **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, name).set_developer_status(action).text
+def _set_developer_status(username, password, mfa_secret, token, zonename, org, profile, name, action, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).set_developer_status(action).text
 
 
 @developers.command(
@@ -117,8 +125,8 @@ def set_status(*args, **kwargs):
     console.echo(_set_developer_status(*args, **kwargs))
 
 
-def _update_developer(username, password, mfa_secret, org, profile, name, body, **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, name).update_developer(body).text
+def _update_developer(username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).update_developer(body).text
 
 
 @developers.command(
@@ -133,12 +141,12 @@ def update(*args, **kwargs):
     console.echo(_update_developer(*args, **kwargs))
 
 
-# def _get_developer_attribute(username, password, mfa_secret, org, profile, attribute_name, **kwargs):
+# def _get_developer_attribute(username, password, mfa_secret, token, zonename, org, profile, attribute_name, **kwargs):
 #     pass
 
 
-def _update_a_developer_attribute(username, password, mfa_secret, org, profile, name, attribute_name, updated_value, **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, name).update_a_developer_attribute(attribute_name, updated_value).text
+def _update_a_developer_attribute(username, password, mfa_secret, token, zonename, org, profile, name, attribute_name, updated_value, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).update_a_developer_attribute(attribute_name, updated_value).text
 
 
 @developers.command(help='Updates the value of a developer attribute.')
@@ -152,8 +160,8 @@ def update_attr(*args, **kwargs):
     console.echo(_update_a_developer_attribute(*args, **kwargs))
 
 
-def _delete_developer_attribute(username, password, mfa_secret, org, profile, name, attribute_name, **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, name).delete_developer_attribute(attribute_name).text
+def _delete_developer_attribute(username, password, mfa_secret, token, zonename, org, profile, name, attribute_name, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).delete_developer_attribute(attribute_name).text
 
 
 @developers.command(help='Deletes a developer attribute.')
@@ -166,8 +174,8 @@ def delete_attr(*args, **kwargs):
     console.echo(_delete_developer_attribute(*args, **kwargs))
 
 
-def _get_all_developer_attributes(username, password, mfa_secret, org, profile, name, **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, name).get_all_developer_attributes().text
+def _get_all_developer_attributes(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_all_developer_attributes().text
 
 
 @developers.command(help='Returns a list of all developer attributes.')
@@ -179,8 +187,8 @@ def get_attrs(*args, **kwargs):
     console.echo(_get_all_developer_attributes(*args, **kwargs))
 
 
-def _update_all_developer_attributes(username, password, mfa_secret, org, profile, name, body, **kwargs):
-    return Developers(gen_auth(username, password, mfa_secret), org, name).update_all_developer_attributes(body).text
+def _update_all_developer_attributes(username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).update_all_developer_attributes(body).text
 
 
 @developers.command(

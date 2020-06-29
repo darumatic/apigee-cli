@@ -35,8 +35,8 @@ def permissions():
     pass
 
 
-def _create_permissions(username, password, mfa_secret, org, profile, name, body, **kwargs):
-    return Permissions(gen_auth(username, password, mfa_secret), org, name).create_permissions(body).text
+def _create_permissions(username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs):
+    return Permissions(gen_auth(username, password, mfa_secret, token, zonename), org, name).create_permissions(body).text
 
 
 @permissions.command(help='Create permissions for a role.')
@@ -49,9 +49,9 @@ def create(*args, **kwargs):
     console.echo(_create_permissions(*args, **kwargs))
 
 
-def _team_permissions(username, password, mfa_secret, org, profile, name, file, placeholder_key=None, placeholder_value="", **kwargs):
+def _team_permissions(username, password, mfa_secret, token, zonename, org, profile, name, file, placeholder_key=None, placeholder_value="", **kwargs):
     return (
-        Permissions(gen_auth(username, password, mfa_secret), org, name)
+        Permissions(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .team_permissions(file, placeholder_key=placeholder_key, placeholder_value=placeholder_value)
         .text
     )
@@ -69,8 +69,8 @@ def template(*args, **kwargs):
     console.echo(_team_permissions(*args, **kwargs))
 
 
-def _get_permissions(username, password, mfa_secret, org, profile, name, format, showindex=False, tablefmt='plain', **kwargs):
-    return Permissions(gen_auth(username, password, mfa_secret), org, name).get_permissions(
+def _get_permissions(username, password, mfa_secret, token, zonename, org, profile, name, format, showindex=False, tablefmt='plain', **kwargs):
+    return Permissions(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_permissions(
         formatted=True, format=format, showindex=showindex, tablefmt=tablefmt
     )
 

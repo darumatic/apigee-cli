@@ -12,8 +12,11 @@ from pathlib import Path
 APIGEE_USERNAME = getenv('APIGEE_USERNAME')
 APIGEE_PASSWORD = getenv('APIGEE_PASSWORD')
 APIGEE_MFA_SECRET = getenv('APIGEE_MFA_SECRET')
+APIGEE_IS_TOKEN = getenv('APIGEE_IS_TOKEN')
 APIGEE_ADMIN_API_URL = 'https://api.enterprise.apigee.com'
 APIGEE_OAUTH_URL = 'https://login.apigee.com/oauth/token'
+APIGEE_ZONENAME_OAUTH_URL = 'https://{zonename}.login.apigee.com/oauth/token'
+APIGEE_ZONENAME = getenv('APIGEE_ZONENAME')
 APIGEE_ORG = getenv('APIGEE_ORG')
 
 # custom

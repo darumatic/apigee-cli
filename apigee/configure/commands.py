@@ -16,7 +16,7 @@ class HiddenSecret(object):
         return '*' * 16 if self.secret else ''
 
 
-KEY_LIST = ('username', 'password', 'mfa_secret', 'org', 'prefix')
+KEY_LIST = ('username', 'password', 'mfa_secret', 'is_token', 'zonename', 'org', 'prefix')
 config = configparser.ConfigParser()
 config.read(APIGEE_CLI_CREDENTIALS_FILE)
 profile = 'default'
@@ -38,13 +38,17 @@ except KeyError:
 # @click.group(cls=ClickAliasedGroup)
 # @click.command(aliases=['conf', 'config', 'cfg'])
 @click.command(help='Configure Apigee Edge credentials.')
-@click.option('-u', '--username', prompt='Apigee username (email)', default=profile_dict['username'])
+@click.option('-u', '--username', prompt='Apigee username (email)', default=profile_dict['username'], show_default=True)
 @click.option('-p', '--password', prompt='Apigee password', default=lambda: HiddenSecret(profile_dict['password']), hide_input=True)
 @click.option('-mfa', '--mfa-secret', prompt='Apigee MFA key (optional)', default=lambda: HiddenSecret(profile_dict['mfa_secret']), hide_input=True)
-@click.option('-o', '--org', prompt='Default Apigee organization (recommended)', default=profile_dict['org'])
-@click.option('--prefix', prompt='Default team/resource prefix (optional)', default=profile_dict['prefix'])
+@click.option('-z', '--zonename', prompt='Identity zone name (to support SAML authentication)', default=profile_dict['zonename'], show_default=True)
+@click.option(
+    '--token/--no-token', default=profile_dict['is_token'], help='specify to use oauth without MFA', prompt='Use OAuth, no MFA (select Y if you previously entered an identity zone name)?', show_default=True
+)
+@click.option('-o', '--org', prompt='Default Apigee organization (recommended)', default=profile_dict['org'], show_default=True)
+@click.option('--prefix', prompt='Default team/resource prefix (optional)', default=profile_dict['prefix'], show_default=True)
 @click.option('-P', '--profile', help='name of the user profile to create/update', default='default', show_default=True)
-def configure(username, password, mfa_secret, org, prefix, profile):
+def configure(username, password, mfa_secret, token, zonename, org, prefix, profile):
     if isinstance(password, HiddenSecret):
         password = password.secret
     if isinstance(mfa_secret, HiddenSecret):
@@ -52,6 +56,8 @@ def configure(username, password, mfa_secret, org, prefix, profile):
     profile_dict['username'] = username
     profile_dict['password'] = password
     profile_dict['mfa_secret'] = mfa_secret
+    profile_dict['is_token'] = token
+    profile_dict['zonename'] = zonename
     profile_dict['org'] = org
     profile_dict['prefix'] = prefix
     config[profile] = {k: v for k, v in profile_dict.items() if v}

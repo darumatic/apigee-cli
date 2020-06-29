@@ -35,8 +35,10 @@ def deployments():
     pass
 
 
-def _get_api_proxy_deployment_details(username, password, mfa_secret, org, profile, name, format, showindex, tablefmt, revision_name_only, **kwargs):
-    return Deployments(gen_auth(username, password, mfa_secret), org, name).get_api_proxy_deployment_details(
+def _get_api_proxy_deployment_details(
+    username, password, mfa_secret, token, zonename, org, profile, name, format, showindex, tablefmt, revision_name_only, **kwargs
+):
+    return Deployments(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_api_proxy_deployment_details(
         formatted=True, format=format, showindex=showindex, tablefmt=tablefmt, revision_name_only=revision_name_only
     )
 

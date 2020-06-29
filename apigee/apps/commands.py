@@ -15,8 +15,8 @@ def apps():
     pass
 
 
-def _create_developer_app(username, password, mfa_secret, org, profile, name, developer, body, **kwargs):
-    return Apps(gen_auth(username, password, mfa_secret), org, None).create_developer_app(developer, body).text
+def _create_developer_app(username, password, mfa_secret, token, zonename, org, profile, name, developer, body, **kwargs):
+    return Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None).create_developer_app(developer, body).text
 
 
 @apps.command(
@@ -32,8 +32,8 @@ def create(*args, **kwargs):
     console.echo(_create_developer_app(*args, **kwargs))
 
 
-def _delete_developer_app(username, password, mfa_secret, org, profile, name, developer, **kwargs):
-    return Apps(gen_auth(username, password, mfa_secret), org, name).delete_developer_app(developer).text
+def _delete_developer_app(username, password, mfa_secret, token, zonename, org, profile, name, developer, **kwargs):
+    return Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name).delete_developer_app(developer).text
 
 
 @apps.command(help='Deletes a developer app.')
@@ -46,9 +46,9 @@ def delete(*args, **kwargs):
     console.echo(_delete_developer_app(*args, **kwargs))
 
 
-def _create_empty_developer_app(username, password, mfa_secret, org, profile, name, developer, display_name="", callback_url="", **kwargs):
+def _create_empty_developer_app(username, password, mfa_secret, token, zonename, org, profile, name, developer, display_name="", callback_url="", **kwargs):
     return (
-        Apps(gen_auth(username, password, mfa_secret), org, name)
+        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .create_empty_developer_app(developer, display_name=display_name, callback_url=callback_url)
         .text
     )
@@ -74,8 +74,8 @@ def create_empty(*args, **kwargs):
     console.echo(_create_empty_developer_app(*args, **kwargs))
 
 
-def _get_developer_app_details(username, password, mfa_secret, org, profile, name, developer, **kwargs):
-    return Apps(gen_auth(username, password, mfa_secret), org, name).get_developer_app_details(developer).text
+def _get_developer_app_details(username, password, mfa_secret, token, zonename, org, profile, name, developer, **kwargs):
+    return Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_developer_app_details(developer).text
 
 
 @apps.command(
@@ -90,8 +90,10 @@ def get(*args, **kwargs):
     console.echo(_get_developer_app_details(*args, **kwargs))
 
 
-def _list_developer_apps(username, password, mfa_secret, org, profile, developer, prefix=None, expand=False, count=1000, startkey="", **kwargs):
-    return Apps(gen_auth(username, password, mfa_secret), org, None).list_developer_apps(
+def _list_developer_apps(
+    username, password, mfa_secret, token, zonename, org, profile, developer, prefix=None, expand=False, count=1000, startkey="", **kwargs
+):
+    return Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_developer_apps(
         developer, prefix=prefix, expand=expand, count=count, startkey=startkey
     )
 
@@ -124,7 +126,7 @@ def list(*args, **kwargs):
 
 
 # def _list_apps_for_all_developers(
-#     username, password, mfa_secret, org, profile,
+#     username, password, mfa_secret, token, zonename, org, profile,
 #     prefix=None,
 #     expand=False,
 #     count=1000,
@@ -134,7 +136,7 @@ def list(*args, **kwargs):
 # ):
 #     pass
 
-# def _delete_key_for_a_developer_app(username, password, mfa_secret, org, profile, developer, consumer_key):
+# def _delete_key_for_a_developer_app(username, password, mfa_secret, token, zonename, org, profile, developer, consumer_key):
 #     pass
 
 
@@ -142,6 +144,8 @@ def _create_a_consumer_key_and_secret(
     username,
     password,
     mfa_secret,
+    token,
+    zonename,
     org,
     profile,
     name,
@@ -156,7 +160,7 @@ def _create_a_consumer_key_and_secret(
     **kwargs
 ):
     return (
-        Apps(gen_auth(username, password, mfa_secret), org, name)
+        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .create_a_consumer_key_and_secret(
             developer,
             consumer_key=consumer_key,
@@ -195,12 +199,12 @@ def create_creds(*args, **kwargs):
     console.echo(_create_a_consumer_key_and_secret(*args, **kwargs))
 
 
-# def _add_api_product_to_key(username, password, mfa_secret, org, profile, developer, consumer_key, request_body):
+# def _add_api_product_to_key(username, password, mfa_secret, token, zonename, org, profile, developer, consumer_key, request_body):
 #     pass
 
 
-def _restore_app(username, password, mfa_secret, org, profile, file, **kwargs):
-    return Apps(gen_auth(username, password, mfa_secret), org, None).restore_app(file).text
+def _restore_app(username, password, mfa_secret, token, zonename, org, profile, file, **kwargs):
+    return Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None).restore_app(file).text
 
 
 @apps.command(help='Restore developer app from a file.')

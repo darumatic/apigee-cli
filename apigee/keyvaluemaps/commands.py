@@ -15,8 +15,8 @@ def keyvaluemaps():
     pass
 
 
-def _create_keyvaluemap_in_an_environment(username, password, mfa_secret, org, profile, name, environment, body, **kwargs):
-    return Keyvaluemaps(gen_auth(username, password, mfa_secret), org, name).create_keyvaluemap_in_an_environment(environment, body).text
+def _create_keyvaluemap_in_an_environment(username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs):
+    return Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name).create_keyvaluemap_in_an_environment(environment, body).text
 
 
 @keyvaluemaps.command(help='Creates a key value map in an environment.')
@@ -30,8 +30,8 @@ def create(*args, **kwargs):
     console.echo(_create_keyvaluemap_in_an_environment(*args, **kwargs))
 
 
-def _delete_keyvaluemap_from_an_environment(username, password, mfa_secret, org, profile, name, environment, **kwargs):
-    return Keyvaluemaps(gen_auth(username, password, mfa_secret), org, name).delete_keyvaluemap_from_an_environment(environment).text
+def _delete_keyvaluemap_from_an_environment(username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs):
+    return Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name).delete_keyvaluemap_from_an_environment(environment).text
 
 
 @keyvaluemaps.command(help='Deletes a key/value map and all associated entries from an environment.')
@@ -44,8 +44,12 @@ def delete(*args, **kwargs):
     console.echo(_delete_keyvaluemap_from_an_environment(*args, **kwargs))
 
 
-def _delete_keyvaluemap_entry_in_an_environment(username, password, mfa_secret, org, profile, name, environment, entry_name, **kwargs):
-    return Keyvaluemaps(gen_auth(username, password, mfa_secret), org, name).delete_keyvaluemap_entry_in_an_environment(environment, entry_name).text
+def _delete_keyvaluemap_entry_in_an_environment(username, password, mfa_secret, token, zonename, org, profile, name, environment, entry_name, **kwargs):
+    return (
+        Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .delete_keyvaluemap_entry_in_an_environment(environment, entry_name)
+        .text
+    )
 
 
 @keyvaluemaps.command(help='Deletes a specific key/value map entry in an environment by name, along with associated entries.')
@@ -59,8 +63,8 @@ def delete_entry(*args, **kwargs):
     console.echo(_delete_keyvaluemap_entry_in_an_environment(*args, **kwargs))
 
 
-def _get_keyvaluemap_in_an_environment(username, password, mfa_secret, org, profile, name, environment, **kwargs):
-    return Keyvaluemaps(gen_auth(username, password, mfa_secret), org, name).get_keyvaluemap_in_an_environment(environment).text
+def _get_keyvaluemap_in_an_environment(username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs):
+    return Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_keyvaluemap_in_an_environment(environment).text
 
 
 @keyvaluemaps.command(help='Gets a KeyValueMap (KVM) in an environment by name, along with the keys and values.')
@@ -73,8 +77,14 @@ def get(*args, **kwargs):
     console.echo(_get_keyvaluemap_in_an_environment(*args, **kwargs))
 
 
-def _get_a_keys_value_in_an_environment_scoped_keyvaluemap(username, password, mfa_secret, org, profile, name, environment, entry_name, **kwargs):
-    return Keyvaluemaps(gen_auth(username, password, mfa_secret), org, name).get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry_name).text
+def _get_a_keys_value_in_an_environment_scoped_keyvaluemap(
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, entry_name, **kwargs
+):
+    return (
+        Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry_name)
+        .text
+    )
 
 
 @keyvaluemaps.command(help='Gets the value of a key in an environment-scoped KeyValueMap (KVM).')
@@ -88,8 +98,8 @@ def get_value(*args, **kwargs):
     console.echo(_get_a_keys_value_in_an_environment_scoped_keyvaluemap(*args, **kwargs))
 
 
-def _list_keyvaluemaps_in_an_environment(username, password, mfa_secret, org, profile, environment, prefix=None, **kwargs):
-    return Keyvaluemaps(gen_auth(username, password, mfa_secret), org, None).list_keyvaluemaps_in_an_environment(environment, prefix=prefix)
+def _list_keyvaluemaps_in_an_environment(username, password, mfa_secret, token, zonename, org, profile, environment, prefix=None, **kwargs):
+    return Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_keyvaluemaps_in_an_environment(environment, prefix=prefix)
 
 
 @keyvaluemaps.command(
@@ -104,8 +114,8 @@ def list(*args, **kwargs):
     console.echo(_list_keyvaluemaps_in_an_environment(*args, **kwargs))
 
 
-def _update_keyvaluemap_in_an_environment(username, password, mfa_secret, org, profile, name, environment, body, **kwargs):
-    return Keyvaluemaps(gen_auth(username, password, mfa_secret), org, name).update_keyvaluemap_in_an_environment(environment, body).text
+def _update_keyvaluemap_in_an_environment(username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs):
+    return Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name).update_keyvaluemap_in_an_environment(environment, body).text
 
 
 @keyvaluemaps.command(
@@ -121,9 +131,11 @@ def update(*args, **kwargs):
     console.echo(_update_keyvaluemap_in_an_environment(*args, **kwargs))
 
 
-def _create_an_entry_in_an_environment_scoped_kvm(username, password, mfa_secret, org, profile, name, environment, entry_name, entry_value, **kwargs):
+def _create_an_entry_in_an_environment_scoped_kvm(
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, entry_name, entry_value, **kwargs
+):
     return (
-        Keyvaluemaps(gen_auth(username, password, mfa_secret), org, name)
+        Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .create_an_entry_in_an_environment_scoped_kvm(environment, entry_name, entry_value)
         .text
     )
@@ -143,9 +155,11 @@ def create_entry(*args, **kwargs):
     console.echo(_create_an_entry_in_an_environment_scoped_kvm(*args, **kwargs))
 
 
-def _update_an_entry_in_an_environment_scoped_kvm(username, password, mfa_secret, org, profile, name, environment, entry_name, updated_value, **kwargs):
+def _update_an_entry_in_an_environment_scoped_kvm(
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, entry_name, updated_value, **kwargs
+):
     return (
-        Keyvaluemaps(gen_auth(username, password, mfa_secret), org, name)
+        Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .update_an_entry_in_an_environment_scoped_kvm(environment, entry_name, updated_value)
         .text
     )
@@ -165,8 +179,14 @@ def update_entry(*args, **kwargs):
     console.echo(_update_an_entry_in_an_environment_scoped_kvm(*args, **kwargs))
 
 
-def _list_keys_in_an_environment_scoped_keyvaluemap(username, password, mfa_secret, org, profile, name, environment, startkey, count, **kwargs):
-    return Keyvaluemaps(gen_auth(username, password, mfa_secret), org, name).list_keys_in_an_environment_scoped_keyvaluemap(environment, startkey, count).text
+def _list_keys_in_an_environment_scoped_keyvaluemap(
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, startkey, count, **kwargs
+):
+    return (
+        Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .list_keys_in_an_environment_scoped_keyvaluemap(environment, startkey, count)
+        .text
+    )
 
 
 @keyvaluemaps.command(
@@ -191,8 +211,8 @@ def list_keys(*args, **kwargs):
     console.echo(_list_keys_in_an_environment_scoped_keyvaluemap(*args, **kwargs))
 
 
-def _push_keyvaluemap(username, password, mfa_secret, org, profile, environment, file, **kwargs):
-    return Keyvaluemaps(gen_auth(username, password, mfa_secret), org, None).push_keyvaluemap(environment, file)
+def _push_keyvaluemap(username, password, mfa_secret, token, zonename, org, profile, environment, file, **kwargs):
+    return Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, None).push_keyvaluemap(environment, file)
 
 
 @keyvaluemaps.command(

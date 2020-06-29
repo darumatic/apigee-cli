@@ -13,8 +13,8 @@ def apiproducts():
     pass
 
 
-def _create_api_product(username, password, mfa_secret, org, profile, name, body, **kwargs):
-    return Apiproducts(gen_auth(username, password, mfa_secret), org, name).create_api_product(body).text
+def _create_api_product(username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs):
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).create_api_product(body).text
 
 
 @apiproducts.command(help='Creates an API product in an organization.')
@@ -27,8 +27,8 @@ def create(*args, **kwargs):
     console.echo(_create_api_product(*args, **kwargs))
 
 
-def _delete_api_product(username, password, mfa_secret, org, profile, name, **kwargs):
-    return Apiproducts(gen_auth(username, password, mfa_secret), org, name).delete_api_product().text
+def _delete_api_product(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).delete_api_product().text
 
 
 @apiproducts.command(help='Deletes an API product from an organization.')
@@ -40,8 +40,8 @@ def delete(*args, **kwargs):
     console.echo(_delete_api_product(*args, **kwargs))
 
 
-def _get_api_product(username, password, mfa_secret, org, profile, name, **kwargs):
-    return Apiproducts(gen_auth(username, password, mfa_secret), org, name).get_api_product().text
+def _get_api_product(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_api_product().text
 
 
 @apiproducts.command(
@@ -55,8 +55,10 @@ def get(*args, **kwargs):
     console.echo(_get_api_product(*args, **kwargs))
 
 
-def _list_api_products(username, password, mfa_secret, org, profile, prefix=None, expand=False, count=1000, startkey="", **kwargs):
-    return Apiproducts(gen_auth(username, password, mfa_secret), org, None).list_api_products(prefix=prefix, expand=expand, count=count, startkey=startkey)
+def _list_api_products(username, password, mfa_secret, token, zonename, org, profile, prefix=None, expand=False, count=1000, startkey="", **kwargs):
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_api_products(
+        prefix=prefix, expand=expand, count=count, startkey=startkey
+    )
 
 
 @apiproducts.command(help='Get a list of all API product names for an organization.')
@@ -77,8 +79,8 @@ def list(*args, **kwargs):
     console.echo(_list_api_products(*args, **kwargs))
 
 
-def _update_api_product(username, password, mfa_secret, org, profile, body, **kwargs):
-    return Apiproducts(gen_auth(username, password, mfa_secret), org, name).update_api_product(body).text
+def _update_api_product(username, password, mfa_secret, token, zonename, org, profile, body, **kwargs):
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).update_api_product(body).text
 
 
 @apiproducts.command(
@@ -93,8 +95,8 @@ def update(*args, **kwargs):
     console.echo(_update_api_product(*args, **kwargs))
 
 
-def _push_apiproducts(username, password, mfa_secret, org, profile, file, **kwargs):
-    return Apiproducts(gen_auth(username, password, mfa_secret), org, None).push_apiproducts(file)
+def _push_apiproducts(username, password, mfa_secret, token, zonename, org, profile, file, **kwargs):
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, None).push_apiproducts(file)
 
 
 @apiproducts.command(help='Push API product to Apigee. This will create/update an API product.')

@@ -33,14 +33,7 @@ def exception_handler(func):
             frm = inspect.trace()[-1]
             mod = inspect.getmodule(frm[0])
             modname = mod.__name__ if mod else frm[1]
-            error_message = {
-               "Exception":{
-                  "detail":{
-                     "errorcode":f"{modname}.{type(e).__name__}"
-                  },
-                  "exceptionstring":f"{e}"
-               }
-            }
+            error_message = {'Exception': {'detail': {'errorcode': f'{modname}.{type(e).__name__}'}, 'exceptionstring': f'{e}'}}
             # sys.exit(f'An exception of type {type(e).__name__} occurred. Arguments:\n{e}')
             sys.exit(json.dumps(error_message, indent=4))
         except KeyboardInterrupt as ki:

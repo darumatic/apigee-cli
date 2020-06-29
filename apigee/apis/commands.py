@@ -16,8 +16,8 @@ def apis():
     pass
 
 
-def _delete_api_proxy_revision(username, password, mfa_secret, org, profile, name, revision_number, **kwargs):
-    return Apis(gen_auth(username, password, mfa_secret), org).delete_api_proxy_revision(name, revision_number).text
+def _delete_api_proxy_revision(username, password, mfa_secret, token, zonename, org, profile, name, revision_number, **kwargs):
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org).delete_api_proxy_revision(name, revision_number).text
 
 
 @apis.command(
@@ -32,9 +32,13 @@ def delete_revision(*args, **kwargs):
     console.echo(_delete_api_proxy_revision(*args, **kwargs))
 
 
-def _deploy_api_proxy_revision(username, password, mfa_secret, org, profile, name, environment, revision_number, delay=0, override=False, **kwargs):
+def _deploy_api_proxy_revision(
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, revision_number, delay=0, override=False, **kwargs
+):
     return (
-        Apis(gen_auth(username, password, mfa_secret), org).deploy_api_proxy_revision(name, environment, revision_number, delay=delay, override=override).text
+        Apis(gen_auth(username, password, mfa_secret, token, zonename), org)
+        .deploy_api_proxy_revision(name, environment, revision_number, delay=delay, override=override)
+        .text
     )
 
 
@@ -60,8 +64,8 @@ def deploy_revision(*args, **kwargs):
     console.echo(_deploy_api_proxy_revision(*args, **kwargs))
 
 
-def _delete_undeployed_revisions(username, password, mfa_secret, org, profile, name, save_last=0, dry_run=False, **kwargs):
-    return Apis(gen_auth(username, password, mfa_secret), org).delete_undeployed_revisions(name, save_last=save_last, dry_run=dry_run)
+def _delete_undeployed_revisions(username, password, mfa_secret, token, zonename, org, profile, name, save_last=0, dry_run=False, **kwargs):
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org).delete_undeployed_revisions(name, save_last=save_last, dry_run=dry_run)
 
 
 @apis.command(help='Deletes all undeployed revisions of an API proxy and all policies, resources, endpoints, and revisions associated with it.')
@@ -75,8 +79,8 @@ def clean(*args, **kwargs):
     _delete_undeployed_revisions(*args, **kwargs)
 
 
-def _export_api_proxy(username, password, mfa_secret, org, profile, name, revision_number, fs_write=True, output_file=None, **kwargs):
-    return Apis(gen_auth(username, password, mfa_secret), org).export_api_proxy(
+def _export_api_proxy(username, password, mfa_secret, token, zonename, org, profile, name, revision_number, fs_write=True, output_file=None, **kwargs):
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org).export_api_proxy(
         name, revision_number, fs_write=True, output_file=output_file if output_file else f'{name}.zip'
     )
 
@@ -94,8 +98,8 @@ def export(*args, **kwargs):
     _export_api_proxy(*args, **kwargs)
 
 
-def _get_api_proxy(username, password, mfa_secret, org, profile, name, **kwargs):
-    return Apis(gen_auth(username, password, mfa_secret), org).get_api_proxy(name).text
+def _get_api_proxy(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org).get_api_proxy(name).text
 
 
 @apis.command(help='Gets an API proxy by name, including a list of existing revisions of the proxy.')
@@ -107,8 +111,8 @@ def get(*args, **kwargs):
     console.echo(_get_api_proxy(*args, **kwargs))
 
 
-def _list_api_proxies(username, password, mfa_secret, org, profile, prefix=None, format='json', **kwargs):
-    return Apis(gen_auth(username, password, mfa_secret), org).list_api_proxies(prefix=prefix)
+def _list_api_proxies(username, password, mfa_secret, token, zonename, org, profile, prefix=None, format='json', **kwargs):
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org).list_api_proxies(prefix=prefix)
 
 
 @apis.command(
@@ -122,8 +126,8 @@ def list(*args, **kwargs):
     console.echo(_list_api_proxies(*args, **kwargs))
 
 
-def _list_api_proxy_revisions(username, password, mfa_secret, org, profile, name, **kwargs):
-    return Apis(gen_auth(username, password, mfa_secret), org).list_api_proxy_revisions(name).text
+def _list_api_proxy_revisions(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org).list_api_proxy_revisions(name).text
 
 
 @apis.command(help='List all revisions for an API proxy.')
@@ -135,8 +139,8 @@ def list_revisions(*args, **kwargs):
     console.echo(_list_api_proxy_revisions(*args, **kwargs))
 
 
-def _undeploy_api_proxy_revision(username, password, mfa_secret, org, profile, name, environment, revision_number, **kwargs):
-    return Apis(gen_auth(username, password, mfa_secret), org).undeploy_api_proxy_revision(name, environment, revision_number).text
+def _undeploy_api_proxy_revision(username, password, mfa_secret, token, zonename, org, profile, name, environment, revision_number, **kwargs):
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org).undeploy_api_proxy_revision(name, environment, revision_number).text
 
 
 @apis.command(help='Undeploys an API proxy revision from an environment.')
@@ -150,8 +154,8 @@ def undeploy_revision(*args, **kwargs):
     console.echo(_undeploy_api_proxy_revision(*args, **kwargs))
 
 
-def _force_undeploy_api_proxy_revision(username, password, mfa_secret, org, profile, name, environment, revision_number, **kwargs):
-    return Apis(gen_auth(username, password, mfa_secret), org).force_undeploy_api_proxy_revision(name, environment, revision_number).text
+def _force_undeploy_api_proxy_revision(username, password, mfa_secret, token, zonename, org, profile, name, environment, revision_number, **kwargs):
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org).force_undeploy_api_proxy_revision(name, environment, revision_number).text
 
 
 @apis.command(help='Force the undeployment of the API proxy that is partially deployed.')
@@ -169,6 +173,8 @@ def _pull(
     username,
     password,
     mfa_secret,
+    token,
+    zonename,
     org,
     profile,
     name,
@@ -181,7 +187,7 @@ def _pull(
     basepath=None,
     **kwargs,
 ):
-    return Apis(gen_auth(username, password, mfa_secret), org, revision_number, environment, work_tree=work_tree).pull(
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org, revision_number, environment, work_tree=work_tree).pull(
         name, force=force, prefix=prefix, basepath=basepath
     )
 
@@ -201,7 +207,7 @@ def pull(*args, **kwargs):
     _pull(*args, **kwargs)
 
 
-def _deploy(username, password, mfa_secret, org, profile, name, directory, import_only, seamless_deploy, environment, **kwargs):
+def _deploy(username, password, mfa_secret, token, zonename, org, profile, name, directory, import_only, seamless_deploy, environment, **kwargs):
     return deploy_tool(
         Struct(
             username=username,
