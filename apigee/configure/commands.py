@@ -58,9 +58,9 @@ except KeyError:
 @click.option('-z', '--zonename', prompt='Identity zone name (to support SAML authentication)', default=profile_dict['zonename'], show_default=True)
 @click.option(
     '--token/--no-token',
-    default=profile_dict['is_token'],
+    default=True if profile_dict['is_token'] in (True, 'True', 'true', '1') else False,
     help='specify to use oauth without MFA',
-    prompt='Use OAuth, no MFA (select Y if you previously entered an identity zone name)?',
+    prompt='Use OAuth, no MFA (optional)?',
     show_default=True,
 )
 @click.option('-o', '--org', prompt='Default Apigee organization (recommended)', default=profile_dict['org'], show_default=True)

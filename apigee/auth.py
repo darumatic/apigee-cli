@@ -97,7 +97,7 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
     _oauth_url = APIGEE_OAUTH_URL
     if auth.zonename:
         _oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
-    if auth.token:
+    if auth.token or auth.zonename:
         username = auth.username
         password = auth.password
         retry = Retry(total=retries, read=retries, connect=retries, backoff_factor=backoff_factor, status_forcelist=status_forcelist)
@@ -170,7 +170,7 @@ def get_credential(section, key):
 
 
 def set_header(auth_obj, headers={}):
-    if auth_obj.token:
+    if auth_obj.token or auth_obj.zonename:
         headers['Authorization'] = f'Bearer {get_access_token(auth_obj)}'
     elif auth_obj.mfa_secret:
         access_token = ""
