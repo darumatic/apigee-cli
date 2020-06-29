@@ -39,8 +39,8 @@ except KeyError:
 # @click.command(aliases=['conf', 'config', 'cfg'])
 @click.command(help='Configure Apigee Edge credentials.')
 @click.option('-u', '--username', prompt='Apigee username (email)', default=profile_dict['username'], show_default=True)
-@click.option('-p', '--password', prompt='Apigee password', default=lambda: HiddenSecret(profile_dict['password']), hide_input=True)
-@click.option('-mfa', '--mfa-secret', prompt='Apigee MFA key (optional)', default=lambda: HiddenSecret(profile_dict['mfa_secret']), hide_input=True)
+@click.option('-p', '--password', prompt='Apigee password', default=lambda: HiddenSecret(profile_dict['password']), hide_input=True, show_default='hidden' if profile_dict['password'] else 'None')
+@click.option('-mfa', '--mfa-secret', prompt='Apigee MFA key (optional)', default=lambda: HiddenSecret(profile_dict['mfa_secret']), hide_input=True, show_default='hidden' if profile_dict['mfa_secret'] else 'None')
 @click.option('-z', '--zonename', prompt='Identity zone name (to support SAML authentication)', default=profile_dict['zonename'], show_default=True)
 @click.option(
     '--token/--no-token', default=profile_dict['is_token'], help='specify to use oauth without MFA', prompt='Use OAuth, no MFA (select Y if you previously entered an identity zone name)?', show_default=True
