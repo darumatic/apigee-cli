@@ -74,8 +74,10 @@ The quickest way to get started is to run the ``apigee configure`` command::
     Apigee username (email) []: my_email
     Apigee password []: my_pass
     Apigee MFA key (optional) []: my_key
+    Identity zone name (to support SAML authentication) []:
+    Use OAuth, no MFA (select Y if you previously entered an identity zone name)? [Y/n]: n
     Default Apigee organization (recommended) []: my_org
-    Default team/resource prefix (optional) []: team_prefix
+    Default team/resource prefix (optional) []:
 
 
 To use environment variables, do the following::
@@ -83,6 +85,8 @@ To use environment variables, do the following::
     $ export APIGEE_USERNAME=<my_email>
     $ export APIGEE_PASSWORD=<my_pass>
     $ export APIGEE_MFA_SECRET=<my_key>
+    $ export APIGEE_ZONENAME=<my_zonename>
+    $ export APIGEE_IS_TOKEN=<bool>
     $ export APIGEE_ORG=<my_org>
     $ export APIGEE_CLI_PREFIX=<my_prefix>
 
