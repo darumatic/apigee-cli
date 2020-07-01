@@ -170,20 +170,18 @@ def get_credential(section, key):
 
 
 def set_header(auth_obj, headers={}):
-    if auth_obj.token or auth_obj.zonename:
-        headers['Authorization'] = f'Bearer {get_access_token(auth_obj)}'
-    elif auth_obj.mfa_secret:
+    if auth_obj.mfa_secret or auth_obj.token or auth_obj.zonename:
         access_token = ""
         make_dirs(APIGEE_CLI_DIRECTORY)
         try:
             with open(APIGEE_CLI_ACCESS_TOKEN_FILE, 'r') as f:
-                access_token = f.read()
+                access_token = f.read().strip()
         except (IOError, OSError) as e:
             pass
         finally:
             if access_token:
                 decoded = jwt.decode(access_token, verify=False)
-                if decoded['exp'] < int(time.time()) or decoded['email'] != auth_obj.username:
+                if decoded['exp'] < int(time.time()) or decoded['email'].lower() != auth_obj.username.lower():
                     access_token = ""
         if not access_token:
             access_token = get_access_token(auth_obj)
