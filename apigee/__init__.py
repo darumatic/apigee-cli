@@ -1,6 +1,6 @@
 APP = 'apigeecli'
 CMD = 'apigee'
-__version__ = '0.42.0'
+__version__ = '0.42.1'
 description = 'Apigee Management API command-line interface with multi-factor authentication'
 long_description = """Apigee Management API command-line interface with multi-factor authentication"""
 
