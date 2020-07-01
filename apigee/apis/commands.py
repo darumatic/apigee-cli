@@ -219,6 +219,8 @@ def _deploy(username, password, mfa_secret, token, zonename, org, profile, name,
             import_only=import_only,
             seamless_deploy=seamless_deploy,
             mfa_secret=mfa_secret,
+            token=token,
+            zonename=zonename
         )
     )
 
