@@ -184,7 +184,7 @@ def deploy(args):
     ShouldOverride = args.seamless_deploy
     # GracePeriod = 15
     # AccessToken = mfa_with_pyotp.get_access_token(args)
-    Auth = Struct(username=args.username, password=args.password, mfa_secret=args.mfa_secret)
+    Auth = Struct(username=args.username, password=args.password, mfa_secret=args.mfa_secret, token=args.token, zonename=args.zonename)
 
     # if UserPW == None or \
     #         (Directory == None and ZipFile == None) or \
