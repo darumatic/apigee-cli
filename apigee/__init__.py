@@ -17,6 +17,8 @@ APIGEE_ADMIN_API_URL = 'https://api.enterprise.apigee.com'
 APIGEE_OAUTH_URL = 'https://login.apigee.com/oauth/token'
 APIGEE_ZONENAME_OAUTH_URL = 'https://{zonename}.login.apigee.com/oauth/token'
 APIGEE_ZONENAME = getenv('APIGEE_ZONENAME')
+APIGEE_CLI_IS_MACHINE_USER = True if getenv('APIGEE_CLI_IS_MACHINE_USER') in (True, 'True', 'true', '1') else False
+APIGEE_SAML_LOGIN_URL = 'https://{zonename}.login.apigee.com/passcode'
 APIGEE_ORG = getenv('APIGEE_ORG')
 
 # custom

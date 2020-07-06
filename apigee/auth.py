@@ -20,7 +20,8 @@ from requests.exceptions import ConnectionError
 from requests.packages.urllib3.util.retry import Retry
 
 from apigee import (APIGEE_CLI_ACCESS_TOKEN_FILE, APIGEE_CLI_CREDENTIALS_FILE,
-                    APIGEE_CLI_DIRECTORY, APIGEE_OAUTH_URL,
+                    APIGEE_CLI_DIRECTORY, APIGEE_CLI_IS_MACHINE_USER,
+                    APIGEE_OAUTH_URL, APIGEE_SAML_LOGIN_URL,
                     APIGEE_ZONENAME_OAUTH_URL, console)
 from apigee.cls import AliasedGroup
 # from apigee.prefix import common_prefix_options
@@ -103,13 +104,13 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
     adapter = HTTPAdapter(max_retries=retry)
     session = requests.Session()
     session.mount('https://', adapter)
-    _oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename) if auth.zonename else APIGEE_OAUTH_URL
-    if auth.token or auth.zonename:
-        post_headers = {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-            'Accept': 'application/json;charset=utf-8',
-            'Authorization': 'Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0',
-        }
+    post_headers = {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+        'Accept': 'application/json;charset=utf-8',
+        'Authorization': 'Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0',
+    }
+    _oauth_url = APIGEE_OAUTH_URL
+    if auth.token or APIGEE_CLI_IS_MACHINE_USER:
         post_body = f'username={urllib.parse.quote(username)}&password={urllib.parse.quote(password)}&grant_type=password&response_type=token'
         try:
             response_post = session.post(f'{_oauth_url}', headers=post_headers, data=post_body)
@@ -122,11 +123,6 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
             totp.now()
         except binascii.Error as e:
             sys.exit(f'{type(e).__name__}: {e}: Not a valid MFA key')
-        post_headers = {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
-            'Accept': 'application/json;charset=utf-8',
-            'Authorization': 'Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0',
-        }
         post_body = f'username={urllib.parse.quote(username)}&password={urllib.parse.quote(password)}&grant_type=password'
         try:
             response_post = session.post(f'{_oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body)
@@ -136,6 +132,26 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
             response_post.json()['access_token']
         except KeyError as ke:
             response_post = session.post(f'{_oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body)
+    elif auth.zonename:
+        _oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
+        passcode_url = APIGEE_SAML_LOGIN_URL.format(zonename=auth.zonename)
+        webbrowser.open(passcode_url)
+        console.echo('SSO authorization page has automatically been opened in your default browser.')
+        console.echo('Follow the instructions in the browser to complete this authorization request.')
+        console.echo(
+            f"""\nIf your browser did not automatically open, go to the following URL and sign in:\n\n{passcode_url}\n\nthen copy the Temporary Authentication Code.\n"""
+        )
+        try:
+            passcode = click.prompt('Please enter the Temporary Authentication Code')
+            post_body = f'passcode={passcode}&grant_type=password&response_type=token'
+            response_post = session.post(f'{_oauth_url}', headers=post_headers, data=post_body)
+            while not response_post.json().get('access_token'):
+                passcode = click.prompt('Temporary Authentication Code is invalid. Please try again')
+                response_post = session.post(f'{_oauth_url}', headers=post_headers, data=post_body)
+        except ConnectionError as ce:
+            console.echo(ce)
+        except KeyError:
+            pass
     else:
         return
     try:
@@ -144,6 +160,10 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
         frm = inspect.trace()[-1]
         mod = inspect.getmodule(frm[0])
         modname = mod.__name__ if mod else frm[1]
+        if APIGEE_CLI_IS_MACHINE_USER:
+            sys.exit(
+                f'An exception of type {modname}.{type(ke).__name__} occurred. Arguments:\n{ke}\nDouble check your credentials and try again.\nWARNING: APIGEE_CLI_IS_MACHINE_USER={APIGEE_CLI_IS_MACHINE_USER}'
+            )
         sys.exit(f'An exception of type {modname}.{type(ke).__name__} occurred. Arguments:\n{ke}\nDouble check your credentials and try again.')
 
 
