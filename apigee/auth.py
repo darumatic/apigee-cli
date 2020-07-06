@@ -1,6 +1,7 @@
 import base64
 import binascii
 import configparser
+import inspect
 import json
 import os
 import sys
@@ -150,13 +151,10 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
     try:
         return response_post.json()['access_token']
     except KeyError as ke:
-        error_message = {
-            'Exception': {
-                'detail': {'errorcode': f'apigee.auth.get_access_token.{type(ke).__name__}'},
-                'exceptionstring': 'Double check your credentials and try again.',
-            }
-        }
-        sys.exit(json.dumps(error_message, indent=4))
+        frm = inspect.trace()[-1]
+        mod = inspect.getmodule(frm[0])
+        modname = mod.__name__ if mod else frm[1]
+        sys.exit(f'An exception of type {modname}.{type(ke).__name__} occurred. Arguments:\n{ke}\nDouble check your credentials and try again.')
 
 
 def get_credential(section, key):
