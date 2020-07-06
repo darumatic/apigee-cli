@@ -9,6 +9,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import webbrowser
 
 import click
 import jwt
@@ -102,8 +103,7 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
     adapter = HTTPAdapter(max_retries=retry)
     session = requests.Session()
     session.mount('https://', adapter)
-    if auth.zonename:
-        _oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
+    _oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename) if auth.zonename else APIGEE_OAUTH_URL
     if auth.token or auth.zonename:
         post_headers = {
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
