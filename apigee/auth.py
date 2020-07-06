@@ -144,10 +144,11 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
         try:
             passcode = click.prompt('Please enter the Temporary Authentication Code')
             post_body = f'passcode={passcode}&grant_type=password&response_type=token'
-            response_post = session.post(f'{_oauth_url}', headers=post_headers, data=post_body)
-            while not response_post.json().get('access_token'):
-                passcode = click.prompt('Temporary Authentication Code is invalid. Please try again')
+            try:
                 response_post = session.post(f'{_oauth_url}', headers=post_headers, data=post_body)
+                response_post.json()['access_token']
+            except KeyError:
+                sys.exit('Temporary Authentication Code is invalid. Please try again.')
         except ConnectionError as ce:
             console.echo(ce)
         except KeyError:
