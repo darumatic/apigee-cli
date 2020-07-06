@@ -112,6 +112,44 @@ As you can see, you can have multiple ``profiles`` defined in the configuration 
 profile to use by using the ``-P/--profile`` option. If no profile is specified
 the ``default`` profile is used.
 
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Using SAML authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^
+If you specified an ``Identity zone name (to support SAML authentication)`` during setup,
+the CLI will automatically use SAML authentication.
+If you are not currently signed in by your identity provider, you will be prompted to sign in::
+
+    $ apigee apis list
+    SSO authorization page has automatically been opened in your default browser.
+    Follow the instructions in the browser to complete this authorization request.
+
+    If your browser did not automatically open, go to the following URL and sign in:
+
+    https://{zoneName}.login.apigee.com/passcode
+
+    then copy the Temporary Authentication Code.
+
+    Please enter the Temporary Authentication Code:
+
+``zoneName`` will be the ``Identity zone name`` you previously configured.
+
+Refer to the official Apigee documentation to learn more about how to `Access the Edge API with SAML`_.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Using SAML with automated tasks
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The CLI also supports machine users as described in `Using SAML with automated tasks`_ when SAML is enabled
+to support automation for common development tasks, such as test automation or Continuous Integration/Continuous Deployment (CI/CD).
+
+To tell the CLI that the current user ``--profile`` is a machine user and thus to not redirect you to an identity provider,
+you can set the following environment variable like so::
+
+    $ export APIGEE_CLI_IS_MACHINE_USER=true
+
+To continue using an ordinary user, you will need to unset this variable or set it to ``false``.
+
+Refer to the official Apigee documentation to learn more about identity zones: `SAML Overview`_.
+
 ------------
 Getting Help
 ------------
@@ -140,3 +178,6 @@ Getting Help
 .. _`The Apigee Management API command-line interface documentation`: https://mdelotavo.github.io/apigee-cli/index.html
 .. _`GitHub`: https://github.com/mdelotavo/apigee-cli
 .. _`Python Package Index (PyPI)`: https://pypi.org/project/apigeecli/
+.. _`Access the Edge API with SAML`: https://docs.apigee.com/api-platform/system-administration/using-saml
+.. _`SAML Overview`: https://docs.apigee.com/api-platform/system-administration/saml-overview
+.. _`Using SAML with automated tasks`: https://docs.apigee.com/private-cloud/v4.17.09/using-saml-automated-tasks
