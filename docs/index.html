@@ -296,6 +296,18 @@ you can set the following environment variable like so:</p>
 <p>Refer to the official Apigee documentation to learn more about identity zones: <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/saml-overview">SAML Overview</a>.</p>
 </div>
 </div>
+<div class="section" id="troubleshooting">
+<h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h3>
+<p>If you get an error like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">An</span> <span class="n">exception</span> <span class="n">of</span> <span class="nb">type</span> <span class="n">jwt</span><span class="o">.</span><span class="n">api_jws</span><span class="o">.</span><span class="n">DecodeError</span> <span class="n">occurred</span><span class="o">.</span> <span class="n">Arguments</span><span class="p">:</span>
+<span class="n">Invalid</span> <span class="n">crypto</span> <span class="n">padding</span>
+</pre></div>
+</div>
+<p>Try deleting the cached access token:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ rm ~/.apigee/access_token
+</pre></div>
+</div>
+</div>
 <div class="section" id="getting-help">
 <h3>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
