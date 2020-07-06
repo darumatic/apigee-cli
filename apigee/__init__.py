@@ -1,8 +1,8 @@
 APP = 'apigeecli'
 CMD = 'apigee'
 __version__ = '0.42.3'
-description = 'Apigee Management API command-line interface with multi-factor authentication'
-long_description = """Apigee Management API command-line interface with multi-factor authentication"""
+description = 'Apigee Management API command-line interface with multi-factor authentication (MFA) and single sign-on (SSO)/SAML support'
+long_description = """Apigee Management API command-line interface with multi-factor authentication (MFA) and single sign-on (SSO)/SAML support"""
 
 import json
 from os import getenv
