@@ -262,6 +262,39 @@ $ export APIGEE_CLI_PREFIX=&lt;my_prefix&gt;
 <p>As you can see, you can have multiple <code class="docutils literal notranslate"><span class="pre">profiles</span></code> defined in the configuration file. You can then specify which
 profile to use by using the <code class="docutils literal notranslate"><span class="pre">-P/--profile</span></code> option. If no profile is specified
 the <code class="docutils literal notranslate"><span class="pre">default</span></code> profile is used.</p>
+<div class="section" id="using-saml-authentication">
+<h4>Using SAML authentication<a class="headerlink" href="#using-saml-authentication" title="Permalink to this headline">¶</a></h4>
+<p>If you specified an <code class="docutils literal notranslate"><span class="pre">Identity</span> <span class="pre">zone</span> <span class="pre">name</span> <span class="pre">(to</span> <span class="pre">support</span> <span class="pre">SAML</span> <span class="pre">authentication)</span></code> during setup,
+the CLI will automatically use SAML authentication.
+If you are not currently signed in by your identity provider, you will be prompted to sign in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis list
+SSO authorization page has automatically been opened in your default browser.
+Follow the instructions in the browser to complete this authorization request.
+
+If your browser did not automatically open, go to the following URL and sign in:
+
+https://{zoneName}.login.apigee.com/passcode
+
+then copy the Temporary Authentication Code.
+
+Please enter the Temporary Authentication Code:
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">zoneName</span></code> will be the <code class="docutils literal notranslate"><span class="pre">Identity</span> <span class="pre">zone</span> <span class="pre">name</span></code> you previously configured.</p>
+<p>Refer to the official Apigee documentation to learn more about how to <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/using-saml">Access the Edge API with SAML</a>.</p>
+</div>
+<div class="section" id="using-saml-with-automated-tasks">
+<h4>Using SAML with automated tasks<a class="headerlink" href="#using-saml-with-automated-tasks" title="Permalink to this headline">¶</a></h4>
+<p>The CLI also supports machine users as described in <a class="reference external" href="https://docs.apigee.com/private-cloud/v4.17.09/using-saml-automated-tasks">Using SAML with automated tasks</a> when SAML is enabled
+to support automation for common development tasks, such as test automation or Continuous Integration/Continuous Deployment (CI/CD).</p>
+<p>To tell the CLI that the current user <code class="docutils literal notranslate"><span class="pre">--profile</span></code> is a machine user and thus to not redirect you to an identity provider,
+you can set the following environment variable like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_CLI_IS_MACHINE_USER=true
+</pre></div>
+</div>
+<p>To continue using an ordinary user, you will need to unset this variable or set it to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Refer to the official Apigee documentation to learn more about identity zones: <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/saml-overview">SAML Overview</a>.</p>
+</div>
 </div>
 <div class="section" id="getting-help">
 <h3>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h3>
