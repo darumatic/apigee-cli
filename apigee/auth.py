@@ -96,15 +96,15 @@ def gen_auth(username=None, password=None, mfa_secret=None, token=None, zonename
 
 def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500, 502, 504), session=None):
     _oauth_url = APIGEE_OAUTH_URL
+    username = auth.username
+    password = auth.password
+    retry = Retry(total=retries, read=retries, connect=retries, backoff_factor=backoff_factor, status_forcelist=status_forcelist)
+    adapter = HTTPAdapter(max_retries=retry)
+    session = requests.Session()
+    session.mount('https://', adapter)
     if auth.zonename:
         _oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
     if auth.token or auth.zonename:
-        username = auth.username
-        password = auth.password
-        retry = Retry(total=retries, read=retries, connect=retries, backoff_factor=backoff_factor, status_forcelist=status_forcelist)
-        adapter = HTTPAdapter(max_retries=retry)
-        session = requests.Session()
-        session.mount('https://', adapter)
         post_headers = {
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
             'Accept': 'application/json;charset=utf-8',
@@ -115,23 +115,13 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
             response_post = session.post(f'{_oauth_url}', headers=post_headers, data=post_body)
         except ConnectionError as ce:
             console.echo(ce)
-        try:
-            response_post.json()['access_token']
-        except KeyError as ke:
-            response_post = session.post(f'{_oauth_url}', headers=post_headers, data=post_body)
     elif auth.mfa_secret:
-        username = auth.username
-        password = auth.password
         mfa_secret = auth.mfa_secret
         totp = pyotp.TOTP(mfa_secret)
         try:
             totp.now()
         except binascii.Error as e:
             sys.exit(f'{type(e).__name__}: {e}: Not a valid MFA key')
-        retry = Retry(total=retries, read=retries, connect=retries, backoff_factor=backoff_factor, status_forcelist=status_forcelist)
-        adapter = HTTPAdapter(max_retries=retry)
-        session = requests.Session()
-        session.mount('https://', adapter)
         post_headers = {
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
             'Accept': 'application/json;charset=utf-8',
