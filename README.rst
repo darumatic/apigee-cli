@@ -150,6 +150,18 @@ To continue using an ordinary user, you will need to unset this variable or set 
 
 Refer to the official Apigee documentation to learn more about identity zones: `SAML Overview`_.
 
+---------------
+Troubleshooting
+---------------
+If you get an error like so::
+
+    An exception of type jwt.api_jws.DecodeError occurred. Arguments:
+    Invalid crypto padding
+    
+Try deleting the cached access token::
+
+    $ rm ~/.apigee/access_token
+
 ------------
 Getting Help
 ------------
