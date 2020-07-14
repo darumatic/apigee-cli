@@ -49,6 +49,14 @@ apigee.console module
    :undoc-members:
    :show-inheritance:
 
+apigee.crypto module
+--------------------
+
+.. automodule:: apigee.crypto
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.exceptions module
 ------------------------
 
