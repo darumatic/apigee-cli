@@ -1,10 +1,15 @@
+import sys
+
 import click
 
-from apigee import console
+from apigee import APIGEE_CLI_SYMMETRIC_KEY, console
 from apigee.auth import common_auth_options, gen_auth
+from apigee.crypto import (ENCRYPTED_HEADER_BEGIN, ENCRYPTED_HEADER_END,
+                           decrypt_message, encrypt_message, is_encrypted)
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
+from apigee.utils import read_file, write_file
 from apigee.verbose import common_verbose_options
 
 
@@ -211,8 +216,8 @@ def list_keys(*args, **kwargs):
     console.echo(_list_keys_in_an_environment_scoped_keyvaluemap(*args, **kwargs))
 
 
-def _push_keyvaluemap(username, password, mfa_secret, token, zonename, org, profile, environment, file, **kwargs):
-    return Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, None).push_keyvaluemap(environment, file)
+def _push_keyvaluemap(username, password, mfa_secret, token, zonename, org, profile, environment, file, symmetric_key, **kwargs):
+    return Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, None).push_keyvaluemap(environment, file, secret=symmetric_key)
 
 
 @keyvaluemaps.command(
@@ -223,5 +228,42 @@ def _push_keyvaluemap(username, password, mfa_secret, token, zonename, org, prof
 @common_verbose_options
 @click.option('-e', '--environment', help='environment', required=True)
 @click.option('-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True)
+@click.option('--symmetric-key', default=APIGEE_CLI_SYMMETRIC_KEY, help='symmetric secret key for decrypting')
 def push(*args, **kwargs):
     _push_keyvaluemap(*args, **kwargs)
+
+
+@keyvaluemaps.command(name='encrypt', help='Use symmetric GPG (AES256) to encrypt KVM file in a custom format.')
+@common_silent_options
+@common_verbose_options
+@click.option('-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True)
+@click.option('--symmetric-key', required=True, help='symmetric secret key for encrypting')
+def encrypt_file(symmetric_key, file, verbose, silent):
+    contents = read_file(file, type='json')
+    decrypted_count = 0
+    console.echo('Encrypting... ', end='', flush=True)
+    contents, decrypted_count = Keyvaluemaps.encrypt_keyvaluemap(contents, symmetric_key)
+    if decrypted_count:
+        write_file(contents, file, indent=2)
+        console.echo('Done')
+        return contents
+    console.echo('None')
+    return ''
+
+
+@keyvaluemaps.command(name='decrypt', help='Use symmetric GPG (AES256) to decrypt KVM file in a custom format.')
+@common_silent_options
+@common_verbose_options
+@click.option('-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True)
+@click.option('--symmetric-key', required=True, help='symmetric secret key for decrypting')
+def decrypt_file(symmetric_key, file, verbose, silent):
+    contents = read_file(file, type='json')
+    decrypted_count = 0
+    console.echo('Decrypting... ', end='', flush=True)
+    contents, decrypted_count = Keyvaluemaps.decrypt_keyvaluemap(contents, symmetric_key)
+    if decrypted_count:
+        write_file(contents, file, indent=2)
+        console.echo('Done')
+        return contents
+    console.echo('None')
+    return ''

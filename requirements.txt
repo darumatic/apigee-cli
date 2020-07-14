@@ -12,3 +12,4 @@ requests
 tqdm
 tabulate
 pyjwt
+python-gnupg>=0.3.5

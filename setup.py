@@ -46,7 +46,8 @@ SETUP_ARGS = dict(
         "requests",
         "tqdm",
         "tabulate",
-        "pyjwt"
+        "pyjwt",
+        'python-gnupg>=0.3.5'
     ],
     project_urls={"Documentation": "https://mdelotavo.github.io/apigee-cli/index.html"},
     python_requires=">=3.6",

@@ -75,16 +75,24 @@ def touch(path):
         pass
 
 
-def write_file(content, path, fs_write=True):
+def write_file(content, path, fs_write=True, indent=None, eof=True):
     if not fs_write:
         return
     touch(path)
     with open(path, 'w') as f:
-        try:
+        if isinstance(content, str):
+            if eof:
+                content = f'{content}\n'
             f.write(content)
-        except TypeError:
-            if isinstance(content, dict) or isinstance(content, list):
-                f.write(json.dumps(content))
+        elif isinstance(content, dict) or isinstance(content, list):
+            if isinstance(indent, int):
+                content = f'{json.dumps(content, indent=indent)}'
+            else:
+                content = f'{json.dumps(content)}'
+            if eof:
+                f.write(f'{content}\n')
+            else:
+                f.write(content)
 
 
 def write_zip(file, content):
