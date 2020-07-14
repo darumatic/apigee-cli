@@ -111,6 +111,8 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
     }
     _oauth_url = APIGEE_OAUTH_URL
     if auth.token or APIGEE_CLI_IS_MACHINE_USER:
+        if auth.zonename:
+            _oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
         post_body = f'username={urllib.parse.quote(username)}&password={urllib.parse.quote(password)}&grant_type=password&response_type=token'
         try:
             response_post = session.post(f'{_oauth_url}', headers=post_headers, data=post_body)
