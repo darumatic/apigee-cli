@@ -10,8 +10,18 @@ ENCRYPTED_HEADER_END = '-----END ENCRYPTED APIGEE CLI MESSAGE-----'
 def encrypt_message(secret, message, encoded=True):
     gpg = gnupg.GPG()
     if encoded:
-        return base64.b64encode(str(gpg.encrypt(message, symmetric='AES256', passphrase=secret, recipients=None)).encode()).decode()
+        return base64.b64encode(
+            str(
+                gpg.encrypt(message, symmetric='AES256', passphrase=secret, recipients=None)
+            ).encode()
+        ).decode()
     return str(gpg.encrypt(message, symmetric='AES256', passphrase=secret, recipients=None))
+
+
+def is_encrypted(message):
+    return message.startswith(ENCRYPTED_HEADER_BEGIN) and message.endswith(
+        ENCRYPTED_HEADER_END
+    )
 
 
 def decrypt_message(secret, message, encoded=True):
@@ -22,7 +32,3 @@ def decrypt_message(secret, message, encoded=True):
     if encoded:
         return str(gpg.decrypt(base64.b64decode(message).decode(), passphrase=secret))
     return str(gpg.decrypt(message, passphrase=secret))
-
-
-def is_encrypted(message):
-    return message.startswith(ENCRYPTED_HEADER_BEGIN) and message.endswith(ENCRYPTED_HEADER_END)
