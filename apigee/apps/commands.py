@@ -15,8 +15,24 @@ def apps():
     pass
 
 
-def _create_developer_app(username, password, mfa_secret, token, zonename, org, profile, name, developer, body, **kwargs):
-    return Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None).create_developer_app(developer, body).text
+def _create_developer_app(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    developer,
+    body,
+    **kwargs
+):
+    return (
+        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None)
+        .create_developer_app(developer, body)
+        .text
+    )
 
 
 @apps.command(
@@ -32,8 +48,14 @@ def create(*args, **kwargs):
     console.echo(_create_developer_app(*args, **kwargs))
 
 
-def _delete_developer_app(username, password, mfa_secret, token, zonename, org, profile, name, developer, **kwargs):
-    return Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name).delete_developer_app(developer).text
+def _delete_developer_app(
+    username, password, mfa_secret, token, zonename, org, profile, name, developer, **kwargs
+):
+    return (
+        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .delete_developer_app(developer)
+        .text
+    )
 
 
 @apps.command(help='Deletes a developer app.')
@@ -46,10 +68,25 @@ def delete(*args, **kwargs):
     console.echo(_delete_developer_app(*args, **kwargs))
 
 
-def _create_empty_developer_app(username, password, mfa_secret, token, zonename, org, profile, name, developer, display_name="", callback_url="", **kwargs):
+def _create_empty_developer_app(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    developer,
+    display_name="",
+    callback_url="",
+    **kwargs
+):
     return (
         Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .create_empty_developer_app(developer, display_name=display_name, callback_url=callback_url)
+        .create_empty_developer_app(
+            developer, display_name=display_name, callback_url=callback_url
+        )
         .text
     )
 
@@ -74,8 +111,14 @@ def create_empty(*args, **kwargs):
     console.echo(_create_empty_developer_app(*args, **kwargs))
 
 
-def _get_developer_app_details(username, password, mfa_secret, token, zonename, org, profile, name, developer, **kwargs):
-    return Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_developer_app_details(developer).text
+def _get_developer_app_details(
+    username, password, mfa_secret, token, zonename, org, profile, name, developer, **kwargs
+):
+    return (
+        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .get_developer_app_details(developer)
+        .text
+    )
 
 
 @apps.command(
@@ -91,9 +134,23 @@ def get(*args, **kwargs):
 
 
 def _list_developer_apps(
-    username, password, mfa_secret, token, zonename, org, profile, developer, prefix=None, expand=False, count=1000, startkey="", **kwargs
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    developer,
+    prefix=None,
+    expand=False,
+    count=1000,
+    startkey="",
+    **kwargs
 ):
-    return Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_developer_apps(
+    return Apps(
+        gen_auth(username, password, mfa_secret, token, zonename), org, None
+    ).list_developer_apps(
         developer, prefix=prefix, expand=expand, count=count, startkey=startkey
     )
 
@@ -119,7 +176,10 @@ def _list_developer_apps(
     help='Limits the list to the number you specify. The limit is 100. Use with the startKey parameter to provide more targeted filtering.',
 )
 @click.option(
-    '--startkey', default="", show_default=True, help='To filter the keys that are returned, enter the name of a developer app that the list will start with.'
+    '--startkey',
+    default="",
+    show_default=True,
+    help='To filter the keys that are returned, enter the name of a developer app that the list will start with.',
 )
 def list(*args, **kwargs):
     console.echo(_list_developer_apps(*args, **kwargs))
@@ -183,16 +243,45 @@ def _create_a_consumer_key_and_secret(
 @common_silent_options
 @click.option('-n', '--name', help='name', required=True)
 @click.option('--developer', help='developer email or id', required=True)
-@optgroup.group('consumerKey options', cls=MutuallyExclusiveOptionGroup, help='The consumerKey options')
+@optgroup.group(
+    'consumerKey options', cls=MutuallyExclusiveOptionGroup, help='The consumerKey options'
+)
 @optgroup.option('--consumer-key', default=None, help="")
-@optgroup.option('--key-length', type=click.INT, default=32, show_default=True, help='length of the consumer key')
-@optgroup.group('consumerSecret options', cls=MutuallyExclusiveOptionGroup, help='The consumerSecret options')
+@optgroup.option(
+    '--key-length',
+    type=click.INT,
+    default=32,
+    show_default=True,
+    help='length of the consumer key',
+)
+@optgroup.group(
+    'consumerSecret options',
+    cls=MutuallyExclusiveOptionGroup,
+    help='The consumerSecret options',
+)
 @optgroup.option('--consumer-secret', default=None, help="")
-@optgroup.option('--secret-length', type=click.INT, default=32, show_default=True, help='length of the consumer secret')
+@optgroup.option(
+    '--secret-length',
+    type=click.INT,
+    default=32,
+    show_default=True,
+    help='length of the consumer secret',
+)
 @click.option('--key-suffix', default=None, help="")
-@click.option('--key-delimiter', default='-', help='separates consumerKey and key suffix with a delimiter.')
+@click.option(
+    '--key-delimiter',
+    default='-',
+    help='separates consumerKey and key suffix with a delimiter.',
+)
 # @click.option("products", "--products", multiple=True, default=[], help="A list of API products to be associated with the app's credentials")
-@click.option('products', '--products', metavar='LIST', cls=OptionEatAll, default=[], help="A list of API products to be associated with the app's credentials")
+@click.option(
+    'products',
+    '--products',
+    metavar='LIST',
+    cls=OptionEatAll,
+    default=[],
+    help="A list of API products to be associated with the app's credentials",
+)
 def create_creds(*args, **kwargs):
     # click.echo(kwargs.get('products'))
     # import sys;sys.exit(1)
@@ -203,14 +292,25 @@ def create_creds(*args, **kwargs):
 #     pass
 
 
-def _restore_app(username, password, mfa_secret, token, zonename, org, profile, file, **kwargs):
-    return Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None).restore_app(file).text
+def _restore_app(
+    username, password, mfa_secret, token, zonename, org, profile, file, **kwargs
+):
+    return (
+        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None)
+        .restore_app(file)
+        .text
+    )
 
 
 @apps.command(help='Restore developer app from a file.')
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option('-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True)
+@click.option(
+    '-f',
+    '--file',
+    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
+    required=True,
+)
 def restore(*args, **kwargs):
     _restore_app(*args, **kwargs)

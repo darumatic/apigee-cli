@@ -14,11 +14,17 @@ def sharedflows():
     pass
 
 
-def _get_a_list_of_shared_flows(username, password, mfa_secret, token, zonename, org, profile, prefix=None, **kwargs):
-    return Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org).get_a_list_of_shared_flows(prefix=prefix)
+def _get_a_list_of_shared_flows(
+    username, password, mfa_secret, token, zonename, org, profile, prefix=None, **kwargs
+):
+    return Sharedflows(
+        gen_auth(username, password, mfa_secret, token, zonename), org
+    ).get_a_list_of_shared_flows(prefix=prefix)
 
 
-@sharedflows.command(help='Gets an array of the names of shared flows in the organization. The response is a simple array of strings.')
+@sharedflows.command(
+    help='Gets an array of the names of shared flows in the organization. The response is a simple array of strings.'
+)
 @common_auth_options
 @common_prefix_options
 @common_silent_options
@@ -27,8 +33,14 @@ def list(*args, **kwargs):
     console.echo(_get_a_list_of_shared_flows(*args, **kwargs))
 
 
-def _import_a_shared_flow(username, password, mfa_secret, token, zonename, org, profile, file, name, **kwargs):
-    return Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org).import_a_shared_flow(file, name).text
+def _import_a_shared_flow(
+    username, password, mfa_secret, token, zonename, org, profile, file, name, **kwargs
+):
+    return (
+        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        .import_a_shared_flow(file, name)
+        .text
+    )
 
 
 @sharedflows.command(
@@ -55,8 +67,14 @@ def import_a_shared_flow(*args, **kwargs):
 #     pass
 
 
-def _get_a_shared_flow(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
-    return Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org).get_a_shared_flow(name).text
+def _get_a_shared_flow(
+    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
+):
+    return (
+        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        .get_a_shared_flow(name)
+        .text
+    )
 
 
 @sharedflows.command(help='Gets a shared flow by name, including a list of its revisions.')
@@ -68,10 +86,32 @@ def get(*args, **kwargs):
     console.echo(_get_a_shared_flow(*args, **kwargs))
 
 
-def _deploy_a_shared_flow(username, password, mfa_secret, token, zonename, org, profile, environment, name, revision_number, override, delay, file, **kwargs):
+def _deploy_a_shared_flow(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    environment,
+    name,
+    revision_number,
+    override,
+    delay,
+    file,
+    **kwargs
+):
     return (
         Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
-        .deploy_a_shared_flow(environment, name, revision_number, override=override, delay=delay, shared_flow_file=file)
+        .deploy_a_shared_flow(
+            environment,
+            name,
+            revision_number,
+            override=override,
+            delay=delay,
+            shared_flow_file=file,
+        )
         .text
     )
 
@@ -85,7 +125,11 @@ def _deploy_a_shared_flow(username, password, mfa_secret, token, zonename, org, 
 @common_verbose_options
 @click.option('-e', '--environment', help='environment', required=True)
 @click.option('-n', '--name', help='name', required=True)
-@optgroup.group('Deployment options', cls=RequiredMutuallyExclusiveOptionGroup, help='The deployment options')
+@optgroup.group(
+    'Deployment options',
+    cls=RequiredMutuallyExclusiveOptionGroup,
+    help='The deployment options',
+)
 @optgroup.option(
     '-f',
     '--file',
@@ -110,8 +154,24 @@ def deploy(*args, **kwargs):
     console.echo(_deploy_a_shared_flow(*args, **kwargs))
 
 
-def _undeploy_a_shared_flow(username, password, mfa_secret, token, zonename, org, profile, environment, name, revision_number, **kwargs):
-    return Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org).undeploy_a_shared_flow(environment, name, revision_number).text
+def _undeploy_a_shared_flow(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    environment,
+    name,
+    revision_number,
+    **kwargs
+):
+    return (
+        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        .undeploy_a_shared_flow(environment, name, revision_number)
+        .text
+    )
 
 
 @sharedflows.command(help='Undeploys a shared flow revision from an environment.')
@@ -125,11 +185,28 @@ def undeploy(*args, **kwargs):
     console.echo(_undeploy_a_shared_flow(*args, **kwargs))
 
 
-def _get_deployment_environments_for_shared_flows(username, password, mfa_secret, token, zonename, org, profile, name, revision_number, **kwargs):
-    return Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org).get_deployment_environments_for_shared_flows(name, revision_number).text
+def _get_deployment_environments_for_shared_flows(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    revision_number,
+    **kwargs
+):
+    return (
+        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        .get_deployment_environments_for_shared_flows(name, revision_number)
+        .text
+    )
 
 
-@sharedflows.command(help='Gets an array of the environments to which the shared flow is deployed.')
+@sharedflows.command(
+    help='Gets an array of the environments to which the shared flow is deployed.'
+)
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -150,8 +227,23 @@ def _delete_a_shared_flow(self, shared_flow_name):
 #     pass
 
 
-def _get_the_shared_flow_attached_to_a_flow_hook(username, password, mfa_secret, token, zonename, org, profile, environment, flow_hook, **kwargs):
-    return Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org).get_the_shared_flow_attached_to_a_flow_hook(environment, flow_hook).text
+def _get_the_shared_flow_attached_to_a_flow_hook(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    environment,
+    flow_hook,
+    **kwargs
+):
+    return (
+        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        .get_the_shared_flow_attached_to_a_flow_hook(environment, flow_hook)
+        .text
+    )
 
 
 @sharedflows.command(
@@ -161,13 +253,21 @@ def _get_the_shared_flow_attached_to_a_flow_hook(username, password, mfa_secret,
 @common_silent_options
 @common_verbose_options
 @click.option('-e', '--environment', help='environment', required=True)
-@click.option('--flow-hook', help='flow hook to which the shared flow is attached', required=True)
+@click.option(
+    '--flow-hook', help='flow hook to which the shared flow is attached', required=True
+)
 def get_flow_hook(*args, **kwargs):
     console.echo(_get_the_shared_flow_attached_to_a_flow_hook(*args, **kwargs))
 
 
-def _get_shared_flow_deployments(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
-    return Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org).get_shared_flow_deployments(name).text
+def _get_shared_flow_deployments(
+    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
+):
+    return (
+        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        .get_shared_flow_deployments(name)
+        .text
+    )
 
 
 @sharedflows.command(help='View all shared flow deployments.')
@@ -179,8 +279,14 @@ def get_deployments(*args, **kwargs):
     console.echo(_get_shared_flow_deployments(*args, **kwargs))
 
 
-def _get_shared_flow_revisions(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
-    return Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org).get_shared_flow_revisions(name).text
+def _get_shared_flow_revisions(
+    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
+):
+    return (
+        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        .get_shared_flow_revisions(name)
+        .text
+    )
 
 
 @sharedflows.command(help='List the revisions of a shared flow.')
