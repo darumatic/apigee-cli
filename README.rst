@@ -4,6 +4,18 @@ apigee-cli
 
 |License|
 
+Welcome to the Apigee Management API command-line interface!
+
+This is not an officially supported Google product, and is not affiliated with Apigee or Google in any way.
+
+This is a user-friendly command-line interface to the Apigee Management API providing
+features that automate steps that are too cumbersome to perform manually or are non-existent
+in existing tools such as multi-factor authentication (MFA) and single sign-on (SSO)/SAML.
+
+This tool was made with certain clients in mind, and is intended for general administrative
+use from your shell, as a package for developers, and to support automation for common development tasks,
+such as test automation or Continuous Integration/Continuous Deployment (CI/CD).
+
 .. code-block:: text
 
     Usage: apigee [OPTIONS] COMMAND [ARGS]...
@@ -157,7 +169,7 @@ If you get an error like so::
 
     An exception of type jwt.api_jws.DecodeError occurred. Arguments:
     Invalid crypto padding
-    
+
 Try deleting the cached access token::
 
     $ rm ~/.apigee/access_token
@@ -170,6 +182,10 @@ Getting Help
 * `Apigee Product Documentation`_
 * `GitHub`_
 
+----------
+Disclaimer
+----------
+This is not an officially supported Google product.
 
 
 .. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
