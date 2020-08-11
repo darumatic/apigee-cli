@@ -170,11 +170,15 @@ def printDeployments(dep, check_revision=None):
         if d['state'] == 'missing':
             console.echo('Missing deployment. Attempting deletion...')
             try:
-                Apis(Auth, Organization).undeploy_api_proxy_revision(Name, d['environment'], d['revision'])
+                Apis(Auth, Organization).undeploy_api_proxy_revision(
+                    Name, d['environment'], d['revision']
+                )
             except HTTPError as e:
                 if e.response.status_code != 400:
                     raise e
-            console.echo(Apis(Auth, Organization).delete_api_proxy_revision(Name, d['revision']).text)
+            console.echo(
+                Apis(Auth, Organization).delete_api_proxy_revision(Name, d['revision']).text
+            )
         elif d['state'] != 'deployed':
             sys.exit(1)
         if 'error' in d:
