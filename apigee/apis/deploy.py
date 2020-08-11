@@ -27,7 +27,10 @@ import urllib.parse
 import xml.dom.minidom
 import zipfile
 
+from requests.exceptions import HTTPError
+
 from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee.apis.apis import Apis
 
 ApigeeHost = APIGEE_ADMIN_API_URL
 UserPW = None
@@ -164,7 +167,15 @@ def printDeployments(dep, check_revision=None):
         console.echo('Environment: %s' % d['environment'])
         console.echo('  Revision: %i BasePath = %s' % (d['revision'], d['basePath']))
         console.echo('  State: %s' % d['state'])
-        if d['state'] != 'deployed':
+        if d['state'] == 'missing':
+            console.echo('Missing deployment. Attempting deletion...')
+            try:
+                Apis(Auth, Organization).undeploy_api_proxy_revision(Name, d['environment'], d['revision'])
+            except HTTPError as e:
+                if e.response.status_code != 400:
+                    raise e
+            console.echo(Apis(Auth, Organization).delete_api_proxy_revision(Name, d['revision']).text)
+        elif d['state'] != 'deployed':
             sys.exit(1)
         if 'error' in d:
             console.echo('  Error: %s' % d['error'])
