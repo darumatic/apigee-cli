@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>apigee.backups package &mdash; apigee-cli 0.x.x documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> apigee-cli
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../auth.html">auth</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Apache License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../disclaimer.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../help.html">Need Help</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">apigee-cli</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>apigee.backups package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/apigee.backups.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="apigee-backups-package">
+<h1>apigee.backups package<a class="headerlink" href="#apigee-backups-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-apigee.backups.backups">
+<span id="apigee-backups-backups-module"></span><h2>apigee.backups.backups module<a class="headerlink" href="#module-apigee.backups.backups" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="apigee.backups.backups.Backups">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.backups.backups.</code><code class="sig-name descname">Backups</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">org_name</span></em>, <em class="sig-param"><span class="n">target_directory</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">apis</span><span class="o">=</span><span class="default_value">{'apiproducts', 'apis', 'apps', 'caches', 'developers', 'keyvaluemaps', 'targetservers', 'userroles'}</span></em>, <em class="sig-param"><span class="n">environments</span><span class="o">=</span><span class="default_value">['test', 'prod']</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="apigee.backups.backups.Backups.APIS">
+<code class="sig-name descname">APIS</code><em class="property"> = {'apiproducts', 'apis', 'apps', 'caches', 'developers', 'keyvaluemaps', 'targetservers', 'userroles'}</em><a class="headerlink" href="#apigee.backups.backups.Backups.APIS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="apigee.backups.backups.Backups.SNAPSHOTS_DIRECTORY_NAME">
+<code class="sig-name descname">SNAPSHOTS_DIRECTORY_NAME</code><em class="property"> = 'snapshots'</em><a class="headerlink" href="#apigee.backups.backups.Backups.SNAPSHOTS_DIRECTORY_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.apis">
+<em class="property">property </em><code class="sig-name descname">apis</code><a class="headerlink" href="#apigee.backups.backups.Backups.apis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_apiproducts">
+<code class="sig-name descname">download_apiproducts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apiproducts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_apiproducts_snapshot">
+<code class="sig-name descname">download_apiproducts_snapshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apiproducts_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_apis">
+<code class="sig-name descname">download_apis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_apis_snapshot">
+<code class="sig-name descname">download_apis_snapshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apis_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_apps">
+<code class="sig-name descname">download_apps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_apps_snapshot">
+<code class="sig-name descname">download_apps_snapshot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">expand</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">count</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">startkey</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apps_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_caches">
+<code class="sig-name descname">download_caches</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_caches" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_caches_snapshot">
+<code class="sig-name descname">download_caches_snapshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_caches_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_developers">
+<code class="sig-name descname">download_developers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_developers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_developers_snapshot">
+<code class="sig-name descname">download_developers_snapshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_developers_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_keyvaluemaps">
+<code class="sig-name descname">download_keyvaluemaps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_keyvaluemaps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_keyvaluemaps_snapshot">
+<code class="sig-name descname">download_keyvaluemaps_snapshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_keyvaluemaps_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_targetservers">
+<code class="sig-name descname">download_targetservers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_targetservers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_targetservers_snapshot">
+<code class="sig-name descname">download_targetservers_snapshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_targetservers_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_userroles">
+<code class="sig-name descname">download_userroles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_userroles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.download_userroles_snapshot">
+<code class="sig-name descname">download_userroles_snapshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_userroles_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.get_snapshots">
+<code class="sig-name descname">get_snapshots</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.get_snapshots" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.backups.backups.Backups.take_snapshot">
+<code class="sig-name descname">take_snapshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.take_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-apigee.backups.commands">
+<span id="apigee-backups-commands-module"></span><h2>apigee.backups.commands module<a class="headerlink" href="#module-apigee.backups.commands" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-apigee.backups">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-apigee.backups" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Matthew Delotavo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

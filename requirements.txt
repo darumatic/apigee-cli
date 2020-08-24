@@ -1,0 +1,15 @@
+# These requirements are for running tests, the library itself only needs a
+# subset, see setup.py for that list
+click
+click-aliases
+click-option-group
+colorama
+coverage
+pudb
+pyjwt
+pyotp
+python-gnupg>=0.3.5
+requests
+requests
+tabulate
+tqdm

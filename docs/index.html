@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to the Apigee Management API command-line interface documentation! &mdash; apigee-cli 0.x.x documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> apigee-cli
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="auth.html">auth</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Apache License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#contact">Contact</a></li>
+<li class="toctree-l1"><a class="reference internal" href="disclaimer.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="help.html">Need Help</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">apigee-cli</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Welcome to the Apigee Management API command-line interface documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-the-apigee-management-api-command-line-interface-documentation">
+<h1>Welcome to the Apigee Management API command-line interface documentation!<a class="headerlink" href="#welcome-to-the-apigee-management-api-command-line-interface-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="apigee-cli">
+<h2>apigee-cli<a class="headerlink" href="#apigee-cli" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
+<p>Welcome to the Apigee Management API command-line interface!</p>
+<p>This is not an officially supported Google product, and is not affiliated with Apigee or Google in any way.</p>
+<p>This is a user-friendly command-line interface to the Apigee Management API providing
+features that automate steps that are too cumbersome to perform manually or are non-existent
+in existing tools such as multi-factor authentication (MFA) and single sign-on (SSO)/SAML.</p>
+<p>This tool was made with certain clients in mind, and is intended for general administrative
+use from your shell, as a package for developers, and to support automation for common development tasks,
+such as test automation or Continuous Integration/Continuous Deployment (CI/CD).</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Usage: apigee [OPTIONS] COMMAND [ARGS]...
+
+  Welcome to the Apigee Management API command-line interface!
+
+  Docs:    https://mdelotavo.github.io/apigee-cli/
+  PyPI:    https://pypi.org/project/apigeecli/
+  GitHub:  https://github.com/mdelotavo/apigee-cli
+
+Options:
+  -V, --version  Show the version and exit.
+  -h, --help     Show this message and exit.
+
+Commands:
+  apiproducts    API products enable you to bundle and distribute your APIs...
+  apis           The proxy APIs let you perform operations on API proxies,...
+  apps           Management APIs available for working with developer apps.
+  auth           Custom authorization commands.
+  backups        Download configuration files from Apigee that can later be...
+  caches         A lightweight persistence store that can be used by...
+  configure      Configure Apigee Edge credentials.
+  deployments    API proxies that are actively deployed in environments on...
+  developers     Developers implement client/consumer apps and must be...
+  keyvaluemaps   Key/value maps at the environment scope can be accessed by...
+  maskconfigs    Specify data that will be filtered out of trace sessions.
+  permissions    Permissions for roles in an organization on Apigee Edge.
+  sharedflows    You can use the following APIs to manage shared flows and...
+  targetservers  TargetServers are used to decouple TargetEndpoint...
+  userroles      Roles for users in an organization on Apigee Edge.
+</pre></div>
+</div>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<p>The easiest way to install apigee-cli is to use <a class="reference external" href="http://www.pip-installer.org/en/latest/">pip</a> in a <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install apigeecli
+</pre></div>
+</div>
+<p>or, if you are not installing in a <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code>, to install globally:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo pip install apigeecli
+</pre></div>
+</div>
+<p>or for your user:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install --user apigeecli
+</pre></div>
+</div>
+<p>If you have the apigee-cli installed and want to upgrade to the latest version
+you can run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install --upgrade apigeecli
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-started">
+<h3>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h3>
+<p>Before using apigee-cli, you need to tell it about your Apigee Edge credentials.  You
+can do this in three ways:</p>
+<ul class="simple">
+<li><p>Environment variables</p></li>
+<li><p>Config file</p></li>
+<li><p>Command-line arguments</p></li>
+</ul>
+<p>The quickest way to get started is to run the <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">configure</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee configure
+Apigee username (email) []: my_email
+Apigee password []: my_pass
+Apigee MFA key (optional) []: my_key
+Identity zone name (to support SAML authentication) []:
+Use OAuth, no MFA (optional)? [y/N]: n
+Default Apigee organization (recommended) []: my_org
+Default team/resource prefix (optional) []:
+</pre></div>
+</div>
+<p>To use environment variables, do the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_USERNAME=&lt;my_email&gt;
+$ export APIGEE_PASSWORD=&lt;my_pass&gt;
+$ export APIGEE_MFA_SECRET=&lt;my_key&gt;
+$ export APIGEE_ZONENAME=&lt;my_zonename&gt;
+$ export APIGEE_IS_TOKEN=&lt;bool&gt;
+$ export APIGEE_ORG=&lt;my_org&gt;
+$ export APIGEE_CLI_PREFIX=&lt;my_prefix&gt;
+</pre></div>
+</div>
+<p>To use the configuration file, create an INI formatted file like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">default</span><span class="p">]</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">my_email</span>
+<span class="n">org</span> <span class="o">=</span> <span class="n">my_org</span>
+<span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">my_key</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="n">my_prefix</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">my_pass</span>
+
+<span class="p">[</span><span class="n">produser</span><span class="p">]</span>
+<span class="n">org</span> <span class="o">=</span> <span class="n">my_org</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">my_email</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">my_pass</span>
+<span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">my_key</span>
+</pre></div>
+</div>
+<p>and place it in <code class="docutils literal notranslate"><span class="pre">~/.apigee/credentials</span></code>.</p>
+<p>As you can see, you can have multiple <code class="docutils literal notranslate"><span class="pre">profiles</span></code> defined in the configuration file. You can then specify which
+profile to use by using the <code class="docutils literal notranslate"><span class="pre">-P/--profile</span></code> option. If no profile is specified
+the <code class="docutils literal notranslate"><span class="pre">default</span></code> profile is used.</p>
+<div class="section" id="using-saml-authentication">
+<h4>Using SAML authentication<a class="headerlink" href="#using-saml-authentication" title="Permalink to this headline">¶</a></h4>
+<p>If you specified an <code class="docutils literal notranslate"><span class="pre">Identity</span> <span class="pre">zone</span> <span class="pre">name</span> <span class="pre">(to</span> <span class="pre">support</span> <span class="pre">SAML</span> <span class="pre">authentication)</span></code> during setup,
+the CLI will automatically use SAML authentication.
+If you are not currently signed in by your identity provider, you will be prompted to sign in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis list
+SSO authorization page has automatically been opened in your default browser.
+Follow the instructions in the browser to complete this authorization request.
+
+If your browser did not automatically open, go to the following URL and sign in:
+
+https://{zoneName}.login.apigee.com/passcode
+
+then copy the Temporary Authentication Code.
+
+Please enter the Temporary Authentication Code:
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">zoneName</span></code> will be the <code class="docutils literal notranslate"><span class="pre">Identity</span> <span class="pre">zone</span> <span class="pre">name</span></code> you previously configured.</p>
+<p>Refer to the official Apigee documentation to learn more about how to <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/using-saml">Access the Edge API with SAML</a>.</p>
+</div>
+<div class="section" id="using-saml-with-automated-tasks">
+<h4>Using SAML with automated tasks<a class="headerlink" href="#using-saml-with-automated-tasks" title="Permalink to this headline">¶</a></h4>
+<p>The CLI also supports machine users as described in <a class="reference external" href="https://docs.apigee.com/private-cloud/v4.17.09/using-saml-automated-tasks">Using SAML with automated tasks</a> when SAML is enabled
+to support automation for common development tasks, such as test automation or Continuous Integration/Continuous Deployment (CI/CD).</p>
+<p>To tell the CLI that the current user <code class="docutils literal notranslate"><span class="pre">--profile</span></code> is a machine user and thus to not redirect you to an identity provider,
+you can set the following environment variable like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_CLI_IS_MACHINE_USER=true
+</pre></div>
+</div>
+<p>To continue using an ordinary user, you will need to unset this variable or set it to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Refer to the official Apigee documentation to learn more about identity zones: <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/saml-overview">SAML Overview</a>.</p>
+</div>
+</div>
+<div class="section" id="troubleshooting">
+<h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h3>
+<p>If you get an error like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">An</span> <span class="n">exception</span> <span class="n">of</span> <span class="nb">type</span> <span class="n">jwt</span><span class="o">.</span><span class="n">api_jws</span><span class="o">.</span><span class="n">DecodeError</span> <span class="n">occurred</span><span class="o">.</span> <span class="n">Arguments</span><span class="p">:</span>
+<span class="n">Invalid</span> <span class="n">crypto</span> <span class="n">padding</span>
+</pre></div>
+</div>
+<p>Try deleting the cached access token:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ rm ~/.apigee/access_token
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-help">
+<h3>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://mdelotavo.github.io/apigee-cli/index.html">The Apigee Management API command-line interface documentation</a></p></li>
+<li><p><a class="reference external" href="https://apidocs.apigee.com/management/apis">Apigee Product Documentation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/mdelotavo/apigee-cli">GitHub</a></p></li>
+</ul>
+</div>
+<div class="section" id="disclaimer">
+<h3>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h3>
+<p>This is not an officially supported Google product.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<ul class="simple">
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Matthew Delotavo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
