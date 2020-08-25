@@ -5,21 +5,11 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 
-CREATE_A_TARGETSERVER_PATH = (
-    '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers'
-)
-DELETE_A_TARGETSERVER_PATH = (
-    '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}'
-)
-LIST_TARGETSERVERS_IN_AN_ENVIRONMENT_PATH = (
-    '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers'
-)
-GET_TARGETSERVER_PATH = (
-    '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}'
-)
-UPDATE_A_TARGETSERVER_PATH = (
-    '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}'
-)
+CREATE_A_TARGETSERVER_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers'
+DELETE_A_TARGETSERVER_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}'
+LIST_TARGETSERVERS_IN_AN_ENVIRONMENT_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers'
+GET_TARGETSERVER_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}'
+UPDATE_A_TARGETSERVER_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}'
 
 
 class TargetserversSerializer:
@@ -29,11 +19,7 @@ class TargetserversSerializer:
             return targetservers.text
         targetservers = targetservers.json()
         if prefix:
-            targetservers = [
-                targetserver
-                for targetserver in targetservers
-                if targetserver.startswith(prefix)
-            ]
+            targetservers = [targetserver for targetserver in targetservers if targetserver.startswith(prefix)]
         if format == 'json':
             return json.dumps(targetservers)
         elif format == 'table':
@@ -82,10 +68,7 @@ class Targetservers:
         uri = CREATE_A_TARGETSERVER_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -93,10 +76,7 @@ class Targetservers:
 
     def delete_a_targetserver(self, environment):
         uri = DELETE_A_TARGETSERVER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
-            environment=environment,
-            name=self._targetserver_name,
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name
         )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.delete(uri, headers=hdrs)
@@ -114,10 +94,7 @@ class Targetservers:
 
     def get_targetserver(self, environment):
         uri = GET_TARGETSERVER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
-            environment=environment,
-            name=self._targetserver_name,
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name
         )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
@@ -126,15 +103,9 @@ class Targetservers:
 
     def update_a_targetserver(self, environment, request_body):
         uri = UPDATE_A_TARGETSERVER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
-            environment=environment,
-            name=self._targetserver_name,
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
         resp.raise_for_status()

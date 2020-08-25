@@ -15,13 +15,9 @@ def apiproducts():
     pass
 
 
-def _create_api_product(
-    username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs
-):
+def _create_api_product(username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs):
     return (
-        Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .create_api_product(body)
-        .text
+        Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).create_api_product(body).text
     )
 
 
@@ -35,14 +31,8 @@ def create(*args, **kwargs):
     console.echo(_create_api_product(*args, **kwargs))
 
 
-def _delete_api_product(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .delete_api_product()
-        .text
-    )
+def _delete_api_product(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).delete_api_product().text
 
 
 @apiproducts.command(help='Deletes an API product from an organization.')
@@ -54,14 +44,8 @@ def delete(*args, **kwargs):
     console.echo(_delete_api_product(*args, **kwargs))
 
 
-def _get_api_product(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .get_api_product()
-        .text
-    )
+def _get_api_product(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_api_product().text
 
 
 @apiproducts.command(
@@ -89,9 +73,9 @@ def _list_api_products(
     startkey="",
     **kwargs
 ):
-    return Apiproducts(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
-    ).list_api_products(prefix=prefix, expand=expand, count=count, startkey=startkey)
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_api_products(
+        prefix=prefix, expand=expand, count=count, startkey=startkey
+    )
 
 
 @apiproducts.command(help='Get a list of all API product names for an organization.')
@@ -99,11 +83,7 @@ def _list_api_products(
 @common_verbose_options
 @common_silent_options
 @common_prefix_options
-@click.option(
-    '--expand/--no-expand',
-    default=False,
-    help="Set to 'true' to get expanded details about each product.",
-)
+@click.option('--expand/--no-expand', default=False, help="Set to 'true' to get expanded details about each product.")
 @click.option(
     '--count',
     type=click.INT,
@@ -121,13 +101,9 @@ def list(*args, **kwargs):
     console.echo(_list_api_products(*args, **kwargs))
 
 
-def _update_api_product(
-    username, password, mfa_secret, token, zonename, org, profile, body, **kwargs
-):
+def _update_api_product(username, password, mfa_secret, token, zonename, org, profile, body, **kwargs):
     return (
-        Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .update_api_product(body)
-        .text
+        Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).update_api_product(body).text
     )
 
 
@@ -143,25 +119,16 @@ def update(*args, **kwargs):
     console.echo(_update_api_product(*args, **kwargs))
 
 
-def _push_apiproducts(
-    username, password, mfa_secret, token, zonename, org, profile, file, **kwargs
-):
-    return Apiproducts(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
-    ).push_apiproducts(file)
+def _push_apiproducts(username, password, mfa_secret, token, zonename, org, profile, file, **kwargs):
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, None).push_apiproducts(file)
 
 
-@apiproducts.command(
-    help='Push API product to Apigee. This will create/update an API product.'
-)
+@apiproducts.command(help='Push API product to Apigee. This will create/update an API product.')
 @common_auth_options
 @common_silent_options
 @common_verbose_options
 @click.option(
-    '-f',
-    '--file',
-    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
-    required=True,
+    '-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True
 )
 def push(*args, **kwargs):
     _push_apiproducts(*args, **kwargs)

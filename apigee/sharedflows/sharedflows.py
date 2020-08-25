@@ -12,19 +12,17 @@ GET_A_SHARED_FLOW_PATH = '{api_url}/v1/organizations/{org}/sharedflows/{shared_f
 DEPLOY_A_SHARED_FLOW_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/sharedflows/{shared_flow_name}/revisions/{revision_number}/deployments'
 UNDEPLOY_SHARED_FLOW_REVISIONS_IN_ENVIRONMENT_PATH = ''
 UNDEPLOY_A_SHARED_FLOW_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/sharedflows/{shared_flow_name}/revisions/{revision_number}/deployments'
-GET_DEPLOYMENT_ENVIRONMENTS_FOR_SHARED_FLOWS_PATH = '{api_url}/v1/organizations/{org}/sharedflows/{shared_flow_name}/revisions/{revision_number}/deployments'
+GET_DEPLOYMENT_ENVIRONMENTS_FOR_SHARED_FLOWS_PATH = (
+    '{api_url}/v1/organizations/{org}/sharedflows/{shared_flow_name}/revisions/{revision_number}/deployments'
+)
 DELETE_A_SHARED_FLOW_PATH = ''
 # ATTACH_A_SHARED_FLOW_TO_A_FLOW_HOOK_PATH = ''
 # DETACHES_A_SHARED_FLOW_FROM_A_FLOW_HOOK_PATH = ''
 GET_THE_SHARED_FLOW_ATTACHED_TO_A_FLOW_HOOK_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/flowhooks/{flow_hook}'
 )
-GET_SHARED_FLOW_DEPLOYMENTS_PATH = (
-    '{api_url}/v1/organizations/{org}/sharedflows/{shared_flow_name}/deployments'
-)
-GET_SHARED_FLOW_REVISIONS_PATH = (
-    '{api_url}/v1/organizations/{org}/sharedflows/{shared_flow_name}/revisions'
-)
+GET_SHARED_FLOW_DEPLOYMENTS_PATH = '{api_url}/v1/organizations/{org}/sharedflows/{shared_flow_name}/deployments'
+GET_SHARED_FLOW_REVISIONS_PATH = '{api_url}/v1/organizations/{org}/sharedflows/{shared_flow_name}/revisions'
 
 
 class SharedflowsSerializer:
@@ -34,9 +32,7 @@ class SharedflowsSerializer:
             return sharedflows.text
         sharedflows = sharedflows.json()
         if prefix:
-            sharedflows = [
-                sharedflow for sharedflow in sharedflows if sharedflow.startswith(prefix)
-            ]
+            sharedflows = [sharedflow for sharedflow in sharedflows if sharedflow.startswith(prefix)]
         if format == 'json':
             return json.dumps(sharedflows)
         elif format == 'table':
@@ -71,26 +67,18 @@ class Sharedflows:
         self._org_name = value
 
     def get_a_list_of_shared_flows(self, prefix=None):
-        uri = GET_A_LIST_OF_SHARED_FLOWS_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name
-        )
+        uri = GET_A_LIST_OF_SHARED_FLOWS_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name)
         hdrs = auth.set_header(self._auth, {'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return SharedflowsSerializer().serialize_details(resp, 'json', prefix=prefix)
 
     def import_a_shared_flow(self, shared_flow_file, shared_flow_name):
-        uri = IMPORT_A_SHARED_FLOW_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name
-        )
-        hdrs = auth.set_header(
-            self._auth, {'Accept': 'application/json', 'Content-Type': 'multipart/form-data'}
-        )
+        uri = IMPORT_A_SHARED_FLOW_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name)
+        hdrs = auth.set_header(self._auth, {'Accept': 'application/json', 'Content-Type': 'multipart/form-data'})
         params = {'action': 'import', 'name': shared_flow_name}
         with open(shared_flow_file, 'rb') as f:
-            resp = requests.post(
-                uri, headers=hdrs, files={'file': ('sharedflow.zip', f)}, params=params
-            )
+            resp = requests.post(uri, headers=hdrs, files={'file': ('sharedflow.zip', f)}, params=params)
         resp.raise_for_status()
         return resp
 
@@ -107,13 +95,7 @@ class Sharedflows:
         return resp
 
     def deploy_a_shared_flow(
-        self,
-        environment,
-        shared_flow_name,
-        revision_number,
-        override=False,
-        delay=0,
-        shared_flow_file=None,
+        self, environment, shared_flow_name, revision_number, override=False, delay=0, shared_flow_file=None
     ):
         deployed_shared_flows_exist = False
         try:
@@ -127,11 +109,7 @@ class Sharedflows:
             self.undeploy_shared_flow_revisions_in_environment(environment, shared_flow_name)
             console.echo('Done.')
         if shared_flow_file:
-            revision_number = int(
-                self.import_a_shared_flow(shared_flow_file, shared_flow_name).json()[
-                    'revision'
-                ]
-            )
+            revision_number = int(self.import_a_shared_flow(shared_flow_file, shared_flow_name).json()['revision'])
         uri = DEPLOY_A_SHARED_FLOW_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,
@@ -157,9 +135,7 @@ class Sharedflows:
             if deployment['name'] == environment:
                 for detail in deployment['revision']:
                     revision_number = int(detail['name'])
-                    console.echo(
-                        f'Undeploying revision {revision_number}... ', end='', flush=True
-                    )
+                    console.echo(f'Undeploying revision {revision_number}... ', end='', flush=True)
                     self.undeploy_a_shared_flow(environment, shared_flow_name, revision_number)
                     console.echo('Done')
         return resp
@@ -200,10 +176,7 @@ class Sharedflows:
 
     def get_the_shared_flow_attached_to_a_flow_hook(self, environment, flow_hook):
         uri = GET_THE_SHARED_FLOW_ATTACHED_TO_A_FLOW_HOOK_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
-            environment=environment,
-            flow_hook=flow_hook,
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, flow_hook=flow_hook
         )
         hdrs = auth.set_header(self._auth, {'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)

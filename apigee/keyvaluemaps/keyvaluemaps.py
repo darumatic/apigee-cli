@@ -9,27 +9,29 @@ from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.crypto import (ENCRYPTED_HEADER_BEGIN, ENCRYPTED_HEADER_END,
                            decrypt_message, encrypt_message, is_encrypted)
 
-CREATE_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH = (
-    '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps'
-)
+CREATE_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps'
 DELETE_KEYVALUEMAP_FROM_AN_ENVIRONMENT_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}'
 )
-DELETE_KEYVALUEMAP_ENTRY_IN_AN_ENVIRONMENT_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}/entries/{entry_name}'
+DELETE_KEYVALUEMAP_ENTRY_IN_AN_ENVIRONMENT_PATH = (
+    '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}/entries/{entry_name}'
+)
 GET_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}'
 )
-GET_A_KEYS_VALUE_IN_AN_ENVIRONMENT_SCOPED_KEYVALUEMAP_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}/entries/{entry_name}'
-LIST_KEYVALUEMAPS_IN_AN_ENVIRONMENT_PATH = (
-    '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps'
+GET_A_KEYS_VALUE_IN_AN_ENVIRONMENT_SCOPED_KEYVALUEMAP_PATH = (
+    '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}/entries/{entry_name}'
 )
+LIST_KEYVALUEMAPS_IN_AN_ENVIRONMENT_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps'
 UPDATE_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}'
 )
 CREATE_AN_ENTRY_IN_AN_ENVIRONMENT_SCOPED_KVM_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}/entries'
 )
-UPDATE_AN_ENTRY_IN_AN_ENVIRONMENT_SCOPED_KVM_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}/entries/{entry_name}'
+UPDATE_AN_ENTRY_IN_AN_ENVIRONMENT_SCOPED_KVM_PATH = (
+    '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}/entries/{entry_name}'
+)
 LIST_KEYS_IN_AN_ENVIRONMENT_SCOPED_KEYVALUEMAP_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}/keys?startkey={startkey}&count={count}'
 
 
@@ -89,10 +91,7 @@ class Keyvaluemaps:
         uri = CREATE_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -100,10 +99,7 @@ class Keyvaluemaps:
 
     def delete_keyvaluemap_from_an_environment(self, environment):
         uri = DELETE_KEYVALUEMAP_FROM_AN_ENVIRONMENT_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
-            environment=environment,
-            name=self._map_name,
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._map_name
         )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.delete(uri, headers=hdrs)
@@ -125,10 +121,7 @@ class Keyvaluemaps:
 
     def get_keyvaluemap_in_an_environment(self, environment):
         uri = GET_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
-            environment=environment,
-            name=self._map_name,
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._map_name
         )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
@@ -159,41 +152,25 @@ class Keyvaluemaps:
 
     def update_keyvaluemap_in_an_environment(self, environment, request_body):
         uri = UPDATE_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
-            environment=environment,
-            name=self._map_name,
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._map_name
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
 
-    def create_an_entry_in_an_environment_scoped_kvm(
-        self, environment, entry_name, entry_value
-    ):
+    def create_an_entry_in_an_environment_scoped_kvm(self, environment, entry_name, entry_value):
         uri = CREATE_AN_ENTRY_IN_AN_ENVIRONMENT_SCOPED_KVM_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
-            environment=environment,
-            name=self._map_name,
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._map_name
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = {'name': entry_name, 'value': entry_value}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
 
-    def update_an_entry_in_an_environment_scoped_kvm(
-        self, environment, entry_name, updated_value
-    ):
+    def update_an_entry_in_an_environment_scoped_kvm(self, environment, entry_name, updated_value):
         uri = UPDATE_AN_ENTRY_IN_AN_ENVIRONMENT_SCOPED_KVM_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,
@@ -201,10 +178,7 @@ class Keyvaluemaps:
             name=self._map_name,
             entry_name=entry_name,
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
-        )
+        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = {'name': entry_name, 'value': updated_value}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -232,18 +206,12 @@ class Keyvaluemaps:
 
     def _create_or_update_entry(self, environment, entry):
         try:
-            self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(
-                environment, entry['name']
-            )
-            self.update_an_entry_in_an_environment_scoped_kvm(
-                environment, entry['name'], entry['value']
-            )
+            self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry['name'])
+            self.update_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
-            self.create_an_entry_in_an_environment_scoped_kvm(
-                environment, entry['name'], entry['value']
-            )
+            self.create_an_entry_in_an_environment_scoped_kvm(environment, entry['name'], entry['value'])
 
     def _delete_entries(self, environment, deleted_keys):
         for idx, entry in enumerate(
@@ -299,9 +267,7 @@ class Keyvaluemaps:
         try:
             env_kvm = self.get_keyvaluemap_in_an_environment(environment).json()
             _, deleted_keys = self._diff_kvms(loc_kvm, env_kvm)
-            updated_loc_kvm = {
-                'entry': [entry for entry in loc_kvm['entry'] if entry not in env_kvm['entry']]
-            }
+            updated_loc_kvm = {'entry': [entry for entry in loc_kvm['entry'] if entry not in env_kvm['entry']]}
             if deleted_keys:
                 self._delete_entries(environment, deleted_keys)
                 console.echo('Removed entries.')

@@ -21,17 +21,7 @@ def keyvaluemaps():
 
 
 def _create_keyvaluemap_in_an_environment(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs
 ):
     return (
         Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -61,9 +51,7 @@ def _delete_keyvaluemap_from_an_environment(
     )
 
 
-@keyvaluemaps.command(
-    help='Deletes a key/value map and all associated entries from an environment.'
-)
+@keyvaluemaps.command(help='Deletes a key/value map and all associated entries from an environment.')
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -74,17 +62,7 @@ def delete(*args, **kwargs):
 
 
 def _delete_keyvaluemap_entry_in_an_environment(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    entry_name,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, entry_name, **kwargs
 ):
     return (
         Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -116,9 +94,7 @@ def _get_keyvaluemap_in_an_environment(
     )
 
 
-@keyvaluemaps.command(
-    help='Gets a KeyValueMap (KVM) in an environment by name, along with the keys and values.'
-)
+@keyvaluemaps.command(help='Gets a KeyValueMap (KVM) in an environment by name, along with the keys and values.')
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -129,17 +105,7 @@ def get(*args, **kwargs):
 
 
 def _get_a_keys_value_in_an_environment_scoped_keyvaluemap(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    entry_name,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, entry_name, **kwargs
 ):
     return (
         Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -148,9 +114,7 @@ def _get_a_keys_value_in_an_environment_scoped_keyvaluemap(
     )
 
 
-@keyvaluemaps.command(
-    help='Gets the value of a key in an environment-scoped KeyValueMap (KVM).'
-)
+@keyvaluemaps.command(help='Gets the value of a key in an environment-scoped KeyValueMap (KVM).')
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -162,16 +126,7 @@ def get_value(*args, **kwargs):
 
 
 def _list_keyvaluemaps_in_an_environment(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    environment,
-    prefix=None,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, environment, prefix=None, **kwargs
 ):
     return Keyvaluemaps(
         gen_auth(username, password, mfa_secret, token, zonename), org, None
@@ -191,17 +146,7 @@ def list(*args, **kwargs):
 
 
 def _update_keyvaluemap_in_an_environment(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs
 ):
     return (
         Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -224,18 +169,7 @@ def update(*args, **kwargs):
 
 
 def _create_an_entry_in_an_environment_scoped_kvm(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    entry_name,
-    entry_value,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, entry_name, entry_value, **kwargs
 ):
     return (
         Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -294,18 +228,7 @@ def update_entry(*args, **kwargs):
 
 
 def _list_keys_in_an_environment_scoped_keyvaluemap(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    startkey,
-    count,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, startkey, count, **kwargs
 ):
     return (
         Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -342,21 +265,11 @@ def list_keys(*args, **kwargs):
 
 
 def _push_keyvaluemap(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    environment,
-    file,
-    symmetric_key,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, environment, file, symmetric_key, **kwargs
 ):
-    return Keyvaluemaps(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
-    ).push_keyvaluemap(environment, file, secret=symmetric_key)
+    return Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, None).push_keyvaluemap(
+        environment, file, secret=symmetric_key
+    )
 
 
 @keyvaluemaps.command(
@@ -367,30 +280,18 @@ def _push_keyvaluemap(
 @common_verbose_options
 @click.option('-e', '--environment', help='environment', required=True)
 @click.option(
-    '-f',
-    '--file',
-    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
-    required=True,
+    '-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True
 )
-@click.option(
-    '--symmetric-key',
-    default=APIGEE_CLI_SYMMETRIC_KEY,
-    help='symmetric secret key for decrypting',
-)
+@click.option('--symmetric-key', default=APIGEE_CLI_SYMMETRIC_KEY, help='symmetric secret key for decrypting')
 def push(*args, **kwargs):
     _push_keyvaluemap(*args, **kwargs)
 
 
-@keyvaluemaps.command(
-    name='encrypt', help='Use symmetric GPG (AES256) to encrypt KVM file in a custom format.'
-)
+@keyvaluemaps.command(name='encrypt', help='Use symmetric GPG (AES256) to encrypt KVM file in a custom format.')
 @common_silent_options
 @common_verbose_options
 @click.option(
-    '-f',
-    '--file',
-    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
-    required=True,
+    '-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True
 )
 @click.option('--symmetric-key', required=True, help='symmetric secret key for encrypting')
 def encrypt_file(symmetric_key, file, verbose, silent):
@@ -406,16 +307,11 @@ def encrypt_file(symmetric_key, file, verbose, silent):
     return ''
 
 
-@keyvaluemaps.command(
-    name='decrypt', help='Use symmetric GPG (AES256) to decrypt KVM file in a custom format.'
-)
+@keyvaluemaps.command(name='decrypt', help='Use symmetric GPG (AES256) to decrypt KVM file in a custom format.')
 @common_silent_options
 @common_verbose_options
 @click.option(
-    '-f',
-    '--file',
-    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
-    required=True,
+    '-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True
 )
 @click.option('--symmetric-key', required=True, help='symmetric secret key for decrypting')
 def decrypt_file(symmetric_key, file, verbose, silent):

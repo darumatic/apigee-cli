@@ -30,10 +30,7 @@ TABLEFMT_CHOICES = [
 ]
 
 
-@click.group(
-    help='API proxies that are actively deployed in environments on Apigee Edge.',
-    cls=ClickAliasedGroup,
-)
+@click.group(help='API proxies that are actively deployed in environments on Apigee Edge.', cls=ClickAliasedGroup)
 def deployments():
     pass
 
@@ -56,11 +53,7 @@ def _get_api_proxy_deployment_details(
     return Deployments(
         gen_auth(username, password, mfa_secret, token, zonename), org, name
     ).get_api_proxy_deployment_details(
-        formatted=True,
-        format=format,
-        showindex=showindex,
-        tablefmt=tablefmt,
-        revision_name_only=revision_name_only,
+        formatted=True, format=format, showindex=showindex, tablefmt=tablefmt, revision_name_only=revision_name_only
     )
 
 

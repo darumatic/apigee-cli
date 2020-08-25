@@ -16,17 +16,7 @@ def targetservers():
 
 
 def _create_a_targetserver(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs
 ):
     return (
         Targetservers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -48,9 +38,7 @@ def create(*args, **kwargs):
     console.echo(_create_a_targetserver(*args, **kwargs))
 
 
-def _delete_a_targetserver(
-    username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs
-):
+def _delete_a_targetserver(username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs):
     return (
         Targetservers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .delete_a_targetserver(environment)
@@ -71,16 +59,7 @@ def delete(*args, **kwargs):
 
 
 def _list_targetservers_in_an_environment(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    environment,
-    prefix=None,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, environment, prefix=None, **kwargs
 ):
     return Targetservers(
         gen_auth(username, password, mfa_secret, token, zonename), org, None
@@ -97,9 +76,7 @@ def list(*args, **kwargs):
     console.echo(_list_targetservers_in_an_environment(*args, **kwargs))
 
 
-def _get_targetserver(
-    username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs
-):
+def _get_targetserver(username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs):
     return (
         Targetservers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .get_targetserver(environment)
@@ -118,17 +95,7 @@ def get(*args, **kwargs):
 
 
 def _update_a_targetserver(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs
 ):
     return (
         Targetservers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -148,26 +115,19 @@ def create(*args, **kwargs):
     console.echo(_update_a_targetserver(*args, **kwargs))
 
 
-def _push_targetserver(
-    username, password, mfa_secret, token, zonename, org, profile, environment, file, **kwargs
-):
-    return Targetservers(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
-    ).push_targetserver(environment, file)
+def _push_targetserver(username, password, mfa_secret, token, zonename, org, profile, environment, file, **kwargs):
+    return Targetservers(gen_auth(username, password, mfa_secret, token, zonename), org, None).push_targetserver(
+        environment, file
+    )
 
 
-@targetservers.command(
-    help='Push TargetServer to Apigee. This will create/update a TargetServer.'
-)
+@targetservers.command(help='Push TargetServer to Apigee. This will create/update a TargetServer.')
 @common_auth_options
 @common_silent_options
 @common_verbose_options
 @click.option('-e', '--environment', help='environment', required=True)
 @click.option(
-    '-f',
-    '--file',
-    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
-    required=True,
+    '-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True
 )
 def push(*args, **kwargs):
     _push_targetserver(*args, **kwargs)

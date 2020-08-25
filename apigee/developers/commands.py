@@ -51,29 +51,16 @@ def _create_developer(
 )
 @click.option('--first-name', help='The first name of the developer.', required=True)
 @click.option('--last-name', help='The last name of the developer.', required=True)
+@click.option('--user-name', help="The developer's username. This value is not used by Apigee Edge.", required=True)
 @click.option(
-    '--user-name',
-    help="The developer's username. This value is not used by Apigee Edge.",
-    required=True,
-)
-@click.option(
-    '--attributes',
-    default='{"attributes" : [ ]}',
-    required=True,
-    help='request body e.g.: \'{"attributes" : [ ]}\'',
+    '--attributes', default='{"attributes" : [ ]}', required=True, help='request body e.g.: \'{"attributes" : [ ]}\''
 )
 def create(*args, **kwargs):
     console.echo(_create_developer(*args, **kwargs))
 
 
-def _delete_developer(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .delete_developer()
-        .text
-    )
+def _delete_developer(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).delete_developer().text
 
 
 @developers.command(
@@ -92,14 +79,8 @@ def delete(*args, **kwargs):
     console.echo(_delete_developer(*args, **kwargs))
 
 
-def _get_developer(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .get_developer()
-        .text
-    )
+def _get_developer(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_developer().text
 
 
 @developers.command(
@@ -118,9 +99,7 @@ def get(*args, **kwargs):
     console.echo(_get_developer(*args, **kwargs))
 
 
-def _get_developer_by_app(
-    username, password, mfa_secret, token, zonename, org, profile, app_name, **kwargs
-):
+def _get_developer_by_app(username, password, mfa_secret, token, zonename, org, profile, app_name, **kwargs):
     return (
         Developers(gen_auth(username, password, mfa_secret, token, zonename), org, None)
         .get_developer_by_app(app_name)
@@ -153,9 +132,9 @@ def _list_developers(
     startkey="",
     **kwargs
 ):
-    return Developers(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
-    ).list_developers(prefix=prefix, expand=expand, count=count, startkey=startkey)
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_developers(
+        prefix=prefix, expand=expand, count=count, startkey=startkey
+    )
 
 
 @developers.command(
@@ -165,11 +144,7 @@ def _list_developers(
 @common_verbose_options
 @common_silent_options
 @common_prefix_options
-@click.option(
-    '--expand/--no-expand',
-    default=False,
-    help='Set to true to list developers exanded with details.',
-)
+@click.option('--expand/--no-expand', default=False, help='Set to true to list developers exanded with details.')
 @click.option(
     '--count',
     type=click.INT,
@@ -187,9 +162,7 @@ def list(*args, **kwargs):
     console.echo(_list_developers(*args, **kwargs))
 
 
-def _set_developer_status(
-    username, password, mfa_secret, token, zonename, org, profile, name, action, **kwargs
-):
+def _set_developer_status(username, password, mfa_secret, token, zonename, org, profile, name, action, **kwargs):
     return (
         Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .set_developer_status(action)
@@ -210,23 +183,14 @@ def _set_developer_status(
     required=True,
 )
 @click.option(
-    '--action',
-    type=click.Choice(['active', 'inactive'], case_sensitive=False),
-    required=True,
-    show_default=True,
+    '--action', type=click.Choice(['active', 'inactive'], case_sensitive=False), required=True, show_default=True
 )
 def set_status(*args, **kwargs):
     console.echo(_set_developer_status(*args, **kwargs))
 
 
-def _update_developer(
-    username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs
-):
-    return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .update_developer(body)
-        .text
-    )
+def _update_developer(username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs):
+    return Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name).update_developer(body).text
 
 
 @developers.command(
@@ -251,17 +215,7 @@ def update(*args, **kwargs):
 
 
 def _update_a_developer_attribute(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    attribute_name,
-    updated_value,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, attribute_name, updated_value, **kwargs
 ):
     return (
         Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -287,16 +241,7 @@ def update_attr(*args, **kwargs):
 
 
 def _delete_developer_attribute(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    attribute_name,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, attribute_name, **kwargs
 ):
     return (
         Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -320,9 +265,7 @@ def delete_attr(*args, **kwargs):
     console.echo(_delete_developer_attribute(*args, **kwargs))
 
 
-def _get_all_developer_attributes(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
+def _get_all_developer_attributes(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
     return (
         Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .get_all_developer_attributes()

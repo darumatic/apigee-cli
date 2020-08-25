@@ -38,13 +38,7 @@ except KeyError:
 # @click.group(cls=ClickAliasedGroup)
 # @click.command(aliases=['conf', 'config', 'cfg'])
 @click.command(help='Configure Apigee Edge credentials.')
-@click.option(
-    '-u',
-    '--username',
-    prompt='Apigee username (email)',
-    default=profile_dict['username'],
-    show_default=True,
-)
+@click.option('-u', '--username', prompt='Apigee username (email)', default=profile_dict['username'], show_default=True)
 @click.option(
     '-p',
     '--password',
@@ -76,25 +70,12 @@ except KeyError:
     show_default=True,
 )
 @click.option(
-    '-o',
-    '--org',
-    prompt='Default Apigee organization (recommended)',
-    default=profile_dict['org'],
-    show_default=True,
+    '-o', '--org', prompt='Default Apigee organization (recommended)', default=profile_dict['org'], show_default=True
 )
 @click.option(
-    '--prefix',
-    prompt='Default team/resource prefix (optional)',
-    default=profile_dict['prefix'],
-    show_default=True,
+    '--prefix', prompt='Default team/resource prefix (optional)', default=profile_dict['prefix'], show_default=True
 )
-@click.option(
-    '-P',
-    '--profile',
-    help='name of the user profile to create/update',
-    default='default',
-    show_default=True,
-)
+@click.option('-P', '--profile', help='name of the user profile to create/update', default='default', show_default=True)
 def configure(username, password, mfa_secret, token, zonename, org, prefix, profile):
     if isinstance(password, HiddenSecret):
         password = password.secret

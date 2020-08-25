@@ -26,9 +26,7 @@ def exception_handler(func):
             touch(APIGEE_CLI_EXCEPTION_LOG_FILE)
             f_handler = logging.FileHandler(APIGEE_CLI_EXCEPTION_LOG_FILE, 'w+')
             f_handler.setLevel(logging.INFO)
-            formatter = logging.Formatter(
-                '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-            )
+            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
             f_handler.setFormatter(formatter)
             logging.getLogger("").addHandler(f_handler)
             logging.error('Exception occurred', exc_info=True)
@@ -36,9 +34,7 @@ def exception_handler(func):
             mod = inspect.getmodule(frm[0])
             modname = mod.__name__ if mod else frm[1]
             # error_message = {'Exception': {'detail': {'errorcode': f'{modname}.{type(e).__name__}'}, 'exceptionstring': f'{e}'}}
-            sys.exit(
-                f'An exception of type {modname}.{type(e).__name__} occurred. Arguments:\n{e}'
-            )
+            sys.exit(f'An exception of type {modname}.{type(e).__name__} occurred. Arguments:\n{e}')
             # sys.exit(json.dumps(error_message, indent=2))
         except KeyboardInterrupt as ki:
             console.echo()

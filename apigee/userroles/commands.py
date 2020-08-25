@@ -16,9 +16,7 @@ def userroles():
     pass
 
 
-def _add_a_user_to_a_role(
-    username, password, mfa_secret, token, zonename, org, profile, name, user_email, **kwargs
-):
+def _add_a_user_to_a_role(username, password, mfa_secret, token, zonename, org, profile, name, user_email, **kwargs):
     return (
         Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .add_a_user_to_a_role(user_email)
@@ -90,25 +88,13 @@ def _create_a_user_role_in_an_organization(
 @common_auth_options
 @common_verbose_options
 @common_silent_options
-@click.option(
-    '-n', '--names', metavar='LIST', cls=OptionEatAll, help='list of role names', required=True
-)
+@click.option('-n', '--names', metavar='LIST', cls=OptionEatAll, help='list of role names', required=True)
 def create(*args, **kwargs):
     console.echo(_create_a_user_role_in_an_organization(*args, **kwargs))
 
 
 def _delete_a_permission_for_a_resource(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    permission,
-    resource_path,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, permission, resource_path, **kwargs
 ):
     return (
         Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -131,16 +117,7 @@ def delete_permission(*args, **kwargs):
 
 
 def _delete_resource_from_permissions(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    resource_path,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, resource_path, **kwargs
 ):
     return (
         Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -161,19 +138,11 @@ def delete_resource(*args, **kwargs):
     console.echo(_delete_resource_from_permissions(*args, **kwargs))
 
 
-def _delete_a_user_role(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .delete_a_user_role()
-        .text
-    )
+def _delete_a_user_role(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name).delete_a_user_role().text
 
 
-@userroles.command(
-    help='Deletes a role from an organization. Roles can only be deleted when no users are in the role.'
-)
+@userroles.command(help='Deletes a role from an organization. Roles can only be deleted when no users are in the role.')
 @common_auth_options
 @common_verbose_options
 @common_silent_options
@@ -183,11 +152,7 @@ def delete(*args, **kwargs):
 
 
 def _get_a_role(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
-    return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .get_a_role()
-        .text
-    )
+    return Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_a_role().text
 
 
 @userroles.command(help='Gets the name of a user role.')
@@ -200,16 +165,7 @@ def get(*args, **kwargs):
 
 
 def _get_resource_permissions_for_a_specific_role(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    resource_path="",
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, resource_path="", **kwargs
 ):
     return (
         Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -228,14 +184,8 @@ def get_permissions(*args, **kwargs):
     console.echo(_get_resource_permissions_for_a_specific_role(*args, **kwargs))
 
 
-def _get_users_for_a_role(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
-    return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .get_users_for_a_role()
-        .text
-    )
+def _get_users_for_a_role(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+    return Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_users_for_a_role().text
 
 
 @userroles.command(help='Returns a list of all system users associated with a role.')
@@ -247,9 +197,7 @@ def get_users(*args, **kwargs):
     console.echo(_get_users_for_a_role(*args, **kwargs))
 
 
-def _list_permissions_for_a_resource(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
+def _list_permissions_for_a_resource(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
     return (
         Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .list_permissions_for_a_resource()
@@ -267,11 +215,7 @@ def list_permissions(*args, **kwargs):
 
 
 def _list_user_roles(username, password, mfa_secret, token, zonename, org, profile, **kwargs):
-    return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, None)
-        .list_user_roles()
-        .text
-    )
+    return Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_user_roles().text
 
 
 @userroles.command(help='Gets a list of roles available to users in an organization.')
@@ -304,17 +248,7 @@ def remove_user(*args, **kwargs):
 
 
 def _verify_a_user_roles_permission_on_a_specific_RBAC_resource(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    permission,
-    resource_path,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, permission, resource_path, **kwargs
 ):
     return (
         Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
