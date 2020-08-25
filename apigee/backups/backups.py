@@ -342,8 +342,19 @@ class Backups:
     def _get_users_for_a_role(self, role_name):
         return Userroles(self.auth, self.org_name, role_name).get_users_for_a_role().text
 
+    @staticmethod
+    def _sort_lists_in_permissions(user_role):
+        for i, _ in enumerate(user_role.get('resourcePermission')):
+            user_role['resourcePermission'][i]['permissions'].sort()
+        return user_role
+
     def _get_permissions(self, role_name):
-        return Permissions(self.auth, self.org_name, role_name).get_permissions(formatted=True, format='text')
+        return json.dumps(
+            Backups._sort_lists_in_permissions(
+                Permissions(self.auth, self.org_name, role_name).get_permissions(formatted=True, format='json')
+            ),
+            indent=2,
+        )
 
     def download_userroles(self):
         for userrole in self.snapshot_data.userroles:
