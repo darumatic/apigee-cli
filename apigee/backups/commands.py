@@ -8,16 +8,7 @@ from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
-APIS_CHOICES = {
-    'apis',
-    'keyvaluemaps',
-    'targetservers',
-    'caches',
-    'developers',
-    'apiproducts',
-    'apps',
-    'userroles',
-}
+APIS_CHOICES = {'apis', 'keyvaluemaps', 'targetservers', 'caches', 'developers', 'apiproducts', 'apps', 'userroles'}
 
 
 @click.group(help='Download configuration files from Apigee that can later be restored.')
@@ -72,8 +63,6 @@ def _take_snapshot(
     show_default=True,
 )
 # @click.option('--apis', metavar='LIST', cls=OptionEatAll, default=APIS_CHOICES, show_default=True, help='')
-@click.option(
-    '-e', '--environments', metavar='LIST', cls=OptionEatAll, default=['test', 'prod'], help=''
-)
+@click.option('-e', '--environments', metavar='LIST', cls=OptionEatAll, default=['test', 'prod'], help='')
 def take_snapshot(*args, **kwargs):
     _take_snapshot(*args, **kwargs)
