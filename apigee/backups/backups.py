@@ -344,7 +344,7 @@ class Backups:
 
     @staticmethod
     def _sort_lists_in_permissions(user_role):
-        for i, _ in enumerate(user_role.get('resourcePermission')):
+        for i in range(len(user_role.get('resourcePermission'))):
             user_role['resourcePermission'][i]['permissions'].sort()
         return user_role
 
