@@ -343,10 +343,10 @@ class Backups:
         return Userroles(self.auth, self.org_name, role_name).get_users_for_a_role().text
 
     @staticmethod
-    def _sort_lists_in_permissions(user_role):
-        for i in range(len(user_role.get('resourcePermission'))):
-            user_role['resourcePermission'][i]['permissions'].sort()
-        return user_role
+    def _sort_lists_in_permissions(resource_permissions):
+        for i in range(len(resource_permissions.get('resourcePermission'))):
+            resource_permissions['resourcePermission'][i]['permissions'].sort()
+        return resource_permissions
 
     def _get_permissions(self, role_name):
         return json.dumps(
@@ -356,34 +356,34 @@ class Backups:
             indent=2,
         )
 
+    def _download_users_for_a_role(self, role_name):
+        try:
+            write_file(
+                self._get_users_for_a_role(role_name),
+                str(Path(self.target_directory) / self.org_name / 'userroles' / role_name / 'users.json'),
+                fs_write=self.fs_write,
+            )
+        except HTTPError as e:
+            console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for User Role ({role_name}) users')
+
+    def _download_resource_permissions(self, role_name):
+        try:
+            write_file(
+                self._get_permissions(role_name),
+                str(
+                    Path(self.target_directory) / self.org_name / 'userroles' / role_name / 'resource_permissions.json'
+                ),
+                fs_write=self.fs_write,
+            )
+        except HTTPError as e:
+            console.echo(
+                f'Ignoring {type(e).__name__} {e.response.status_code} error for User Role ({role_name}) resource permissions'
+            )
+
     def download_userroles(self):
-        for userrole in self.snapshot_data.userroles:
-            try:
-                write_file(
-                    self._get_users_for_a_role(userrole),
-                    str(Path(self.target_directory) / self.org_name / 'userroles' / userrole / 'users.json'),
-                    fs_write=self.fs_write,
-                )
-            except HTTPError as e:
-                console.echo(
-                    f'Ignoring {type(e).__name__} {e.response.status_code} error for User Role ({userrole}) users'
-                )
-            try:
-                write_file(
-                    self._get_permissions(userrole),
-                    str(
-                        Path(self.target_directory)
-                        / self.org_name
-                        / 'userroles'
-                        / userrole
-                        / 'resource_permissions.json'
-                    ),
-                    fs_write=self.fs_write,
-                )
-            except HTTPError as e:
-                console.echo(
-                    f'Ignoring {type(e).__name__} {e.response.status_code} error for User Role ({userrole}) resource permissions'
-                )
+        for role_name in self.snapshot_data.userroles:
+            self._download_users_for_a_role(role_name)
+            self._download_resource_permissions(role_name)
             self._progress_callback(desc='User Roles')
         return self.snapshot_data.userroles
 
