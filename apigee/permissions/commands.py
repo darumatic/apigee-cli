@@ -103,7 +103,7 @@ def _get_permissions(
     **kwargs
 ):
     return Permissions(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_permissions(
-        formatted=True, format=format, showindex=showindex, tablefmt=tablefmt
+        formatted=True, format='text' if format == 'json' else format, showindex=showindex, tablefmt=tablefmt
     )
 
 
@@ -115,7 +115,7 @@ def _get_permissions(
 # @click.option("-j", "--json", help="display json output when using -r flag", default="table")
 @click.option(
     '--format',
-    help='defines how to format output when using the -r flag',
+    help='defines how to format output',
     default='table',
     type=click.Choice(['json', 'table'], case_sensitive=False),
 )
