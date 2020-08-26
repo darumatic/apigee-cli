@@ -162,6 +162,56 @@ To continue using an ordinary user, you will need to unset this variable or set 
 
 Refer to the official Apigee documentation to learn more about identity zones: `SAML Overview`_.
 
+^^^^^^^^^^^^^^^^^^^^^^
+Tabulating deployments
+^^^^^^^^^^^^^^^^^^^^^^
+Deployments information can be too verbose but you may just want to see a quick summary of which revisions of an API proxy are deployed and their status.
+
+To tabulate the deployments response, use the ``-r/--revision-name-only`` flag in the following command::
+
+    $ apigee deployments get -n <API_NAME> -r
+
+This will output a table like so::
+
+    name     revision    state
+    prod     ['1']       ['deployed']
+    test     ['1']       ['deployed']
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Tabulating resource permissions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Resource permissions responses can be slightly difficult to read so the CLI outputs this information as a table by default::
+
+    $ apigee permissions get -n <ROLE_NAME>
+    organization      path             permissions
+    my_org            /                ['delete', 'get', 'put']
+    my_org            /environments    ['get']
+    my_org            /environments/*  ['get']
+    my_org            /apimonitoring   ['delete', 'get', 'put']
+
+If you need the JSON response, use the ``--format json`` option::
+
+    $ apigee permissions get -n <ROLE_NAME> --format json
+    {
+      "resourcePermission" : [ {
+        "organization" : "my_org",
+        "path" : "/",
+        "permissions" : [ "put", "get", "delete" ]
+      }, {
+        "organization" : "my_org",
+        "path" : "/environments",
+        "permissions" : [ "get" ]
+      }, {
+        "organization" : "my_org",
+        "path" : "/environments/*",
+        "permissions" : [ "get" ]
+      }, {
+        "organization" : "my_org",
+        "path" : "/apimonitoring",
+        "permissions" : [ "put", "get", "delete" ]
+      } ]
+    }
+
 ---------------
 Troubleshooting
 ---------------
