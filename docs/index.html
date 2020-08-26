@@ -303,6 +303,55 @@ you can set the following environment variable like so:</p>
 <p>To continue using an ordinary user, you will need to unset this variable or set it to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <p>Refer to the official Apigee documentation to learn more about identity zones: <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/saml-overview">SAML Overview</a>.</p>
 </div>
+<div class="section" id="tabulating-deployments">
+<h4>Tabulating deployments<a class="headerlink" href="#tabulating-deployments" title="Permalink to this headline">¶</a></h4>
+<p>Deployments information can be too verbose but you may just want to see a quick summary of which revisions of an API proxy are deployed and their status.</p>
+<p>To tabulate the deployments response, use the <code class="docutils literal notranslate"><span class="pre">-r/--revision-name-only</span></code> flag in the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee deployments get -n &lt;API_NAME&gt; -r
+</pre></div>
+</div>
+<p>This will output a table like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span>     <span class="n">revision</span>    <span class="n">state</span>
+<span class="n">prod</span>     <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">]</span>       <span class="p">[</span><span class="s1">&#39;deployed&#39;</span><span class="p">]</span>
+<span class="n">test</span>     <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">]</span>       <span class="p">[</span><span class="s1">&#39;deployed&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tabulating-resource-permissions">
+<h4>Tabulating resource permissions<a class="headerlink" href="#tabulating-resource-permissions" title="Permalink to this headline">¶</a></h4>
+<p>Resource permissions responses can be slightly difficult to read so the CLI outputs this information as a table by default:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee permissions get -n &lt;ROLE_NAME&gt;
+organization      path             permissions
+my_org            /                [&#39;delete&#39;, &#39;get&#39;, &#39;put&#39;]
+my_org            /environments    [&#39;get&#39;]
+my_org            /environments/*  [&#39;get&#39;]
+my_org            /apimonitoring   [&#39;delete&#39;, &#39;get&#39;, &#39;put&#39;]
+</pre></div>
+</div>
+<p>If you need the JSON response, use the <code class="docutils literal notranslate"><span class="pre">--format</span> <span class="pre">json</span></code> option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee permissions get -n &lt;ROLE_NAME&gt; --format json
+{
+  &quot;resourcePermission&quot; : [ {
+    &quot;organization&quot; : &quot;my_org&quot;,
+    &quot;path&quot; : &quot;/&quot;,
+    &quot;permissions&quot; : [ &quot;put&quot;, &quot;get&quot;, &quot;delete&quot; ]
+  }, {
+    &quot;organization&quot; : &quot;my_org&quot;,
+    &quot;path&quot; : &quot;/environments&quot;,
+    &quot;permissions&quot; : [ &quot;get&quot; ]
+  }, {
+    &quot;organization&quot; : &quot;my_org&quot;,
+    &quot;path&quot; : &quot;/environments/*&quot;,
+    &quot;permissions&quot; : [ &quot;get&quot; ]
+  }, {
+    &quot;organization&quot; : &quot;my_org&quot;,
+    &quot;path&quot; : &quot;/apimonitoring&quot;,
+    &quot;permissions&quot; : [ &quot;put&quot;, &quot;get&quot;, &quot;delete&quot; ]
+  } ]
+}
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="troubleshooting">
 <h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h3>
