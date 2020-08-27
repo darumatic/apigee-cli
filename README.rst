@@ -277,6 +277,25 @@ It supports a bunch of useful features such as MFA, SAML, seamless deployments a
 If deploying via CI/CD you may end up with a lot of undeployed revisions. In this case, you can
 make use of the ``apigee apis clean`` command to delete all those undeployed revisions and even specify to always keep the last few revisions.
 
+^^^^^^^^^^^^^
+Push commands
+^^^^^^^^^^^^^
+Some commands support the ``push`` subcommand which combines CRUD API calls to manage the creation, update and sometimes deletion of resources using a single command.
+
+The following commands support the ``push`` subcommand:
+
+- ``apiproducts``
+- ``caches``
+- ``keyvaluemaps``
+- ``targetservers``
+- ``maskconfigs``
+
+Push commands read JSON from a file and can be invoked like so::
+
+    $ apigee keyvaluemaps push -e <env> -f <file_path.json>
+
+This will create the KVM if it does not exist, and update it if it does.
+
 ---------------
 Troubleshooting
 ---------------
