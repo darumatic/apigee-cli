@@ -91,6 +91,15 @@ The quickest way to get started is to run the ``apigee configure`` command::
     Default Apigee organization (recommended) []: my_org
     Default team/resource prefix (optional) []:
 
+You can also do the same thing using command-line arguments::
+
+    $ apigee configure -P default -u <my_email> -p <my_pass> -o <my_org> -mfa '' -z '' --no-token --prefix ''
+
+You may need to specify empty strings as above. Also note the ``--prefix`` option. This option
+will filter the output of some commands, such as the ``list`` type commands, by the prefix which may be useful to some people,
+but if you want to avoid confusion just keep this value empty. You can also explicitly specify the ``--prefix``
+for those commands if you need it on the fly.
+
 
 To use environment variables, do the following::
 
