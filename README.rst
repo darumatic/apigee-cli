@@ -221,6 +221,62 @@ If you need the JSON response, use the ``--format json`` option::
       } ]
     }
 
+^^^^^^^^^^^^^^^^^^^^^^^^
+Deploy API Proxy bundles
+^^^^^^^^^^^^^^^^^^^^^^^^
+You can also deploy API proxy bundles to Apigee.
+
+This command is an enhanced version of the Apigee API Proxy Deploy Tool.
+
+It supports a bunch of useful features such as MFA, SAML, seamless deployments and automatic handling of ``missing`` and broken deployments.
+
+.. code-block:: text
+
+    Usage: apigee apis deploy [OPTIONS]
+
+      Deploy APIs using an improved version of the Apigee API Proxy Deploy Tool:
+      https://github.com/apigee/api-platform-samples/tree/master/tools
+
+         =========================================================================
+         ==  NOTICE file corresponding to the section 4 d of                    ==
+         ==  the Apache License, Version 2.0,                                   ==
+         ==  in this case for the Apigee API Proxy Deploy Tool code.            ==
+         =========================================================================
+
+      Apigee API Proxy Deploy Tool https://github.com/apigee/api-platform-
+      samples/tree/master/tools These files are Copyright 2015 Apigee
+      Corporation, released under the Apache2 License.
+
+    Options:
+      -P, --profile TEXT              name of the user profile to authenticate
+                                      with  [default: default]
+
+      -o, --org TEXT                  [default: (current org)]
+      -z, --zonename TEXT             [default: (current identity zone name)]
+      --token / --no-token            specify to use oauth without MFA  [default:
+                                      False]
+
+      -mfa, --mfa-secret TEXT
+      -p, --password TEXT             [default: (current password)]
+      -u, --username TEXT             [default: (current username)]
+      -v, --verbose                   [default: (toggle verbose output)]
+      --silent                        [default: (toggle silent output)]
+      -e, --environment TEXT          environment  [required]
+      -n, --name TEXT                 name  [required]
+      -d, --directory DIRECTORY       directory with the apiproxy/ bundle
+                                      [required]
+
+      Deployment options: [mutually_exclusive]
+                                      The deployment options
+        -i, --import-only / -I, --no-import-only
+                                      import only and not deploy
+        -s, --seamless-deploy / -S, --no-seamless-deploy
+                                      seamless deploy the bundle
+      -h, --help                      Show this message and exit.
+
+If deploying via CI/CD you may end up with a lot of undeployed revisions. In this case, you can
+make use of the ``apigee apis clean`` command to delete all those undeployed revisions and even specify to always keep the last few revisions.
+
 ---------------
 Troubleshooting
 ---------------
