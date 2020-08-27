@@ -241,6 +241,14 @@ Default Apigee organization (recommended) []: my_org
 Default team/resource prefix (optional) []:
 </pre></div>
 </div>
+<p>You can also do the same thing using command-line arguments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee configure -P default -u &lt;my_email&gt; -p &lt;my_pass&gt; -o &lt;my_org&gt; -mfa &#39;&#39; -z &#39;&#39; --no-token --prefix &#39;&#39;
+</pre></div>
+</div>
+<p>You may need to specify empty strings as above. Also note the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> option. This option
+will filter the output of some commands, such as the <code class="docutils literal notranslate"><span class="pre">list</span></code> type commands, by the prefix which may be useful to some people,
+but if you want to avoid confusion just keep this value empty. You can also explicitly specify the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code>
+for those commands if you need it on the fly.</p>
 <p>To use environment variables, do the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_USERNAME=&lt;my_email&gt;
 $ export APIGEE_PASSWORD=&lt;my_pass&gt;
@@ -351,6 +359,74 @@ my_org            /apimonitoring   [&#39;delete&#39;, &#39;get&#39;, &#39;put&#3
 }
 </pre></div>
 </div>
+</div>
+<div class="section" id="deploy-api-proxy-bundles">
+<h4>Deploy API Proxy bundles<a class="headerlink" href="#deploy-api-proxy-bundles" title="Permalink to this headline">¶</a></h4>
+<p>You can also deploy API proxy bundles to Apigee.</p>
+<p>This command is an enhanced version of the Apigee API Proxy Deploy Tool.</p>
+<p>It supports a bunch of useful features such as MFA, SAML, seamless deployments and automatic handling of <code class="docutils literal notranslate"><span class="pre">missing</span></code> and broken deployments.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Usage: apigee apis deploy [OPTIONS]
+
+  Deploy APIs using an improved version of the Apigee API Proxy Deploy Tool:
+  https://github.com/apigee/api-platform-samples/tree/master/tools
+
+     =========================================================================
+     ==  NOTICE file corresponding to the section 4 d of                    ==
+     ==  the Apache License, Version 2.0,                                   ==
+     ==  in this case for the Apigee API Proxy Deploy Tool code.            ==
+     =========================================================================
+
+  Apigee API Proxy Deploy Tool https://github.com/apigee/api-platform-
+  samples/tree/master/tools These files are Copyright 2015 Apigee
+  Corporation, released under the Apache2 License.
+
+Options:
+  -P, --profile TEXT              name of the user profile to authenticate
+                                  with  [default: default]
+
+  -o, --org TEXT                  [default: (current org)]
+  -z, --zonename TEXT             [default: (current identity zone name)]
+  --token / --no-token            specify to use oauth without MFA  [default:
+                                  False]
+
+  -mfa, --mfa-secret TEXT
+  -p, --password TEXT             [default: (current password)]
+  -u, --username TEXT             [default: (current username)]
+  -v, --verbose                   [default: (toggle verbose output)]
+  --silent                        [default: (toggle silent output)]
+  -e, --environment TEXT          environment  [required]
+  -n, --name TEXT                 name  [required]
+  -d, --directory DIRECTORY       directory with the apiproxy/ bundle
+                                  [required]
+
+  Deployment options: [mutually_exclusive]
+                                  The deployment options
+    -i, --import-only / -I, --no-import-only
+                                  import only and not deploy
+    -s, --seamless-deploy / -S, --no-seamless-deploy
+                                  seamless deploy the bundle
+  -h, --help                      Show this message and exit.
+</pre></div>
+</div>
+<p>If deploying via CI/CD you may end up with a lot of undeployed revisions. In this case, you can
+make use of the <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">apis</span> <span class="pre">clean</span></code> command to delete all those undeployed revisions and even specify to always keep the last few revisions.</p>
+</div>
+<div class="section" id="push-commands">
+<h4>Push commands<a class="headerlink" href="#push-commands" title="Permalink to this headline">¶</a></h4>
+<p>Some commands support the <code class="docutils literal notranslate"><span class="pre">push</span></code> subcommand which combines CRUD API calls to manage the creation, update and sometimes deletion of resources using a single command.</p>
+<p>The following commands support the <code class="docutils literal notranslate"><span class="pre">push</span></code> subcommand:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">apiproducts</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">caches</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">keyvaluemaps</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">targetservers</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">maskconfigs</span></code></p></li>
+</ul>
+<p>Push commands read JSON from a file and can be invoked like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee keyvaluemaps push -e &lt;env&gt; -f &lt;file_path.json&gt;
+</pre></div>
+</div>
+<p>This will create the KVM if it does not exist, and update it if it does.</p>
 </div>
 </div>
 <div class="section" id="troubleshooting">
