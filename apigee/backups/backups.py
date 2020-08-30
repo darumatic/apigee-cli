@@ -80,6 +80,7 @@ class Backups:
                     / (api + '.json')
                 ),
                 fs_write=self.fs_write,
+                indent=2
             )
         return self.snapshot_data.apis
 
@@ -120,6 +121,7 @@ class Backups:
                     / 'keyvaluemaps.json'
                 ),
                 fs_write=self.fs_write,
+                indent=2
             )
         return self.snapshot_data.keyvaluemaps
 
@@ -158,6 +160,7 @@ class Backups:
                     / 'targetservers.json'
                 ),
                 fs_write=self.fs_write,
+                indent=2
             )
         return self.snapshot_data.targetservers
 
@@ -202,6 +205,7 @@ class Backups:
                     / 'caches.json'
                 ),
                 fs_write=self.fs_write,
+                indent=2
             )
         return self.snapshot_data.caches
 
@@ -233,6 +237,7 @@ class Backups:
                 / 'developers.json'
             ),
             fs_write=self.fs_write,
+            indent=2
         )
         return self.snapshot_data.developers
 
@@ -263,6 +268,7 @@ class Backups:
                 / 'apiproducts.json'
             ),
             fs_write=self.fs_write,
+            indent=2
         )
         return self.snapshot_data.apiproducts
 
@@ -301,6 +307,7 @@ class Backups:
                     / (app + '.json')
                 ),
                 fs_write=self.fs_write,
+                indent=2
             )
         return self.snapshot_data.apps
 
@@ -336,11 +343,12 @@ class Backups:
                 / 'userroles.json'
             ),
             fs_write=self.fs_write,
+            indent=2
         )
         return self.snapshot_data.userroles
 
     def _get_users_for_a_role(self, role_name):
-        return Userroles(self.auth, self.org_name, role_name).get_users_for_a_role().text
+        return Userroles(self.auth, self.org_name, role_name).get_users_for_a_role().json()
 
     @staticmethod
     def _sort_lists_in_permissions(resource_permissions):
@@ -362,6 +370,7 @@ class Backups:
                 self._get_users_for_a_role(role_name),
                 str(Path(self.target_directory) / self.org_name / 'userroles' / role_name / 'users.json'),
                 fs_write=self.fs_write,
+                indent=2
             )
         except HTTPError as e:
             console.echo(f'Ignoring {type(e).__name__} {e.response.status_code} error for User Role ({role_name}) users')
