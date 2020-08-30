@@ -35,7 +35,7 @@ class Backups:
         self.fs_write = fs_write
         if not isinstance(apis, set):
             apis = set(apis)
-        self.apis = apis
+        self.apis = sorted(apis)
         self.environments = environments
         self.snapshot_data = empty_snapshot()
         self.snapshot_size = 0
@@ -412,37 +412,12 @@ class Backups:
         return count
 
     def get_snapshots(self):
-        if 'apis' in self.apis:
-            console.echo('Retrieving API Proxies listing (this may take a while)... ', end='', flush=True)
-            self.download_apis_snapshot()
-            console.echo('Done')
-        if 'keyvaluemaps' in self.apis:
-            console.echo('Retrieving KeyValueMaps listing... ', end='', flush=True)
-            self.download_keyvaluemaps_snapshot()
-            console.echo('Done')
-        if 'targetservers' in self.apis:
-            console.echo('Retrieving TargetServers listing... ', end='', flush=True)
-            self.download_targetservers_snapshot()
-            console.echo('Done')
-        if 'caches' in self.apis:
-            console.echo('Retrieving Caches listing... ', end='', flush=True)
-            self.download_caches_snapshot()
-            console.echo('Done')
-        if 'developers' in self.apis:
-            console.echo('Retrieving Developers listing... ', end='', flush=True)
-            self.download_developers_snapshot()
-            console.echo('Done')
-        if 'apiproducts' in self.apis:
-            console.echo('Retrieving API Products listing... ', end='', flush=True)
-            self.download_apiproducts_snapshot()
-            console.echo('Done')
-        if 'apps' in self.apis:
-            console.echo('Retrieving Developer Apps listing (this may take a while)... ', end='', flush=True)
-            self.download_apps_snapshot()
-            console.echo('Done')
-        if 'userroles' in self.apis:
-            console.echo('Retrieving User Roles listing... ', end='', flush=True)
-            self.download_userroles_snapshot()
+        for api in self.apis:
+            if api in {'apis', 'apps'}:
+                console.echo(f'Retrieving {api} listing (this may take a while)... ', end='', flush=True)
+            else:
+                console.echo(f'Retrieving {api} listing... ', end='', flush=True)
+            getattr(self, f'download_{api}_snapshot')()
             console.echo('Done')
         self.snapshot_size = self._calculate_snapshot_size()
         return self.snapshot_data
@@ -450,22 +425,8 @@ class Backups:
     def take_snapshot(self):
         self.get_snapshots()
         console.echo('Generating snapshot files...')
-        if 'apis' in self.apis:
-            self.download_apis()
-        if 'keyvaluemaps' in self.apis:
-            self.download_keyvaluemaps()
-        if 'targetservers' in self.apis:
-            self.download_targetservers()
-        if 'caches' in self.apis:
-            self.download_caches()
-        if 'developers' in self.apis:
-            self.download_developers()
-        if 'apiproducts' in self.apis:
-            self.download_apiproducts()
-        if 'apps' in self.apis:
-            self.download_apps()
-        if 'userroles' in self.apis:
-            self.download_userroles()
+        for api in self.apis:
+            getattr(self, f'download_{api}')()
         self.progress_bar.close()
         console.echo('Done.')
         return self.snapshot_data
