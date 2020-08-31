@@ -65,9 +65,7 @@ class Targetservers:
         self._targetserver_name = value
 
     def create_a_targetserver(self, environment, request_body):
-        uri = CREATE_A_TARGETSERVER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
-        )
+        uri = CREATE_A_TARGETSERVER_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment)
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -75,36 +73,28 @@ class Targetservers:
         return resp
 
     def delete_a_targetserver(self, environment):
-        uri = DELETE_A_TARGETSERVER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name
-        )
+        uri = DELETE_A_TARGETSERVER_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name)
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def list_targetservers_in_an_environment(self, environment, prefix=None, format='json'):
-        uri = LIST_TARGETSERVERS_IN_AN_ENVIRONMENT_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
-        )
+        uri = LIST_TARGETSERVERS_IN_AN_ENVIRONMENT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment)
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return TargetserversSerializer().serialize_details(resp, format, prefix=prefix)
 
     def get_targetserver(self, environment):
-        uri = GET_TARGETSERVER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name
-        )
+        uri = GET_TARGETSERVER_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name)
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def update_a_targetserver(self, environment, request_body):
-        uri = UPDATE_A_TARGETSERVER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name
-        )
+        uri = UPDATE_A_TARGETSERVER_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, name=self._targetserver_name)
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)

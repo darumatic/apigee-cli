@@ -13,14 +13,8 @@ def maskconfigs():
     pass
 
 
-def _create_data_masks_for_an_api_proxy(
-    username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs
-):
-    return (
-        Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .create_data_masks_for_an_api_proxy(body)
-        .text
-    )
+def _create_data_masks_for_an_api_proxy(username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs):
+    return Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name).create_data_masks_for_an_api_proxy(body).text
 
 
 @maskconfigs.command(
@@ -35,14 +29,8 @@ def create_api(*args, **kwargs):
     console.echo(_create_data_masks_for_an_api_proxy(*args, **kwargs))
 
 
-def _delete_data_masks_for_an_api_proxy(
-    username, password, mfa_secret, token, zonename, org, profile, name, maskconfig_name, **kwargs
-):
-    return (
-        Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .delete_data_masks_for_an_api_proxy(maskconfig_name)
-        .text
-    )
+def _delete_data_masks_for_an_api_proxy(username, password, mfa_secret, token, zonename, org, profile, name, maskconfig_name, **kwargs):
+    return Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name).delete_data_masks_for_an_api_proxy(maskconfig_name).text
 
 
 @maskconfigs.command(help='Delete a data mask for an API proxy.')
@@ -55,14 +43,8 @@ def delete_api(*args, **kwargs):
     console.echo(_delete_data_masks_for_an_api_proxy(*args, **kwargs))
 
 
-def _get_data_mask_details_for_an_api_proxy(
-    username, password, mfa_secret, token, zonename, org, profile, name, maskconfig_name, **kwargs
-):
-    return (
-        Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .get_data_mask_details_for_an_api_proxy(maskconfig_name)
-        .text
-    )
+def _get_data_mask_details_for_an_api_proxy(username, password, mfa_secret, token, zonename, org, profile, name, maskconfig_name, **kwargs):
+    return Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_data_mask_details_for_an_api_proxy(maskconfig_name).text
 
 
 @maskconfigs.command(help='Get the details for a data mask for an API proxy.')
@@ -76,11 +58,7 @@ def get_api(*args, **kwargs):
 
 
 def _list_data_masks_for_an_api_proxy(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
-    return (
-        Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .list_data_masks_for_an_api_proxy()
-        .text
-    )
+    return Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name).list_data_masks_for_an_api_proxy().text
 
 
 @maskconfigs.command(help='List all data masks for an API proxy.')
@@ -93,11 +71,7 @@ def list_api(*args, **kwargs):
 
 
 def _list_data_masks_for_an_organization(username, password, mfa_secret, token, zonename, org, profile, **kwargs):
-    return (
-        Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, None)
-        .list_data_masks_for_an_organization()
-        .text
-    )
+    return Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_data_masks_for_an_organization().text
 
 
 @maskconfigs.command(help='List all data masks for an organization.')
@@ -108,12 +82,8 @@ def list(*args, **kwargs):
     console.echo(_list_data_masks_for_an_organization(*args, **kwargs))
 
 
-def _push_data_masks_for_an_api_proxy(
-    username, password, mfa_secret, token, zonename, org, profile, name, file, **kwargs
-):
-    return Maskconfigs(
-        gen_auth(username, password, mfa_secret, token, zonename), org, name
-    ).push_data_masks_for_an_api_proxy(file)
+def _push_data_masks_for_an_api_proxy(username, password, mfa_secret, token, zonename, org, profile, name, file, **kwargs):
+    return Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name).push_data_masks_for_an_api_proxy(file)
 
 
 @maskconfigs.command(help='Push data mask for an API proxy to Apigee. This will create/update a data mask.')
@@ -121,8 +91,6 @@ def _push_data_masks_for_an_api_proxy(
 @common_silent_options
 @common_verbose_options
 @click.option('-n', '--name', help='API proxy name', required=True)
-@click.option(
-    '-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True
-)
+@click.option('-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True)
 def push(*args, **kwargs):
     _push_data_masks_for_an_api_proxy(*args, **kwargs)

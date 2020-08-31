@@ -36,23 +36,9 @@ def deployments():
 
 
 def _get_api_proxy_deployment_details(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    format,
-    showindex,
-    tablefmt,
-    revision_name_only,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, format, showindex, tablefmt, revision_name_only, **kwargs
 ):
-    return Deployments(
-        gen_auth(username, password, mfa_secret, token, zonename), org, name
-    ).get_api_proxy_deployment_details(
+    return Deployments(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_api_proxy_deployment_details(
         formatted=True, format=format, showindex=showindex, tablefmt=tablefmt, revision_name_only=revision_name_only
     )
 
@@ -67,18 +53,11 @@ def _get_api_proxy_deployment_details(
 @click.option('-n', '--name', help='name', required=True)
 # @click.option("-j", "--json", help="display json output when using -r flag", default="table")
 @click.option(
-    '--format',
-    help='defines how to format output when using the -r flag',
-    default='table',
-    type=click.Choice(['json', 'table'], case_sensitive=False),
+    '--format', help='defines how to format output when using the -r flag', default='table', type=click.Choice(['json', 'table'], case_sensitive=False)
 )
 @click.option('--showindex/--no-showindex', default=False)
 @click.option(
-    '--tablefmt',
-    help='defines how the table is formatted',
-    type=click.Choice(TABLEFMT_CHOICES, case_sensitive=False),
-    default='plain',
-    show_default=True,
+    '--tablefmt', help='defines how the table is formatted', type=click.Choice(TABLEFMT_CHOICES, case_sensitive=False), default='plain', show_default=True
 )
 @click.option('--revision-name-only/--no-revision-name-only', '-r/-R', default=False)
 def get(*args, **kwargs):

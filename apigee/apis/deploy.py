@@ -195,13 +195,7 @@ def deploy(args):
     ShouldOverride = args.seamless_deploy
     # GracePeriod = 15
     # AccessToken = mfa_with_pyotp.get_access_token(args)
-    Auth = Struct(
-        username=args.username,
-        password=args.password,
-        mfa_secret=args.mfa_secret,
-        token=args.token,
-        zonename=args.zonename,
-    )
+    Auth = Struct(username=args.username, password=args.password, mfa_secret=args.mfa_secret, token=args.token, zonename=args.zonename)
 
     # if UserPW == None or \
     #         (Directory == None and ZipFile == None) or \
@@ -280,13 +274,7 @@ def deploy(args):
         hdrs = {'Accept': 'application/json'}
         resp = httpCall(
             'POST',
-            (
-                '/v1/organizations/%s/apis/%s/deployments'
-                + '?action=deploy'
-                + '&env=%s'
-                + '&revision=%i'
-                + '&basepath=%s'
-            )
+            ('/v1/organizations/%s/apis/%s/deployments' + '?action=deploy' + '&env=%s' + '&revision=%i' + '&basepath=%s')
             % (Organization, Name, Environment, revision, BasePath),
             hdrs,
             None,

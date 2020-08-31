@@ -6,12 +6,8 @@ from requests.exceptions import HTTPError
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 
 CREATE_DATA_MASKS_FOR_AN_API_PROXY_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs'
-DELETE_DATA_MASKS_FOR_AN_API_PROXY_PATH = (
-    '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs/{maskconfig_name}'
-)
-GET_DATA_MASK_DETAILS_FOR_AN_API_PROXY_PATH = (
-    '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs/{maskconfig_name}'
-)
+DELETE_DATA_MASKS_FOR_AN_API_PROXY_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs/{maskconfig_name}'
+GET_DATA_MASK_DETAILS_FOR_AN_API_PROXY_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs/{maskconfig_name}'
 LIST_DATA_MASKS_FOR_AN_API_PROXY_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs'
 LIST_DATA_MASKS_FOR_AN_ORGANIZATION_PATH = '{api_url}/v1/organizations/{org}/maskconfigs'
 
@@ -67,9 +63,7 @@ class Maskconfigs:
         pass
 
     def create_data_masks_for_an_api_proxy(self, request_body):
-        uri = CREATE_DATA_MASKS_FOR_AN_API_PROXY_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=self._api_name
-        )
+        uri = CREATE_DATA_MASKS_FOR_AN_API_PROXY_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=self._api_name)
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -95,9 +89,7 @@ class Maskconfigs:
         return resp
 
     def list_data_masks_for_an_api_proxy(self):
-        uri = LIST_DATA_MASKS_FOR_AN_API_PROXY_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=self._api_name
-        )
+        uri = LIST_DATA_MASKS_FOR_AN_API_PROXY_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=self._api_name)
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()

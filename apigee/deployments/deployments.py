@@ -14,13 +14,7 @@ class DeploymentsSerializer:
             return deployment_details.text
         revisions = []
         for i in deployment_details.json()['environment']:
-            revisions.append(
-                {
-                    'name': i['name'],
-                    'revision': [j['name'] for j in i['revision']],
-                    'state': [j['state'] for j in i['revision']],
-                }
-            )
+            revisions.append({'name': i['name'], 'revision': [j['name'] for j in i['revision']], 'state': [j['state'] for j in i['revision']]})
         if format == 'json':
             return json.dumps(revisions)
         elif format == 'table':
@@ -69,12 +63,8 @@ class Deployments:
     def api_name(self, value):
         self._api_name = value
 
-    def get_api_proxy_deployment_details(
-        self, formatted=False, format='text', showindex=False, tablefmt='plain', revision_name_only=False
-    ):
-        uri = GET_API_PROXY_DEPLOYMENT_DETAILS_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=self._api_name
-        )
+    def get_api_proxy_deployment_details(self, formatted=False, format='text', showindex=False, tablefmt='plain', revision_name_only=False):
+        uri = GET_API_PROXY_DEPLOYMENT_DETAILS_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=self._api_name)
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()

@@ -7,6 +7,4 @@ class Struct:
 
 
 def empty_snapshot():
-    return Struct(
-        apis={}, keyvaluemaps={}, targetservers={}, caches={}, developers=[], apps={}, apiproducts=[], userroles=[]
-    )
+    return Struct(apis={}, keyvaluemaps={}, targetservers={}, caches={}, developers=[], apps={}, apiproducts=[], userroles=[])

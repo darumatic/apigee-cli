@@ -17,10 +17,7 @@ class PermissionsSerializer:
         elif format == 'json':
             return permission_details.json()
         elif format == 'table':
-            table = [
-                [res['organization'], res['path'], res['permissions']]
-                for res in permission_details.json()['resourcePermission']
-            ]
+            table = [[res['organization'], res['path'], res['permissions']] for res in permission_details.json()['resourcePermission']]
             headers = []
             if showindex == 'always' or showindex is True:
                 headers = ['id', 'organization', 'path', 'permissions']
@@ -66,9 +63,7 @@ class Permissions:
         self._role_name = value
 
     def create_permissions(self, request_body):
-        uri = CREATE_PERMISSIONS_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
-        )
+        uri = CREATE_PERMISSIONS_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name)
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)

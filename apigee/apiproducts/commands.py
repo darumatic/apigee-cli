@@ -8,17 +8,13 @@ from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
 
-@click.group(
-    help='API products enable you to bundle and distribute your APIs to multiple developer groups simultaneously, without having to modify code.'
-)
+@click.group(help='API products enable you to bundle and distribute your APIs to multiple developer groups simultaneously, without having to modify code.')
 def apiproducts():
     pass
 
 
 def _create_api_product(username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs):
-    return (
-        Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).create_api_product(body).text
-    )
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).create_api_product(body).text
 
 
 @apiproducts.command(help='Creates an API product in an organization.')
@@ -59,20 +55,7 @@ def get(*args, **kwargs):
     console.echo(_get_api_product(*args, **kwargs))
 
 
-def _list_api_products(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    prefix=None,
-    expand=False,
-    count=1000,
-    startkey="",
-    **kwargs
-):
+def _list_api_products(username, password, mfa_secret, token, zonename, org, profile, prefix=None, expand=False, count=1000, startkey="", **kwargs):
     return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_api_products(
         prefix=prefix, expand=expand, count=count, startkey=startkey
     )
@@ -91,20 +74,13 @@ def _list_api_products(
     show_default=True,
     help='Number of API products to return in the API call. The maximum limit is 1000. Use with the startkey to provide more targeted filtering.',
 )
-@click.option(
-    '--startkey',
-    default="",
-    show_default=True,
-    help='Returns a list of API products starting with the specified API product.',
-)
+@click.option('--startkey', default="", show_default=True, help='Returns a list of API products starting with the specified API product.')
 def list(*args, **kwargs):
     console.echo(_list_api_products(*args, **kwargs))
 
 
 def _update_api_product(username, password, mfa_secret, token, zonename, org, profile, body, **kwargs):
-    return (
-        Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).update_api_product(body).text
-    )
+    return Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name).update_api_product(body).text
 
 
 @apiproducts.command(
@@ -127,8 +103,6 @@ def _push_apiproducts(username, password, mfa_secret, token, zonename, org, prof
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option(
-    '-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True
-)
+@click.option('-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True)
 def push(*args, **kwargs):
     _push_apiproducts(*args, **kwargs)
