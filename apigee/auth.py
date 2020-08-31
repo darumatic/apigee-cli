@@ -32,6 +32,78 @@ from apigee.utils import make_dirs
 from apigee.verbose import common_verbose_options
 
 
+def _attach_username_option(func, profile):
+    username = get_credential(profile, 'username')
+    username_envvar = os.environ.get(f'APIGEE_USERNAME', '')
+    if username:
+        func = click.option('-u', '--username', default=username, show_default='current username')(func)
+    elif username_envvar:
+        func = click.option('-u', '--username', default=username_envvar, show_default='current username')(func)
+    else:
+        func = click.option('-u', '--username', required=True)(func)
+    return func
+
+
+def _attach_password_option(func, profile):
+    password = get_credential(profile, 'password')
+    password_envvar = os.environ.get(f'APIGEE_PASSWORD', '')
+    if password:
+        func = click.option('-p', '--password', default=password, show_default='current password')(func)
+    elif password_envvar:
+        func = click.option('-p', '--password', default=password_envvar, show_default='current password')(func)
+    else:
+        func = click.option('-p', '--password', required=True)(func)
+    return func
+
+
+def _attach_mfa_secret_option(func, profile):
+    mfa_secret = get_credential(profile, 'mfa_secret')
+    mfa_envvar = os.environ.get(f'APIGEE_MFA_SECRET', '')
+    if mfa_secret:
+        func = click.option('-mfa', '--mfa-secret', default=mfa_secret, show_default='current mfa key')(func)
+    elif mfa_envvar:
+        func = click.option('-mfa', '--mfa-secret', default=mfa_envvar, show_default='current mfa key')(func)
+    else:
+        func = click.option('-mfa', '--mfa-secret')(func)
+    return func
+
+
+def _attach_is_token_option(func, profile):
+    is_token = get_credential(profile, 'is_token')
+    is_token_envvar = os.environ.get(f'APIGEE_IS_TOKEN', '')
+    if is_token in (True, 'True', 'true', '1'):
+        func = click.option('--token/--no-token', default=is_token, show_default=True, help='specify to use oauth without MFA')(func)
+    elif is_token_envvar in (True, 'True', 'true', '1'):
+        func = click.option('--token/--no-token', default=is_token_envvar, show_default=True, help='specify to use oauth without MFA')(func)
+    else:
+        func = click.option('--token/--no-token', default=False, show_default=True, help='specify to use oauth without MFA')(func)
+    return func
+
+
+def _attach_zonename_option(func, profile):
+    zonename = get_credential(profile, 'zonename')
+    zonename_envvar = os.environ.get('APIGEE_ZONENAME', '')
+    if zonename:
+        func = click.option('-z', '--zonename', default=zonename, show_default='current identity zone name')(func)
+    elif zonename_envvar:
+        func = click.option('-z', '--zonename', default=zonename_envvar, show_default='current identity zone name')(func)
+    else:
+        func = click.option('-z', '--zonename', help='identity zone name')(func)
+    return func
+
+
+def _attach_org_option(func, profile):
+    org = get_credential(profile, 'org')
+    org_envvar = os.environ.get(f'APIGEE_ORG', '')
+    if org:
+        func = click.option('-o', '--org', default=org, show_default='current org')(func)
+    elif org_envvar:
+        func = click.option('-o', '--org', default=org_envvar, show_default='current org')(func)
+    else:
+        func = click.option('-o', '--org', required=True)(func)
+    return func
+
+
 def common_auth_options(func):
     profile = 'default'
     for i, arg in enumerate(sys.argv):
@@ -40,54 +112,12 @@ def common_auth_options(func):
                 profile = sys.argv[i + 1]
             except IndexError:
                 pass
-    username = get_credential(profile, 'username')
-    username_envvar = os.environ.get(f'APIGEE_USERNAME', '')
-    password = get_credential(profile, 'password')
-    password_envvar = os.environ.get(f'APIGEE_PASSWORD', '')
-    mfa_secret = get_credential(profile, 'mfa_secret')
-    mfa_envvar = os.environ.get(f'APIGEE_MFA_SECRET', '')
-    is_token = get_credential(profile, 'is_token')
-    is_token_envvar = os.environ.get(f'APIGEE_IS_TOKEN', '')
-    zonename = get_credential(profile, 'zonename')
-    zonename_envvar = os.environ.get('APIGEE_ZONENAME', '')
-    org = get_credential(profile, 'org')
-    org_envvar = os.environ.get(f'APIGEE_ORG', '')
-    if username:
-        func = click.option('-u', '--username', default=username, show_default='current username')(func)
-    elif username_envvar:
-        func = click.option('-u', '--username', default=username_envvar, show_default='current username')(func)
-    else:
-        func = click.option('-u', '--username', required=True)(func)
-    if password:
-        func = click.option('-p', '--password', default=password, show_default='current password')(func)
-    elif password_envvar:
-        func = click.option('-p', '--password', default=password_envvar, show_default='current password')(func)
-    else:
-        func = click.option('-p', '--password', required=True)(func)
-    if mfa_secret:
-        func = click.option('-mfa', '--mfa-secret', default=mfa_secret, show_default='current mfa key')(func)
-    elif mfa_envvar:
-        func = click.option('-mfa', '--mfa-secret', default=mfa_envvar, show_default='current mfa key')(func)
-    else:
-        func = click.option('-mfa', '--mfa-secret')(func)
-    if is_token in (True, 'True', 'true', '1'):
-        func = click.option('--token/--no-token', default=is_token, show_default=True, help='specify to use oauth without MFA')(func)
-    elif is_token_envvar in (True, 'True', 'true', '1'):
-        func = click.option('--token/--no-token', default=is_token_envvar, show_default=True, help='specify to use oauth without MFA')(func)
-    else:
-        func = click.option('--token/--no-token', default=False, show_default=True, help='specify to use oauth without MFA')(func)
-    if zonename:
-        func = click.option('-z', '--zonename', default=zonename, show_default='current identity zone name')(func)
-    elif zonename_envvar:
-        func = click.option('-z', '--zonename', default=zonename_envvar, show_default='current identity zone name')(func)
-    else:
-        func = click.option('-z', '--zonename', help='identity zone name')(func)
-    if org:
-        func = click.option('-o', '--org', default=org, show_default='current org')(func)
-    elif org_envvar:
-        func = click.option('-o', '--org', default=org_envvar, show_default='current org')(func)
-    else:
-        func = click.option('-o', '--org', required=True)(func)
+    _attach_username_option(func, profile)
+    _attach_password_option(func, profile)
+    _attach_mfa_secret_option(func, profile)
+    _attach_is_token_option(func, profile)
+    _attach_zonename_option(func, profile)
+    _attach_org_option(func, profile)
     func = click.option('-P', '--profile', help='name of the user profile to authenticate with', default=profile, show_default=True)(func)
     return func
 
@@ -96,8 +126,68 @@ def gen_auth(username=None, password=None, mfa_secret=None, token=None, zonename
     return Struct(username=username, password=password, mfa_secret=mfa_secret, token=token, zonename=zonename)
 
 
+def _get_access_token_for_token(auth, username, password, oauth_url, post_headers, session):
+    if auth.zonename:
+        oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
+    post_body = f'username={urllib.parse.quote(username)}&password={urllib.parse.quote(password)}&grant_type=password&response_type=token'
+    try:
+        return session.post(f'{oauth_url}', headers=post_headers, data=post_body)
+    except ConnectionError as ce:
+        console.echo(ce)
+
+
+def _get_access_token_for_mfa(auth, username, password, oauth_url, post_headers, session):
+    mfa_secret = auth.mfa_secret
+    totp = pyotp.TOTP(mfa_secret)
+    try:
+        totp.now()
+    except binascii.Error as e:
+        sys.exit(f'{type(e).__name__}: {e}: Not a valid MFA key')
+    post_body = f'username={urllib.parse.quote(username)}&password={urllib.parse.quote(password)}&grant_type=password'
+    try:
+        response_post = session.post(f'{oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body)
+    except ConnectionError as ce:
+        console.echo(ce)
+    try:
+        response_post.json()['access_token']
+        return response_post
+    except KeyError as ke:
+        return session.post(f'{oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body)
+
+
+def _get_access_token_for_sso(auth, username, password, oauth_url, post_headers, session):
+    oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
+    passcode_url = APIGEE_SAML_LOGIN_URL.format(zonename=auth.zonename)
+    webbrowser.open(passcode_url)
+    console.echo('SSO authorization page has automatically been opened in your default browser.')
+    console.echo('Follow the instructions in the browser to complete this authorization request.')
+    console.echo(
+        f"""\nIf your browser did not automatically open, go to the following URL and sign in:\n\n{passcode_url}\n\nthen copy the Temporary Authentication Code.\n"""
+    )
+    try:
+        passcode = click.prompt('Please enter the Temporary Authentication Code')
+        post_body = f'passcode={passcode}&grant_type=password&response_type=token'
+        try:
+            response_post = session.post(f'{oauth_url}', headers=post_headers, data=post_body)
+            response_post.json()['access_token']
+            return response_post
+        except KeyError:
+            sys.exit('Temporary Authentication Code is invalid. Please try again.')
+    except ConnectionError as ce:
+        console.echo(ce)
+    except KeyError:
+        pass
+
+
+def _gen_auth_error_message(error):
+    error_message = f'An exception of type {type(error).__name__} occurred. Arguments:\n{error}\nDouble check your credentials and try again.'
+    if APIGEE_CLI_IS_MACHINE_USER:
+        return f'{error_message} \nWARNING: APIGEE_CLI_IS_MACHINE_USER={APIGEE_CLI_IS_MACHINE_USER}'
+    return error_message
+
+
 def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500, 502, 504), session=None):
-    _oauth_url = APIGEE_OAUTH_URL
+    oauth_url = APIGEE_OAUTH_URL
     username = auth.username
     password = auth.password
     retry = Retry(total=retries, read=retries, connect=retries, backoff_factor=backoff_factor, status_forcelist=status_forcelist)
@@ -109,65 +199,18 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
         'Accept': 'application/json;charset=utf-8',
         'Authorization': 'Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0',
     }
-    _oauth_url = APIGEE_OAUTH_URL
     if auth.token or APIGEE_CLI_IS_MACHINE_USER:
-        if auth.zonename:
-            _oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
-        post_body = f'username={urllib.parse.quote(username)}&password={urllib.parse.quote(password)}&grant_type=password&response_type=token'
-        try:
-            response_post = session.post(f'{_oauth_url}', headers=post_headers, data=post_body)
-        except ConnectionError as ce:
-            console.echo(ce)
+        response_post = _get_access_token_for_token(auth, username, password, oauth_url, post_headers, session)
     elif auth.mfa_secret:
-        mfa_secret = auth.mfa_secret
-        totp = pyotp.TOTP(mfa_secret)
-        try:
-            totp.now()
-        except binascii.Error as e:
-            sys.exit(f'{type(e).__name__}: {e}: Not a valid MFA key')
-        post_body = f'username={urllib.parse.quote(username)}&password={urllib.parse.quote(password)}&grant_type=password'
-        try:
-            response_post = session.post(f'{_oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body)
-        except ConnectionError as ce:
-            console.echo(ce)
-        try:
-            response_post.json()['access_token']
-        except KeyError as ke:
-            response_post = session.post(f'{_oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body)
+        response_post = _get_access_token_for_mfa(auth, username, password, oauth_url, post_headers, session)
     elif auth.zonename:
-        _oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
-        passcode_url = APIGEE_SAML_LOGIN_URL.format(zonename=auth.zonename)
-        webbrowser.open(passcode_url)
-        console.echo('SSO authorization page has automatically been opened in your default browser.')
-        console.echo('Follow the instructions in the browser to complete this authorization request.')
-        console.echo(
-            f"""\nIf your browser did not automatically open, go to the following URL and sign in:\n\n{passcode_url}\n\nthen copy the Temporary Authentication Code.\n"""
-        )
-        try:
-            passcode = click.prompt('Please enter the Temporary Authentication Code')
-            post_body = f'passcode={passcode}&grant_type=password&response_type=token'
-            try:
-                response_post = session.post(f'{_oauth_url}', headers=post_headers, data=post_body)
-                response_post.json()['access_token']
-            except KeyError:
-                sys.exit('Temporary Authentication Code is invalid. Please try again.')
-        except ConnectionError as ce:
-            console.echo(ce)
-        except KeyError:
-            pass
+        response_post = _get_access_token_for_sso(auth, username, password, oauth_url, post_headers, session)
     else:
         return
     try:
         return response_post.json()['access_token']
     except KeyError as ke:
-        frm = inspect.trace()[-1]
-        mod = inspect.getmodule(frm[0])
-        modname = mod.__name__ if mod else frm[1]
-        if APIGEE_CLI_IS_MACHINE_USER:
-            sys.exit(
-                f'An exception of type {modname}.{type(ke).__name__} occurred. Arguments:\n{ke}\nDouble check your credentials and try again.\nWARNING: APIGEE_CLI_IS_MACHINE_USER={APIGEE_CLI_IS_MACHINE_USER}'
-            )
-        sys.exit(f'An exception of type {modname}.{type(ke).__name__} occurred. Arguments:\n{ke}\nDouble check your credentials and try again.')
+        sys.exit(_gen_auth_error_message(ke))
 
 
 def get_credential(section, key):
