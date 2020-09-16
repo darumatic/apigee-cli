@@ -3,6 +3,7 @@
 
 import codecs
 import configparser
+import importlib
 import os
 import re
 import sys
@@ -12,7 +13,7 @@ from functools import update_wrapper
 import click
 import requests
 
-from apigee import APP, CMD
+from apigee import APIGEE_CLI_PLUGINS_PATH, APP, CMD
 from apigee import __version__ as version
 from apigee.apiproducts.commands import apiproducts
 from apigee.apis.commands import apis
@@ -62,7 +63,7 @@ def cli(ctx):
 
 @exception_handler
 def main():
-    cli_commands = (
+    cli_commands = [
         backups,
         configure,
         deployments,
@@ -78,7 +79,23 @@ def main():
         userroles,
         permissions,
         sharedflows,
-    )
+    ]
+
+    if os.path.exists(APIGEE_CLI_PLUGINS_PATH):
+        try:
+            spec = importlib.util.spec_from_file_location('plugins_modules', APIGEE_CLI_PLUGINS_PATH)
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[spec.name] = module
+            spec.loader.exec_module(module)
+            import plugins_modules
+            from plugins_modules import __all__ as all_plugins_modules
+
+            for module in all_plugins_modules:
+                _module = getattr(plugins_modules, module)
+                if isinstance(_module, (click.core.Command, click.core.Group)):
+                    cli_commands.append(_module)
+        except ImportError:
+            pass
 
     for command in cli_commands:
         cli.add_command(command)

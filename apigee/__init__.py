@@ -1,6 +1,6 @@
 APP = 'apigeecli'
 CMD = 'apigee'
-__version__ = '0.44.6'
+__version__ = '0.45.0'
 description = 'Apigee Management API command-line interface with multi-factor authentication (MFA) and single sign-on (SSO)/SAML support'
 long_description = """Apigee Management API command-line interface with multi-factor authentication (MFA) and single sign-on (SSO)/SAML support"""
 
@@ -37,3 +37,5 @@ APIGEE_CLI_DIRECTORY = str(Path.home() / '.apigee')
 APIGEE_CLI_ACCESS_TOKEN_FILE = str(Path(APIGEE_CLI_DIRECTORY) / 'access_token')
 APIGEE_CLI_CREDENTIALS_FILE = str(Path(APIGEE_CLI_DIRECTORY) / 'credentials')
 APIGEE_CLI_EXCEPTION_LOG_FILE = str(Path(APIGEE_CLI_DIRECTORY) / 'exception.log')
+APIGEE_CLI_PLUGINS_PATH = str(Path(APIGEE_CLI_DIRECTORY) / 'plugins' / '__init__.py')
+# APIGEE_CLI_PLUGINS_NAME = 'plugins_modules'
