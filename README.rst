@@ -8,13 +8,16 @@ Welcome to the Apigee Management API command-line interface!
 
 This is not an officially supported Google product, and is not affiliated with Apigee or Google in any way.
 
-This is a user-friendly command-line interface to the Apigee Management API providing
+Apigee CLI is a user-friendly command-line interface to the Apigee Management API providing
 features that automate steps that are too cumbersome to perform manually or are non-existent
 in existing tools such as multi-factor authentication (MFA) and single sign-on (SSO)/SAML.
 
-This tool was made with certain clients in mind, and is intended for general administrative
-use from your shell, as a package for developers, and to support automation for common development tasks,
-such as test automation or Continuous Integration/Continuous Deployment (CI/CD).
+It is intended for general administrative use from your shell, as a package for developers,
+and to support automation for common development tasks, such as test automation
+or Continuous Integration/Continuous Deployment (CI/CD).
+
+Please note that this CLI is still highly experimental and may change significantly
+based on client needs.
 
 .. code-block:: text
 
@@ -156,71 +159,6 @@ If you are not currently signed in by your identity provider, you will be prompt
 
 Refer to the official Apigee documentation to learn more about how to `Access the Edge API with SAML`_.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Using SAML with automated tasks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The CLI also supports machine users as described in `Using SAML with automated tasks`_ when SAML is enabled
-to support automation for common development tasks, such as test automation or Continuous Integration/Continuous Deployment (CI/CD).
-
-To tell the CLI that the current user ``--profile`` is a machine user and thus to not redirect you to an identity provider,
-you can set the following environment variable like so::
-
-    $ export APIGEE_CLI_IS_MACHINE_USER=true
-
-To continue using an ordinary user, you will need to unset this variable or set it to ``false``.
-
-Refer to the official Apigee documentation to learn more about identity zones: `SAML Overview`_.
-
-^^^^^^^^^^^^^^^^^^^^^^
-Tabulating deployments
-^^^^^^^^^^^^^^^^^^^^^^
-Deployments information can be too verbose but you may just want to see a quick summary of which revisions of an API proxy are deployed and their status.
-
-To tabulate the deployments response, use the ``-r/--revision-name-only`` flag in the following command::
-
-    $ apigee deployments get -n <API_NAME> -r
-
-This will output a table like so::
-
-    name     revision    state
-    prod     ['1']       ['deployed']
-    test     ['1']       ['deployed']
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Tabulating resource permissions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Resource permissions responses can be slightly difficult to read so the CLI outputs this information as a table by default::
-
-    $ apigee permissions get -n <ROLE_NAME>
-    organization      path             permissions
-    my_org            /                ['delete', 'get', 'put']
-    my_org            /environments    ['get']
-    my_org            /environments/*  ['get']
-    my_org            /apimonitoring   ['delete', 'get', 'put']
-
-If you need the JSON response, use the ``--format json`` option::
-
-    $ apigee permissions get -n <ROLE_NAME> --format json
-    {
-      "resourcePermission" : [ {
-        "organization" : "my_org",
-        "path" : "/",
-        "permissions" : [ "put", "get", "delete" ]
-      }, {
-        "organization" : "my_org",
-        "path" : "/environments",
-        "permissions" : [ "get" ]
-      }, {
-        "organization" : "my_org",
-        "path" : "/environments/*",
-        "permissions" : [ "get" ]
-      }, {
-        "organization" : "my_org",
-        "path" : "/apimonitoring",
-        "permissions" : [ "put", "get", "delete" ]
-      } ]
-    }
-
 ^^^^^^^^^^^^^^^^^^^^^^^^
 Deploy API Proxy bundles
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -232,63 +170,39 @@ It supports a bunch of useful features such as MFA, SAML, seamless deployments a
 
 .. code-block:: text
 
-    Usage: apigee apis deploy [OPTIONS]
+    $ apigee apis deploy -n API_NAME -e ENVIRONMENT -d DIRECTORY_WITH_APIPROXY
 
-      Deploy APIs using an improved version of the Apigee API Proxy Deploy Tool:
-      https://github.com/apigee/api-platform-samples/tree/master/tools
+Some notable options::
 
-         =========================================================================
-         ==  NOTICE file corresponding to the section 4 d of                    ==
-         ==  the Apache License, Version 2.0,                                   ==
-         ==  in this case for the Apigee API Proxy Deploy Tool code.            ==
-         =========================================================================
+    Deployment options: [mutually_exclusive]
+                                    The deployment options
+      -i, --import-only / -I, --no-import-only
+                                    import only and not deploy
+      -s, --seamless-deploy / -S, --no-seamless-deploy
+                                    seamless deploy the bundle
 
-      Apigee API Proxy Deploy Tool https://github.com/apigee/api-platform-
-      samples/tree/master/tools These files are Copyright 2015 Apigee
-      Corporation, released under the Apache2 License.
-
-    Options:
-      -P, --profile TEXT              name of the user profile to authenticate
-                                      with  [default: default]
-
-      -o, --org TEXT                  [default: (current org)]
-      -z, --zonename TEXT             [default: (current identity zone name)]
-      --token / --no-token            specify to use oauth without MFA  [default:
-                                      False]
-
-      -mfa, --mfa-secret TEXT
-      -p, --password TEXT             [default: (current password)]
-      -u, --username TEXT             [default: (current username)]
-      -v, --verbose                   [default: (toggle verbose output)]
-      --silent                        [default: (toggle silent output)]
-      -e, --environment TEXT          environment  [required]
-      -n, --name TEXT                 name  [required]
-      -d, --directory DIRECTORY       directory with the apiproxy/ bundle
-                                      [required]
-
-      Deployment options: [mutually_exclusive]
-                                      The deployment options
-        -i, --import-only / -I, --no-import-only
-                                      import only and not deploy
-        -s, --seamless-deploy / -S, --no-seamless-deploy
-                                      seamless deploy the bundle
-      -h, --help                      Show this message and exit.
-
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Cleaning up undeployed revisions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 If deploying via CI/CD you may end up with a lot of undeployed revisions. In this case, you can
-make use of the ``apigee apis clean`` command to delete all those undeployed revisions and even specify to always keep the last few revisions.
+make use of the ``clean`` command to delete all undeployed revisions.
+
+.. code-block:: text
+
+    $ apigee apis clean -n API_NAME
+
+You can also specify to keep the last few revisions::
+
+    $ apigee apis clean -n API_NAME --save-last 10
+
+To only show which revisions will be deleted but not actually delete anything, use the following option::
+
+      --dry-run / --no-dry-run  show revisions to be deleted but do not delete
 
 ^^^^^^^^^^^^^
 Push commands
 ^^^^^^^^^^^^^
 Some commands support the ``push`` subcommand which combines CRUD API calls to manage the creation, update and sometimes deletion of resources using a single command.
-
-The following commands support the ``push`` subcommand:
-
-- ``apiproducts``
-- ``caches``
-- ``keyvaluemaps``
-- ``targetservers``
-- ``maskconfigs``
 
 Push commands read JSON from a file and can be invoked like so::
 
@@ -296,17 +210,23 @@ Push commands read JSON from a file and can be invoked like so::
 
 This will create the KVM if it does not exist, and update it if it does.
 
----------------
-Troubleshooting
----------------
-If you get an error like so::
+-------------
+More Commands
+-------------
+For more commands, examples and use cases, please refer to <https://github.com/mdelotavo/apigee-cli-docs>.
 
-    An exception of type jwt.api_jws.DecodeError occurred. Arguments:
-    Invalid crypto padding
+Some notable pages:
 
-Try deleting the cached access token::
+* `Commands cheatsheet`_
+* `Using SAML with automated tasks`_
+* `Tabulating deployments`_
+* `Tabulating resource permissions`_
+* `Troubleshooting`_
 
-    $ rm ~/.apigee/access_token
+-------
+Plugins
+-------
+Commands (plugins) can be dynamically loaded into the CLI at runtime. This will be documented soon.
 
 ------------
 Getting Help
@@ -315,6 +235,14 @@ Getting Help
 * `The Apigee Management API command-line interface documentation`_
 * `Apigee Product Documentation`_
 * `GitHub`_
+* `Mirror`_
+
+----------
+Next Steps
+----------
+You may want to make use of our `Apigee CI/CD Docker releases`_::
+
+    $ docker pull darumatic/apigee-cicd
 
 ----------
 Disclaimer
@@ -341,5 +269,12 @@ This is not an officially supported Google product.
 .. _`GitHub`: https://github.com/mdelotavo/apigee-cli
 .. _`Python Package Index (PyPI)`: https://pypi.org/project/apigeecli/
 .. _`Access the Edge API with SAML`: https://docs.apigee.com/api-platform/system-administration/using-saml
-.. _`SAML Overview`: https://docs.apigee.com/api-platform/system-administration/saml-overview
-.. _`Using SAML with automated tasks`: https://docs.apigee.com/private-cloud/v4.17.09/using-saml-automated-tasks
+
+.. _`Commands cheatsheet`: https://github.com/mdelotavo/apigee-cli-docs
+.. _`Using SAML with automated tasks`: https://github.com/mdelotavo/apigee-cli-docs
+.. _`Tabulating deployments`: https://github.com/mdelotavo/apigee-cli-docs
+.. _`Tabulating resource permissions`: https://github.com/mdelotavo/apigee-cli-docs
+.. _`Troubleshooting`: https://github.com/mdelotavo/apigee-cli-docs
+.. _`Mirror`: https://github.com/darumatic/apigee-cli
+
+.. _`Apigee CI/CD Docker releases`: https://hub.docker.com/r/darumatic/apigee-cicd
