@@ -165,12 +165,14 @@
 <p><a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
 <p>Welcome to the Apigee Management API command-line interface!</p>
 <p>This is not an officially supported Google product, and is not affiliated with Apigee or Google in any way.</p>
-<p>This is a user-friendly command-line interface to the Apigee Management API providing
+<p>Apigee CLI is a user-friendly command-line interface to the Apigee Management API providing
 features that automate steps that are too cumbersome to perform manually or are non-existent
 in existing tools such as multi-factor authentication (MFA) and single sign-on (SSO)/SAML.</p>
-<p>This tool was made with certain clients in mind, and is intended for general administrative
-use from your shell, as a package for developers, and to support automation for common development tasks,
-such as test automation or Continuous Integration/Continuous Deployment (CI/CD).</p>
+<p>It is intended for general administrative use from your shell, as a package for developers,
+and to support automation for common development tasks, such as test automation
+or Continuous Integration/Continuous Deployment (CI/CD).</p>
+<p>Please note that this CLI is still highly experimental and may change significantly
+based on client needs.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Usage: apigee [OPTIONS] COMMAND [ARGS]...
 
   Welcome to the Apigee Management API command-line interface!
@@ -299,129 +301,43 @@ Please enter the Temporary Authentication Code:
 <p><code class="docutils literal notranslate"><span class="pre">zoneName</span></code> will be the <code class="docutils literal notranslate"><span class="pre">Identity</span> <span class="pre">zone</span> <span class="pre">name</span></code> you previously configured.</p>
 <p>Refer to the official Apigee documentation to learn more about how to <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/using-saml">Access the Edge API with SAML</a>.</p>
 </div>
-<div class="section" id="using-saml-with-automated-tasks">
-<h4>Using SAML with automated tasks<a class="headerlink" href="#using-saml-with-automated-tasks" title="Permalink to this headline">¶</a></h4>
-<p>The CLI also supports machine users as described in <a class="reference external" href="https://docs.apigee.com/private-cloud/v4.17.09/using-saml-automated-tasks">Using SAML with automated tasks</a> when SAML is enabled
-to support automation for common development tasks, such as test automation or Continuous Integration/Continuous Deployment (CI/CD).</p>
-<p>To tell the CLI that the current user <code class="docutils literal notranslate"><span class="pre">--profile</span></code> is a machine user and thus to not redirect you to an identity provider,
-you can set the following environment variable like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_CLI_IS_MACHINE_USER=true
-</pre></div>
-</div>
-<p>To continue using an ordinary user, you will need to unset this variable or set it to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
-<p>Refer to the official Apigee documentation to learn more about identity zones: <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/saml-overview">SAML Overview</a>.</p>
-</div>
-<div class="section" id="tabulating-deployments">
-<h4>Tabulating deployments<a class="headerlink" href="#tabulating-deployments" title="Permalink to this headline">¶</a></h4>
-<p>Deployments information can be too verbose but you may just want to see a quick summary of which revisions of an API proxy are deployed and their status.</p>
-<p>To tabulate the deployments response, use the <code class="docutils literal notranslate"><span class="pre">-r/--revision-name-only</span></code> flag in the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee deployments get -n &lt;API_NAME&gt; -r
-</pre></div>
-</div>
-<p>This will output a table like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span>     <span class="n">revision</span>    <span class="n">state</span>
-<span class="n">prod</span>     <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">]</span>       <span class="p">[</span><span class="s1">&#39;deployed&#39;</span><span class="p">]</span>
-<span class="n">test</span>     <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">]</span>       <span class="p">[</span><span class="s1">&#39;deployed&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="tabulating-resource-permissions">
-<h4>Tabulating resource permissions<a class="headerlink" href="#tabulating-resource-permissions" title="Permalink to this headline">¶</a></h4>
-<p>Resource permissions responses can be slightly difficult to read so the CLI outputs this information as a table by default:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee permissions get -n &lt;ROLE_NAME&gt;
-organization      path             permissions
-my_org            /                [&#39;delete&#39;, &#39;get&#39;, &#39;put&#39;]
-my_org            /environments    [&#39;get&#39;]
-my_org            /environments/*  [&#39;get&#39;]
-my_org            /apimonitoring   [&#39;delete&#39;, &#39;get&#39;, &#39;put&#39;]
-</pre></div>
-</div>
-<p>If you need the JSON response, use the <code class="docutils literal notranslate"><span class="pre">--format</span> <span class="pre">json</span></code> option:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee permissions get -n &lt;ROLE_NAME&gt; --format json
-{
-  &quot;resourcePermission&quot; : [ {
-    &quot;organization&quot; : &quot;my_org&quot;,
-    &quot;path&quot; : &quot;/&quot;,
-    &quot;permissions&quot; : [ &quot;put&quot;, &quot;get&quot;, &quot;delete&quot; ]
-  }, {
-    &quot;organization&quot; : &quot;my_org&quot;,
-    &quot;path&quot; : &quot;/environments&quot;,
-    &quot;permissions&quot; : [ &quot;get&quot; ]
-  }, {
-    &quot;organization&quot; : &quot;my_org&quot;,
-    &quot;path&quot; : &quot;/environments/*&quot;,
-    &quot;permissions&quot; : [ &quot;get&quot; ]
-  }, {
-    &quot;organization&quot; : &quot;my_org&quot;,
-    &quot;path&quot; : &quot;/apimonitoring&quot;,
-    &quot;permissions&quot; : [ &quot;put&quot;, &quot;get&quot;, &quot;delete&quot; ]
-  } ]
-}
-</pre></div>
-</div>
-</div>
 <div class="section" id="deploy-api-proxy-bundles">
 <h4>Deploy API Proxy bundles<a class="headerlink" href="#deploy-api-proxy-bundles" title="Permalink to this headline">¶</a></h4>
 <p>You can also deploy API proxy bundles to Apigee.</p>
 <p>This command is an enhanced version of the Apigee API Proxy Deploy Tool.</p>
 <p>It supports a bunch of useful features such as MFA, SAML, seamless deployments and automatic handling of <code class="docutils literal notranslate"><span class="pre">missing</span></code> and broken deployments.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Usage: apigee apis deploy [OPTIONS]
-
-  Deploy APIs using an improved version of the Apigee API Proxy Deploy Tool:
-  https://github.com/apigee/api-platform-samples/tree/master/tools
-
-     =========================================================================
-     ==  NOTICE file corresponding to the section 4 d of                    ==
-     ==  the Apache License, Version 2.0,                                   ==
-     ==  in this case for the Apigee API Proxy Deploy Tool code.            ==
-     =========================================================================
-
-  Apigee API Proxy Deploy Tool https://github.com/apigee/api-platform-
-  samples/tree/master/tools These files are Copyright 2015 Apigee
-  Corporation, released under the Apache2 License.
-
-Options:
-  -P, --profile TEXT              name of the user profile to authenticate
-                                  with  [default: default]
-
-  -o, --org TEXT                  [default: (current org)]
-  -z, --zonename TEXT             [default: (current identity zone name)]
-  --token / --no-token            specify to use oauth without MFA  [default:
-                                  False]
-
-  -mfa, --mfa-secret TEXT
-  -p, --password TEXT             [default: (current password)]
-  -u, --username TEXT             [default: (current username)]
-  -v, --verbose                   [default: (toggle verbose output)]
-  --silent                        [default: (toggle silent output)]
-  -e, --environment TEXT          environment  [required]
-  -n, --name TEXT                 name  [required]
-  -d, --directory DIRECTORY       directory with the apiproxy/ bundle
-                                  [required]
-
-  Deployment options: [mutually_exclusive]
-                                  The deployment options
-    -i, --import-only / -I, --no-import-only
-                                  import only and not deploy
-    -s, --seamless-deploy / -S, --no-seamless-deploy
-                                  seamless deploy the bundle
-  -h, --help                      Show this message and exit.
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ apigee apis deploy -n API_NAME -e ENVIRONMENT -d DIRECTORY_WITH_APIPROXY
 </pre></div>
 </div>
+<p>Some notable options:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Deployment</span> <span class="n">options</span><span class="p">:</span> <span class="p">[</span><span class="n">mutually_exclusive</span><span class="p">]</span>
+                                <span class="n">The</span> <span class="n">deployment</span> <span class="n">options</span>
+  <span class="o">-</span><span class="n">i</span><span class="p">,</span> <span class="o">--</span><span class="n">import</span><span class="o">-</span><span class="n">only</span> <span class="o">/</span> <span class="o">-</span><span class="n">I</span><span class="p">,</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">import</span><span class="o">-</span><span class="n">only</span>
+                                <span class="kn">import</span> <span class="nn">only</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">deploy</span>
+  <span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="o">--</span><span class="n">seamless</span><span class="o">-</span><span class="n">deploy</span> <span class="o">/</span> <span class="o">-</span><span class="n">S</span><span class="p">,</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">seamless</span><span class="o">-</span><span class="n">deploy</span>
+                                <span class="n">seamless</span> <span class="n">deploy</span> <span class="n">the</span> <span class="n">bundle</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cleaning-up-undeployed-revisions">
+<h4>Cleaning up undeployed revisions<a class="headerlink" href="#cleaning-up-undeployed-revisions" title="Permalink to this headline">¶</a></h4>
 <p>If deploying via CI/CD you may end up with a lot of undeployed revisions. In this case, you can
-make use of the <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">apis</span> <span class="pre">clean</span></code> command to delete all those undeployed revisions and even specify to always keep the last few revisions.</p>
+make use of the <code class="docutils literal notranslate"><span class="pre">clean</span></code> command to delete all undeployed revisions.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ apigee apis clean -n API_NAME
+</pre></div>
+</div>
+<p>You can also specify to keep the last few revisions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis clean -n API_NAME --save-last 10
+</pre></div>
+</div>
+<p>To only show which revisions will be deleted but not actually delete anything, use the following option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span> <span class="o">/</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span>  <span class="n">show</span> <span class="n">revisions</span> <span class="n">to</span> <span class="n">be</span> <span class="n">deleted</span> <span class="n">but</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">delete</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="push-commands">
 <h4>Push commands<a class="headerlink" href="#push-commands" title="Permalink to this headline">¶</a></h4>
 <p>Some commands support the <code class="docutils literal notranslate"><span class="pre">push</span></code> subcommand which combines CRUD API calls to manage the creation, update and sometimes deletion of resources using a single command.</p>
-<p>The following commands support the <code class="docutils literal notranslate"><span class="pre">push</span></code> subcommand:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">apiproducts</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">caches</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">keyvaluemaps</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">targetservers</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">maskconfigs</span></code></p></li>
-</ul>
 <p>Push commands read JSON from a file and can be invoked like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee keyvaluemaps push -e &lt;env&gt; -f &lt;file_path.json&gt;
 </pre></div>
@@ -429,17 +345,21 @@ make use of the <code class="docutils literal notranslate"><span class="pre">api
 <p>This will create the KVM if it does not exist, and update it if it does.</p>
 </div>
 </div>
-<div class="section" id="troubleshooting">
-<h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h3>
-<p>If you get an error like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">An</span> <span class="n">exception</span> <span class="n">of</span> <span class="nb">type</span> <span class="n">jwt</span><span class="o">.</span><span class="n">api_jws</span><span class="o">.</span><span class="n">DecodeError</span> <span class="n">occurred</span><span class="o">.</span> <span class="n">Arguments</span><span class="p">:</span>
-<span class="n">Invalid</span> <span class="n">crypto</span> <span class="n">padding</span>
-</pre></div>
+<div class="section" id="more-commands">
+<h3>More Commands<a class="headerlink" href="#more-commands" title="Permalink to this headline">¶</a></h3>
+<p>For more commands, examples and use cases, please refer to &lt;<a class="reference external" href="https://github.com/mdelotavo/apigee-cli-docs">https://github.com/mdelotavo/apigee-cli-docs</a>&gt;.</p>
+<p>Some notable pages:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/mdelotavo/apigee-cli-docs">Commands cheatsheet</a></p></li>
+<li><p><a class="reference external" href="https://github.com/mdelotavo/apigee-cli-docs">Using SAML with automated tasks</a></p></li>
+<li><p><a class="reference external" href="https://github.com/mdelotavo/apigee-cli-docs">Tabulating deployments</a></p></li>
+<li><p><a class="reference external" href="https://github.com/mdelotavo/apigee-cli-docs">Tabulating resource permissions</a></p></li>
+<li><p><a class="reference external" href="https://github.com/mdelotavo/apigee-cli-docs">Troubleshooting</a></p></li>
+</ul>
 </div>
-<p>Try deleting the cached access token:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ rm ~/.apigee/access_token
-</pre></div>
-</div>
+<div class="section" id="plugins">
+<h3>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h3>
+<p>Commands (plugins) can be dynamically loaded into the CLI at runtime. This will be documented soon.</p>
 </div>
 <div class="section" id="getting-help">
 <h3>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h3>
@@ -447,7 +367,15 @@ make use of the <code class="docutils literal notranslate"><span class="pre">api
 <li><p><a class="reference external" href="https://mdelotavo.github.io/apigee-cli/index.html">The Apigee Management API command-line interface documentation</a></p></li>
 <li><p><a class="reference external" href="https://apidocs.apigee.com/management/apis">Apigee Product Documentation</a></p></li>
 <li><p><a class="reference external" href="https://github.com/mdelotavo/apigee-cli">GitHub</a></p></li>
+<li><p><a class="reference external" href="https://github.com/darumatic/apigee-cli">Mirror</a></p></li>
 </ul>
+</div>
+<div class="section" id="next-steps">
+<h3>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h3>
+<p>You may want to make use of our <a class="reference external" href="https://hub.docker.com/r/darumatic/apigee-cicd">Apigee CI/CD Docker releases</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker pull darumatic/apigee-cicd
+</pre></div>
+</div>
 </div>
 <div class="section" id="disclaimer">
 <h3>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h3>
