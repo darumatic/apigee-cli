@@ -13,7 +13,7 @@ def keystores():
     pass
 
 
-def _create_a_keystore_or_truststore(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+def _create_a_keystore_or_truststore(*args, **kwargs):
     pass
 
 
@@ -22,10 +22,10 @@ def _create_a_keystore_or_truststore(username, password, mfa_secret, token, zone
 @common_silent_options
 @common_verbose_options
 def create(*args, **kwargs):
-    console.echo(_create_a_keystore_or_truststore(*args, **kwargs))
+    _create_a_keystore_or_truststore(*args, **kwargs)
 
 
-def _delete_a_keystore_or_truststore(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+def _delete_a_keystore_or_truststore(*args, **kwargs):
     pass
 
 
@@ -34,7 +34,7 @@ def _delete_a_keystore_or_truststore(username, password, mfa_secret, token, zone
 @common_silent_options
 @common_verbose_options
 def delete(*args, **kwargs):
-    console.echo(_delete_a_keystore_or_truststore(*args, **kwargs))
+    _delete_a_keystore_or_truststore(*args, **kwargs)
 
 
 def _list_all_keystores_and_truststores(username, password, mfa_secret, token, zonename, org, profile, environment, prefix=None, **kwargs):
@@ -65,7 +65,7 @@ def get(*args, **kwargs):
     console.echo(_get_a_keystore_or_truststore(*args, **kwargs))
 
 
-def _test_a_keystore_or_truststore(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+def _test_a_keystore_or_truststore(*args, **kwargs):
     pass
 
 
@@ -74,7 +74,7 @@ def _test_a_keystore_or_truststore(username, password, mfa_secret, token, zonena
 @common_silent_options
 @common_verbose_options
 def test(*args, **kwargs):
-    console.echo(_test_a_keystore_or_truststore(*args, **kwargs))
+    _test_a_keystore_or_truststore(*args, **kwargs)
 
 
 def _get_cert_details_from_a_keystore_or_truststore(username, password, mfa_secret, token, zonename, org, profile, name, environment, cert_name, **kwargs):
@@ -113,7 +113,7 @@ def get_all_certs(*args, **kwargs):
     console.echo(_get_all_certs_from_a_keystore_or_truststore(*args, **kwargs))
 
 
-def _delete_cert_from_a_keystore_or_truststore(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+def _delete_cert_from_a_keystore_or_truststore(*args, **kwargs):
     pass
 
 
@@ -122,7 +122,7 @@ def _delete_cert_from_a_keystore_or_truststore(username, password, mfa_secret, t
 @common_silent_options
 @common_verbose_options
 def delete_cert(*args, **kwargs):
-    console.echo(_delete_cert_from_a_keystore_or_truststore(*args, **kwargs))
+    _delete_cert_from_a_keystore_or_truststore(*args, **kwargs)
 
 
 def _export_a_cert(username, password, mfa_secret, token, zonename, org, profile, name, environment, cert_name, **kwargs):
@@ -140,7 +140,7 @@ def export(*args, **kwargs):
     console.echo(_export_a_cert(*args, **kwargs))
 
 
-def _upload_a_certificate_to_a_truststore(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+def _upload_a_certificate_to_a_truststore(*args, **kwargs):
     pass
 
 
@@ -149,10 +149,10 @@ def _upload_a_certificate_to_a_truststore(username, password, mfa_secret, token,
 @common_silent_options
 @common_verbose_options
 def upload_cert_to_truststore(*args, **kwargs):
-    console.echo(_upload_a_certificate_to_a_truststore(*args, **kwargs))
+    _upload_a_certificate_to_a_truststore(*args, **kwargs)
 
 
-def _upload_a_jar_file_to_a_keystore(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+def _upload_a_jar_file_to_a_keystore(*args, **kwargs):
     pass
 
 
@@ -161,10 +161,10 @@ def _upload_a_jar_file_to_a_keystore(username, password, mfa_secret, token, zone
 @common_silent_options
 @common_verbose_options
 def upload_jar_to_keystore(*args, **kwargs):
-    console.echo(_upload_a_jar_file_to_a_keystore(*args, **kwargs))
+    _upload_a_jar_file_to_a_keystore(*args, **kwargs)
 
 
-def _create_an_alias_by_generating_a_self_signed_certificate(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+def _create_an_alias_by_generating_a_self_signed_certificate(*args, **kwargs):
     pass
 
 
@@ -173,7 +173,7 @@ def _create_an_alias_by_generating_a_self_signed_certificate(username, password,
 @common_silent_options
 @common_verbose_options
 def create_alias(*args, **kwargs):
-    console.echo(_create_an_alias_by_generating_a_self_signed_certificate(*args, **kwargs))
+    _create_an_alias_by_generating_a_self_signed_certificate(*args, **kwargs)
 
 
 def _list_aliases(username, password, mfa_secret, token, zonename, org, profile, name, environment, prefix=None, **kwargs):
@@ -206,7 +206,7 @@ def get_alias(*args, **kwargs):
     console.echo(_get_alias(*args, **kwargs))
 
 
-def _update_the_certificate_in_an_alias(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+def _update_the_certificate_in_an_alias(*args, **kwargs):
     pass
 
 
@@ -215,10 +215,10 @@ def _update_the_certificate_in_an_alias(username, password, mfa_secret, token, z
 @common_silent_options
 @common_verbose_options
 def update_cert_in_alias(*args, **kwargs):
-    console.echo(_update_the_certificate_in_an_alias(*args, **kwargs))
+    _update_the_certificate_in_an_alias(*args, **kwargs)
 
 
-def _generate_a_csr_for_an_alias(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+def _generate_a_csr_for_an_alias(*args, **kwargs):
     pass
 
 
@@ -227,7 +227,7 @@ def _generate_a_csr_for_an_alias(username, password, mfa_secret, token, zonename
 @common_silent_options
 @common_verbose_options
 def generate_csr_for_alias(*args, **kwargs):
-    console.echo(_generate_a_csr_for_an_alias(*args, **kwargs))
+    _generate_a_csr_for_an_alias(*args, **kwargs)
 
 
 def _export_a_certificate_for_an_alias(username, password, mfa_secret, token, zonename, org, profile, name, environment, alias_name, **kwargs):
@@ -245,7 +245,7 @@ def export_cert_for_alias(*args, **kwargs):
     console.echo(_export_a_certificate_for_an_alias(*args, **kwargs))
 
 
-def _delete_alias(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
+def _delete_alias(*args, **kwargs):
     pass
 
 
@@ -254,4 +254,4 @@ def _delete_alias(username, password, mfa_secret, token, zonename, org, profile,
 @common_silent_options
 @common_verbose_options
 def delete_alias(*args, **kwargs):
-    console.echo(_delete_alias(*args, **kwargs))
+    _delete_alias(*args, **kwargs)
