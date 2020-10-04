@@ -30,6 +30,7 @@ from apigee.keystores.commands import keystores
 from apigee.keyvaluemaps.commands import keyvaluemaps
 from apigee.maskconfigs.commands import maskconfigs
 from apigee.permissions.commands import permissions
+from apigee.references.commands import references
 from apigee.sharedflows.commands import sharedflows
 from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
@@ -81,6 +82,7 @@ def main():
         permissions,
         sharedflows,
         keystores,
+        references,
     ]
 
     if os.path.exists(APIGEE_CLI_PLUGINS_PATH):
