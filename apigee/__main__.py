@@ -26,6 +26,7 @@ from apigee.configure.commands import configure
 from apigee.deployments.commands import deployments
 from apigee.developers.commands import developers
 from apigee.exceptions import exception_handler
+from apigee.keystores.commands import keystores
 from apigee.keyvaluemaps.commands import keyvaluemaps
 from apigee.maskconfigs.commands import maskconfigs
 from apigee.permissions.commands import permissions
@@ -79,6 +80,7 @@ def main():
         userroles,
         permissions,
         sharedflows,
+        keystores,
     ]
 
     if os.path.exists(APIGEE_CLI_PLUGINS_PATH):
