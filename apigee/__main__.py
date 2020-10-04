@@ -35,6 +35,7 @@ from apigee.sharedflows.commands import sharedflows
 from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
 from apigee.utils import show_message
+from apigee.virtualhosts.commands import virtualhosts
 
 # from click_aliases import ClickAliasedGroup
 
@@ -83,6 +84,7 @@ def main():
         sharedflows,
         keystores,
         references,
+        virtualhosts,
     ]
 
     if os.path.exists(APIGEE_CLI_PLUGINS_PATH):
