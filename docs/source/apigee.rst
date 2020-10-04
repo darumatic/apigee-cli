@@ -15,12 +15,15 @@ Subpackages
    apigee.configure
    apigee.deployments
    apigee.developers
+   apigee.keystores
    apigee.keyvaluemaps
    apigee.maskconfigs
    apigee.permissions
+   apigee.references
    apigee.sharedflows
    apigee.targetservers
    apigee.userroles
+   apigee.virtualhosts
 
 Submodules
 ----------
