@@ -5,11 +5,21 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 
-CREATE_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts'
-DELETE_A_VIRTUAL_HOST_FROM_AN_ENVIRONMENT_PATH = '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}'
-GET_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}'
-LIST_VIRTUAL_HOSTS_FOR_AN_ENVIRONMENT_PATH = '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts'
-UPDATE_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}'
+CREATE_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = (
+    '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts'
+)
+DELETE_A_VIRTUAL_HOST_FROM_AN_ENVIRONMENT_PATH = (
+    '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}'
+)
+GET_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = (
+    '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}'
+)
+LIST_VIRTUAL_HOSTS_FOR_AN_ENVIRONMENT_PATH = (
+    '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts'
+)
+UPDATE_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = (
+    '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}'
+)
 
 
 class VirtualhostsSerializer:
@@ -19,7 +29,9 @@ class VirtualhostsSerializer:
             return virtualhosts.text
         virtualhosts = virtualhosts.json()
         if prefix:
-            virtualhosts = [virtualhost for virtualhost in virtualhosts if virtualhost.startswith(prefix)]
+            virtualhosts = [
+                virtualhost for virtualhost in virtualhosts if virtualhost.startswith(prefix)
+            ]
         if format == 'json':
             return json.dumps(virtualhosts)
         elif format == 'table':
@@ -70,7 +82,10 @@ class Virtualhosts:
 
     def get_a_virtual_host_for_an_environment(self, environment):
         uri = GET_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org_name=self._org_name, environment=environment, virtualhost_name=self._virtualhost_name
+            api_url=APIGEE_ADMIN_API_URL,
+            org_name=self._org_name,
+            environment=environment,
+            virtualhost_name=self._virtualhost_name,
         )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
@@ -78,7 +93,9 @@ class Virtualhosts:
         return resp
 
     def list_virtual_hosts_for_an_environment(self, environment, prefix=None, format='json'):
-        uri = LIST_VIRTUAL_HOSTS_FOR_AN_ENVIRONMENT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org_name=self._org_name, environment=environment)
+        uri = LIST_VIRTUAL_HOSTS_FOR_AN_ENVIRONMENT_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL, org_name=self._org_name, environment=environment
+        )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()

@@ -43,7 +43,12 @@ from apigee.virtualhosts.commands import virtualhosts
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
-@click.group(context_settings=CONTEXT_SETTINGS, cls=AliasedGroup, invoke_without_command=False, chain=False)
+@click.group(
+    context_settings=CONTEXT_SETTINGS,
+    cls=AliasedGroup,
+    invoke_without_command=False,
+    chain=False,
+)
 # @click.group(context_settings=CONTEXT_SETTINGS, cls=ClickAliasedGroup, invoke_without_command=False, chain=False)
 @click.version_option(version, '-V', '--version')
 @click.pass_context
@@ -89,7 +94,9 @@ def main():
 
     if os.path.exists(APIGEE_CLI_PLUGINS_PATH):
         try:
-            spec = importlib.util.spec_from_file_location('plugins_modules', APIGEE_CLI_PLUGINS_PATH)
+            spec = importlib.util.spec_from_file_location(
+                'plugins_modules', APIGEE_CLI_PLUGINS_PATH
+            )
             module = importlib.util.module_from_spec(spec)
             sys.modules[spec.name] = module
             spec.loader.exec_module(module)

@@ -19,7 +19,9 @@ class ApiproductsSerializer:
             return apiproducts.text
         apiproducts = apiproducts.json()
         if prefix:
-            apiproducts = [apiproduct for apiproduct in apiproducts if apiproduct.startswith(prefix)]
+            apiproducts = [
+                apiproduct for apiproduct in apiproducts if apiproduct.startswith(prefix)
+            ]
         if format == 'json':
             return json.dumps(apiproducts)
         elif format == 'table':
@@ -66,36 +68,56 @@ class Apiproducts:
 
     def create_api_product(self, request_body):
         uri = CREATE_API_PRODUCT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name)
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
+        hdrs = auth.set_header(
+            self._auth,
+            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+        )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
 
     def delete_api_product(self):
-        uri = DELETE_API_PRODUCT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._apiproduct_name)
+        uri = DELETE_API_PRODUCT_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._apiproduct_name
+        )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def get_api_product(self):
-        uri = GET_API_PRODUCT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._apiproduct_name)
+        uri = GET_API_PRODUCT_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._apiproduct_name
+        )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_api_products(self, prefix=None, expand=False, count=1000, startkey="", format='json'):
-        uri = LIST_API_PRODUCTS_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, expand=expand, count=count, startkey=startkey)
+    def list_api_products(
+        self, prefix=None, expand=False, count=1000, startkey="", format='json'
+    ):
+        uri = LIST_API_PRODUCTS_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            expand=expand,
+            count=count,
+            startkey=startkey,
+        )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return ApiproductsSerializer().serialize_details(resp, format, prefix=prefix)
 
     def update_api_product(self, request_body):
-        uri = UPDATE_API_PRODUCT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._apiproduct_name)
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'})
+        uri = UPDATE_API_PRODUCT_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._apiproduct_name
+        )
+        hdrs = auth.set_header(
+            self._auth,
+            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+        )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
         resp.raise_for_status()

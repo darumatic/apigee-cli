@@ -8,7 +8,9 @@ from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
 
-@click.group(help='A list of URIs used to create, modify, and delete keystores and truststores.')
+@click.group(
+    help='A list of URIs used to create, modify, and delete keystores and truststores.'
+)
 def keystores():
     pass
 
@@ -37,8 +39,21 @@ def delete(*args, **kwargs):
     _delete_a_keystore_or_truststore(*args, **kwargs)
 
 
-def _list_all_keystores_and_truststores(username, password, mfa_secret, token, zonename, org, profile, environment, prefix=None, **kwargs):
-    return Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_all_keystores_and_truststores(environment, prefix=prefix)
+def _list_all_keystores_and_truststores(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    environment,
+    prefix=None,
+    **kwargs
+):
+    return Keystores(
+        gen_auth(username, password, mfa_secret, token, zonename), org, None
+    ).list_all_keystores_and_truststores(environment, prefix=prefix)
 
 
 @keystores.command(help='Returns a list of all keystores and truststores in the environment.')
@@ -51,8 +66,14 @@ def list(*args, **kwargs):
     console.echo(_list_all_keystores_and_truststores(*args, **kwargs))
 
 
-def _get_a_keystore_or_truststore(username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs):
-    return Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_a_keystore_or_truststore(environment).text
+def _get_a_keystore_or_truststore(
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs
+):
+    return (
+        Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .get_a_keystore_or_truststore(environment)
+        .text
+    )
 
 
 @keystores.command(help='Returns a specific keystore or truststore in the environment.')
@@ -77,7 +98,19 @@ def test(*args, **kwargs):
     _test_a_keystore_or_truststore(*args, **kwargs)
 
 
-def _get_cert_details_from_a_keystore_or_truststore(username, password, mfa_secret, token, zonename, org, profile, name, environment, cert_name, **kwargs):
+def _get_cert_details_from_a_keystore_or_truststore(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    environment,
+    cert_name,
+    **kwargs
+):
     return (
         Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .get_cert_details_from_a_keystore_or_truststore(environment, cert_name)
@@ -96,10 +129,22 @@ def get_cert(*args, **kwargs):
     console.echo(_get_cert_details_from_a_keystore_or_truststore(*args, **kwargs))
 
 
-def _get_all_certs_from_a_keystore_or_truststore(username, password, mfa_secret, token, zonename, org, profile, name, environment, prefix=None, **kwargs):
-    return Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_all_certs_from_a_keystore_or_truststore(
-        environment, prefix=prefix
-    )
+def _get_all_certs_from_a_keystore_or_truststore(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    environment,
+    prefix=None,
+    **kwargs
+):
+    return Keystores(
+        gen_auth(username, password, mfa_secret, token, zonename), org, name
+    ).get_all_certs_from_a_keystore_or_truststore(environment, prefix=prefix)
 
 
 @keystores.command(help='Returns all certs from a keystore or truststore.')
@@ -125,8 +170,24 @@ def delete_cert(*args, **kwargs):
     _delete_cert_from_a_keystore_or_truststore(*args, **kwargs)
 
 
-def _export_a_cert(username, password, mfa_secret, token, zonename, org, profile, name, environment, cert_name, **kwargs):
-    return Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name).export_a_cert(environment, cert_name).text
+def _export_a_cert(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    environment,
+    cert_name,
+    **kwargs
+):
+    return (
+        Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .export_a_cert(environment, cert_name)
+        .text
+    )
 
 
 @keystores.command(help='Export a cert from a keystore or truststore.')
@@ -176,8 +237,22 @@ def create_alias(*args, **kwargs):
     _create_an_alias_by_generating_a_self_signed_certificate(*args, **kwargs)
 
 
-def _list_aliases(username, password, mfa_secret, token, zonename, org, profile, name, environment, prefix=None, **kwargs):
-    return Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name).list_aliases(environment, prefix=prefix)
+def _list_aliases(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    environment,
+    prefix=None,
+    **kwargs
+):
+    return Keystores(
+        gen_auth(username, password, mfa_secret, token, zonename), org, name
+    ).list_aliases(environment, prefix=prefix)
 
 
 @keystores.command(help='Returns a list of all the aliases in the keystore.')
@@ -191,8 +266,24 @@ def list_aliases(*args, **kwargs):
     console.echo(_list_aliases(*args, **kwargs))
 
 
-def _get_alias(username, password, mfa_secret, token, zonename, org, profile, name, environment, alias_name, **kwargs):
-    return Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_alias(environment, alias_name).text
+def _get_alias(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    environment,
+    alias_name,
+    **kwargs
+):
+    return (
+        Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .get_alias(environment, alias_name)
+        .text
+    )
 
 
 @keystores.command(help='Returns details about an alias.')
@@ -230,11 +321,29 @@ def generate_csr_for_alias(*args, **kwargs):
     _generate_a_csr_for_an_alias(*args, **kwargs)
 
 
-def _export_a_certificate_for_an_alias(username, password, mfa_secret, token, zonename, org, profile, name, environment, alias_name, **kwargs):
-    return Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name).export_a_certificate_for_an_alias(environment, alias_name).text
+def _export_a_certificate_for_an_alias(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    environment,
+    alias_name,
+    **kwargs
+):
+    return (
+        Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .export_a_certificate_for_an_alias(environment, alias_name)
+        .text
+    )
 
 
-@keystores.command(help='Exports a certificate or certificate chain for the specified alias in a keystore.')
+@keystores.command(
+    help='Exports a certificate or certificate chain for the specified alias in a keystore.'
+)
 @common_auth_options
 @common_silent_options
 @common_verbose_options

@@ -14,18 +14,16 @@ from apigee.targetservers.targetservers import Targetservers
 from apigee.utils import (extract_zip, make_dirs, path_exists, paths_exist,
                           split_path, write_zip)
 
-DELETE_API_PROXY_REVISION_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}'
-DEPLOY_API_PROXY_REVISION_PATH = (
-    '{api_url}/v1/organizations/{org}/environments/{environment}/apis/{api_name}/revisions/{revision_number}/deployments?delay={delay}'
+DELETE_API_PROXY_REVISION_PATH = (
+    '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}'
 )
+DEPLOY_API_PROXY_REVISION_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/apis/{api_name}/revisions/{revision_number}/deployments?delay={delay}'
 EXPORT_API_PROXY_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}?format=bundle'
 GET_API_PROXY_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}'
 LIST_API_PROXIES_PATH = '{api_url}/v1/organizations/{org}/apis'
 LIST_API_PROXY_REVISIONS_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions'
 UNDEPLOY_API_PROXY_REVISION_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/apis/{api_name}/revisions/{revision_number}/deployments'
-FORCE_UNDEPLOY_API_PROXY_REVISION_PATH = (
-    '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}/deployments?action=undeploy&env={environment}&force=true'
-)
+FORCE_UNDEPLOY_API_PROXY_REVISION_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}/deployments?action=undeploy&env={environment}&force=true'
 
 
 class ApisSerializer:
@@ -179,28 +177,53 @@ class Apis(IApis, IPull):
     def __init__(self, *args, **kwargs):
         IApis.__init__(self, args[0], args[1])  # auth, org_name
         try:
-            IPull.__init__(self, args[0], args[1], args[2], args[3], **kwargs)  # auth, org_name, revision_number, environment, work_tree=None
+            IPull.__init__(
+                self, args[0], args[1], args[2], args[3], **kwargs
+            )  # auth, org_name, revision_number, environment, work_tree=None
         except IndexError:
             pass
 
     def delete_api_proxy_revision(self, api_name, revision_number):
-        uri = DELETE_API_PROXY_REVISION_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=api_name, revision_number=revision_number)
+        uri = DELETE_API_PROXY_REVISION_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            api_name=api_name,
+            revision_number=revision_number,
+        )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def deploy_api_proxy_revision(self, api_name, environment, revision_number, delay=0, override=False):
+    def deploy_api_proxy_revision(
+        self, api_name, environment, revision_number, delay=0, override=False
+    ):
         uri = DEPLOY_API_PROXY_REVISION_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, api_name=api_name, revision_number=revision_number, delay=delay
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            environment=environment,
+            api_name=api_name,
+            revision_number=revision_number,
+            delay=delay,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'})
-        resp = requests.post(uri, headers=hdrs, data={'override': 'true' if override else 'false'})
+        hdrs = auth.set_header(
+            self._auth,
+            headers={
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        )
+        resp = requests.post(
+            uri, headers=hdrs, data={'override': 'true' if override else 'false'}
+        )
         resp.raise_for_status()
         return resp
 
     def gen_deployment_detail(self, deployment):
-        return {'name': deployment['name'], 'revision': [revision['name'] for revision in deployment['revision']]}
+        return {
+            'name': deployment['name'],
+            'revision': [revision['name'] for revision in deployment['revision']],
+        }
 
     def get_deployment_details(self, details):
         deployment_details = []
@@ -220,8 +243,16 @@ class Apis(IApis, IPull):
         return undeployed[: -save_last if save_last > 0 else len(undeployed)]
 
     def delete_undeployed_revisions(self, api_name, save_last=0, dry_run=False):
-        details = self.get_deployment_details(Deployments(self._auth, self._org_name, api_name).get_api_proxy_deployment_details().json())
-        undeployed = self.get_undeployed_revisions(self.list_api_proxy_revisions(api_name).json(), self.get_deployed_revisions(details), save_last=save_last)
+        details = self.get_deployment_details(
+            Deployments(self._auth, self._org_name, api_name)
+            .get_api_proxy_deployment_details()
+            .json()
+        )
+        undeployed = self.get_undeployed_revisions(
+            self.list_api_proxy_revisions(api_name).json(),
+            self.get_deployed_revisions(details),
+            save_last=save_last,
+        )
         console.echo(f'Undeployed revisions to be deleted: {undeployed}')
         if dry_run:
             return undeployed
@@ -238,7 +269,12 @@ class Apis(IApis, IPull):
         fs_write=True,
         output_file=None,
     ):
-        uri = EXPORT_API_PROXY_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=api_name, revision_number=revision_number)
+        uri = EXPORT_API_PROXY_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            api_name=api_name,
+            revision_number=revision_number,
+        )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -248,7 +284,9 @@ class Apis(IApis, IPull):
         return resp
 
     def get_api_proxy(self, api_name):
-        uri = GET_API_PROXY_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=api_name)
+        uri = GET_API_PROXY_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=api_name
+        )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -262,7 +300,9 @@ class Apis(IApis, IPull):
         return ApisSerializer().serialize_details(resp, format, prefix=prefix)
 
     def list_api_proxy_revisions(self, api_name):
-        uri = LIST_API_PROXY_REVISIONS_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=api_name)
+        uri = LIST_API_PROXY_REVISIONS_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=api_name
+        )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -270,7 +310,11 @@ class Apis(IApis, IPull):
 
     def undeploy_api_proxy_revision(self, api_name, environment, revision_number):
         uri = UNDEPLOY_API_PROXY_REVISION_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment, api_name=api_name, revision_number=revision_number
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            environment=environment,
+            api_name=api_name,
+            revision_number=revision_number,
         )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.delete(uri, headers=hdrs)
@@ -279,7 +323,11 @@ class Apis(IApis, IPull):
 
     def force_undeploy_api_proxy_revision(self, api_name, environment, revision_number):
         uri = FORCE_UNDEPLOY_API_PROXY_REVISION_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=api_name, revision_number=revision_number, environment=environment
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            api_name=api_name,
+            revision_number=revision_number,
+            environment=environment,
         )
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.delete(uri, headers=hdrs)
@@ -305,13 +353,19 @@ class Apis(IApis, IPull):
                 pass
         return keyvaluemaps
 
-    def export_keyvaluemap_dependencies(self, environment, keyvaluemaps, force=False, expc_verbosity=1):
+    def export_keyvaluemap_dependencies(
+        self, environment, keyvaluemaps, force=False, expc_verbosity=1
+    ):
         make_dirs(self._keyvaluemaps_dir)
         for keyvaluemap in keyvaluemaps:
             keyvaluemap_file = str(Path(self._keyvaluemaps_dir) / keyvaluemap)
             if not force:
                 path_exists(os.path.relpath(keyvaluemap_file))
-            resp = Keyvaluemaps(self._auth, self._org_name, keyvaluemap).get_keyvaluemap_in_an_environment(environment).text
+            resp = (
+                Keyvaluemaps(self._auth, self._org_name, keyvaluemap)
+                .get_keyvaluemap_in_an_environment(environment)
+                .text
+            )
             console.echo(resp, expc_verbosity=1)
             with open(keyvaluemap_file, 'w') as f:
                 f.write(resp)
@@ -328,13 +382,19 @@ class Apis(IApis, IPull):
                 pass
         return targetservers
 
-    def export_targetserver_dependencies(self, environment, targetservers, force=False, expc_verbosity=1):
+    def export_targetserver_dependencies(
+        self, environment, targetservers, force=False, expc_verbosity=1
+    ):
         make_dirs(self._targetservers_dir)
         for targetserver in targetservers:
             targetserver_file = str(Path(self._targetservers_dir) / targetserver)
             if not force:
                 path_exists(os.path.relpath(targetserver_file))
-            resp = Targetservers(self._auth, self._org_name, targetserver).get_targetserver(environment).text
+            resp = (
+                Targetservers(self._auth, self._org_name, targetserver)
+                .get_targetserver(environment)
+                .text
+            )
             console.echo(resp, expc_verbosity=1)
             with open(targetserver_file, 'w') as f:
                 f.write(resp)
@@ -356,7 +416,11 @@ class Apis(IApis, IPull):
             cache_file = str(Path(self._caches_dir) / cache)
             if not force:
                 path_exists(os.path.relpath(cache_file))
-            resp = Caches(self._auth, self._org_name, cache).get_information_about_a_cache(environment).text
+            resp = (
+                Caches(self._auth, self._org_name, cache)
+                .get_information_about_a_cache(environment)
+                .text
+            )
             console.echo(resp, expc_verbosity=1)
             with open(cache_file, 'w') as f:
                 f.write(resp)
@@ -419,7 +483,9 @@ class Apis(IApis, IPull):
         if not force:
             paths_exist((os.path.relpath(self._zip_file), os.path.relpath(self._apiproxy_dir)))
 
-        export = self.export_api_proxy(api_name, self._revision_number, fs_write=True, output_file=self._zip_file)
+        export = self.export_api_proxy(
+            api_name, self._revision_number, fs_write=True, output_file=self._zip_file
+        )
 
         make_dirs(self._apiproxy_dir)
 

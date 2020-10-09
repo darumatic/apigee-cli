@@ -1,4 +1,13 @@
-APIS = {'apis', 'keyvaluemaps', 'targetservers', 'caches', 'developers', 'apiproducts', 'apps', 'userroles'}
+APIS = {
+    'apis',
+    'keyvaluemaps',
+    'targetservers',
+    'caches',
+    'developers',
+    'apiproducts',
+    'apps',
+    'userroles',
+}
 
 
 class Struct:
@@ -7,4 +16,13 @@ class Struct:
 
 
 def empty_snapshot():
-    return Struct(apis={}, keyvaluemaps={}, targetservers={}, caches={}, developers=[], apps={}, apiproducts=[], userroles=[])
+    return Struct(
+        apis={},
+        keyvaluemaps={},
+        targetservers={},
+        caches={},
+        developers=[],
+        apps={},
+        apiproducts=[],
+        userroles=[],
+    )

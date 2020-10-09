@@ -116,7 +116,9 @@ def pathContainsDot(p):
 def getDeployments():
     # Print info on deployments
     hdrs = {'Accept': 'application/xml'}
-    resp = httpCall('GET', '/v1/organizations/%s/apis/%s/deployments' % (Organization, Name), hdrs, None)
+    resp = httpCall(
+        'GET', '/v1/organizations/%s/apis/%s/deployments' % (Organization, Name), hdrs, None
+    )
 
     if resp.status != 200:
         return None
@@ -140,7 +142,12 @@ def getDeployments():
                 basePath = 'unknown'
 
             # svrs = rev.getElementsByTagName('Server')
-            status = {'environment': envName, 'revision': revNum, 'basePath': basePath, 'state': state}
+            status = {
+                'environment': envName,
+                'revision': revNum,
+                'basePath': basePath,
+                'state': state,
+            }
 
             if error != None:
                 status['error'] = error
@@ -163,8 +170,14 @@ def printDeployments(dep, check_revision=None):
         if d['state'] == 'missing':
             console.echo('Missing deployment. Attempting deletion...')
             try:
-                Apis(Auth, Organization).undeploy_api_proxy_revision(Name, d['environment'], d['revision'])
-                console.echo(Apis(Auth, Organization).delete_api_proxy_revision(Name, d['revision']).text)
+                Apis(Auth, Organization).undeploy_api_proxy_revision(
+                    Name, d['environment'], d['revision']
+                )
+                console.echo(
+                    Apis(Auth, Organization)
+                    .delete_api_proxy_revision(Name, d['revision'])
+                    .text
+                )
             except HTTPError as e:
                 if e.response.status_code != 400:
                     raise e
@@ -195,7 +208,13 @@ def deploy(args):
     ShouldOverride = args.seamless_deploy
     # GracePeriod = 15
     # AccessToken = mfa_with_pyotp.get_access_token(args)
-    Auth = Struct(username=args.username, password=args.password, mfa_secret=args.mfa_secret, token=args.token, zonename=args.zonename)
+    Auth = Struct(
+        username=args.username,
+        password=args.password,
+        mfa_secret=args.mfa_secret,
+        token=args.token,
+        zonename=args.zonename,
+    )
 
     # if UserPW == None or \
     #         (Directory == None and ZipFile == None) or \
@@ -245,7 +264,10 @@ def deploy(args):
     resp = httpCall('POST', uri, hdrs, body)
 
     if resp.status != 200 and resp.status != 201:
-        console.echo('Import failed to %s with status %i:\n%s' % (uri, resp.status, resp.read().decode()))
+        console.echo(
+            'Import failed to %s with status %i:\n%s'
+            % (uri, resp.status, resp.read().decode())
+        )
         sys.exit(2)
 
     deployment = json.loads(resp.read().decode())
@@ -257,31 +279,52 @@ def deploy(args):
         # Undeploy duplicates
         deps = getDeployments()
         for d in deps:
-            if d['environment'] == Environment and d['basePath'] == BasePath and d['revision'] != revision:
-                console.echo('Undeploying revision %i in same environment and path:' % d['revision'])
+            if (
+                d['environment'] == Environment
+                and d['basePath'] == BasePath
+                and d['revision'] != revision
+            ):
+                console.echo(
+                    'Undeploying revision %i in same environment and path:' % d['revision']
+                )
                 conn = http.client.HTTPSConnection(httpHost)
                 resp = httpCall(
                     'POST',
-                    ('/v1/organizations/%s/apis/%s/deployments' + '?action=undeploy' + '&env=%s' + '&revision=%i')
+                    (
+                        '/v1/organizations/%s/apis/%s/deployments'
+                        + '?action=undeploy'
+                        + '&env=%s'
+                        + '&revision=%i'
+                    )
                     % (Organization, Name, Environment, d['revision']),
                     None,
                     None,
                 )
                 if resp.status != 200 and resp.status != 204:
-                    console.echo('Error %i on undeployment:\n%s' % (resp.status, resp.read().decode()))
+                    console.echo(
+                        'Error %i on undeployment:\n%s' % (resp.status, resp.read().decode())
+                    )
 
         # Deploy the bundle
         hdrs = {'Accept': 'application/json'}
         resp = httpCall(
             'POST',
-            ('/v1/organizations/%s/apis/%s/deployments' + '?action=deploy' + '&env=%s' + '&revision=%i' + '&basepath=%s')
+            (
+                '/v1/organizations/%s/apis/%s/deployments'
+                + '?action=deploy'
+                + '&env=%s'
+                + '&revision=%i'
+                + '&basepath=%s'
+            )
             % (Organization, Name, Environment, revision, BasePath),
             hdrs,
             None,
         )
 
         if resp.status != 200 and resp.status != 201:
-            console.echo('Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode()))
+            console.echo(
+                'Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode())
+            )
             sys.exit(2)
 
     if ShouldOverride:
@@ -290,14 +333,20 @@ def deploy(args):
         hdrs = {'Content-Type': 'application/x-www-form-urlencoded'}
         resp = httpCall(
             'POST',
-            ('/v1/organizations/%s/environments/%s/apis/%s/revisions/%s/deployments' + '?override=true' + '&delay=%s')
+            (
+                '/v1/organizations/%s/environments/%s/apis/%s/revisions/%s/deployments'
+                + '?override=true'
+                + '&delay=%s'
+            )
             % (Organization, Environment, Name, revision, GracePeriod),
             hdrs,
             None,
         )
 
         if resp.status != 200 and resp.status != 201:
-            console.echo('Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode()))
+            console.echo(
+                'Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode())
+            )
             sys.exit(2)
 
     deps = getDeployments()

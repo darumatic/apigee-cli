@@ -36,9 +36,13 @@ def _attach_username_option(func, profile):
     username = get_credential(profile, 'username')
     username_envvar = os.environ.get(f'APIGEE_USERNAME', '')
     if username:
-        func = click.option('-u', '--username', default=username, show_default='current username')(func)
+        func = click.option(
+            '-u', '--username', default=username, show_default='current username'
+        )(func)
     elif username_envvar:
-        func = click.option('-u', '--username', default=username_envvar, show_default='current username')(func)
+        func = click.option(
+            '-u', '--username', default=username_envvar, show_default='current username'
+        )(func)
     else:
         func = click.option('-u', '--username', required=True)(func)
     return func
@@ -48,9 +52,13 @@ def _attach_password_option(func, profile):
     password = get_credential(profile, 'password')
     password_envvar = os.environ.get(f'APIGEE_PASSWORD', '')
     if password:
-        func = click.option('-p', '--password', default=password, show_default='current password')(func)
+        func = click.option(
+            '-p', '--password', default=password, show_default='current password'
+        )(func)
     elif password_envvar:
-        func = click.option('-p', '--password', default=password_envvar, show_default='current password')(func)
+        func = click.option(
+            '-p', '--password', default=password_envvar, show_default='current password'
+        )(func)
     else:
         func = click.option('-p', '--password', required=True)(func)
     return func
@@ -60,9 +68,13 @@ def _attach_mfa_secret_option(func, profile):
     mfa_secret = get_credential(profile, 'mfa_secret')
     mfa_envvar = os.environ.get(f'APIGEE_MFA_SECRET', '')
     if mfa_secret:
-        func = click.option('-mfa', '--mfa-secret', default=mfa_secret, show_default='current mfa key')(func)
+        func = click.option(
+            '-mfa', '--mfa-secret', default=mfa_secret, show_default='current mfa key'
+        )(func)
     elif mfa_envvar:
-        func = click.option('-mfa', '--mfa-secret', default=mfa_envvar, show_default='current mfa key')(func)
+        func = click.option(
+            '-mfa', '--mfa-secret', default=mfa_envvar, show_default='current mfa key'
+        )(func)
     else:
         func = click.option('-mfa', '--mfa-secret')(func)
     return func
@@ -72,11 +84,26 @@ def _attach_is_token_option(func, profile):
     is_token = get_credential(profile, 'is_token')
     is_token_envvar = os.environ.get(f'APIGEE_IS_TOKEN', '')
     if is_token in (True, 'True', 'true', '1'):
-        func = click.option('--token/--no-token', default=is_token, show_default=True, help='specify to use oauth without MFA')(func)
+        func = click.option(
+            '--token/--no-token',
+            default=is_token,
+            show_default=True,
+            help='specify to use oauth without MFA',
+        )(func)
     elif is_token_envvar in (True, 'True', 'true', '1'):
-        func = click.option('--token/--no-token', default=is_token_envvar, show_default=True, help='specify to use oauth without MFA')(func)
+        func = click.option(
+            '--token/--no-token',
+            default=is_token_envvar,
+            show_default=True,
+            help='specify to use oauth without MFA',
+        )(func)
     else:
-        func = click.option('--token/--no-token', default=False, show_default=True, help='specify to use oauth without MFA')(func)
+        func = click.option(
+            '--token/--no-token',
+            default=False,
+            show_default=True,
+            help='specify to use oauth without MFA',
+        )(func)
     return func
 
 
@@ -84,9 +111,16 @@ def _attach_zonename_option(func, profile):
     zonename = get_credential(profile, 'zonename')
     zonename_envvar = os.environ.get('APIGEE_ZONENAME', '')
     if zonename:
-        func = click.option('-z', '--zonename', default=zonename, show_default='current identity zone name')(func)
+        func = click.option(
+            '-z', '--zonename', default=zonename, show_default='current identity zone name'
+        )(func)
     elif zonename_envvar:
-        func = click.option('-z', '--zonename', default=zonename_envvar, show_default='current identity zone name')(func)
+        func = click.option(
+            '-z',
+            '--zonename',
+            default=zonename_envvar,
+            show_default='current identity zone name',
+        )(func)
     else:
         func = click.option('-z', '--zonename', help='identity zone name')(func)
     return func
@@ -98,7 +132,9 @@ def _attach_org_option(func, profile):
     if org:
         func = click.option('-o', '--org', default=org, show_default='current org')(func)
     elif org_envvar:
-        func = click.option('-o', '--org', default=org_envvar, show_default='current org')(func)
+        func = click.option('-o', '--org', default=org_envvar, show_default='current org')(
+            func
+        )
     else:
         func = click.option('-o', '--org', required=True)(func)
     return func
@@ -118,12 +154,24 @@ def common_auth_options(func):
     _attach_is_token_option(func, profile)
     _attach_zonename_option(func, profile)
     _attach_org_option(func, profile)
-    func = click.option('-P', '--profile', help='name of the user profile to authenticate with', default=profile, show_default=True)(func)
+    func = click.option(
+        '-P',
+        '--profile',
+        help='name of the user profile to authenticate with',
+        default=profile,
+        show_default=True,
+    )(func)
     return func
 
 
 def gen_auth(username=None, password=None, mfa_secret=None, token=None, zonename=None):
-    return Struct(username=username, password=password, mfa_secret=mfa_secret, token=token, zonename=zonename)
+    return Struct(
+        username=username,
+        password=password,
+        mfa_secret=mfa_secret,
+        token=token,
+        zonename=zonename,
+    )
 
 
 def _get_access_token_for_token(auth, username, password, oauth_url, post_headers, session):
@@ -145,22 +193,30 @@ def _get_access_token_for_mfa(auth, username, password, oauth_url, post_headers,
         sys.exit(f'{type(e).__name__}: {e}: Not a valid MFA key')
     post_body = f'username={urllib.parse.quote(username)}&password={urllib.parse.quote(password)}&grant_type=password'
     try:
-        response_post = session.post(f'{oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body)
+        response_post = session.post(
+            f'{oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body
+        )
     except ConnectionError as ce:
         console.echo(ce)
     try:
         response_post.json()['access_token']
         return response_post
     except KeyError as ke:
-        return session.post(f'{oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body)
+        return session.post(
+            f'{oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body
+        )
 
 
 def _get_access_token_for_sso(auth, username, password, oauth_url, post_headers, session):
     oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
     passcode_url = APIGEE_SAML_LOGIN_URL.format(zonename=auth.zonename)
     webbrowser.open(passcode_url)
-    console.echo('SSO authorization page has automatically been opened in your default browser.')
-    console.echo('Follow the instructions in the browser to complete this authorization request.')
+    console.echo(
+        'SSO authorization page has automatically been opened in your default browser.'
+    )
+    console.echo(
+        'Follow the instructions in the browser to complete this authorization request.'
+    )
     console.echo(
         f"""\nIf your browser did not automatically open, go to the following URL and sign in:\n\n{passcode_url}\n\nthen copy the Temporary Authentication Code.\n"""
     )
@@ -186,11 +242,19 @@ def _gen_auth_error_message(error):
     return error_message
 
 
-def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500, 502, 504), session=None):
+def get_access_token(
+    auth, retries=4, backoff_factor=0.3, status_forcelist=(500, 502, 504), session=None
+):
     oauth_url = APIGEE_OAUTH_URL
     username = auth.username
     password = auth.password
-    retry = Retry(total=retries, read=retries, connect=retries, backoff_factor=backoff_factor, status_forcelist=status_forcelist)
+    retry = Retry(
+        total=retries,
+        read=retries,
+        connect=retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=status_forcelist,
+    )
     adapter = HTTPAdapter(max_retries=retry)
     session = requests.Session()
     session.mount('https://', adapter)
@@ -200,11 +264,17 @@ def get_access_token(auth, retries=4, backoff_factor=0.3, status_forcelist=(500,
         'Authorization': 'Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0',
     }
     if auth.token or APIGEE_CLI_IS_MACHINE_USER:
-        response_post = _get_access_token_for_token(auth, username, password, oauth_url, post_headers, session)
+        response_post = _get_access_token_for_token(
+            auth, username, password, oauth_url, post_headers, session
+        )
     elif auth.mfa_secret:
-        response_post = _get_access_token_for_mfa(auth, username, password, oauth_url, post_headers, session)
+        response_post = _get_access_token_for_mfa(
+            auth, username, password, oauth_url, post_headers, session
+        )
     elif auth.zonename:
-        response_post = _get_access_token_for_sso(auth, username, password, oauth_url, post_headers, session)
+        response_post = _get_access_token_for_sso(
+            auth, username, password, oauth_url, post_headers, session
+        )
     else:
         return
     try:
@@ -235,7 +305,10 @@ def set_header(auth_obj, headers={}):
         finally:
             if access_token:
                 decoded = jwt.decode(access_token, verify=False)
-                if decoded['exp'] < int(time.time()) or decoded['email'].lower() != auth_obj.username.lower():
+                if (
+                    decoded['exp'] < int(time.time())
+                    or decoded['email'].lower() != auth_obj.username.lower()
+                ):
                     access_token = ""
         if not access_token:
             access_token = get_access_token(auth_obj)
@@ -243,7 +316,10 @@ def set_header(auth_obj, headers={}):
                 f.write(access_token)
         headers['Authorization'] = f'Bearer {access_token}'
     else:
-        headers['Authorization'] = 'Basic ' + base64.b64encode((f'{auth_obj.username}:{auth_obj.password}').encode()).decode()
+        headers['Authorization'] = (
+            'Basic '
+            + base64.b64encode((f'{auth_obj.username}:{auth_obj.password}').encode()).decode()
+        )
     return headers
 
 
@@ -255,7 +331,10 @@ def auth_with_prefix(auth_obj, org, name, file=None, key='name'):
     return with_prefix(auth_obj, org, name)
 
 
-@click.command(help='Custom authorization commands. More information on the use cases for these commands are yet to be documented.', cls=AliasedGroup)
+@click.command(
+    help='Custom authorization commands. More information on the use cases for these commands are yet to be documented.',
+    cls=AliasedGroup,
+)
 def auth():
     pass
 
@@ -264,24 +343,51 @@ def auth():
 @common_auth_options
 @common_verbose_options
 @common_silent_options
-def get_access_token_command(username, password, mfa_secret, token, zonename, org, profile, **kwargs):
+def get_access_token_command(
+    username, password, mfa_secret, token, zonename, org, profile, **kwargs
+):
     console.echo(get_access_token(gen_auth(username, password, mfa_secret, token, zonename)))
 
 
-@auth.command(help='check if user (developer) is authorized to access resource with prefix in file')
+@auth.command(
+    help='check if user (developer) is authorized to access resource with prefix in file'
+)
 @common_auth_options
 @common_verbose_options
 @common_silent_options
-@click.option('-f', '--file', type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False), required=True)
+@click.option(
+    '-f',
+    '--file',
+    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=False),
+    required=True,
+)
 @click.option('-k', '--key', help='name of the attribute/key to check', default='name')
 def file(username, password, mfa_secret, token, zonename, org, profile, file, key, **kwargs):
-    console.echo(auth_with_prefix(gen_auth(username, password, mfa_secret, token, zonename), org, None, file=file, key=key))
+    console.echo(
+        auth_with_prefix(
+            gen_auth(username, password, mfa_secret, token, zonename),
+            org,
+            None,
+            file=file,
+            key=key,
+        )
+    )
 
 
-@auth.command(help='check if user (developer) is authorized to access resource with prefix in name')
+@auth.command(
+    help='check if user (developer) is authorized to access resource with prefix in name'
+)
 @common_auth_options
 @common_verbose_options
 @common_silent_options
 @click.option('-n', '--name', help='name of the resource to check', required=True)
 def name(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
-    console.echo(auth_with_prefix(gen_auth(username, password, mfa_secret, token, zonename), org, name, file=None, key='name'))
+    console.echo(
+        auth_with_prefix(
+            gen_auth(username, password, mfa_secret, token, zonename),
+            org,
+            name,
+            file=None,
+            key='name',
+        )
+    )

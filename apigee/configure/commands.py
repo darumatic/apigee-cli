@@ -38,7 +38,13 @@ except KeyError:
 # @click.group(cls=ClickAliasedGroup)
 # @click.command(aliases=['conf', 'config', 'cfg'])
 @click.command(help='Configure Apigee Edge credentials.')
-@click.option('-u', '--username', prompt='Apigee username (email)', default=profile_dict['username'], show_default=True)
+@click.option(
+    '-u',
+    '--username',
+    prompt='Apigee username (email)',
+    default=profile_dict['username'],
+    show_default=True,
+)
 @click.option(
     '-p',
     '--password',
@@ -55,7 +61,13 @@ except KeyError:
     hide_input=True,
     show_default='hidden' if profile_dict['mfa_secret'] else 'None',
 )
-@click.option('-z', '--zonename', prompt='Identity zone name (to support SAML authentication)', default=profile_dict['zonename'], show_default=True)
+@click.option(
+    '-z',
+    '--zonename',
+    prompt='Identity zone name (to support SAML authentication)',
+    default=profile_dict['zonename'],
+    show_default=True,
+)
 @click.option(
     '--token/--no-token',
     default=True if profile_dict['is_token'] in (True, 'True', 'true', '1') else False,
@@ -63,9 +75,26 @@ except KeyError:
     prompt='Use OAuth, no MFA (optional)?',
     show_default=True,
 )
-@click.option('-o', '--org', prompt='Default Apigee organization (recommended)', default=profile_dict['org'], show_default=True)
-@click.option('--prefix', prompt='Default team/resource prefix (optional)', default=profile_dict['prefix'], show_default=True)
-@click.option('-P', '--profile', help='name of the user profile to create/update', default='default', show_default=True)
+@click.option(
+    '-o',
+    '--org',
+    prompt='Default Apigee organization (recommended)',
+    default=profile_dict['org'],
+    show_default=True,
+)
+@click.option(
+    '--prefix',
+    prompt='Default team/resource prefix (optional)',
+    default=profile_dict['prefix'],
+    show_default=True,
+)
+@click.option(
+    '-P',
+    '--profile',
+    help='name of the user profile to create/update',
+    default='default',
+    show_default=True,
+)
 def configure(username, password, mfa_secret, token, zonename, org, prefix, profile):
     if isinstance(password, HiddenSecret):
         password = password.secret

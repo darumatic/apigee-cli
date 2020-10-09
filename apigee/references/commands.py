@@ -13,8 +13,21 @@ def references():
     pass
 
 
-def _list_all_references(username, password, mfa_secret, token, zonename, org, profile, environment, prefix=None, **kwargs):
-    return References(gen_auth(username, password, mfa_secret, token, zonename), org, None).list_all_references(environment, prefix=prefix)
+def _list_all_references(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    environment,
+    prefix=None,
+    **kwargs
+):
+    return References(
+        gen_auth(username, password, mfa_secret, token, zonename), org, None
+    ).list_all_references(environment, prefix=prefix)
 
 
 @references.command(help='List all references in an organization and environment.')
@@ -27,8 +40,14 @@ def list(*args, **kwargs):
     console.echo(_list_all_references(*args, **kwargs))
 
 
-def _get_reference(username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs):
-    return References(gen_auth(username, password, mfa_secret, token, zonename), org, name).get_reference(environment).text
+def _get_reference(
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs
+):
+    return (
+        References(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        .get_reference(environment)
+        .text
+    )
 
 
 @references.command(help='Get reference in an organization and environment.')
