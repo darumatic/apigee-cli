@@ -181,31 +181,33 @@ class Keyvaluemaps:
             self.delete_keyvaluemap_entry_in_an_environment(environment, entry['name'])
 
     @staticmethod
-    def encrypt_keyvaluemap(kvm_dict, secret):
-        decrypted_count = 0
-        if kvm_dict['encrypted'] and kvm_dict['entry']:
-            for idx, entry in enumerate(kvm_dict['entry']):
-                if entry.get('name') and entry.get('value'):
-                    if not is_encrypted(kvm_dict['entry'][idx]['value']):
-                        kvm_dict['entry'][idx][
-                            'value'
-                        ] = f"{ENCRYPTED_HEADER_BEGIN}{encrypt_message(secret, kvm_dict['entry'][idx]['value'])}{ENCRYPTED_HEADER_END}"
-                        decrypted_count += 1
-        return kvm_dict, decrypted_count
+    def encrypt_value(kvm_dict, index, secret):
+        plaintext = kvm_dict['entry'][index]['value']
+        kvm_dict['entry'][index]['value'] = f"{ENCRYPTED_HEADER_BEGIN}{encrypt_message(secret, plaintext)}{ENCRYPTED_HEADER_END}"
 
     @staticmethod
-    def decrypt_keyvaluemap(kvm_dict, secret):
-        decrypted_count = 0
+    def decrypt_value(kvm_dict, index, secret):
+        ciphertext = kvm_dict['entry'][index]['value']
+        decrypted = decrypt_message(secret, ciphertext)
+        if decrypted == '':
+            sys.exit('Incorrect symmetric key.')
+        kvm_dict['entry'][index]['value'] = decrypted
+
+    @staticmethod
+    def encrypt_decrypt_keyvaluemap(kvm_dict, secret, encrypt=True):
+        crypto_count = 0
         if kvm_dict['encrypted'] and kvm_dict['entry']:
             for idx, entry in enumerate(kvm_dict['entry']):
                 if entry.get('name') and entry.get('value'):
-                    if is_encrypted(kvm_dict['entry'][idx]['value']):
-                        decrypted = decrypt_message(secret, kvm_dict['entry'][idx]['value'])
-                        if decrypted == '':
-                            sys.exit('Incorrect symmetric key.')
-                        kvm_dict['entry'][idx]['value'] = decrypted
-                        decrypted_count += 1
-        return kvm_dict, decrypted_count
+                    if encrypt:
+                        if not is_encrypted(kvm_dict['entry'][idx]['value']):
+                            Keyvaluemaps.encrypt_value(kvm_dict, idx, secret)
+                            crypto_count += 1
+                    else:
+                        if is_encrypted(kvm_dict['entry'][idx]['value']):
+                            Keyvaluemaps.decrypt_value(kvm_dict, idx, secret)
+                            crypto_count += 1
+        return kvm_dict, crypto_count
 
     def push_keyvaluemap(self, environment, file, secret=None):
         with open(file) as f:
@@ -213,7 +215,7 @@ class Keyvaluemaps:
         loc_kvm = json.loads(body)
         if secret:
             console.echo('Decrypting... ', end='', flush=True)
-            loc_kvm, decrypted_count = self.decrypt_keyvaluemap(loc_kvm, secret)
+            loc_kvm, decrypted_count = self.encrypt_decrypt_keyvaluemap(loc_kvm, secret, encrypt=False)
             if decrypted_count:
                 console.echo('Done')
             else:

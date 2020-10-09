@@ -240,10 +240,10 @@ def push(*args, **kwargs):
 @click.option('--symmetric-key', required=True, help='symmetric secret key for encrypting')
 def encrypt_file(symmetric_key, file, verbose, silent):
     contents = read_file(file, type='json')
-    decrypted_count = 0
+    encrypted_count = 0
     console.echo('Encrypting... ', end='', flush=True)
-    contents, decrypted_count = Keyvaluemaps.encrypt_keyvaluemap(contents, symmetric_key)
-    if decrypted_count:
+    contents, encrypted_count = Keyvaluemaps.encrypt_decrypt_keyvaluemap(contents, symmetric_key, encrypt=True)
+    if encrypted_count:
         write_file(contents, file, indent=2)
         console.echo('Done')
         return contents
@@ -260,7 +260,7 @@ def decrypt_file(symmetric_key, file, verbose, silent):
     contents = read_file(file, type='json')
     decrypted_count = 0
     console.echo('Decrypting... ', end='', flush=True)
-    contents, decrypted_count = Keyvaluemaps.decrypt_keyvaluemap(contents, symmetric_key)
+    contents, decrypted_count = Keyvaluemaps.encrypt_decrypt_keyvaluemap(contents, symmetric_key, encrypt=False)
     if decrypted_count:
         write_file(contents, file, indent=2)
         console.echo('Done')
