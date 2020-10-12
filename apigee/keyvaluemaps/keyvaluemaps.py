@@ -327,4 +327,4 @@ class Keyvaluemaps:
             if e.response.status_code != 404:
                 raise e
             console.echo(f'Creating {self._map_name}')
-            console.echo(self.create_keyvaluemap_in_an_environment(environment, body).text)
+            console.echo(self.create_keyvaluemap_in_an_environment(environment, json.dumps(loc_kvm)).text)
