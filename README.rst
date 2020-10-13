@@ -88,11 +88,11 @@ This section will describe how we use the Apigee CLI to perform CI/CD and enable
 to access the Apigee Management APIs when SSO/SAML or MFA is enabled organization wide.
 
 ^^^^^^^^^^^^^
-Provisioning a custom API Proxy deployment with a single command
+Provisioning custom API Proxy deployments with a single command
 ^^^^^^^^^^^^^
 
-This section will describe how we use the Apigee CLI to enable clients to generate and deploy proxies
-from our templates on GitLab with their specified requirements with a single command.
+This section will describe how we use the Apigee CLI to enable clients to generate proxies
+from our templates on GitLab and deploy them, all with a single command.
 
 ^^^^^^^^^^^^^
 Encrypting KVMs at rest and decrypting via CI/CD
@@ -113,7 +113,7 @@ into the CLI.
 Taking snapshots of Apigee Edge
 ^^^^^^^^^^^^^
 
-This section will describe how we use the Apigee CLI to take snapshots of things on Apigee
+This section will describe how we use the Apigee CLI to take snapshots of things on Apigee Edge
 via scheduled CI/CD pipelines.
 
 ^^^^^^^^^^^^^
@@ -300,6 +300,8 @@ Getting Help
 * `Apigee Product Documentation`_
 * `GitHub`_
 * `Mirror`_
+
+For further questions, feel free to contact us at hello@darumatic.com or contact matthew@darumatic.com.
 
 ----------
 Next Steps
