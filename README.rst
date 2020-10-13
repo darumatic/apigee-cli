@@ -6,19 +6,6 @@ apigee-cli
 
 Welcome to the Apigee Management API command-line interface!
 
-This is not an officially supported Google product, and is not affiliated with Apigee or Google in any way.
-
-Apigee CLI is a user-friendly command-line interface to the Apigee Management API providing
-features that automate steps that are too cumbersome to perform manually or are non-existent
-in existing tools such as multi-factor authentication (MFA) and single sign-on (SSO)/SAML.
-
-It is intended for general administrative use from your shell, as a package for developers,
-and to support automation for common development tasks, such as test automation
-or Continuous Integration/Continuous Deployment (CI/CD).
-
-Please note that this CLI is still highly experimental and may change significantly
-based on client needs.
-
 .. code-block:: text
 
     Usage: apigee [OPTIONS] COMMAND [ARGS]...
@@ -55,6 +42,84 @@ based on client needs.
       userroles      Roles for users in an organization on Apigee Edge.
       virtualhosts   A named network configuration (including URL) for an...
 
+
+This is not an officially supported Google product, and is not affiliated with Apigee or Google in any way.
+
+Please note that this CLI is still highly experimental and may change significantly
+based on client needs.
+
+--------------------
+Why does this exist?
+--------------------
+
+Apigee CLI is a user-friendly command-line interface to the Apigee Management API providing
+features that automate steps that are too cumbersome to perform manually or are non-existent
+in existing tools such as multi-factor authentication (MFA) and single sign-on (SSO)/SAML.
+It is intended for general administrative use from your shell, as a package for developers,
+and to support automation for common development tasks, such as test automation
+or Continuous Integration/Continuous Deployment (CI/CD).
+
+We built and use the Apigee CLI to implement and distribute features that allow our clients
+to manage CI/CD and perform self-service operations and promote our DevOps workflows
+in ways that are not supported by official tools. Additionally, we constantly add new features
+and make improvements to the CLI to make it more user-friendly based on client needs and feedback.
+
+The Apigee CLI also supports the ability to load third-party plugins (to be documented)
+as additional commands which enables us (and third-party developers) to distribute their own commands
+for very specific use cases which may not even require any interaction with the Apigee Management API,
+while being able to leverage the command-line interface without any knowledge of the CLI internals.
+
+Apigee Corporation provides their own CLI for the Apigee Management API known as `apigeetool-node`_.
+This is a comprehensive and well-supported tool which can also be used as an SDK to orchestrate tasks
+and may be more than suitable for your needs.
+If however, you have certain use cases that cannot be satisfied by this tool,
+such as those requiring a more simplified use of CLI commands with CI/CD in mind,
+then the Apigee CLI may have what you need.
+
+Example use cases that are too specialised for official tools are (to be) documented below.
+
+^^^^^^^^^^^^^
+Making CI/CD work on SSO/SAML and MFA enabled Apigee organizations
+^^^^^^^^^^^^^
+
+This section will describe how we use the Apigee CLI to perform CI/CD and enable clients
+to access the Apigee Management APIs when SSO/SAML or MFA is enabled organization wide.
+
+^^^^^^^^^^^^^
+Provisioning a custom API Proxy deployment with a single command
+^^^^^^^^^^^^^
+
+This section will describe how we use the Apigee CLI to enable clients to generate and deploy proxies
+from our templates on GitLab with their specified requirements with a single command.
+
+^^^^^^^^^^^^^
+Encrypting KVMs at rest and decrypting at runtime for CI/CD
+^^^^^^^^^^^^^
+
+This section will describe how we use the Apigee CLI to encrypt KVM secrets and rest
+and we the CLI can decrypt those secrets and deploy them to Apigee via CI/CD.
+
+^^^^^^^^^^^^^
+Distributing and developing third-party plugins as commands
+^^^^^^^^^^^^^
+
+This section will describe how we use the Apigee CLI to distribute custom commands for clients,
+and even give them the ability to develop their own commands that can be dynamically loaded
+into the CLI.
+
+^^^^^^^^^^^^^
+Taking snapshots of Apigee
+^^^^^^^^^^^^^
+
+This section will describe how we use the Apigee CLI to take snapshots of things on Apigee
+via scheduled CI/CD pipelines.
+
+^^^^^^^^^^^^^
+Using resource permissions as templates for new roles
+^^^^^^^^^^^^^
+
+This section will describe how we use the Apigee CLI to distribute resource permission templates
+that can be used to automate duplication or modification of resource permissions across user roles.
 
 ------------
 Installation
@@ -207,7 +272,7 @@ To only show which revisions will be deleted but not actually delete anything, u
 ^^^^^^^^^^^^^
 Push commands
 ^^^^^^^^^^^^^
-Some commands support the ``push`` subcommand which combines CRUD API calls to manage the creation, update and sometimes deletion of resources using a single command.
+Some commands support the ``push`` subcommand which combines API calls to manage the creation, update and sometimes deletion of resources using a single command.
 
 Push commands read JSON from a file and can be invoked like so::
 
@@ -218,20 +283,12 @@ This will create the KVM if it does not exist, and update it if it does.
 -------------
 More Commands
 -------------
-For more commands, examples and use cases, please refer to <https://github.com/mdelotavo/apigee-cli-docs>.
+This will be documented soon.
 
-Some notable pages:
-
-* `Commands cheatsheet`_
-* `Using SAML with automated tasks`_
-* `Tabulating deployments`_
-* `Tabulating resource permissions`_
-* `Troubleshooting`_
-
--------
-Plugins
--------
-Commands (plugins) can be dynamically loaded into the CLI at runtime. This will be documented soon.
+-------------------
+Third-party plugins
+-------------------
+This will be documented soon.
 
 ------------
 Getting Help
@@ -254,6 +311,8 @@ Disclaimer
 ----------
 This is not an officially supported Google product.
 
+
+.. _`apigeetool-node`: https://github.com/apigee/apigeetool-node
 
 .. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
     :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
