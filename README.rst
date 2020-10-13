@@ -78,9 +78,9 @@ as additional commands which enables us (and third-party developers) to distribu
 for very specific use cases which may not even require any interaction with the Apigee Management API,
 while being able to leverage the command-line interface without any knowledge of the CLI internals.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-When would you use this over the official tool
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When to use this over the official tool
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Apigee Corporation provides their own CLI for the Apigee Management API known as `apigeetool-node`_.
 This is a comprehensive and well-supported tool which can also be used as an SDK to orchestrate tasks
