@@ -92,14 +92,15 @@ Provisioning custom API Proxy deployments with a single command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to enable clients to generate proxies
-from proxy templates on GitLab and deploy them, all with a single command.
+from proxy templates on GitLab (enforcing conventions and best practices) and deploy them,
+all with a single command.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Encrypting KVMs at rest and decrypting via CI/CD
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This section will describe how we use the Apigee CLI to encrypt KVM secrets and rest
-and we the CLI can decrypt those secrets and deploy them to Apigee via CI/CD.
+This section will describe how we use the Apigee CLI to encrypt KVM secrets at rest
+and later decrypt those secrets and deploy them to Apigee Edge via CI/CD.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Distributing and developing third-party plugins as commands
