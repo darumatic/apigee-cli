@@ -117,7 +117,7 @@ This section will describe how we use the Apigee CLI to take snapshots of things
 via scheduled CI/CD pipelines.
 
 ^^^^^^^^^^^^^
-Using resource permissions as templates for new roles
+Using resource permissions as templates
 ^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to distribute resource permission templates
