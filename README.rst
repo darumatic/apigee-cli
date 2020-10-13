@@ -75,7 +75,7 @@ Apigee Corporation provides their own CLI for the Apigee Management API known as
 This is a comprehensive and well-supported tool which can also be used as an SDK to orchestrate tasks
 and may be more than suitable for your needs.
 If however, you have certain use cases that cannot be satisfied by this tool,
-such as those requiring a more simplified use of CLI commands with CI/CD in mind,
+such as those requiring a more simplified use of CLI commands for CI/CD usage,
 then the Apigee CLI may have what you need.
 
 Example use cases that are too specialised for official tools are (to be) documented below.
