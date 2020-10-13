@@ -80,45 +80,45 @@ then the Apigee CLI may have what you need.
 
 Example use cases that are too specialised for official tools are (to be) documented below.
 
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Making CI/CD work on SSO/SAML and MFA enabled Apigee Edge organizations
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to perform CI/CD and enable clients
 to access the Apigee Management APIs when SSO/SAML or MFA is enabled organization wide.
 
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Provisioning custom API Proxy deployments with a single command
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to enable clients to generate proxies
 from proxy templates on GitLab and deploy them, all with a single command.
 
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Encrypting KVMs at rest and decrypting via CI/CD
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to encrypt KVM secrets and rest
 and we the CLI can decrypt those secrets and deploy them to Apigee via CI/CD.
 
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Distributing and developing third-party plugins as commands
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to distribute custom commands for clients,
 and even give them the ability to develop their own commands that can be dynamically loaded
 into the CLI.
 
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Taking snapshots of Apigee Edge
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to take snapshots of things on Apigee Edge
 via scheduled CI/CD pipelines.
 
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Using resource permissions as templates
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to distribute resource permission templates
 that can be used to automate creation of resource permissions across user roles.
