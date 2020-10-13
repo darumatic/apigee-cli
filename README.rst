@@ -90,7 +90,7 @@ such as those requiring a more simplified use of CLI commands for CI/CD usage,
 then the Apigee CLI may have what you need.
 
 ^^^^^^^^^^^^^^^^^^^^^
-Specialised Use cases
+Specialised use cases
 ^^^^^^^^^^^^^^^^^^^^^
 
 Some use cases that are too specialised for official tools are (to be found with relevant links) below.
