@@ -78,9 +78,9 @@ as additional commands which enables us (and third-party developers) to distribu
 for very specific use cases which may not even require any interaction with the Apigee Management API,
 while being able to leverage the command-line interface without any knowledge of the CLI internals.
 
-^^^^^^^^^^^^^^^^^
-The existing tool
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When would you use this over the official tool
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Apigee Corporation provides their own CLI for the Apigee Management API known as `apigeetool-node`_.
 This is a comprehensive and well-supported tool which can also be used as an SDK to orchestrate tasks
@@ -90,10 +90,10 @@ such as those requiring a more simplified use of CLI commands for CI/CD usage,
 then the Apigee CLI may have what you need.
 
 ^^^^^^^^^^^^^^^^^^^^^
-Specialised use cases
+Specialised Use cases
 ^^^^^^^^^^^^^^^^^^^^^
 
-Example use cases that are too specialised for official tools are (to be found with relevant links) below.
+Some use cases that are too specialised for official tools are (to be found with relevant links) below.
 
 * Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations
 * Provisioning custom API Proxy deployments with a single command
