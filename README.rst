@@ -92,7 +92,7 @@ Provisioning custom API Proxy deployments with a single command
 ^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to enable clients to generate proxies
-from our templates on GitLab and deploy them, all with a single command.
+from proxy templates on GitLab and deploy them, all with a single command.
 
 ^^^^^^^^^^^^^
 Encrypting KVMs at rest and decrypting via CI/CD
@@ -121,7 +121,7 @@ Using resource permissions as templates
 ^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to distribute resource permission templates
-that can be used to automate duplication or modification of resource permissions across user roles.
+that can be used to automate creation of resource permissions across user roles.
 
 ------------
 Installation
