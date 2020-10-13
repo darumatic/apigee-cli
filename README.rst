@@ -55,21 +55,32 @@ Why does this exist?
 --------------------
 
 Apigee CLI is a user-friendly command-line interface to the Apigee Edge Management API providing
-features that automate steps that are too cumbersome to perform manually or are non-existent
-in existing tools such as multi-factor authentication (MFA) and single sign-on (SSO)/SAML.
+automation capabilities with multi-factor authentication (MFA) and single sign-on (SSO)/SAML support.
 It is intended for general administrative use from your shell, as a package for developers,
 and to support automation for common development tasks, such as test automation
 or Continuous Integration/Continuous Deployment (CI/CD).
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+How we and our clients use it
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We built and use the Apigee CLI to implement and distribute features that allow our clients
 to manage CI/CD and perform self-service operations and promote our DevOps workflows
 in ways that are not supported by official tools. Additionally, we constantly add new features
 and make improvements to the CLI to make it more user-friendly based on client needs and feedback.
 
+^^^^^^^^^^^^^^^^^^^
+Third-party plugins
+^^^^^^^^^^^^^^^^^^^
+
 The Apigee CLI also supports the ability to load third-party plugins (to be documented)
 as additional commands which enables us (and third-party developers) to distribute their own commands
 for very specific use cases which may not even require any interaction with the Apigee Management API,
 while being able to leverage the command-line interface without any knowledge of the CLI internals.
+
+^^^^^^^^^^^^^^^^^
+The existing tool
+^^^^^^^^^^^^^^^^^
 
 Apigee Corporation provides their own CLI for the Apigee Management API known as `apigeetool-node`_.
 This is a comprehensive and well-supported tool which can also be used as an SDK to orchestrate tasks
@@ -78,51 +89,18 @@ If however, you have certain use cases that cannot be satisfied by this tool,
 such as those requiring a more simplified use of CLI commands for CI/CD usage,
 then the Apigee CLI may have what you need.
 
-Example use cases that are too specialised for official tools are (to be) documented below.
+^^^^^^^^^^^^^^^^^^^^^
+Specialised use cases
+^^^^^^^^^^^^^^^^^^^^^
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Making CI/CD work on SSO/SAML and MFA enabled Apigee Edge organizations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Example use cases that are too specialised for official tools are (to be found with relevant links) below.
 
-This section will describe how we use the Apigee CLI to perform CI/CD and enable clients
-to access the Apigee Management APIs when SSO/SAML or MFA is enabled organization wide.
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Provisioning custom API Proxy deployments with a single command
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This section will describe how we use the Apigee CLI to enable clients to generate proxies
-from proxy templates on GitLab (enforcing conventions and best practices) and deploy them,
-all with a single command.
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Encrypting KVMs at rest and decrypting via CI/CD
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This section will describe how we use the Apigee CLI to encrypt KVM secrets at rest
-and later decrypt those secrets and deploy them to Apigee Edge via CI/CD.
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Distributing and developing third-party plugins as commands
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This section will describe how we use the Apigee CLI to distribute custom commands for clients,
-and even give them the ability to develop their own commands that can be dynamically loaded
-into the CLI.
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Taking snapshots of Apigee Edge
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This section will describe how we use the Apigee CLI to take snapshots of things on Apigee Edge
-via scheduled CI/CD pipelines.
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Using resource permissions as templates
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This section will describe how we use the Apigee CLI to distribute resource permission templates
-that can be used to automate creation of resource permissions across user roles.
+* Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations
+* Provisioning custom API Proxy deployments with a single command
+* Encrypting KVMs at rest and decrypting via CI/CD
+* Distributing and developing third-party plugins as commands
+* Taking snapshots of Apigee Edge
+* Using resource permissions as templates
 
 ------------
 Installation
