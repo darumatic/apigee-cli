@@ -95,7 +95,7 @@ This section will describe how we use the Apigee CLI to enable clients to genera
 from our templates on GitLab with their specified requirements with a single command.
 
 ^^^^^^^^^^^^^
-Encrypting KVMs at rest and decrypting at runtime for CI/CD
+Encrypting KVMs at rest and decrypting via CI/CD
 ^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to encrypt KVM secrets and rest
