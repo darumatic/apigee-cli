@@ -54,7 +54,7 @@ based on client needs.
 Why does this exist?
 --------------------
 
-Apigee CLI is a user-friendly command-line interface to the Apigee Management API providing
+Apigee CLI is a user-friendly command-line interface to the Apigee Edge Management API providing
 features that automate steps that are too cumbersome to perform manually or are non-existent
 in existing tools such as multi-factor authentication (MFA) and single sign-on (SSO)/SAML.
 It is intended for general administrative use from your shell, as a package for developers,
@@ -81,7 +81,7 @@ then the Apigee CLI may have what you need.
 Example use cases that are too specialised for official tools are (to be) documented below.
 
 ^^^^^^^^^^^^^
-Making CI/CD work on SSO/SAML and MFA enabled Apigee organizations
+Making CI/CD work on SSO/SAML and MFA enabled Apigee Edge organizations
 ^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to perform CI/CD and enable clients
@@ -110,7 +110,7 @@ and even give them the ability to develop their own commands that can be dynamic
 into the CLI.
 
 ^^^^^^^^^^^^^
-Taking snapshots of Apigee
+Taking snapshots of Apigee Edge
 ^^^^^^^^^^^^^
 
 This section will describe how we use the Apigee CLI to take snapshots of things on Apigee
