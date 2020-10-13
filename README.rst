@@ -48,6 +48,8 @@ This is not an officially supported Google product, and is not affiliated with A
 Please note that this CLI is still highly experimental and may change significantly
 based on client needs.
 
+.. contents:: :local:
+
 --------------------
 Why does this exist?
 --------------------
