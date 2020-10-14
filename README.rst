@@ -96,16 +96,20 @@ Third-party plugins
 
 The Apigee CLI also supports the ability to load third-party plugins (to be documented)
 as additional commands which enables us (and third-party developers) to distribute their own commands
-for very specific use cases which may not even require any interaction with the Apigee Management API,
+for very specific use cases, including those do not require any interaction with the Apigee Management API,
 while being able to leverage the command-line interface without any knowledge of the CLI internals.
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 When to use this over the official tool
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Apigee Corporation provides their own CLI for the Apigee Management API: `apigeetool-node`_.
+Apigee Corporation provides their own CLI for the Apigee Management API:
+
+GitHub repo at `apigeetool-node`_.
+
 It is fully-featured, well-supported and can be used as an SDK to orchestrate tasks
 and may be more than suitable for your needs.
+
 If however, you have certain use cases that cannot be satisfied by this tool,
 then the Apigee CLI may have what you need.
 
@@ -113,7 +117,7 @@ then the Apigee CLI may have what you need.
 Specialised use cases
 ^^^^^^^^^^^^^^^^^^^^^
 
-Some use cases that are too specialised for official tools are (to be found with relevant links) below.
+Some use cases that are too specialised for official tools are listed below (links and docs coming soon).
 
 * Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations while allowing clients to perform self-service operations using their personal accounts (MFA) or after authenticating with their identity provider (SSO/SAML)
 * Provisioning API proxy deployments generated from best practice templates
@@ -122,11 +126,13 @@ Some use cases that are too specialised for official tools are (to be found with
 * Encrypting KVMs at rest and decrypting during CI/CD
 * Taking and restoring snapshots of Apigee Edge
 
+Some of these use cases require plugins. These will be documented and made available soon.
+
 ---------------
 Getting Started
 ---------------
 
-Before using apigee-cli, you need to tell it about your Apigee Edge credentials.  You
+Before using apigee-cli, you need to tell it about your Apigee Edge credentials. You
 can do this in three ways:
 
 * Environment variables
