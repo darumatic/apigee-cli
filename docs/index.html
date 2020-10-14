@@ -266,20 +266,21 @@ and make improvements to the CLI to make it more user-friendly based on client n
 <h4><a class="toc-backref" href="#id5">Third-party plugins</a><a class="headerlink" href="#third-party-plugins" title="Permalink to this headline">¶</a></h4>
 <p>The Apigee CLI also supports the ability to load third-party plugins (to be documented)
 as additional commands which enables us (and third-party developers) to distribute their own commands
-for very specific use cases which may not even require any interaction with the Apigee Management API,
+for very specific use cases, including those do not require any interaction with the Apigee Management API,
 while being able to leverage the command-line interface without any knowledge of the CLI internals.</p>
 </div>
 <div class="section" id="when-to-use-this-over-the-official-tool">
 <h4><a class="toc-backref" href="#id6">When to use this over the official tool</a><a class="headerlink" href="#when-to-use-this-over-the-official-tool" title="Permalink to this headline">¶</a></h4>
-<p>Apigee Corporation provides their own CLI for the Apigee Management API: <a class="reference external" href="https://github.com/apigee/apigeetool-node">apigeetool-node</a>.
-It is fully-featured, well-supported and can be used as an SDK to orchestrate tasks
-and may be more than suitable for your needs.
-If however, you have certain use cases that cannot be satisfied by this tool,
+<p>Apigee Corporation provides their own CLI for the Apigee Management API:</p>
+<p>GitHub repo at <a class="reference external" href="https://github.com/apigee/apigeetool-node">apigeetool-node</a>.</p>
+<p>It is fully-featured, well-supported and can be used as an SDK to orchestrate tasks
+and may be more than suitable for your needs.</p>
+<p>If however, you have certain use cases that cannot be satisfied by this tool,
 then the Apigee CLI may have what you need.</p>
 </div>
 <div class="section" id="specialised-use-cases">
 <h4><a class="toc-backref" href="#id7">Specialised use cases</a><a class="headerlink" href="#specialised-use-cases" title="Permalink to this headline">¶</a></h4>
-<p>Some use cases that are too specialised for official tools are (to be found with relevant links) below.</p>
+<p>Some use cases that are too specialised for official tools are listed below (links and docs coming soon).</p>
 <ul class="simple">
 <li><p>Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations while allowing clients to perform self-service operations using their personal accounts (MFA) or after authenticating with their identity provider (SSO/SAML)</p></li>
 <li><p>Provisioning API proxy deployments generated from best practice templates</p></li>
@@ -288,11 +289,12 @@ then the Apigee CLI may have what you need.</p>
 <li><p>Encrypting KVMs at rest and decrypting during CI/CD</p></li>
 <li><p>Taking and restoring snapshots of Apigee Edge</p></li>
 </ul>
+<p>Some of these use cases require plugins. These will be documented and made available soon.</p>
 </div>
 </div>
 <div class="section" id="getting-started">
 <h3><a class="toc-backref" href="#id8">Getting Started</a><a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h3>
-<p>Before using apigee-cli, you need to tell it about your Apigee Edge credentials.  You
+<p>Before using apigee-cli, you need to tell it about your Apigee Edge credentials. You
 can do this in three ways:</p>
 <ul class="simple">
 <li><p>Environment variables</p></li>
