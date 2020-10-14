@@ -258,7 +258,7 @@ or Continuous Integration/Continuous Deployment (CI/CD).</p>
 <div class="section" id="how-we-and-our-clients-use-it">
 <h4><a class="toc-backref" href="#id4">How we and our clients use it</a><a class="headerlink" href="#how-we-and-our-clients-use-it" title="Permalink to this headline">¶</a></h4>
 <p>We built and use the Apigee CLI to implement and distribute features that allow our clients
-to manage CI/CD and perform self-service operations and promote our DevOps workflows
+to manage CI/CD, perform self-service operations and promote our DevOps workflows
 in ways that are not supported by official tools. Additionally, we constantly add new features
 and make improvements to the CLI to make it more user-friendly based on client needs and feedback.</p>
 </div>
@@ -271,23 +271,22 @@ while being able to leverage the command-line interface without any knowledge of
 </div>
 <div class="section" id="when-to-use-this-over-the-official-tool">
 <h4><a class="toc-backref" href="#id6">When to use this over the official tool</a><a class="headerlink" href="#when-to-use-this-over-the-official-tool" title="Permalink to this headline">¶</a></h4>
-<p>Apigee Corporation provides their own CLI for the Apigee Management API known as <a class="reference external" href="https://github.com/apigee/apigeetool-node">apigeetool-node</a>.
-This is a comprehensive and well-supported tool which can also be used as an SDK to orchestrate tasks
+<p>Apigee Corporation provides their own CLI for the Apigee Management API: <a class="reference external" href="https://github.com/apigee/apigeetool-node">apigeetool-node</a>.
+It is fully-featured, well-supported and can be used as an SDK to orchestrate tasks
 and may be more than suitable for your needs.
 If however, you have certain use cases that cannot be satisfied by this tool,
-such as those requiring a more simplified use of CLI commands for CI/CD usage,
 then the Apigee CLI may have what you need.</p>
 </div>
 <div class="section" id="specialised-use-cases">
 <h4><a class="toc-backref" href="#id7">Specialised use cases</a><a class="headerlink" href="#specialised-use-cases" title="Permalink to this headline">¶</a></h4>
 <p>Some use cases that are too specialised for official tools are (to be found with relevant links) below.</p>
 <ul class="simple">
-<li><p>Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations</p></li>
-<li><p>Provisioning custom API Proxy deployments with a single command</p></li>
-<li><p>Encrypting KVMs at rest and decrypting via CI/CD</p></li>
+<li><p>Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations while allowing clients to perform self-service operations using their personal accounts (MFA) or after authenticating with their identity provider (SSO/SAML)</p></li>
+<li><p>Provisioning API proxy deployments generated from best practice templates</p></li>
+<li><p>Using resource permissions files as templates for team user roles</p></li>
 <li><p>Distributing and developing third-party plugins as commands</p></li>
-<li><p>Taking snapshots of Apigee Edge</p></li>
-<li><p>Using resource permissions as templates</p></li>
+<li><p>Encrypting KVMs at rest and decrypting during CI/CD</p></li>
+<li><p>Taking and restoring snapshots of Apigee Edge</p></li>
 </ul>
 </div>
 </div>
