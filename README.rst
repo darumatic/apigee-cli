@@ -86,7 +86,7 @@ How we and our clients use it
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We built and use the Apigee CLI to implement and distribute features that allow our clients
-to manage CI/CD and perform self-service operations and promote our DevOps workflows
+to manage CI/CD, perform self-service operations and promote our DevOps workflows
 in ways that are not supported by official tools. Additionally, we constantly add new features
 and make improvements to the CLI to make it more user-friendly based on client needs and feedback.
 
@@ -103,11 +103,10 @@ while being able to leverage the command-line interface without any knowledge of
 When to use this over the official tool
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Apigee Corporation provides their own CLI for the Apigee Management API known as `apigeetool-node`_.
-This is a comprehensive and well-supported tool which can also be used as an SDK to orchestrate tasks
+Apigee Corporation provides their own CLI for the Apigee Management API: `apigeetool-node`_.
+It is fully-featured, well-supported and can be used as an SDK to orchestrate tasks
 and may be more than suitable for your needs.
 If however, you have certain use cases that cannot be satisfied by this tool,
-such as those requiring a more simplified use of CLI commands for CI/CD usage,
 then the Apigee CLI may have what you need.
 
 ^^^^^^^^^^^^^^^^^^^^^
@@ -116,12 +115,12 @@ Specialised use cases
 
 Some use cases that are too specialised for official tools are (to be found with relevant links) below.
 
-* Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations
-* Provisioning custom API Proxy deployments with a single command
-* Encrypting KVMs at rest and decrypting via CI/CD
+* Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations while allowing clients to perform self-service operations using their personal accounts (MFA) or after authenticating with their identity provider (SSO/SAML)
+* Provisioning API proxy deployments generated from best practice templates
+* Using resource permissions files as templates for team user roles
 * Distributing and developing third-party plugins as commands
-* Taking snapshots of Apigee Edge
-* Using resource permissions as templates
+* Encrypting KVMs at rest and decrypting during CI/CD
+* Taking and restoring snapshots of Apigee Edge
 
 ---------------
 Getting Started
