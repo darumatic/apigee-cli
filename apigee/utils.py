@@ -29,7 +29,6 @@ def make_dirs(path):
 
 def path_exists(file):
     if os.path.exists(file):
-        # sys.exit(f"error: {os.path.abspath(file)} already exists")
         sys.exit(f'error: {file} already exists')
 
 
