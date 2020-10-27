@@ -20,6 +20,14 @@ apigee.permissions.permissions module
    :undoc-members:
    :show-inheritance:
 
+apigee.permissions.serializer module
+------------------------------------
+
+.. automodule:: apigee.permissions.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

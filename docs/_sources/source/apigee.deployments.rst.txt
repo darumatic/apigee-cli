@@ -20,6 +20,14 @@ apigee.deployments.deployments module
    :undoc-members:
    :show-inheritance:
 
+apigee.deployments.serializer module
+------------------------------------
+
+.. automodule:: apigee.deployments.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

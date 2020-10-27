@@ -12,6 +12,14 @@ apigee.sharedflows.commands module
    :undoc-members:
    :show-inheritance:
 
+apigee.sharedflows.serializer module
+------------------------------------
+
+.. automodule:: apigee.sharedflows.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.sharedflows.sharedflows module
 -------------------------------------
 

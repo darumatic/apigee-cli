@@ -20,6 +20,14 @@ apigee.apiproducts.commands module
    :undoc-members:
    :show-inheritance:
 
+apigee.apiproducts.serializer module
+------------------------------------
+
+.. automodule:: apigee.apiproducts.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

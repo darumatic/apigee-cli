@@ -12,6 +12,14 @@ apigee.targetservers.commands module
    :undoc-members:
    :show-inheritance:
 
+apigee.targetservers.serializer module
+--------------------------------------
+
+.. automodule:: apigee.targetservers.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.targetservers.targetservers module
 -----------------------------------------
 

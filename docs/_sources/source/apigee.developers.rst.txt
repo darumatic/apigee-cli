@@ -20,6 +20,14 @@ apigee.developers.developers module
    :undoc-members:
    :show-inheritance:
 
+apigee.developers.serializer module
+-----------------------------------
+
+.. automodule:: apigee.developers.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

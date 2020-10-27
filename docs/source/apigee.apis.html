@@ -167,7 +167,7 @@
 <dl class="py class">
 <dt id="apigee.apis.apis.Apis">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.apis.apis.</code><code class="sig-name descname">Apis</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#apigee.apis.apis.IApis" title="apigee.apis.apis.IApis"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.apis.apis.IApis</span></code></a>, <a class="reference internal" href="#apigee.apis.apis.IPull" title="apigee.apis.apis.IPull"><code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.apis.apis.IPull</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.apis.interfaces.apis_interface.InformalApisInterface</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">apigee.apis.interfaces.pull_interface.InformalPullInterface</span></code></p>
 <dl class="py method">
 <dt id="apigee.apis.apis.Apis.delete_api_proxy_revision">
 <code class="sig-name descname">delete_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.delete_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
@@ -295,84 +295,6 @@
 
 </dd></dl>
 
-<dl class="py class">
-<dt id="apigee.apis.apis.ApisSerializer">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.apis.apis.</code><code class="sig-name descname">ApisSerializer</code><a class="headerlink" href="#apigee.apis.apis.ApisSerializer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="apigee.apis.apis.ApisSerializer.serialize_details">
-<code class="sig-name descname">serialize_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">apis</span></em>, <em class="sig-param"><span class="n">format</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.ApisSerializer.serialize_details" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="apigee.apis.apis.IApis">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.apis.apis.</code><code class="sig-name descname">IApis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">org_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.IApis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="apigee.apis.apis.IApis.auth">
-<em class="property">property </em><code class="sig-name descname">auth</code><a class="headerlink" href="#apigee.apis.apis.IApis.auth" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.IApis.org_name">
-<em class="property">property </em><code class="sig-name descname">org_name</code><a class="headerlink" href="#apigee.apis.apis.IApis.org_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="apigee.apis.apis.IPull">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.apis.apis.</code><code class="sig-name descname">IPull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">org_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">work_tree</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.IPull" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="apigee.apis.apis.IPull.apiproxy_dir">
-<em class="property">property </em><code class="sig-name descname">apiproxy_dir</code><a class="headerlink" href="#apigee.apis.apis.IPull.apiproxy_dir" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.IPull.auth">
-<em class="property">property </em><code class="sig-name descname">auth</code><a class="headerlink" href="#apigee.apis.apis.IPull.auth" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.IPull.caches_dir">
-<em class="property">property </em><code class="sig-name descname">caches_dir</code><a class="headerlink" href="#apigee.apis.apis.IPull.caches_dir" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.IPull.environment">
-<em class="property">property </em><code class="sig-name descname">environment</code><a class="headerlink" href="#apigee.apis.apis.IPull.environment" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.IPull.keyvaluemaps_dir">
-<em class="property">property </em><code class="sig-name descname">keyvaluemaps_dir</code><a class="headerlink" href="#apigee.apis.apis.IPull.keyvaluemaps_dir" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.IPull.org_name">
-<em class="property">property </em><code class="sig-name descname">org_name</code><a class="headerlink" href="#apigee.apis.apis.IPull.org_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.IPull.revision_number">
-<em class="property">property </em><code class="sig-name descname">revision_number</code><a class="headerlink" href="#apigee.apis.apis.IPull.revision_number" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.IPull.targetservers_dir">
-<em class="property">property </em><code class="sig-name descname">targetservers_dir</code><a class="headerlink" href="#apigee.apis.apis.IPull.targetservers_dir" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.IPull.zip_file">
-<em class="property">property </em><code class="sig-name descname">zip_file</code><a class="headerlink" href="#apigee.apis.apis.IPull.zip_file" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 </div>
 <div class="section" id="module-apigee.apis.commands">
 <span id="apigee-apis-commands-module"></span><h2>apigee.apis.commands module<a class="headerlink" href="#module-apigee.apis.commands" title="Permalink to this headline">¶</a></h2>
@@ -424,6 +346,20 @@
 <dt id="apigee.apis.deploy.printDeployments">
 <code class="sig-prename descclassname">apigee.apis.deploy.</code><code class="sig-name descname">printDeployments</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dep</span></em>, <em class="sig-param"><span class="n">check_revision</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.deploy.printDeployments" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</div>
+<div class="section" id="module-apigee.apis.serializer">
+<span id="apigee-apis-serializer-module"></span><h2>apigee.apis.serializer module<a class="headerlink" href="#module-apigee.apis.serializer" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="apigee.apis.serializer.ApisSerializer">
+<em class="property">class </em><code class="sig-prename descclassname">apigee.apis.serializer.</code><code class="sig-name descname">ApisSerializer</code><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="apigee.apis.serializer.ApisSerializer.serialize_details">
+<code class="sig-name descname">serialize_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">apis</span></em>, <em class="sig-param"><span class="n">format</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.serialize_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="module-apigee.apis">

@@ -20,6 +20,14 @@ apigee.references.references module
    :undoc-members:
    :show-inheritance:
 
+apigee.references.serializer module
+-----------------------------------
+
+.. automodule:: apigee.references.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

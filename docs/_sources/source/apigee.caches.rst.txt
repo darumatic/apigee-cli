@@ -20,6 +20,14 @@ apigee.caches.commands module
    :undoc-members:
    :show-inheritance:
 
+apigee.caches.serializer module
+-------------------------------
+
+.. automodule:: apigee.caches.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

@@ -20,6 +20,14 @@ apigee.maskconfigs.maskconfigs module
    :undoc-members:
    :show-inheritance:
 
+apigee.maskconfigs.serializer module
+------------------------------------
+
+.. automodule:: apigee.maskconfigs.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

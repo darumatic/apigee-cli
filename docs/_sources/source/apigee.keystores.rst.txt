@@ -20,6 +20,14 @@ apigee.keystores.keystores module
    :undoc-members:
    :show-inheritance:
 
+apigee.keystores.serializer module
+----------------------------------
+
+.. automodule:: apigee.keystores.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------

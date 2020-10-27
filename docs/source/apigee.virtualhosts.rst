@@ -12,6 +12,14 @@ apigee.virtualhosts.commands module
    :undoc-members:
    :show-inheritance:
 
+apigee.virtualhosts.serializer module
+-------------------------------------
+
+.. automodule:: apigee.virtualhosts.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.virtualhosts.virtualhosts module
 ---------------------------------------
 

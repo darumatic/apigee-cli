@@ -28,6 +28,14 @@ apigee.apis.deploy module
    :undoc-members:
    :show-inheritance:
 
+apigee.apis.serializer module
+-----------------------------
+
+.. automodule:: apigee.apis.serializer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 
 Module contents
 ---------------
