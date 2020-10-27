@@ -16,17 +16,7 @@ def apps():
 
 
 def _create_developer_app(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    developer,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, developer, body, **kwargs
 ):
     return (
         Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None)
@@ -84,9 +74,7 @@ def _create_empty_developer_app(
 ):
     return (
         Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .create_empty_developer_app(
-            developer, display_name=display_name, callback_url=callback_url
-        )
+        .create_empty_developer_app(developer, display_name=display_name, callback_url=callback_url)
         .text
     )
 
@@ -150,9 +138,7 @@ def _list_developer_apps(
 ):
     return Apps(
         gen_auth(username, password, mfa_secret, token, zonename), org, None
-    ).list_developer_apps(
-        developer, prefix=prefix, expand=expand, count=count, startkey=startkey
-    )
+    ).list_developer_apps(developer, prefix=prefix, expand=expand, count=count, startkey=startkey)
 
 
 @apps.command(
@@ -248,16 +234,10 @@ def _create_a_consumer_key_and_secret(
 )
 @optgroup.option('--consumer-key', default=None, help="")
 @optgroup.option(
-    '--key-length',
-    type=click.INT,
-    default=32,
-    show_default=True,
-    help='length of the consumer key',
+    '--key-length', type=click.INT, default=32, show_default=True, help='length of the consumer key'
 )
 @optgroup.group(
-    'consumerSecret options',
-    cls=MutuallyExclusiveOptionGroup,
-    help='The consumerSecret options',
+    'consumerSecret options', cls=MutuallyExclusiveOptionGroup, help='The consumerSecret options'
 )
 @optgroup.option('--consumer-secret', default=None, help="")
 @optgroup.option(
@@ -269,9 +249,7 @@ def _create_a_consumer_key_and_secret(
 )
 @click.option('--key-suffix', default=None, help="")
 @click.option(
-    '--key-delimiter',
-    default='-',
-    help='separates consumerKey and key suffix with a delimiter.',
+    '--key-delimiter', default='-', help='separates consumerKey and key suffix with a delimiter.'
 )
 # @click.option("products", "--products", multiple=True, default=[], help="A list of API products to be associated with the app's credentials")
 @click.option(
@@ -292,9 +270,7 @@ def create_creds(*args, **kwargs):
 #     pass
 
 
-def _restore_app(
-    username, password, mfa_secret, token, zonename, org, profile, file, **kwargs
-):
+def _restore_app(username, password, mfa_secret, token, zonename, org, profile, file, **kwargs):
     return (
         Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None)
         .restore_app(file)

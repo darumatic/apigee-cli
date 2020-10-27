@@ -4,6 +4,7 @@ import requests
 from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee.sharedflows.serializer import SharedflowsSerializer
 
 GET_A_LIST_OF_SHARED_FLOWS_PATH = '{api_url}/v1/organizations/{org}/sharedflows'
 IMPORT_A_SHARED_FLOW_PATH = '{api_url}/v1/organizations/{org}/sharedflows'
@@ -25,25 +26,6 @@ GET_SHARED_FLOW_DEPLOYMENTS_PATH = (
 GET_SHARED_FLOW_REVISIONS_PATH = (
     '{api_url}/v1/organizations/{org}/sharedflows/{shared_flow_name}/revisions'
 )
-
-
-class SharedflowsSerializer:
-    def serialize_details(self, sharedflows, format, prefix=None):
-        resp = sharedflows
-        if format == 'text':
-            return sharedflows.text
-        sharedflows = sharedflows.json()
-        if prefix:
-            sharedflows = [
-                sharedflow for sharedflow in sharedflows if sharedflow.startswith(prefix)
-            ]
-        if format == 'json':
-            return json.dumps(sharedflows)
-        elif format == 'table':
-            pass
-        # else:
-        #     raise ValueError(format)
-        return resp
 
 
 class Sharedflows:
@@ -80,9 +62,7 @@ class Sharedflows:
         return SharedflowsSerializer().serialize_details(resp, 'json', prefix=prefix)
 
     def import_a_shared_flow(self, shared_flow_file, shared_flow_name):
-        uri = IMPORT_A_SHARED_FLOW_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name
-        )
+        uri = IMPORT_A_SHARED_FLOW_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name)
         hdrs = auth.set_header(
             self._auth, {'Accept': 'application/json', 'Content-Type': 'multipart/form-data'}
         )
@@ -128,9 +108,7 @@ class Sharedflows:
             console.echo('Done.')
         if shared_flow_file:
             revision_number = int(
-                self.import_a_shared_flow(shared_flow_file, shared_flow_name).json()[
-                    'revision'
-                ]
+                self.import_a_shared_flow(shared_flow_file, shared_flow_name).json()['revision']
             )
         uri = DEPLOY_A_SHARED_FLOW_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
@@ -157,9 +135,7 @@ class Sharedflows:
             if deployment['name'] == environment:
                 for detail in deployment['revision']:
                     revision_number = int(detail['name'])
-                    console.echo(
-                        f'Undeploying revision {revision_number}... ', end='', flush=True
-                    )
+                    console.echo(f'Undeploying revision {revision_number}... ', end='', flush=True)
                     self.undeploy_a_shared_flow(environment, shared_flow_name, revision_number)
                     console.echo('Done')
         return resp

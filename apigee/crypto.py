@@ -19,9 +19,7 @@ def encrypt_message(secret, message, encoded=True):
 
 
 def is_encrypted(message):
-    return message.startswith(ENCRYPTED_HEADER_BEGIN) and message.endswith(
-        ENCRYPTED_HEADER_END
-    )
+    return message.startswith(ENCRYPTED_HEADER_BEGIN) and message.endswith(ENCRYPTED_HEADER_END)
 
 
 def decrypt_message(secret, message, encoded=True):

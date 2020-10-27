@@ -16,17 +16,7 @@ def targetservers():
 
 
 def _create_a_targetserver(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs
 ):
     return (
         Targetservers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -118,17 +108,7 @@ def get(*args, **kwargs):
 
 
 def _update_a_targetserver(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs
 ):
     return (
         Targetservers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -156,9 +136,7 @@ def _push_targetserver(
     ).push_targetserver(environment, file)
 
 
-@targetservers.command(
-    help='Push TargetServer to Apigee. This will create/update a TargetServer.'
-)
+@targetservers.command(help='Push TargetServer to Apigee. This will create/update a TargetServer.')
 @common_auth_options
 @common_silent_options
 @common_verbose_options

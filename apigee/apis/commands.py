@@ -19,16 +19,7 @@ def apis():
 
 
 def _delete_api_proxy_revision(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    revision_number,
-    **kwargs,
+    username, password, mfa_secret, token, zonename, org, profile, name, revision_number, **kwargs
 ):
     return (
         Apis(gen_auth(username, password, mfa_secret, token, zonename), org)
@@ -129,9 +120,7 @@ def _delete_undeployed_revisions(
     default=0,
 )
 @click.option(
-    '--dry-run/--no-dry-run',
-    default=False,
-    help='show revisions to be deleted but do not delete',
+    '--dry-run/--no-dry-run', default=False, help='show revisions to be deleted but do not delete'
 )
 def clean(*args, **kwargs):
     _delete_undeployed_revisions(*args, **kwargs)
@@ -151,9 +140,7 @@ def _export_api_proxy(
     output_file=None,
     **kwargs,
 ):
-    return Apis(
-        gen_auth(username, password, mfa_secret, token, zonename), org
-    ).export_api_proxy(
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org).export_api_proxy(
         name,
         revision_number,
         fs_write=True,
@@ -176,9 +163,7 @@ def export(*args, **kwargs):
     _export_api_proxy(*args, **kwargs)
 
 
-def _get_api_proxy(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
+def _get_api_proxy(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
     return (
         Apis(gen_auth(username, password, mfa_secret, token, zonename), org)
         .get_api_proxy(name)
@@ -209,9 +194,9 @@ def _list_api_proxies(
     format='json',
     **kwargs,
 ):
-    return Apis(
-        gen_auth(username, password, mfa_secret, token, zonename), org
-    ).list_api_proxies(prefix=prefix)
+    return Apis(gen_auth(username, password, mfa_secret, token, zonename), org).list_api_proxies(
+        prefix=prefix
+    )
 
 
 @apis.command(
@@ -343,8 +328,7 @@ def _pull(
 @click.option('-r', '--revision-number', type=click.INT, help='revision number', required=True)
 @click.option('-e', '--environment', help='environment', required=True)
 @click.option(
-    '--work-tree',
-    help='set the path to the working tree (defaults to current working directory)',
+    '--work-tree', help='set the path to the working tree (defaults to current working directory)'
 )
 @click.option('--force/--no-force', '-f/-F', default=False, help='force write files')
 @click.option(

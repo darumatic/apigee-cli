@@ -36,9 +36,9 @@ def _attach_username_option(func, profile):
     username = get_credential(profile, 'username')
     username_envvar = os.environ.get(f'APIGEE_USERNAME', '')
     if username:
-        func = click.option(
-            '-u', '--username', default=username, show_default='current username'
-        )(func)
+        func = click.option('-u', '--username', default=username, show_default='current username')(
+            func
+        )
     elif username_envvar:
         func = click.option(
             '-u', '--username', default=username_envvar, show_default='current username'
@@ -52,9 +52,9 @@ def _attach_password_option(func, profile):
     password = get_credential(profile, 'password')
     password_envvar = os.environ.get(f'APIGEE_PASSWORD', '')
     if password:
-        func = click.option(
-            '-p', '--password', default=password, show_default='current password'
-        )(func)
+        func = click.option('-p', '--password', default=password, show_default='current password')(
+            func
+        )
     elif password_envvar:
         func = click.option(
             '-p', '--password', default=password_envvar, show_default='current password'
@@ -116,10 +116,7 @@ def _attach_zonename_option(func, profile):
         )(func)
     elif zonename_envvar:
         func = click.option(
-            '-z',
-            '--zonename',
-            default=zonename_envvar,
-            show_default='current identity zone name',
+            '-z', '--zonename', default=zonename_envvar, show_default='current identity zone name'
         )(func)
     else:
         func = click.option('-z', '--zonename', help='identity zone name')(func)
@@ -132,9 +129,7 @@ def _attach_org_option(func, profile):
     if org:
         func = click.option('-o', '--org', default=org, show_default='current org')(func)
     elif org_envvar:
-        func = click.option('-o', '--org', default=org_envvar, show_default='current org')(
-            func
-        )
+        func = click.option('-o', '--org', default=org_envvar, show_default='current org')(func)
     else:
         func = click.option('-o', '--org', required=True)(func)
     return func
@@ -166,11 +161,7 @@ def common_auth_options(func):
 
 def gen_auth(username=None, password=None, mfa_secret=None, token=None, zonename=None):
     return Struct(
-        username=username,
-        password=password,
-        mfa_secret=mfa_secret,
-        token=token,
-        zonename=zonename,
+        username=username, password=password, mfa_secret=mfa_secret, token=token, zonename=zonename
     )
 
 
@@ -211,12 +202,8 @@ def _get_access_token_for_sso(auth, username, password, oauth_url, post_headers,
     oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
     passcode_url = APIGEE_SAML_LOGIN_URL.format(zonename=auth.zonename)
     webbrowser.open(passcode_url)
-    console.echo(
-        'SSO authorization page has automatically been opened in your default browser.'
-    )
-    console.echo(
-        'Follow the instructions in the browser to complete this authorization request.'
-    )
+    console.echo('SSO authorization page has automatically been opened in your default browser.')
+    console.echo('Follow the instructions in the browser to complete this authorization request.')
     console.echo(
         f"""\nIf your browser did not automatically open, go to the following URL and sign in:\n\n{passcode_url}\n\nthen copy the Temporary Authentication Code.\n"""
     )
@@ -349,9 +336,7 @@ def get_access_token_command(
     console.echo(get_access_token(gen_auth(username, password, mfa_secret, token, zonename)))
 
 
-@auth.command(
-    help='check if user (developer) is authorized to access resource with prefix in file'
-)
+@auth.command(help='check if user (developer) is authorized to access resource with prefix in file')
 @common_auth_options
 @common_verbose_options
 @common_silent_options
@@ -365,18 +350,12 @@ def get_access_token_command(
 def file(username, password, mfa_secret, token, zonename, org, profile, file, key, **kwargs):
     console.echo(
         auth_with_prefix(
-            gen_auth(username, password, mfa_secret, token, zonename),
-            org,
-            None,
-            file=file,
-            key=key,
+            gen_auth(username, password, mfa_secret, token, zonename), org, None, file=file, key=key
         )
     )
 
 
-@auth.command(
-    help='check if user (developer) is authorized to access resource with prefix in name'
-)
+@auth.command(help='check if user (developer) is authorized to access resource with prefix in name')
 @common_auth_options
 @common_verbose_options
 @common_silent_options

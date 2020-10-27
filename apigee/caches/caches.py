@@ -4,8 +4,11 @@ import requests
 from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee.caches.serializer import CachesSerializer
 
-CLEAR_ALL_CACHE_ENTRIES_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/caches/{name}/entries?action=clear'
+CLEAR_ALL_CACHE_ENTRIES_PATH = (
+    '{api_url}/v1/organizations/{org}/environments/{environment}/caches/{name}/entries?action=clear'
+)
 CLEAR_A_CACHE_ENTRY_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/caches/{name}/entries/{entry}?action=clear'
 CREATE_A_CACHE_IN_AN_ENVIRONMENT_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/caches?name={name}'
@@ -19,28 +22,7 @@ LIST_CACHES_IN_AN_ENVIRONMENT_PATH = (
 UPDATE_A_CACHE_IN_AN_ENVIRONMENT_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/caches/{name}'
 )
-DELETE_A_CACHE_PATH = (
-    '{api_url}/v1/organizations/{org}/environments/{environment}/caches/{name}'
-)
-
-
-class CachesSerializer:
-    def serialize_details(self, caches, format, prefix=None):
-        resp = caches
-        if format == 'text':
-            return caches.text
-        caches = caches.json()
-        if prefix:
-            caches = [cache for cache in caches if cache.startswith(prefix)]
-        if format == 'json':
-            return json.dumps(caches)
-        elif format == 'table':
-            pass
-        elif format == 'dict':
-            return caches
-        # else:
-        #     raise ValueError(format)
-        return resp
+DELETE_A_CACHE_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/caches/{name}'
 
 
 class Caches:
@@ -115,8 +97,7 @@ class Caches:
             name=self._cache_name,
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -152,8 +133,7 @@ class Caches:
             name=self._cache_name,
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)

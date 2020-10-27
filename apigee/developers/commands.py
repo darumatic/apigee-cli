@@ -92,9 +92,7 @@ def delete(*args, **kwargs):
     console.echo(_delete_developer(*args, **kwargs))
 
 
-def _get_developer(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
+def _get_developer(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
     return (
         Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .get_developer()
@@ -287,16 +285,7 @@ def update_attr(*args, **kwargs):
 
 
 def _delete_developer_attribute(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    attribute_name,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, attribute_name, **kwargs
 ):
     return (
         Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)

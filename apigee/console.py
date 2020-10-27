@@ -3,13 +3,7 @@ import sys
 
 
 def echo(
-    *message,
-    status=None,
-    silent=False,
-    curr_verbosity=0,
-    expc_verbosity=0,
-    end='\n',
-    flush=False
+    *message, status=None, silent=False, curr_verbosity=0, expc_verbosity=0, end='\n', flush=False
 ):
     toggle_silent = False
     toggle_verbose = 0

@@ -54,9 +54,7 @@ def delete(*args, **kwargs):
     console.echo(_delete_api_product(*args, **kwargs))
 
 
-def _get_api_product(
-    username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
-):
+def _get_api_product(username, password, mfa_secret, token, zonename, org, profile, name, **kwargs):
     return (
         Apiproducts(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .get_api_product()
@@ -151,9 +149,7 @@ def _push_apiproducts(
     ).push_apiproducts(file)
 
 
-@apiproducts.command(
-    help='Push API product to Apigee. This will create/update an API product.'
-)
+@apiproducts.command(help='Push API product to Apigee. This will create/update an API product.')
 @common_auth_options
 @common_silent_options
 @common_verbose_options

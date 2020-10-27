@@ -4,6 +4,7 @@ import requests
 from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee.maskconfigs.serializer import MaskconfigsSerializer
 
 CREATE_DATA_MASKS_FOR_AN_API_PROXY_PATH = (
     '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs'
@@ -18,25 +19,6 @@ LIST_DATA_MASKS_FOR_AN_API_PROXY_PATH = (
     '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs'
 )
 LIST_DATA_MASKS_FOR_AN_ORGANIZATION_PATH = '{api_url}/v1/organizations/{org}/maskconfigs'
-
-
-class MaskconfigsSerializer:
-    def serialize_details(self, maskconfigs, format, prefix=None):
-        resp = maskconfigs
-        if format == 'text':
-            return maskconfigs.text
-        maskconfigs = maskconfigs.json()
-        if prefix:
-            maskconfigs = [
-                maskconfig for maskconfig in maskconfigs if maskconfig.startswith(prefix)
-            ]
-        if format == 'json':
-            return json.dumps(maskconfigs)
-        elif format == 'table':
-            pass
-        # else:
-        #     raise ValueError(format)
-        return resp
 
 
 class Maskconfigs:
@@ -77,8 +59,7 @@ class Maskconfigs:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=self._api_name
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)

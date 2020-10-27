@@ -126,9 +126,7 @@ def _deploy_a_shared_flow(
 @click.option('-e', '--environment', help='environment', required=True)
 @click.option('-n', '--name', help='name', required=True)
 @optgroup.group(
-    'Deployment options',
-    cls=RequiredMutuallyExclusiveOptionGroup,
-    help='The deployment options',
+    'Deployment options', cls=RequiredMutuallyExclusiveOptionGroup, help='The deployment options'
 )
 @optgroup.option(
     '-f',
@@ -186,16 +184,7 @@ def undeploy(*args, **kwargs):
 
 
 def _get_deployment_environments_for_shared_flows(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    revision_number,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, revision_number, **kwargs
 ):
     return (
         Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
@@ -204,9 +193,7 @@ def _get_deployment_environments_for_shared_flows(
     )
 
 
-@sharedflows.command(
-    help='Gets an array of the environments to which the shared flow is deployed.'
-)
+@sharedflows.command(help='Gets an array of the environments to which the shared flow is deployed.')
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -228,16 +215,7 @@ def _delete_a_shared_flow(self, shared_flow_name):
 
 
 def _get_the_shared_flow_attached_to_a_flow_hook(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    environment,
-    flow_hook,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, environment, flow_hook, **kwargs
 ):
     return (
         Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
@@ -253,9 +231,7 @@ def _get_the_shared_flow_attached_to_a_flow_hook(
 @common_silent_options
 @common_verbose_options
 @click.option('-e', '--environment', help='environment', required=True)
-@click.option(
-    '--flow-hook', help='flow hook to which the shared flow is attached', required=True
-)
+@click.option('--flow-hook', help='flow hook to which the shared flow is attached', required=True)
 def get_flow_hook(*args, **kwargs):
     console.echo(_get_the_shared_flow_attached_to_a_flow_hook(*args, **kwargs))
 

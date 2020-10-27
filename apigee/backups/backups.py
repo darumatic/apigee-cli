@@ -170,9 +170,7 @@ class Backups:
                         ),
                         'fs_write': self.fs_write,
                     }
-                    write_file(
-                        data['snapshot'], data['target_path'], fs_write=data['fs_write']
-                    )
+                    write_file(data['snapshot'], data['target_path'], fs_write=data['fs_write'])
                 except HTTPError as e:
                     console.echo(
                         f'Ignoring {type(e).__name__} {e.response.status_code} error for KVM ({kvm})'
@@ -219,9 +217,7 @@ class Backups:
                         ),
                         'fs_write': self.fs_write,
                     }
-                    write_file(
-                        data['snapshot'], data['target_path'], fs_write=data['fs_write']
-                    )
+                    write_file(data['snapshot'], data['target_path'], fs_write=data['fs_write'])
                 except HTTPError as e:
                     console.echo(
                         f'Ignoring {type(e).__name__} {e.response.status_code} error for TargetServer ({targetserver})'
@@ -266,9 +262,7 @@ class Backups:
                         ),
                         'fs_write': self.fs_write,
                     }
-                    write_file(
-                        data['snapshot'], data['target_path'], fs_write=data['fs_write']
-                    )
+                    write_file(data['snapshot'], data['target_path'], fs_write=data['fs_write'])
                 except HTTPError as e:
                     console.echo(
                         f'Ignoring {type(e).__name__} {e.response.status_code} error for Cache ({cache})'
@@ -277,9 +271,9 @@ class Backups:
         return self.snapshot_data.caches
 
     def download_developers_snapshot(self):
-        self.snapshot_data.developers = Developers(
-            self.auth, self.org_name, None
-        ).list_developers(prefix=self.prefix, format='dict')
+        self.snapshot_data.developers = Developers(self.auth, self.org_name, None).list_developers(
+            prefix=self.prefix, format='dict'
+        )
         data = {
             'snapshot': self.snapshot_data.developers,
             'target_path': self._gen_snapshot_path(subpaths=['developers', 'developers.json']),
@@ -287,10 +281,7 @@ class Backups:
             'indent': 2,
         }
         write_file(
-            data['snapshot'],
-            data['target_path'],
-            fs_write=data['fs_write'],
-            indent=data['indent'],
+            data['snapshot'], data['target_path'], fs_write=data['fs_write'], indent=data['indent']
         )
         return self.snapshot_data.developers
 
@@ -320,17 +311,12 @@ class Backups:
         ).list_api_products(prefix=self.prefix, format='dict')
         data = {
             'snapshot': self.snapshot_data.apiproducts,
-            'target_path': self._gen_snapshot_path(
-                subpaths=['apiproducts', 'apiproducts.json']
-            ),
+            'target_path': self._gen_snapshot_path(subpaths=['apiproducts', 'apiproducts.json']),
             'fs_write': self.fs_write,
             'indent': 2,
         }
         write_file(
-            data['snapshot'],
-            data['target_path'],
-            fs_write=data['fs_write'],
-            indent=data['indent'],
+            data['snapshot'], data['target_path'], fs_write=data['fs_write'], indent=data['indent']
         )
         return self.snapshot_data.apiproducts
 
@@ -355,9 +341,7 @@ class Backups:
         return self.snapshot_data.apiproducts
 
     def download_apps_snapshot(self, expand=False, count=1000, startkey=""):
-        self.snapshot_data.apps = Apps(
-            self.auth, self.org_name, None
-        ).list_apps_for_all_developers(
+        self.snapshot_data.apps = Apps(self.auth, self.org_name, None).list_apps_for_all_developers(
             Developers(self.auth, self.org_name, None).list_developers(
                 prefix=None, expand=expand, count=count, startkey=startkey, format='dict'
             ),
@@ -393,9 +377,7 @@ class Backups:
                         ),
                         'fs_write': self.fs_write,
                     }
-                    write_file(
-                        data['snapshot'], data['target_path'], fs_write=data['fs_write']
-                    )
+                    write_file(data['snapshot'], data['target_path'], fs_write=data['fs_write'])
                 except HTTPError as e:
                     console.echo(
                         f'Ignoring {type(e).__name__} {e.response.status_code} error for Developer App ({app})'
@@ -418,10 +400,7 @@ class Backups:
             'indent': 2,
         }
         write_file(
-            data['snapshot'],
-            data['target_path'],
-            fs_write=data['fs_write'],
-            indent=data['indent'],
+            data['snapshot'], data['target_path'], fs_write=data['fs_write'], indent=data['indent']
         )
         return self.snapshot_data.userroles
 

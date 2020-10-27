@@ -4,6 +4,7 @@ import requests
 from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee.keystores.serializer import KeystoresSerializer
 
 CREATE_A_KEYSTORE_OR_TRUSTSTORE_PATH = (
     '{api_url}/v1/o/{org_name}/environments/{environment}/keystores'
@@ -17,9 +18,7 @@ LIST_ALL_KEYSTORES_AND_TRUSTSTORES_PATH = (
 GET_A_KEYSTORE_OR_TRUSTSTORE_PATH = (
     '{api_url}/v1/o/{org_name}/environments/{environment}/keystores/{keystore_name}'
 )
-TEST_A_KEYSTORE_OR_TRUSTSTORE_PATH = (
-    '{api_url}/v1/o/{org_name}/environments/{environment}/testssl'
-)
+TEST_A_KEYSTORE_OR_TRUSTSTORE_PATH = '{api_url}/v1/o/{org_name}/environments/{environment}/testssl'
 GET_CERT_DETAILS_FROM_A_KEYSTORE_OR_TRUSTSTORE_PATH = '{api_url}/v1/o/{org_name}/environments/{environment}/keystores/{keystore_name}/certs/{cert_name}'
 GET_ALL_CERTS_FROM_A_KEYSTORE_OR_TRUSTSTORE_PATH = (
     '{api_url}/v1/o/{org_name}/environments/{environment}/keystores/{keystore_name}/certs'
@@ -43,23 +42,6 @@ UPDATE_THE_CERTIFICATE_IN_AN_ALIAS_PATH = '{api_url}/v1/o/{org_name}/environment
 GENERATE_A_CSR_FOR_AN_ALIAS_PATH = '{api_url}/v1/o/{org_name}/environments/{environment}/keystores/{keystore_name}/aliases/{alias_name}/csr'
 EXPORT_A_CERTIFICATE_FOR_AN_ALIAS_PATH = '{api_url}/v1/o/{org_name}/environments/{environment}/keystores/{keystore_name}/aliases/{alias_name}/certificate'
 DELETE_ALIAS_PATH = '{api_url}/v1/o/{org_name}/environments/{environment}/keystores/{keystore_name}/aliases/{alias_name}'
-
-
-class KeystoresSerializer:
-    def serialize_details(self, keystores, format, prefix=None):
-        resp = keystores
-        if format == 'text':
-            return keystores.text
-        keystores = keystores.json()
-        if prefix:
-            keystores = [keystore for keystore in keystores if keystore.startswith(prefix)]
-        if format == 'json':
-            return json.dumps(keystores)
-        elif format == 'table':
-            pass
-        elif format == 'dict':
-            return keystores
-        return resp
 
 
 class Keystores:
@@ -138,9 +120,7 @@ class Keystores:
         resp.raise_for_status()
         return resp
 
-    def get_all_certs_from_a_keystore_or_truststore(
-        self, environment, prefix=None, format='json'
-    ):
+    def get_all_certs_from_a_keystore_or_truststore(self, environment, prefix=None, format='json'):
         uri = GET_ALL_CERTS_FROM_A_KEYSTORE_OR_TRUSTSTORE_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org_name=self._org_name,

@@ -44,10 +44,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
 @click.group(
-    context_settings=CONTEXT_SETTINGS,
-    cls=AliasedGroup,
-    invoke_without_command=False,
-    chain=False,
+    context_settings=CONTEXT_SETTINGS, cls=AliasedGroup, invoke_without_command=False, chain=False
 )
 # @click.group(context_settings=CONTEXT_SETTINGS, cls=ClickAliasedGroup, invoke_without_command=False, chain=False)
 @click.version_option(version, '-V', '--version')

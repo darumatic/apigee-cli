@@ -7,11 +7,10 @@ from requests.exceptions import HTTPError
 from tqdm import tqdm
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee.apps.serializer import AppsSerializer
 
 CREATE_DEVELOPER_APP_PATH = '{api_url}/v1/organizations/{org}/developers/{developer}/apps'
-DELETE_DEVELOPER_APP_PATH = (
-    '{api_url}/v1/organizations/{org}/developers/{developer}/apps/{name}'
-)
+DELETE_DEVELOPER_APP_PATH = '{api_url}/v1/organizations/{org}/developers/{developer}/apps/{name}'
 CREATE_EMPTY_DEVELOPER_APP_PATH = CREATE_DEVELOPER_APP_PATH
 GET_DEVELOPER_APP_DETAILS_PATH = (
     '{api_url}/v1/organizations/{org}/developers/{developer}/apps/{name}'
@@ -26,25 +25,6 @@ CREATE_A_CONSUMER_KEY_AND_SECRET_PATH = (
 ADD_API_PRODUCT_TO_KEY_PATH = (
     '{api_url}/v1/organizations/{org}/developers/{developer}/apps/{name}/keys/{consumer_key}'
 )
-
-
-class AppsSerializer:
-    def serialize_details(self, apps, format, prefix=None):
-        resp = apps
-        if format == 'text':
-            return apps.text
-        apps = apps.json()
-        if prefix:
-            apps = [app for app in apps if app.startswith(prefix)]
-        if format == 'json':
-            return json.dumps(apps)
-        elif format == 'table':
-            pass
-        elif format == 'dict':
-            return apps
-        # else:
-        #     raise ValueError(format)
-        return resp
 
 
 class Apps:
@@ -85,8 +65,7 @@ class Apps:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, developer=developer
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -110,8 +89,7 @@ class Apps:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, developer=developer
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = {
             'name': self._app_name,
@@ -127,9 +105,7 @@ class Apps:
         # body = {k: v for k, v in body.items() if v}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
-        self.delete_key_for_a_developer_app(
-            developer, resp.json()['credentials'][0]['consumerKey']
-        )
+        self.delete_key_for_a_developer_app(developer, resp.json()['credentials'][0]['consumerKey'])
         return self.get_developer_app_details(developer)
 
     def get_developer_app_details(self, developer):
@@ -212,8 +188,7 @@ class Apps:
             name=self._app_name,
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         # app = self.get_developer_app_details(developer)
         if not consumer_key:
@@ -251,8 +226,7 @@ class Apps:
             consumer_key=consumer_key,
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)

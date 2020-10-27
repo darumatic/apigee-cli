@@ -4,6 +4,7 @@ import requests
 from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee.targetservers.serializer import TargetserversSerializer
 
 CREATE_A_TARGETSERVER_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers'
@@ -20,29 +21,6 @@ GET_TARGETSERVER_PATH = (
 UPDATE_A_TARGETSERVER_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}'
 )
-
-
-class TargetserversSerializer:
-    def serialize_details(self, targetservers, format, prefix=None):
-        resp = targetservers
-        if format == 'text':
-            return targetservers.text
-        targetservers = targetservers.json()
-        if prefix:
-            targetservers = [
-                targetserver
-                for targetserver in targetservers
-                if targetserver.startswith(prefix)
-            ]
-        if format == 'json':
-            return json.dumps(targetservers)
-        elif format == 'table':
-            pass
-        elif format == 'dict':
-            return targetservers
-        # else:
-        #     raise ValueError(format)
-        return resp
 
 
 class Targetservers:
@@ -83,8 +61,7 @@ class Targetservers:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -132,8 +109,7 @@ class Targetservers:
             name=self._targetserver_name,
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)

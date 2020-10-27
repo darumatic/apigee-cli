@@ -30,9 +30,7 @@ TABLEFMT_CHOICES = [
 ]
 
 
-@click.group(
-    help='Permissions for roles in an organization on Apigee Edge.', cls=ClickAliasedGroup
-)
+@click.group(help='Permissions for roles in an organization on Apigee Edge.', cls=ClickAliasedGroup)
 def permissions():
     pass
 
@@ -81,8 +79,7 @@ def _team_permissions(
 
 
 @permissions.command(
-    help='Create permissions for a role using a template file.',
-    aliases=['template-permissions'],
+    help='Create permissions for a role using a template file.', aliases=['template-permissions']
 )
 @common_auth_options
 @common_silent_options
@@ -95,9 +92,7 @@ def _team_permissions(
     required=True,
 )
 @click.option(
-    '--placeholder-key',
-    default=None,
-    help='placeholder key to replace with a placeholder value',
+    '--placeholder-key', default=None, help='placeholder key to replace with a placeholder value'
 )
 @click.option(
     '--placeholder-value',

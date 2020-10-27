@@ -7,6 +7,9 @@ from pathlib import Path
 import requests
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee.apis.interfaces.apis_interface import InformalApisInterface
+from apigee.apis.interfaces.pull_interface import InformalPullInterface
+from apigee.apis.serializer import ApisSerializer
 from apigee.caches.caches import Caches
 from apigee.deployments.deployments import Deployments
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
@@ -18,7 +21,9 @@ DELETE_API_PROXY_REVISION_PATH = (
     '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}'
 )
 DEPLOY_API_PROXY_REVISION_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/apis/{api_name}/revisions/{revision_number}/deployments?delay={delay}'
-EXPORT_API_PROXY_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}?format=bundle'
+EXPORT_API_PROXY_PATH = (
+    '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}?format=bundle'
+)
 GET_API_PROXY_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}'
 LIST_API_PROXIES_PATH = '{api_url}/v1/organizations/{org}/apis'
 LIST_API_PROXY_REVISIONS_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions'
@@ -26,160 +31,11 @@ UNDEPLOY_API_PROXY_REVISION_PATH = '{api_url}/v1/organizations/{org}/environment
 FORCE_UNDEPLOY_API_PROXY_REVISION_PATH = '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}/deployments?action=undeploy&env={environment}&force=true'
 
 
-class ApisSerializer:
-    def serialize_details(self, apis, format, prefix=None):
-        resp = apis
-        if format == 'text':
-            return apis.text
-        apis = apis.json()
-        if prefix:
-            apis = [api for api in apis if api.startswith(prefix)]
-        if format == 'json':
-            return json.dumps(apis)
-        elif format == 'table':
-            pass
-        elif format == 'dict':
-            return apis
-        # else:
-        #     raise ValueError(format)
-        return resp
-
-
-class IApis:
-    def __init__(self, auth, org_name):
-        self._auth = auth
-        self._org_name = org_name
-
-    def __call__(self):
-        pass
-
-    @property
-    def auth(self):
-        return self._auth
-
-    @auth.setter
-    def auth(self, value):
-        self._auth = value
-
-    @property
-    def org_name(self):
-        return self._org_name
-
-    @org_name.setter
-    def org_name(self, value):
-        self._org_name = value
-
-
-class IPull:
-    def __init__(self, auth, org_name, revision_number, environment, work_tree=None):
-        self._auth = auth
-        self._org_name = org_name
-        if work_tree:
-            if not os.path.exists(work_tree):
-                os.makedirs(work_tree)
-            self._work_tree = str(Path(work_tree).resolve())
-        else:
-            self._work_tree = os.getcwd()
-        self._revision_number = revision_number
-        self._environment = environment
-        self._keyvaluemaps_dir = str(Path(self._work_tree) / 'keyvaluemaps' / environment)
-        self._targetservers_dir = str(Path(self._work_tree) / 'targetservers' / environment)
-        self._caches_dir = str(Path(self._work_tree) / 'caches' / environment)
-        # self._apiproxy_dir = str(Path(self._work_tree) / api_name)
-        self._apiproxy_dir = str(Path(self._work_tree))
-        self._zip_file = str(Path(self._apiproxy_dir).with_suffix('.zip'))
-
-    def __call__(self, *args, **kwargs):
-        self.pull(*args, **kwargs)
-
-    @property
-    def auth(self):
-        return self._auth
-
-    @auth.setter
-    def auth(self, value):
-        self._auth = value
-
-    @property
-    def org_name(self):
-        return self._org_name
-
-    @org_name.setter
-    def org_name(self, value):
-        self._org_name = value
-
-    @property
-    def revision_number(self):
-        return self._revision_number
-
-    @revision_number.setter
-    def revision_number(self, value):
-        self._revision_number = value
-
-    @property
-    def environment(self):
-        return self._environment
-
-    @environment.setter
-    def environment(self, value):
-        self._environment = value
-
-    # @property
-    # def work_tree(self):
-    #     return self._work_tree
-    #
-    # @work_tree.setter
-    # def work_tree(self, value):
-    #     self.__init__(self._args, self._api_name, self._revision_number, work_tree=value)
-
-    @property
-    def keyvaluemaps_dir(self):
-        return self._keyvaluemaps_dir
-
-    @keyvaluemaps_dir.setter
-    def keyvaluemaps_dir(self, value):
-        self._keyvaluemaps_dir = str(Path(self._work_tree) / value / environment)
-
-    @property
-    def targetservers_dir(self):
-        return self._targetservers_dir
-
-    @targetservers_dir.setter
-    def targetservers_dir(self, value):
-        self._targetservers_dir = str(Path(self._work_tree) / value / environment)
-
-    @property
-    def caches_dir(self):
-        return self._caches_dir
-
-    @caches_dir.setter
-    def caches_dir(self, value):
-        self._caches_dir = str(Path(self._work_tree) / value / environment)
-
-    @property
-    def apiproxy_dir(self):
-        return self._apiproxy_dir
-
-    @apiproxy_dir.setter
-    def apiproxy_dir(self, value):
-        self._apiproxy_dir = str(Path(self._work_tree) / value)
-
-    @property
-    def zip_file(self):
-        return self._zip_file
-
-    @zip_file.setter
-    def zip_file(self, value):
-        self._zip_file = str(Path(self._apiproxy_dir) / value)
-
-
-class Apis(IApis, IPull):
+class Apis(InformalApisInterface, InformalPullInterface):
     def __init__(self, *args, **kwargs):
-        IApis.__init__(self, args[0], args[1])  # auth, org_name
+        InformalApisInterface.__init__(self, args[0], args[1])
         try:
-            IPull.__init__(
-                self, args[0], args[1], args[2], args[3], **kwargs
-            )  # auth, org_name, revision_number, environment, work_tree=None
+            InformalPullInterface.__init__(self, args[0], args[1], args[2], args[3], **kwargs)
         except IndexError:
             pass
 
@@ -213,9 +69,7 @@ class Apis(IApis, IPull):
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         )
-        resp = requests.post(
-            uri, headers=hdrs, data={'override': 'true' if override else 'false'}
-        )
+        resp = requests.post(uri, headers=hdrs, data={'override': 'true' if override else 'false'})
         resp.raise_for_status()
         return resp
 
@@ -261,14 +115,7 @@ class Apis(IApis, IPull):
             self.delete_api_proxy_revision(api_name, rev)
         return undeployed
 
-    def export_api_proxy(
-        # self, api_name, revision_number, fs_write=True, write=True, output_file=None
-        self,
-        api_name,
-        revision_number,
-        fs_write=True,
-        output_file=None,
-    ):
+    def export_api_proxy(self, api_name, revision_number, fs_write=True, output_file=None):
         uri = EXPORT_API_PROXY_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,
@@ -278,7 +125,6 @@ class Apis(IApis, IPull):
         hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
-        # if fs_write and write:
         if fs_write:
             write_zip(output_file, resp.content)
         return resp
@@ -473,45 +319,32 @@ class Apis(IApis, IPull):
         console.echo(f'{current_basepath} -> {basepath}')
         console.echo(f'M  {os.path.relpath(default_file)}')
 
+    def _get_and_export(self, resource_type, files, environment, dependencies=[], force=True):
+        resource = getattr(self, f'get_{resource_type}_dependencies')(files)
+        dependencies.extend(resource)
+        getattr(self, f'export_{resource_type}_dependencies')(environment, resource, force=force)
+        return dependencies
+
     def pull(self, api_name, dependencies=[], force=False, prefix=None, basepath=None):
         dependencies.append(api_name)
-
         make_dirs(self._work_tree)
-
         self.apiproxy_dir = api_name
-
         if not force:
             paths_exist((os.path.relpath(self._zip_file), os.path.relpath(self._apiproxy_dir)))
-
         export = self.export_api_proxy(
             api_name, self._revision_number, fs_write=True, output_file=self._zip_file
         )
-
         make_dirs(self._apiproxy_dir)
-
         extract_zip(self._zip_file, self._apiproxy_dir)
-
         os.remove(self._zip_file)
-
         files = self.get_apiproxy_files(self._apiproxy_dir)
-
-        keyvaluemaps = self.get_keyvaluemap_dependencies(files)
-        dependencies.extend(keyvaluemaps)
-        self.export_keyvaluemap_dependencies(self._environment, keyvaluemaps, force=force)
-
-        targetservers = self.get_targetserver_dependencies(files)
-        dependencies.extend(targetservers)
-        self.export_targetserver_dependencies(self._environment, targetservers, force=force)
-
-        caches = self.get_cache_dependencies(files)
-        dependencies.extend(caches)
-        self.export_cache_dependencies(self._environment, caches, force=force)
-
+        for resource_type in ['keyvaluemap', 'targetserver', 'cache']:
+            self._get_and_export(
+                resource_type, files, self._environment, dependencies=dependencies, force=force
+            )
         if prefix:
             self.prefix_dependencies_in_work_tree(set(dependencies), prefix)
-
         if basepath:
             _, file = self.get_apiproxy_basepath(self._apiproxy_dir)
             self.set_apiproxy_basepath(basepath, file)
-
-        return (export, keyvaluemaps, targetservers, caches)
+        return export, dependencies

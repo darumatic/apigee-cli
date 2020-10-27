@@ -4,6 +4,7 @@ import requests
 from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee.virtualhosts.serializer import VirtualhostsSerializer
 
 CREATE_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = (
     '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts'
@@ -20,25 +21,6 @@ LIST_VIRTUAL_HOSTS_FOR_AN_ENVIRONMENT_PATH = (
 UPDATE_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = (
     '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}'
 )
-
-
-class VirtualhostsSerializer:
-    def serialize_details(self, virtualhosts, format, prefix=None):
-        resp = virtualhosts
-        if format == 'text':
-            return virtualhosts.text
-        virtualhosts = virtualhosts.json()
-        if prefix:
-            virtualhosts = [
-                virtualhost for virtualhost in virtualhosts if virtualhost.startswith(prefix)
-            ]
-        if format == 'json':
-            return json.dumps(virtualhosts)
-        elif format == 'table':
-            pass
-        elif format == 'dict':
-            return virtualhosts
-        return resp
 
 
 class Virtualhosts:

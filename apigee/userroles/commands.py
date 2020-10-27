@@ -131,16 +131,7 @@ def delete_permission(*args, **kwargs):
 
 
 def _delete_resource_from_permissions(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    resource_path,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, resource_path, **kwargs
 ):
     return (
         Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -200,16 +191,7 @@ def get(*args, **kwargs):
 
 
 def _get_resource_permissions_for_a_specific_role(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    resource_path="",
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, resource_path="", **kwargs
 ):
     return (
         Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)

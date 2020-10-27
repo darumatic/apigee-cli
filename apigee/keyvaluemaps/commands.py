@@ -21,17 +21,7 @@ def keyvaluemaps():
 
 
 def _create_keyvaluemap_in_an_environment(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs
 ):
     return (
         Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -148,9 +138,7 @@ def _get_a_keys_value_in_an_environment_scoped_keyvaluemap(
     )
 
 
-@keyvaluemaps.command(
-    help='Gets the value of a key in an environment-scoped KeyValueMap (KVM).'
-)
+@keyvaluemaps.command(help='Gets the value of a key in an environment-scoped KeyValueMap (KVM).')
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -191,17 +179,7 @@ def list(*args, **kwargs):
 
 
 def _update_keyvaluemap_in_an_environment(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs
 ):
     return (
         Keyvaluemaps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -373,9 +351,7 @@ def _push_keyvaluemap(
     required=True,
 )
 @click.option(
-    '--symmetric-key',
-    default=APIGEE_CLI_SYMMETRIC_KEY,
-    help='symmetric secret key for decrypting',
+    '--symmetric-key', default=APIGEE_CLI_SYMMETRIC_KEY, help='symmetric secret key for decrypting'
 )
 def push(*args, **kwargs):
     _push_keyvaluemap(*args, **kwargs)

@@ -91,8 +91,7 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -105,8 +104,7 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -118,8 +116,7 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         roles = []
         for role in self._role_name:
@@ -180,8 +177,7 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -206,8 +202,7 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -218,8 +213,7 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -228,8 +222,7 @@ class Userroles:
     def list_user_roles(self):
         uri = LIST_USER_ROLES_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name)
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -243,16 +236,13 @@ class Userroles:
             user_email=user_email,
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def verify_a_user_roles_permission_on_a_specific_RBAC_resource(
-        self, permission, resource_path
-    ):
+    def verify_a_user_roles_permission_on_a_specific_RBAC_resource(self, permission, resource_path):
         uri = VERIFY_A_USER_ROLES_PERMISSION_ON_A_SPECIFIC_RBAC_RESOURCE_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,
@@ -276,8 +266,7 @@ class Userroles:
             user_email=user_email,
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()

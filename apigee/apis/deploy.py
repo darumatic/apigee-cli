@@ -174,9 +174,7 @@ def printDeployments(dep, check_revision=None):
                     Name, d['environment'], d['revision']
                 )
                 console.echo(
-                    Apis(Auth, Organization)
-                    .delete_api_proxy_revision(Name, d['revision'])
-                    .text
+                    Apis(Auth, Organization).delete_api_proxy_revision(Name, d['revision']).text
                 )
             except HTTPError as e:
                 if e.response.status_code != 400:
@@ -265,8 +263,7 @@ def deploy(args):
 
     if resp.status != 200 and resp.status != 201:
         console.echo(
-            'Import failed to %s with status %i:\n%s'
-            % (uri, resp.status, resp.read().decode())
+            'Import failed to %s with status %i:\n%s' % (uri, resp.status, resp.read().decode())
         )
         sys.exit(2)
 
@@ -322,9 +319,7 @@ def deploy(args):
         )
 
         if resp.status != 200 and resp.status != 201:
-            console.echo(
-                'Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode())
-            )
+            console.echo('Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode()))
             sys.exit(2)
 
     if ShouldOverride:
@@ -344,9 +339,7 @@ def deploy(args):
         )
 
         if resp.status != 200 and resp.status != 201:
-            console.echo(
-                'Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode())
-            )
+            console.echo('Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode()))
             sys.exit(2)
 
     deps = getDeployments()

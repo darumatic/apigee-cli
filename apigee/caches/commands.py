@@ -69,17 +69,7 @@ def clear_entry(*args, **kwargs):
 
 
 def _create_a_cache_in_an_environment(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs
 ):
     return (
         Caches(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -151,17 +141,7 @@ def list(*args, **kwargs):
 
 
 def _update_a_cache_in_an_environment(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    environment,
-    body,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, environment, body, **kwargs
 ):
     return (
         Caches(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -206,9 +186,9 @@ def delete(*args, **kwargs):
 def _push_cache(
     username, password, mfa_secret, token, zonename, org, profile, environment, file, **kwargs
 ):
-    return Caches(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
-    ).push_cache(environment, file)
+    return Caches(gen_auth(username, password, mfa_secret, token, zonename), org, None).push_cache(
+        environment, file
+    )
 
 
 @caches.command(help='Push Cache to Apigee. This will create/update a Cache.')

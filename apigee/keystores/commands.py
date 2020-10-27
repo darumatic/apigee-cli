@@ -8,9 +8,7 @@ from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
 
-@click.group(
-    help='A list of URIs used to create, modify, and delete keystores and truststores.'
-)
+@click.group(help='A list of URIs used to create, modify, and delete keystores and truststores.')
 def keystores():
     pass
 

@@ -36,16 +36,7 @@ def create_api(*args, **kwargs):
 
 
 def _delete_data_masks_for_an_api_proxy(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    maskconfig_name,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, maskconfig_name, **kwargs
 ):
     return (
         Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -65,16 +56,7 @@ def delete_api(*args, **kwargs):
 
 
 def _get_data_mask_details_for_an_api_proxy(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    maskconfig_name,
-    **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, name, maskconfig_name, **kwargs
 ):
     return (
         Maskconfigs(gen_auth(username, password, mfa_secret, token, zonename), org, name)

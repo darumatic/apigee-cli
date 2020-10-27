@@ -1,39 +1,15 @@
 import json
 
 import requests
-from tabulate import tabulate
 
 from apigee import APIGEE_ADMIN_API_URL, auth
+from apigee.permissions.serializer import PermissionsSerializer
 
 CREATE_PERMISSIONS_PATH = (
     '{api_url}/v1/organizations/{org}/userroles/{role_name}/resourcepermissions'
 )
-TEAM_PERMISSIONS_PATH = (
-    '{api_url}/v1/organizations/{org}/userroles/{role_name}/resourcepermissions'
-)
+TEAM_PERMISSIONS_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}/resourcepermissions'
 GET_PERMISSIONS_PATH = '{api_url}/v1/o/{org}/userroles/{role_name}/permissions'
-
-
-class PermissionsSerializer:
-    def serialize_details(self, permission_details, format, showindex=False, tablefmt='plain'):
-        if format == 'text':
-            return permission_details.text
-        elif format == 'json':
-            return permission_details.json()
-        elif format == 'table':
-            table = [
-                [res['organization'], res['path'], res['permissions']]
-                for res in permission_details.json()['resourcePermission']
-            ]
-            headers = []
-            if showindex == 'always' or showindex is True:
-                headers = ['id', 'organization', 'path', 'permissions']
-            elif showindex == 'never' or showindex is False:
-                headers = ['organization', 'path', 'permissions']
-            return tabulate(table, headers, showindex=showindex, tablefmt=tablefmt)
-        # else:
-        #     raise ValueError(format)
-        return permission_details
 
 
 class Permissions:
@@ -74,8 +50,7 @@ class Permissions:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -87,8 +62,7 @@ class Permissions:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         with open(template_file) as f:
             body = json.loads(f.read())
@@ -102,9 +76,7 @@ class Permissions:
         resp.raise_for_status()
         return resp
 
-    def get_permissions(
-        self, formatted=False, format='text', showindex=False, tablefmt='plain'
-    ):
+    def get_permissions(self, formatted=False, format='text', showindex=False, tablefmt='plain'):
         uri = GET_PERMISSIONS_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
