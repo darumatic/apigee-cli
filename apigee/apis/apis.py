@@ -286,14 +286,10 @@ class Apis(InformalApisInterface, InformalPullInterface):
 
     def prefix_dependencies_in_work_tree(self, dependencies, prefix):
         dependencies = [dep for dep in dependencies if not dep.startswith(prefix)]
-        directory = self._work_tree
-        files = []
-        for filename in Path(directory).resolve().rglob('*'):
+        for filename in Path(self._work_tree).resolve().rglob('*'):
             if not filename.is_dir() and '.git' not in split_path(str(filename)):
-                files.append(str(filename))
-        for f in files:
-            for dep in dependencies:
-                self.replace_substring(f, dep, prefix + dep)
+                for dep in dependencies:
+                    self.replace_substring(filename, dep, prefix + dep)
 
     def get_apiproxy_basepath(self, directory):
         default_file = str(Path(directory) / 'apiproxy/proxies/default.xml')
