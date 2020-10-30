@@ -5,6 +5,7 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.sharedflows.serializer import SharedflowsSerializer
+from apigee.utils import add_to_dict_if_exists
 
 GET_A_LIST_OF_SHARED_FLOWS_PATH = '{api_url}/v1/organizations/{org}/sharedflows'
 IMPORT_A_SHARED_FLOW_PATH = '{api_url}/v1/organizations/{org}/sharedflows'
@@ -95,17 +96,13 @@ class Sharedflows:
         delay=0,
         shared_flow_file=None,
     ):
-        deployed_shared_flows_exist = False
+        do_deployments_exist = False
         try:
             if self.get_shared_flow_revisions(shared_flow_name):
-                deployed_shared_flows_exist = True
+                do_deployments_exist = True
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
-        if deployed_shared_flows_exist:
-            console.echo('Attempting undeployment... ')
-            self.undeploy_shared_flow_revisions_in_environment(environment, shared_flow_name)
-            console.echo('Done.')
         if shared_flow_file:
             revision_number = int(
                 self.import_a_shared_flow(shared_flow_file, shared_flow_name).json()['revision']
@@ -117,27 +114,29 @@ class Sharedflows:
             shared_flow_name=shared_flow_name,
             revision_number=revision_number,
         )
-        params = {'override': 'false'}
-        if override:
-            params['override'] = 'true'
-        if delay:
-            params['delay'] = f'{delay}'
+        options_dict = {'override': 'true' if override else 'false', 'delay': f'{delay}'}
+        params = add_to_dict_if_exists(options_dict)
         hdrs = auth.set_header(self._auth, {'Accept': 'application/json'})
-        console.echo(f'Deploy revision {revision_number}... ', end='', flush=True)
+        console.echo(f'Deploying revision {revision_number}... ', end='', flush=True)
         resp = requests.post(uri, headers=hdrs, params=params)
         resp.raise_for_status()
         console.echo('Done')
+        if do_deployments_exist:
+            console.echo('Attempting undeployment... ')
+            self.undeploy_shared_flow_revisions_in_environment(environment, shared_flow_name, except_revisions={revision_number})
+            console.echo('Done.')
         return resp
 
-    def undeploy_shared_flow_revisions_in_environment(self, environment, shared_flow_name):
+    def undeploy_shared_flow_revisions_in_environment(self, environment, shared_flow_name, except_revisions=set()):
         resp = self.get_shared_flow_deployments(shared_flow_name)
         for deployment in resp.json()['environment']:
             if deployment['name'] == environment:
                 for detail in deployment['revision']:
                     revision_number = int(detail['name'])
-                    console.echo(f'Undeploying revision {revision_number}... ', end='', flush=True)
-                    self.undeploy_a_shared_flow(environment, shared_flow_name, revision_number)
-                    console.echo('Done')
+                    if revision_number not in except_revisions:
+                        console.echo(f'Undeploying revision {revision_number}... ', end='', flush=True)
+                        self.undeploy_a_shared_flow(environment, shared_flow_name, revision_number)
+                        console.echo('Done')
         return resp
 
     def undeploy_a_shared_flow(self, environment, shared_flow_name, revision_number):

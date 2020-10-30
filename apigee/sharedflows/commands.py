@@ -117,7 +117,7 @@ def _deploy_a_shared_flow(
 
 
 @sharedflows.command(
-    help='Deploys a shared flow revision to an environment in an organization. Shared flows cannot be used until they have been deployed to an environment. If you experience HTTP 500 errors during deployment, consider using the override parameter to deploy the shared flow in place of a revision currently deployed. The size limit of a shared flow bundle is 15 MB. WARNING: currently, --override does not seem to work on Apigee Edge. To counter this, existing shared flow revisions in the target environment will be undeployed before deploying a new revision, resulting in some downtime.'
+    help='Deploys a shared flow revision to an environment in an organization. Shared flows cannot be used until they have been deployed to an environment. If you experience HTTP 500 errors during deployment, consider using the override parameter to deploy the shared flow in place of a revision currently deployed. The size limit of a shared flow bundle is 15 MB.'
 )
 @common_auth_options
 @common_prefix_options

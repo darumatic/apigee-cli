@@ -6,6 +6,13 @@ import zipfile
 from pathlib import Path
 
 
+def add_to_dict_if_exists(options_dict, initial_dict={}):
+    for k, v in options_dict.items():
+        if v:
+            initial_dict[k] = v
+    return initial_dict
+
+
 def extract_zip(source, dest):
     with zipfile.ZipFile(source, 'r') as zip_ref:
         zip_ref.extractall(dest)
