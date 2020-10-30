@@ -1,6 +1,14 @@
 apigee.apis package
 ===================
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   apigee.apis.interfaces
+
 Submodules
 ----------
 
