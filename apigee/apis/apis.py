@@ -15,7 +15,8 @@ from apigee.deployments.deployments import Deployments
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.targetservers.targetservers import Targetservers
 from apigee.utils import (extract_zip, make_dirs, path_exists, paths_exist,
-                          split_path, write_zip)
+                          remove_last_items_from_list, run_func_on_dir_files,
+                          run_func_on_iterable, split_path, write_zip, is_dir)
 
 DELETE_API_PROXY_REVISION_PATH = (
     '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}'
@@ -73,47 +74,46 @@ class Apis(InformalApisInterface, InformalPullInterface):
         resp.raise_for_status()
         return resp
 
-    def gen_deployment_detail(self, deployment):
-        return {
-            'name': deployment['name'],
-            'revision': [revision['name'] for revision in deployment['revision']],
-        }
+    @staticmethod
+    def filter_deployment_details(details):
+        return run_func_on_iterable(
+            details['environment'],
+            lambda d: {
+                'name': d['name'],
+                'revision': [revision['name'] for revision in d['revision']],
+            },
+        )
 
-    def get_deployment_details(self, details):
-        deployment_details = []
-        for dep in details['environment']:
-            deployment_details.append(self.gen_deployment_detail(dep))
-        return deployment_details
+    @staticmethod
+    def filter_deployed_revisions(details):
+        return list(set(run_func_on_iterable(details, lambda d: d['revision'], state_op='extend')))
 
-    def get_deployed_revisions(self, details):
-        deployed = []
-        for dep in details:
-            deployed.extend(dep['revision'])
-        deployed = list(set(deployed))
-        return deployed
-
-    def get_undeployed_revisions(self, revisions, deployed, save_last=0):
-        undeployed = sorted([int(rev) for rev in revisions if rev not in deployed])
-        return undeployed[: -save_last if save_last > 0 else len(undeployed)]
+    @staticmethod
+    def filter_undeployed_revisions(revisions, deployed, save_last=0):
+        return remove_last_items_from_list(
+            sorted([int(rev) for rev in revisions if rev not in deployed]), save_last
+        )
 
     def delete_undeployed_revisions(self, api_name, save_last=0, dry_run=False):
-        details = self.get_deployment_details(
+        details = Apis.filter_deployment_details(
             Deployments(self._auth, self._org_name, api_name)
             .get_api_proxy_deployment_details()
             .json()
         )
-        undeployed = self.get_undeployed_revisions(
+        undeployed = Apis.filter_undeployed_revisions(
             self.list_api_proxy_revisions(api_name).json(),
-            self.get_deployed_revisions(details),
+            Apis.filter_deployed_revisions(details),
             save_last=save_last,
         )
         console.echo(f'Undeployed revisions to be deleted: {undeployed}')
         if dry_run:
             return undeployed
-        for rev in undeployed:
-            console.echo(f'Deleting revison {rev}')
-            self.delete_api_proxy_revision(api_name, rev)
-        return undeployed
+
+        def _func(revision):
+            console.echo(f'Deleting revison {revision}')
+            self.delete_api_proxy_revision(api_name, revision)
+
+        return run_func_on_iterable(undeployed, _func)
 
     def export_api_proxy(self, api_name, revision_number, fs_write=True, output_file=None):
         uri = EXPORT_API_PROXY_PATH.format(
@@ -181,84 +181,86 @@ class Apis(InformalApisInterface, InformalPullInterface):
         return resp
 
     def get_apiproxy_files(self, directory):
-        files = []
-        directory = str(Path(directory) / 'apiproxy')
-        for filename in Path(directory).resolve().rglob('*'):
-            files.append(str(filename))
-        return files
+        return run_func_on_dir_files(str(Path(directory) / 'apiproxy'), lambda f: f)
 
     def get_keyvaluemap_dependencies(self, files):
-        keyvaluemaps = []
-        for f in files:
+        def _func(f, _state):
             try:
                 root = et.parse(f).getroot()
                 if root.tag == 'KeyValueMapOperations':
-                    if root.attrib['mapIdentifier'] not in keyvaluemaps:
-                        keyvaluemaps.append(root.attrib['mapIdentifier'])
+                    if root.attrib['mapIdentifier'] not in _state:
+                        _state.add(root.attrib['mapIdentifier'])
+                        return root.attrib['mapIdentifier']
             except:
                 pass
-        return keyvaluemaps
+
+        return run_func_on_iterable(files, _func, args=(set(),))
 
     def export_keyvaluemap_dependencies(
         self, environment, keyvaluemaps, force=False, expc_verbosity=1
     ):
         make_dirs(self._keyvaluemaps_dir)
-        for keyvaluemap in keyvaluemaps:
-            keyvaluemap_file = str(Path(self._keyvaluemaps_dir) / keyvaluemap)
+
+        def _func(kvm):
+            kvm_file = str(Path(self._keyvaluemaps_dir) / kvm)
             if not force:
-                path_exists(os.path.relpath(keyvaluemap_file))
+                path_exists(os.path.relpath(kvm_file))
             resp = (
-                Keyvaluemaps(self._auth, self._org_name, keyvaluemap)
+                Keyvaluemaps(self._auth, self._org_name, kvm)
                 .get_keyvaluemap_in_an_environment(environment)
                 .text
             )
             console.echo(resp, expc_verbosity=1)
-            with open(keyvaluemap_file, 'w') as f:
+            with open(kvm_file, 'w') as f:
                 f.write(resp)
 
+        return run_func_on_iterable(keyvaluemaps, _func)
+
     def get_targetserver_dependencies(self, files):
-        targetservers = []
-        for f in files:
+        def _func(f, _state):
             try:
                 root = et.parse(f).getroot()
                 for child in root.iter('Server'):
-                    if child.attrib['name'] not in targetservers:
-                        targetservers.append(child.attrib['name'])
+                    if child.attrib['name'] not in _state:
+                        _state.add(child.attrib['name'])
+                        return child.attrib['name']
             except:
                 pass
-        return targetservers
+
+        return run_func_on_iterable(files, _func, args=(set(),))
 
     def export_targetserver_dependencies(
         self, environment, targetservers, force=False, expc_verbosity=1
     ):
         make_dirs(self._targetservers_dir)
-        for targetserver in targetservers:
-            targetserver_file = str(Path(self._targetservers_dir) / targetserver)
+
+        def _func(ts):
+            ts_file = str(Path(self._targetservers_dir) / ts)
             if not force:
-                path_exists(os.path.relpath(targetserver_file))
-            resp = (
-                Targetservers(self._auth, self._org_name, targetserver)
-                .get_targetserver(environment)
-                .text
-            )
+                path_exists(os.path.relpath(ts_file))
+            resp = Targetservers(self._auth, self._org_name, ts).get_targetserver(environment).text
             console.echo(resp, expc_verbosity=1)
-            with open(targetserver_file, 'w') as f:
+            with open(ts_file, 'w') as f:
                 f.write(resp)
 
+        return run_func_on_iterable(targetservers, _func)
+
     def get_cache_dependencies(self, files):
-        caches = []
-        for f in files:
+        def _func(f, _state):
             try:
                 name = et.parse(f).find('.//CacheResource').text
-                if name and name not in caches:
-                    caches.append(name)
+                if name and name not in _state:
+                    _state.add(name)
+                    return name
             except:
                 pass
-        return caches
+
+        return run_func_on_iterable(files, _func, args=(set(),))
 
     def export_cache_dependencies(self, environment, caches, force=False, expc_verbosity=1):
         make_dirs(self._caches_dir)
-        for cache in caches:
+
+        def _func(cache):
             cache_file = str(Path(self._caches_dir) / cache)
             if not force:
                 path_exists(os.path.relpath(cache_file))
@@ -271,7 +273,10 @@ class Apis(InformalApisInterface, InformalPullInterface):
             with open(cache_file, 'w') as f:
                 f.write(resp)
 
-    def replace_substring(self, file, old, new):
+        return run_func_on_iterable(caches, _func)
+
+    @staticmethod
+    def replace_substring(file, old, new):
         with open(file, 'r') as f:
             body = ""
             try:
@@ -285,11 +290,17 @@ class Apis(InformalApisInterface, InformalPullInterface):
                 console.echo(f'M  {os.path.relpath(file)}')
 
     def prefix_dependencies_in_work_tree(self, dependencies, prefix):
-        dependencies = [dep for dep in dependencies if not dep.startswith(prefix)]
-        for filename in Path(self._work_tree).resolve().rglob('*'):
-            if not filename.is_dir() and '.git' not in split_path(str(filename)):
-                for dep in dependencies:
-                    self.replace_substring(filename, dep, prefix + dep)
+        dependencies = [d for d in dependencies if not d.startswith(prefix)]
+
+        def _cond(file_path):
+            return not is_dir(file_path) and '.git' not in split_path(file_path)
+
+        def _func(file_path):
+            if _cond(file_path):
+                for d in dependencies:
+                    Apis.replace_substring(file_path, d, prefix + d)
+
+        return run_func_on_dir_files(self._work_tree, _func)
 
     def get_apiproxy_basepath(self, directory):
         default_file = str(Path(directory) / 'apiproxy/proxies/default.xml')

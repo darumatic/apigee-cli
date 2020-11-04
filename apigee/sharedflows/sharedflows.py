@@ -123,18 +123,24 @@ class Sharedflows:
         console.echo('Done')
         if do_deployments_exist:
             console.echo('Attempting undeployment... ')
-            self.undeploy_shared_flow_revisions_in_environment(environment, shared_flow_name, except_revisions={revision_number})
+            self.undeploy_shared_flow_revisions_in_environment(
+                environment, shared_flow_name, except_revisions={revision_number}
+            )
             console.echo('Done.')
         return resp
 
-    def undeploy_shared_flow_revisions_in_environment(self, environment, shared_flow_name, except_revisions=set()):
+    def undeploy_shared_flow_revisions_in_environment(
+        self, environment, shared_flow_name, except_revisions=set()
+    ):
         resp = self.get_shared_flow_deployments(shared_flow_name)
         for deployment in resp.json()['environment']:
             if deployment['name'] == environment:
                 for detail in deployment['revision']:
                     revision_number = int(detail['name'])
                     if revision_number not in except_revisions:
-                        console.echo(f'Undeploying revision {revision_number}... ', end='', flush=True)
+                        console.echo(
+                            f'Undeploying revision {revision_number}... ', end='', flush=True
+                        )
                         self.undeploy_a_shared_flow(environment, shared_flow_name, revision_number)
                         console.echo('Done')
         return resp

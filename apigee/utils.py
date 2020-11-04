@@ -13,6 +13,12 @@ def add_to_dict_if_exists(options_dict, initial_dict={}):
     return initial_dict
 
 
+def convert_to_set(iterable):
+    if not isinstance(iterable, set):
+        return set(iterable)
+    return iterable
+
+
 def extract_zip(source, dest):
     with zipfile.ZipFile(source, 'r') as zip_ref:
         zip_ref.extractall(dest)
@@ -55,12 +61,38 @@ def read_file(file, type='text'):
 #     pass
 
 
+def remove_last_items_from_list(init_list, integer=0):
+    if integer <= 0:
+        return init_list
+    return init_list[:-integer]
+
+
 def resolve_target_directory(target_directory=None):
     if target_directory:
         if not os.path.exists(target_directory):
             os.makedirs(target_directory)
         return str(Path(target_directory).resolve())
     return os.getcwd()
+
+
+def run_func_on_dir_files(dir, func, glob='**/*', args=(), kwargs={}):
+    state = []
+    for file_path in Path(resolve_target_directory(dir)).resolve().glob(glob):
+        _tuple = (str(file_path),)
+        result = func(*(_tuple + args), **kwargs)
+        if result:
+            state.append(result)
+    return state
+
+
+def run_func_on_iterable(iterable, func, state_op='append', args=(), kwargs={}):
+    state = []
+    for item in iterable:
+        _tuple = (item,)
+        result = func(*(_tuple + args), **kwargs)
+        if result:
+            getattr(state, state_op)(result)
+    return state
 
 
 def show_message(msg):
