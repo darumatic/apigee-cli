@@ -14,9 +14,10 @@ from apigee.caches.caches import Caches
 from apigee.deployments.deployments import Deployments
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.targetservers.targetservers import Targetservers
-from apigee.utils import (extract_zip, make_dirs, path_exists, paths_exist,
-                          remove_last_items_from_list, run_func_on_dir_files,
-                          run_func_on_iterable, split_path, write_zip, is_dir)
+from apigee.utils import (extract_zip, is_dir, make_dirs, path_exists,
+                          paths_exist, remove_last_items_from_list,
+                          run_func_on_dir_files, run_func_on_iterable,
+                          split_path, write_zip)
 
 DELETE_API_PROXY_REVISION_PATH = (
     '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}'

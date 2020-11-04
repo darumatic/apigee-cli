@@ -247,17 +247,22 @@ class Keyvaluemaps:
     @staticmethod
     def encrypt_decrypt_keyvaluemap(kvm_dict, secret, encrypt=True):
         crypto_count = 0
+
+        def _func(value, kvm, index, secret):
+            operation = ''
+            if encrypt:
+                operation = 'encrypt_value' if not is_encrypted(value) else ''
+            else:
+                operation = 'decrypt_value' if is_encrypted(value) else ''
+            if operation:
+                getattr(Keyvaluemaps, operation)(kvm, index, secret)
+                return 1
+            return 0
+
         if kvm_dict['encrypted'] and kvm_dict['entry']:
             for idx, entry in enumerate(kvm_dict['entry']):
                 if entry.get('name') and entry.get('value'):
-                    if encrypt:
-                        if not is_encrypted(kvm_dict['entry'][idx]['value']):
-                            Keyvaluemaps.encrypt_value(kvm_dict, idx, secret)
-                            crypto_count += 1
-                    else:
-                        if is_encrypted(kvm_dict['entry'][idx]['value']):
-                            Keyvaluemaps.decrypt_value(kvm_dict, idx, secret)
-                            crypto_count += 1
+                    crypto_count += _func(kvm_dict['entry'][idx]['value'], kvm_dict, idx, secret)
         return kvm_dict, crypto_count
 
     def push_keyvaluemap(self, environment, file, secret=None):
