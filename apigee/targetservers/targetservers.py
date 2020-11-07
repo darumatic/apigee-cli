@@ -5,6 +5,7 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.targetservers.serializer import TargetserversSerializer
+from apigee.utils import read_file
 
 CREATE_A_TARGETSERVER_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/targetservers'
@@ -117,9 +118,7 @@ class Targetservers:
         return resp
 
     def push_targetserver(self, environment, file):
-        with open(file) as f:
-            body = f.read()
-        targetserver = json.loads(body)
+        targetserver = read_file(file, type='json')
         self._targetserver_name = targetserver['name']
         try:
             self.get_targetserver(environment)

@@ -5,6 +5,7 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.apiproducts.serializer import ApiproductsSerializer
+from apigee.utils import read_file
 
 CREATE_API_PRODUCT_PATH = '{api_url}/v1/organizations/{org}/apiproducts'
 DELETE_API_PRODUCT_PATH = '{api_url}/v1/organizations/{org}/apiproducts/{name}'
@@ -102,9 +103,7 @@ class Apiproducts:
         return resp
 
     def push_apiproducts(self, file):
-        with open(file) as f:
-            body = f.read()
-        apiproduct = json.loads(body)
+        apiproduct = read_file(file, type='json')
         self._apiproduct_name = apiproduct['name']
         try:
             self.get_api_product()

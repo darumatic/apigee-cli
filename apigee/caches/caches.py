@@ -5,6 +5,7 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.caches.serializer import CachesSerializer
+from apigee.utils import read_file
 
 CLEAR_ALL_CACHE_ENTRIES_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/caches/{name}/entries?action=clear'
@@ -153,9 +154,7 @@ class Caches:
         return resp
 
     def push_cache(self, environment, file):
-        with open(file) as f:
-            body = f.read()
-        cache = json.loads(body)
+        cache = read_file(file, type='json')
         self._cache_name = cache['name']
         try:
             self.get_information_about_a_cache(environment)

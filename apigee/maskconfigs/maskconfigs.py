@@ -5,6 +5,7 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.maskconfigs.serializer import MaskconfigsSerializer
+from apigee.utils import read_file
 
 CREATE_DATA_MASKS_FOR_AN_API_PROXY_PATH = (
     '{api_url}/v1/organizations/{org}/apis/{api_name}/maskconfigs'
@@ -109,9 +110,7 @@ class Maskconfigs:
         return resp
 
     def push_data_masks_for_an_api_proxy(self, file):
-        with open(file) as f:
-            body = f.read()
-        maskconfig = json.loads(body)
+        maskconfig = read_file(file, type='json')
         maskconfig_name = maskconfig['name']
         try:
             self.get_data_mask_details_for_an_api_proxy(maskconfig_name)

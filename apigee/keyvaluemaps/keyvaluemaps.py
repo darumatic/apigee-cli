@@ -9,6 +9,7 @@ from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.crypto import (ENCRYPTED_HEADER_BEGIN, ENCRYPTED_HEADER_END,
                            decrypt_message, encrypt_message, is_encrypted)
 from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
+from apigee.utils import read_file
 
 CREATE_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH = (
     '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps'
@@ -32,6 +33,15 @@ CREATE_AN_ENTRY_IN_AN_ENVIRONMENT_SCOPED_KVM_PATH = (
 )
 UPDATE_AN_ENTRY_IN_AN_ENVIRONMENT_SCOPED_KVM_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}/entries/{entry_name}'
 LIST_KEYS_IN_AN_ENVIRONMENT_SCOPED_KEYVALUEMAP_PATH = '{api_url}/v1/organizations/{org}/environments/{environment}/keyvaluemaps/{name}/keys?startkey={startkey}&count={count}'
+
+
+def TQDM_KWARGS(desc):
+    return {
+        'desc': desc,
+        'unit': 'entries',
+        'bar_format': '{l_bar}{bar:32}{r_bar}{bar:-10b}',
+        'leave': False,
+    }
 
 
 class Keyvaluemaps:
@@ -218,15 +228,7 @@ class Keyvaluemaps:
             )
 
     def _delete_entries(self, environment, deleted_keys):
-        for idx, entry in enumerate(
-            tqdm(
-                deleted_keys,
-                desc='Deleting',
-                unit='entries',
-                bar_format='{l_bar}{bar:32}{r_bar}{bar:-10b}',
-                leave=False,
-            )
-        ):
+        for idx, entry in enumerate(tqdm(deleted_keys, **TQDM_KWARGS('Deleting'))):
             self.delete_keyvaluemap_entry_in_an_environment(environment, entry['name'])
 
     @staticmethod
@@ -266,44 +268,36 @@ class Keyvaluemaps:
         return kvm_dict, crypto_count
 
     def push_keyvaluemap(self, environment, file, secret=None):
-        with open(file) as f:
-            body = f.read()
-        loc_kvm = json.loads(body)
+        local_map = read_file(file, type='json')
         if secret:
             console.echo('Decrypting... ', end='', flush=True)
-            loc_kvm, decrypted_count = self.encrypt_decrypt_keyvaluemap(
-                loc_kvm, secret, encrypt=False
+            local_map, decrypted_count = self.encrypt_decrypt_keyvaluemap(
+                local_map, secret, encrypt=False
             )
             if decrypted_count:
                 console.echo('Done')
             else:
                 console.echo('None')
-        self._map_name = loc_kvm['name']
+        self._map_name = local_map['name']
         try:
-            env_kvm = self.get_keyvaluemap_in_an_environment(environment).json()
-            _, deleted_keys = self._diff_kvms(loc_kvm, env_kvm)
-            updated_loc_kvm = {
-                'entry': [entry for entry in loc_kvm['entry'] if entry not in env_kvm['entry']]
+            remote_map = self.get_keyvaluemap_in_an_environment(environment).json()
+            _, deleted_keys = self._diff_kvms(local_map, remote_map)
+            local_map_updated = {
+                'entry': [entry for entry in local_map['entry'] if entry not in remote_map['entry']]
             }
             if deleted_keys:
                 self._delete_entries(environment, deleted_keys)
                 console.echo('Removed entries.')
-            if updated_loc_kvm['entry']:
-                for entry in tqdm(
-                    updated_loc_kvm['entry'],
-                    desc='Updating',
-                    unit='entries',
-                    bar_format='{l_bar}{bar:32}{r_bar}{bar:-10b}',
-                    leave=False,
-                ):
+            if local_map_updated['entry']:
+                for entry in tqdm(local_map_updated['entry'], **TQDM_KWARGS('Updating')):
                     self._create_or_update_entry(environment, entry)
                 console.echo('Updated entries.')
-            if not deleted_keys and not updated_loc_kvm['entry']:
+            if not deleted_keys and not local_map_updated['entry']:
                 console.echo('All entries up-to-date.')
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
             console.echo(f'Creating {self._map_name}')
             console.echo(
-                self.create_keyvaluemap_in_an_environment(environment, json.dumps(loc_kvm)).text
+                self.create_keyvaluemap_in_an_environment(environment, json.dumps(local_map)).text
             )
