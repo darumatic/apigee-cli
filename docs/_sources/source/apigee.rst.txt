@@ -19,6 +19,7 @@ Subpackages
    apigee.keyvaluemaps
    apigee.maskconfigs
    apigee.permissions
+   apigee.plugins
    apigee.references
    apigee.sharedflows
    apigee.targetservers
