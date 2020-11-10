@@ -8,6 +8,23 @@ import json
 from os import getenv
 from pathlib import Path
 
+
+def is_true(value):
+    return value in (True, 'True', 'true', '1')
+
+
+def str_path(*args):
+    if not args:
+        return
+    path = None
+    for arg in args:
+        if not path:
+            path = Path(arg)
+        else:
+            path /= arg
+    return str(path)
+
+
 # auth
 APIGEE_USERNAME = getenv('APIGEE_USERNAME')
 APIGEE_PASSWORD = getenv('APIGEE_PASSWORD')
@@ -17,9 +34,7 @@ APIGEE_ADMIN_API_URL = 'https://api.enterprise.apigee.com'
 APIGEE_OAUTH_URL = 'https://login.apigee.com/oauth/token'
 APIGEE_ZONENAME_OAUTH_URL = 'https://{zonename}.login.apigee.com/oauth/token'
 APIGEE_ZONENAME = getenv('APIGEE_ZONENAME')
-APIGEE_CLI_IS_MACHINE_USER = (
-    True if getenv('APIGEE_CLI_IS_MACHINE_USER') in (True, 'True', 'true', '1') else False
-)
+APIGEE_CLI_IS_MACHINE_USER = is_true(getenv('APIGEE_CLI_IS_MACHINE_USER'))
 APIGEE_SAML_LOGIN_URL = 'https://{zonename}.login.apigee.com/passcode'
 APIGEE_ORG = getenv('APIGEE_ORG')
 
@@ -34,10 +49,15 @@ APIGEE_CLI_PREFIX = getenv('APIGEE_CLI_PREFIX')
 APIGEE_CLI_TOGGLE_SILENT = False
 APIGEE_CLI_TOGGLE_VERBOSE = 0
 
-# paths
-APIGEE_CLI_DIRECTORY = str(Path.home() / '.apigee')
-APIGEE_CLI_ACCESS_TOKEN_FILE = str(Path(APIGEE_CLI_DIRECTORY) / 'access_token')
-APIGEE_CLI_CREDENTIALS_FILE = str(Path(APIGEE_CLI_DIRECTORY) / 'credentials')
-APIGEE_CLI_EXCEPTION_LOG_FILE = str(Path(APIGEE_CLI_DIRECTORY) / 'exception.log')
-APIGEE_CLI_PLUGINS_PATH = str(Path(APIGEE_CLI_DIRECTORY) / 'plugins' / '__init__.py')
-# APIGEE_CLI_PLUGINS_NAME = 'plugins_modules'
+# config directory
+APIGEE_CLI_DIRECTORY = str_path(Path.home(), '.apigee')
+
+# top-level config files
+APIGEE_CLI_ACCESS_TOKEN_FILE = str_path(APIGEE_CLI_DIRECTORY, 'access_token')
+APIGEE_CLI_CREDENTIALS_FILE = str_path(APIGEE_CLI_DIRECTORY, 'credentials')
+APIGEE_CLI_EXCEPTION_LOG_FILE = str_path(APIGEE_CLI_DIRECTORY, 'exception.log')
+
+# plugin files
+APIGEE_CLI_PLUGINS_DIRECTORY = str_path(APIGEE_CLI_DIRECTORY, 'plugins')
+APIGEE_CLI_PLUGINS_CONFIG_FILE = str_path(APIGEE_CLI_PLUGINS_DIRECTORY, 'config')
+APIGEE_CLI_PLUGINS_PATH = str_path(APIGEE_CLI_PLUGINS_DIRECTORY, '__init__.py')

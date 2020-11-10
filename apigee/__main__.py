@@ -13,7 +13,8 @@ from functools import update_wrapper
 import click
 import requests
 
-from apigee import APIGEE_CLI_PLUGINS_PATH, APP, CMD
+from apigee import (APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH, APP,
+                    CMD)
 from apigee import __version__ as version
 from apigee.apiproducts.commands import apiproducts
 from apigee.apis.commands import apis
@@ -30,11 +31,12 @@ from apigee.keystores.commands import keystores
 from apigee.keyvaluemaps.commands import keyvaluemaps
 from apigee.maskconfigs.commands import maskconfigs
 from apigee.permissions.commands import permissions
+from apigee.plugins.commands import plugins
 from apigee.references.commands import references
 from apigee.sharedflows.commands import sharedflows
 from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
-from apigee.utils import show_message
+from apigee.utils import is_dir, run_func_on_dir_files, show_message
 from apigee.virtualhosts.commands import virtualhosts
 
 # from click_aliases import ClickAliasedGroup
@@ -68,7 +70,7 @@ def cli(ctx):
 
 @exception_handler
 def main():
-    cli_commands = [
+    cli_commands = {
         backups,
         configure,
         deployments,
@@ -87,13 +89,12 @@ def main():
         keystores,
         references,
         virtualhosts,
-    ]
+        plugins,
+    }
 
-    if os.path.exists(APIGEE_CLI_PLUGINS_PATH):
+    def _load_all_modules_in_directory(plugins_init_file):
         try:
-            spec = importlib.util.spec_from_file_location(
-                'plugins_modules', APIGEE_CLI_PLUGINS_PATH
-            )
+            spec = importlib.util.spec_from_file_location('plugins_modules', plugins_init_file)
             module = importlib.util.module_from_spec(spec)
             sys.modules[spec.name] = module
             spec.loader.exec_module(module)
@@ -103,9 +104,13 @@ def main():
             for module in all_plugins_modules:
                 _module = getattr(plugins_modules, module)
                 if isinstance(_module, (click.core.Command, click.core.Group)):
-                    cli_commands.append(_module)
+                    cli_commands.add(_module)
         except ImportError:
             pass
+
+    run_func_on_dir_files(
+        APIGEE_CLI_PLUGINS_DIRECTORY, _load_all_modules_in_directory, glob='[!.][!__]*/__init__.py'
+    )
 
     for command in cli_commands:
         cli.add_command(command)
