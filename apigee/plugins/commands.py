@@ -1,7 +1,9 @@
 import configparser
 import json
-# import os
+import os
 import shutil
+import stat
+from os import path
 from pathlib import Path
 
 import click
@@ -119,6 +121,15 @@ def info():
     pass
 
 
+def chmod_directory(directory, mode):
+    """https://stackoverflow.com/a/58878271"""
+    for root, dirs, files in os.walk(directory):
+        for dir in dirs:
+            os.chmod(path.join(root, dir), mode)
+        for file in files:
+            os.chmod(path.join(root, file), mode)
+
+
 def prune_all(section='sources'):
     init()
     config = load_config()
@@ -133,8 +144,10 @@ def prune_all(section='sources'):
         if name in sources.keys():
             return
         console.echo(f'Removing {name}... ', end='', flush=True)
+        plugin_directory = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name
         try:
-            shutil.rmtree(Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name)
+            chmod_directory(str(Path(plugin_directory) / '.git'), stat.S_IRWXU)
+            shutil.rmtree(plugin_directory)
             console.echo('Done')
         except Exception as e:
             console.echo(e)
