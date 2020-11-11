@@ -268,14 +268,74 @@ Push commands read JSON from a file and can be invoked like so::
 
 This will create the KVM if it does not exist, and update it if it does.
 
+----------------
+Managing plugins
+----------------
+The simple plugins manager uses Git to install commands from remote sources, thus you will need to have Git installed for installation to work.
+However, it is possible to install plugins manually by storing plugins in the correct location (to be documented).
+
+Currently, only the commands below are supported. More commands will be added to improve automation and user experience.
+
+The steps below show how to install commands from a public plugins repository located here:
+
+* https://github.com/mdelotavo/apigee-cli-plugins
+
+^^^^^^^^^^^
+Configuring
+^^^^^^^^^^^
+
+To configure remote sources for installing plugins, run::
+
+    apigee plugins configure -a
+    
+This will open a text editor so that you can specify the remote sources.
+
+If you don't want changes to be automatically applied, then you can drop the ``-a`` option.
+
+When the editor opens, copy and paste the following example configuration::
+
+    [sources]
+    public = https://github.com/mdelotavo/apigee-cli-plugins.git
+
+After saving the changes, the CLI will attempt to install the plugins from the specified Git URI.
+Here we use the HTTPS URI but you can also use SSH if you have configured it.
+
+You can also specify multiple source, as long as the key (``public`` in this case) is unique.
+The key will be the name of the repository on your local machine under ``~/.apigee/plugins/``.
+
+If installation is successful, you should now see additional commands when you run ``apigee -h``
+
+^^^^^^^^
+Updating
+^^^^^^^^
+
+If you specified the ``-a`` option when running ``apigee plugins configure`` then install and update will occur automatically.
+Otherwise you can run::
+
+     apigee plugins update
+
+^^^^^^^
+Pruning
+^^^^^^^
+
+If you specified the ``-a`` option when running ``apigee plugins configure`` then removal of plugins will occur automatically.
+Otherwise you can run::
+
+     apigee plugins prune
+
+^^^^^^^^^^^^
+How it works
+^^^^^^^^^^^^
+
+1. The plugins manager ``apigee/plugins/commands.py`` will clone or pull remote repositories into ``~/.apigee/plugins/``.
+2. The ``_load_all_modules_in_directory()`` function in ``apigee/__main__.py`` will attempt to import the functions as specified in the ``__init__.py`` file for each plugin repository found in ``~/.apigee/plugins/``.
+3. If the functions found are of instance type ``(click.core.Command, click.core.Group)`` then the CLI will add it to the list of available commands.
+
+Further details are to be documented, including how to write plugins and leverage some useful CLI libraries.
+
 -------------
 More Commands
 -------------
-This will be documented soon.
-
--------------------
-Third-party plugins
--------------------
 This will be documented soon.
 
 ------------
