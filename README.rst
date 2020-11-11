@@ -36,6 +36,7 @@ Welcome to the Apigee Management API command-line interface!
       keyvaluemaps   Key/value maps at the environment scope can be accessed by...
       maskconfigs    Specify data that will be filtered out of trace sessions.
       permissions    Permissions for roles in an organization on Apigee Edge.
+      plugins        [Experimental] Simple plugins manager for distributing...
       references     References in an organization and environment.
       sharedflows    You can use the following APIs to manage shared flows and...
       targetservers  TargetServers are used to decouple TargetEndpoint...
@@ -119,12 +120,13 @@ Specialised use cases
 
 Some use cases that are too specialised for official tools are listed below (links and docs coming soon).
 
-* Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations while allowing clients to perform self-service operations using their personal accounts (MFA) or after authenticating with their identity provider (SSO/SAML)
+* Enabling clients to easily use personal accounts (MFA) or authenticate with their identity provider (SSO/SAML)
+* Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations
 * Provisioning API proxy deployments generated from best practice templates
 * Using resource permissions files as templates for team user roles
 * Distributing and developing third-party plugins as commands
 * Encrypting KVMs at rest and decrypting during CI/CD
-* Taking and restoring snapshots of Apigee Edge
+* Managing snapshots of Apigee Edge
 
 Some of these use cases require plugins. These will be documented and made available soon.
 
