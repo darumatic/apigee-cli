@@ -3,12 +3,24 @@ import json
 import os
 import shutil
 import stat
+import sys
 from os import path
 from pathlib import Path
 
 import click
-import git
-from git import Git, Repo
+
+is_git_installed = False
+plugins_command_help = '[Experimental] Simple plugins manager for distributing commands. NOTE: These commands require you to have Git installed.'
+
+try:
+    import git
+    from git import Git, Repo
+
+    is_git_installed = True
+except ImportError:
+    plugins_command_help = (
+        '[Unavailable. Git is not installed.] Simple plugins manager for distributing commands.'
+    )
 
 from apigee import (APIGEE_CLI_PLUGINS_CONFIG_FILE,
                     APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH,
@@ -18,9 +30,12 @@ from apigee.utils import is_dir, make_dirs, run_func_on_dir_files, touch
 from apigee.verbose import common_verbose_options
 
 
-@click.group(
-    help='[Experimental] Simple plugins manager for distributing commands. NOTE: These commands require you to have Git installed.'
-)
+def exit_if_git_not_installed():
+    if not is_git_installed:
+        sys.exit(0)
+
+
+@click.group(help=plugins_command_help)
 def plugins():
     pass
 
@@ -90,6 +105,7 @@ def pull_all():
     show_default=True,
 )
 def configure(silent, verbose, apply_changes):
+    exit_if_git_not_installed()
     init()
     click.edit(filename=APIGEE_CLI_PLUGINS_CONFIG_FILE)
     if apply_changes:
@@ -109,6 +125,7 @@ def install():
 @common_silent_options
 @common_verbose_options
 def update(silent, verbose, section='sources'):
+    exit_if_git_not_installed()
     clone_all()
     pull_all()
 
@@ -159,6 +176,7 @@ def prune_all(section='sources'):
 @common_silent_options
 @common_verbose_options
 def prune(silent, verbose, section='sources'):
+    exit_if_git_not_installed()
     prune_all()
 
 
