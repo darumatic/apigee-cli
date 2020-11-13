@@ -447,21 +447,22 @@ However, it is possible to install plugins manually by storing plugins in the co
 </div>
 <p>After saving the changes, the CLI will attempt to install the plugins from the specified Git URI.
 Here we use the HTTPS URI but you can also use SSH if you have configured it.</p>
-<p>You can also specify multiple source, as long as the key (<code class="docutils literal notranslate"><span class="pre">public</span></code> in this case) is unique.
+<p>You can also specify multiple sources, as long as the key (<code class="docutils literal notranslate"><span class="pre">public</span></code> in this case) is unique.
 The key will be the name of the repository on your local machine under <code class="docutils literal notranslate"><span class="pre">~/.apigee/plugins/</span></code>.</p>
 <p>If installation is successful, you should now see additional commands when you run <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">-h</span></code></p>
 </div>
 <div class="section" id="updating">
 <h4><a class="toc-backref" href="#id14">Updating</a><a class="headerlink" href="#updating" title="Permalink to this headline">¶</a></h4>
-<p>If you specified the <code class="docutils literal notranslate"><span class="pre">-a</span></code> option when running <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">plugins</span> <span class="pre">configure</span></code> then install and update will occur automatically.
+<p>If you specified the <code class="docutils literal notranslate"><span class="pre">-a</span></code> option when running <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">plugins</span> <span class="pre">configure</span></code> then install will occur automatically.
 Otherwise you can run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">update</span>
 </pre></div>
 </div>
+<p>This will install and update plugins.</p>
 </div>
 <div class="section" id="pruning">
 <h4><a class="toc-backref" href="#id15">Pruning</a><a class="headerlink" href="#pruning" title="Permalink to this headline">¶</a></h4>
-<p>If you specified the <code class="docutils literal notranslate"><span class="pre">-a</span></code> option when running <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">plugins</span> <span class="pre">configure</span></code> then removal of plugins will occur automatically.
+<p>If you specified the <code class="docutils literal notranslate"><span class="pre">-a</span></code> option when running <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">plugins</span> <span class="pre">configure</span></code> then the removal of plugins will occur automatically.
 Otherwise you can run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">prune</span>
 </pre></div>

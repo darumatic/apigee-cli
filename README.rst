@@ -300,7 +300,7 @@ When the editor opens, copy and paste the following example configuration::
 After saving the changes, the CLI will attempt to install the plugins from the specified Git URI.
 Here we use the HTTPS URI but you can also use SSH if you have configured it.
 
-You can also specify multiple source, as long as the key (``public`` in this case) is unique.
+You can also specify multiple sources, as long as the key (``public`` in this case) is unique.
 The key will be the name of the repository on your local machine under ``~/.apigee/plugins/``.
 
 If installation is successful, you should now see additional commands when you run ``apigee -h``
@@ -309,16 +309,18 @@ If installation is successful, you should now see additional commands when you r
 Updating
 ^^^^^^^^
 
-If you specified the ``-a`` option when running ``apigee plugins configure`` then install and update will occur automatically.
+If you specified the ``-a`` option when running ``apigee plugins configure`` then install will occur automatically.
 Otherwise you can run::
 
      apigee plugins update
+
+This will install and update plugins.
 
 ^^^^^^^
 Pruning
 ^^^^^^^
 
-If you specified the ``-a`` option when running ``apigee plugins configure`` then removal of plugins will occur automatically.
+If you specified the ``-a`` option when running ``apigee plugins configure`` then the removal of plugins will occur automatically.
 Otherwise you can run::
 
      apigee plugins prune
