@@ -9,8 +9,15 @@ from pathlib import Path
 
 import click
 
+from apigee import (APIGEE_CLI_PLUGINS_CONFIG_FILE,
+                    APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH,
+                    console)
+from apigee.silent import common_silent_options
+from apigee.utils import is_dir, make_dirs, run_func_on_dir_files, touch
+from apigee.verbose import common_verbose_options
+
 is_git_installed = False
-plugins_command_help = '[Experimental] Simple plugins manager for distributing commands. NOTE: These commands require you to have Git installed.'
+plugins_command_help = '[Experimental] Simple plugins manager for distributing commands.'
 
 try:
     import git
@@ -19,15 +26,9 @@ try:
     is_git_installed = True
 except ImportError:
     plugins_command_help = (
-        '[Unavailable. Git is not installed.] Simple plugins manager for distributing commands.'
+        '[Unavailable - Git not found] Simple plugins manager for distributing commands.'
     )
 
-from apigee import (APIGEE_CLI_PLUGINS_CONFIG_FILE,
-                    APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH,
-                    console)
-from apigee.silent import common_silent_options
-from apigee.utils import is_dir, make_dirs, run_func_on_dir_files, touch
-from apigee.verbose import common_verbose_options
 
 
 def exit_if_git_not_installed():
