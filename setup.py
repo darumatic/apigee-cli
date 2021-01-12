@@ -47,7 +47,7 @@ SETUP_ARGS = dict(
         'requests',
         'tqdm',
         'tabulate',
-        'pyjwt',
+        'pyjwt<2.0.0',
         'python-gnupg>=0.3.5',
         'gitpython'
     ],
