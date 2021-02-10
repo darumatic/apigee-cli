@@ -52,7 +52,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.version_option(version, '-V', '--version')
 @click.pass_context
 def cli(ctx):
-    """Welcome to the Apigee Management API command-line interface!
+    """Welcome to the (Unofficial) Apigee Management API command-line interface!
 
     \b
     Docs:    https://mdelotavo.github.io/apigee-cli/

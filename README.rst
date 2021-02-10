@@ -4,13 +4,13 @@ apigee-cli
 
 |License|
 
-Welcome to the Apigee Management API command-line interface!
+Welcome to the (Unofficial) Apigee Management API command-line interface!
 
 .. code-block:: text
 
     Usage: apigee [OPTIONS] COMMAND [ARGS]...
 
-      Welcome to the Apigee Management API command-line interface!
+      Welcome to the (Unofficial) Apigee Management API command-line interface!
 
       Docs:    https://mdelotavo.github.io/apigee-cli/
       PyPI:    https://pypi.org/project/apigeecli/
