@@ -271,3 +271,9 @@ class Userroles:
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
+
+    @staticmethod
+    def sort_permissions(resource_permissions):
+        for i in range(len(resource_permissions.get('resourcePermission'))):
+            resource_permissions['resourcePermission'][i]['permissions'].sort()
+        return resource_permissions

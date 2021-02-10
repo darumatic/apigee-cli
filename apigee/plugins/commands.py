@@ -30,7 +30,6 @@ except ImportError:
     )
 
 
-
 def exit_if_git_not_installed():
     if not is_git_installed:
         sys.exit(0)
