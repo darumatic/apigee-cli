@@ -85,7 +85,7 @@ class Backups:
         ):
             self.snapshot_data.apis[api] = (
                 Apis(self.auth, self.org_name, None).get_api_proxy(api).json()
-            ) 
+            )
             write_file(
                 self.snapshot_data.apis[api],
                 self._gen_download_path(is_snapshot=True, subpaths=['apis', f'{api}.json']),
