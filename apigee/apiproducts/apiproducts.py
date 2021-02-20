@@ -108,9 +108,9 @@ class Apiproducts:
         try:
             self.get_api_product()
             console.echo(f'Updating {self._apiproduct_name}')
-            console.echo(self.update_api_product(body).text)
+            console.echo(self.update_api_product(json.dumps(apiproduct)).text)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
             console.echo(f'Creating {self._apiproduct_name}')
-            console.echo(self.create_api_product(body).text)
+            console.echo(self.create_api_product(json.dumps(apiproduct)).text)

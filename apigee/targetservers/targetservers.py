@@ -123,9 +123,9 @@ class Targetservers:
         try:
             self.get_targetserver(environment)
             console.echo(f'Updating {self._targetserver_name}')
-            console.echo(self.update_a_targetserver(environment, body).text)
+            console.echo(self.update_a_targetserver(environment, json.dumps(targetserver)).text)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
             console.echo(f'Creating {self._targetserver_name}')
-            console.echo(self.create_a_targetserver(environment, body).text)
+            console.echo(self.create_a_targetserver(environment, json.dumps(targetserver)).text)

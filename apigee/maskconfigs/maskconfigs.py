@@ -115,9 +115,9 @@ class Maskconfigs:
         try:
             self.get_data_mask_details_for_an_api_proxy(maskconfig_name)
             console.echo(f'Updating {maskconfig_name} for {self._api_name}')
-            console.echo(self.create_data_masks_for_an_api_proxy(body).text)
+            console.echo(self.create_data_masks_for_an_api_proxy(json.dumps(maskconfig)).text)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
             console.echo(f'Creating {maskconfig_name} for {self._api_name}')
-            console.echo(self.create_data_masks_for_an_api_proxy(body).text)
+            console.echo(self.create_data_masks_for_an_api_proxy(json.dumps(maskconfig)).text)

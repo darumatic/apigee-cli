@@ -159,9 +159,9 @@ class Caches:
         try:
             self.get_information_about_a_cache(environment)
             console.echo(f'Updating {self._cache_name}')
-            console.echo(self.update_a_cache_in_an_environment(environment, body).text)
+            console.echo(self.update_a_cache_in_an_environment(environment, json.dumps(cache)).text)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
             console.echo(f'Creating {self._cache_name}')
-            console.echo(self.create_a_cache_in_an_environment(environment, body).text)
+            console.echo(self.create_a_cache_in_an_environment(environment, json.dumps(cache)).text)
