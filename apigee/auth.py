@@ -192,7 +192,7 @@ def _get_access_token_for_mfa(auth, username, password, oauth_url, post_headers,
     try:
         response_post.json()['access_token']
         return response_post
-    except KeyError as ke:
+    except KeyError:
         return session.post(
             f'{oauth_url}?mfa_token={totp.now()}', headers=post_headers, data=post_body
         )
@@ -287,18 +287,17 @@ def set_header(auth_obj, headers={}):
         try:
             with open(APIGEE_CLI_ACCESS_TOKEN_FILE, 'r') as f:
                 access_token = f.read().strip()
-        except (IOError, OSError) as e:
+        except (IOError, OSError):
             pass
-        finally:
-            if access_token:
-                decoded = jwt.decode(
-                    access_token, options={'verify_signature': False, 'verify_aud': False}
-                )
-                if (
-                    decoded['exp'] < int(time.time())
-                    or decoded['email'].lower() != auth_obj.username.lower()
-                ):
-                    access_token = ""
+        if access_token:
+            decoded = jwt.decode(
+                access_token, options={'verify_signature': False, 'verify_aud': False}
+            )
+            if (
+                decoded['exp'] < int(time.time())
+                or decoded['email'].lower() != auth_obj.username.lower()
+            ):
+                access_token = ""
         if not access_token:
             access_token = get_access_token(auth_obj)
             with open(APIGEE_CLI_ACCESS_TOKEN_FILE, 'w') as f:
