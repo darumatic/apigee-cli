@@ -8,12 +8,14 @@ from os import path
 from pathlib import Path
 
 import click
+from click_option_group import MutuallyExclusiveOptionGroup, optgroup
 
 from apigee import (APIGEE_CLI_PLUGINS_CONFIG_FILE,
                     APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH,
                     console)
 from apigee.silent import common_silent_options
-from apigee.utils import is_dir, make_dirs, run_func_on_dir_files, touch
+from apigee.utils import (is_dir, is_file, make_dirs, read_file,
+                          run_func_on_dir_files, touch)
 from apigee.verbose import common_verbose_options
 
 is_git_installed = False
@@ -130,8 +132,51 @@ def update(silent, verbose, section='sources'):
     pull_all()
 
 
-def show():
-    pass
+@plugins.command(help='Show plugins information.')
+@common_silent_options
+@common_verbose_options
+@click.option('-n', '--name', help='name of the plugins package')
+@optgroup.group('Filter options', cls=MutuallyExclusiveOptionGroup, help='The filter options')
+@optgroup.option(
+    '--show-commit-only/--no-show-commit-only',
+    default=False,
+    help='only print latest Git commit log',
+)
+@optgroup.option(
+    '--show-dependencies-only/--no-show-dependencies-only',
+    default=False,
+    help='only print list of required packages',
+)
+def show(
+    silent, verbose, name, section='sources', show_commit_only=False, show_dependencies_only=False
+):
+    if not name:
+        config = load_config()
+        if not config._sections:
+            return
+        sources = dict(config._sections[section])
+        for name, uri in sources.items():
+            console.echo(f'{name}: {uri}')
+        return
+    plugins_info_file = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name / 'apigee-cli.info'
+    if not is_file(plugins_info_file):
+        return
+    plugins_info = read_file(plugins_info_file, type='json')
+    if show_commit_only:
+        exit_if_git_not_installed()
+        console.echo(
+            Repo(Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name).git.log(
+                '--pretty=format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset',
+                '-1',
+            )
+        )
+        return
+    if show_dependencies_only:
+        if plugins_info.get('Requires'):
+            console.echo(plugins_info.get('Requires'))
+        return
+    for k, v in plugins_info.items():
+        console.echo(f'{k}: {v}')
 
 
 def info():
