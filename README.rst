@@ -324,6 +324,25 @@ If you specified the ``-a`` option when running ``apigee plugins configure`` the
 Otherwise you can run::
 
      apigee plugins prune
+     
+^^^^^^^
+Showing
+^^^^^^^
+
+To show the plugins you have configured, run::
+
+     apigee plugins show
+
+You can also run the following commands if you specify the plugin name::
+
+    apigee plugins show -n PLUGIN_NAME --show-commit-only
+    apigee plugins show -n PLUGIN_NAME --show-dependencies-only
+
+Some plugins will not load if dependencies are not installed. You can run the following command to install them.
+In order for this to work, the plugin needs to have the ``Requires`` key in the JSON body of the ``apigee-cli.info`` file.
+More details coming soon.::
+
+    pip3 install $(apigee plugins show -n PLUGIN_NAME --show-dependencies-only)
 
 ^^^^^^^^^^^^
 How it works
