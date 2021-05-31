@@ -100,10 +100,10 @@ to manage CI/CD, perform self-service operations and promote our DevOps workflow
 in ways that are not supported by official tools. These include but are not limited to:
 
 * Enabling clients to easily use personal accounts (MFA) or authenticate with their identity provider (SSO/SAML)
-* Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations
+* Using CI/CD when SSO/SAML and MFA are enabled for an Apigee Edge organization
 * Provisioning API proxy deployments generated from best practice templates
-* Using resource permissions files as templates for team user roles
-* Distributing and developing third-party plugins as commands
+* Using resource permissions template files to generate team user roles
+* Distributing and developing specialized plugins as commands
 * Encrypting KVMs at rest and decrypting during CI/CD
 * Managing snapshots of Apigee Edge
 
