@@ -82,15 +82,6 @@ It is intended for general administrative use from your shell, as a package for 
 and to support automation for common development tasks, such as test automation
 or Continuous Integration/Continuous Deployment (CI/CD).
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-How we and our clients use it
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-We built and use the Apigee CLI to implement and distribute features that allow our clients
-to manage CI/CD, perform self-service operations and promote our DevOps workflows
-in ways that are not supported by official tools. Additionally, we constantly add new features
-and make improvements to the CLI to make it more user-friendly based on client needs and feedback.
-
 ^^^^^^^^^^^^^^^^^^^
 Third-party plugins
 ^^^^^^^^^^^^^^^^^^^
@@ -100,25 +91,13 @@ as additional commands which enables us (and third-party developers) to distribu
 for very specific use cases, including those do not require any interaction with the Apigee Management API,
 while being able to leverage the command-line interface without any knowledge of the CLI internals.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-When to use this over the official tool
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+How we and our clients use it
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Apigee Corporation provides their own CLI for the Apigee Management API:
-
-GitHub repo at `apigeetool-node`_.
-
-It is fully-featured, well-supported and can be used as an SDK to orchestrate tasks
-and may be more than suitable for your needs.
-
-If however, you have certain use cases that cannot be satisfied by this tool,
-then the Apigee CLI may have what you need.
-
-^^^^^^^^^^^^^^^^^^^^^
-Specialised use cases
-^^^^^^^^^^^^^^^^^^^^^
-
-Some use cases that are too specialised for official tools are listed below (links and docs coming soon).
+We built and use the Apigee CLI to implement and distribute features that allow our clients
+to manage CI/CD, perform self-service operations and promote our DevOps workflows
+in ways that are not supported by official tools. These include but are not limited to:
 
 * Enabling clients to easily use personal accounts (MFA) or authenticate with their identity provider (SSO/SAML)
 * Using CI/CD on SSO/SAML and MFA enabled Apigee Edge organizations
@@ -128,7 +107,26 @@ Some use cases that are too specialised for official tools are listed below (lin
 * Encrypting KVMs at rest and decrypting during CI/CD
 * Managing snapshots of Apigee Edge
 
-Some of these use cases require plugins. These will be documented and made available soon.
+We also constantly add new features and make improvements to the CLI to make it more user-friendly
+based on client needs and feedback.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+When to use this over the official tool
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Apigee Corporation has their own CLI for the Apigee Management API named `apigeetool-node`_.
+
+It is fully-featured, well-supported and can be used as an SDK to orchestrate tasks
+and may be more than suitable for your needs.
+
+If however, you have certain use cases that cannot be satisfied by this tool,
+then the Apigee CLI may have what you need.
+
+^^^^^^^^^^^^^^^^^^^^^
+Specialized use cases
+^^^^^^^^^^^^^^^^^^^^^
+
+Some of these use cases require plugins. These will be documented and made available at a later date.
 
 ---------------
 Getting Started
