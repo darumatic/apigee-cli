@@ -142,17 +142,19 @@ can do this in three ways:
 The quickest way to get started is to run the ``apigee configure`` command::
 
     $ apigee configure
-    Apigee username (email) []: my_email
-    Apigee password []: my_pass
-    Apigee MFA key (optional) []: my_key
+    Apigee username (email) []: MY_EMAIL
+    Apigee password []: MY_PASS
+    Apigee MFA key (optional) []: MY_KEY
     Identity zone name (to support SAML authentication) []:
     Use OAuth, no MFA (optional)? [y/N]: n
-    Default Apigee organization (recommended) []: my_org
+    Default Apigee organization (recommended) []: MY_ORG
     Default team/resource prefix (optional) []:
+
+You may not need to input anything for some of these prompts. In these cases, simply press ``enter`` to skip.
 
 You can also do the same thing using command-line arguments::
 
-    $ apigee configure -P default -u <my_email> -p <my_pass> -o <my_org> -mfa '' -z '' --no-token --prefix ''
+    $ apigee configure -P default -u MY_EMAIL -p MY_PASS -o MY_ORG -mfa '' -z '' --no-token --prefix ''
 
 You may need to specify empty strings as above. Also note the ``--prefix`` option. This option
 will filter the output of some commands, such as the ``list`` type commands, by the prefix which may be useful to some people,
@@ -162,29 +164,29 @@ for those commands if you need it on the fly.
 
 To use environment variables, do the following::
 
-    $ export APIGEE_USERNAME=<my_email>
-    $ export APIGEE_PASSWORD=<my_pass>
-    $ export APIGEE_MFA_SECRET=<my_key>
-    $ export APIGEE_ZONENAME=<my_zonename>
-    $ export APIGEE_IS_TOKEN=<bool>
-    $ export APIGEE_ORG=<my_org>
-    $ export APIGEE_CLI_PREFIX=<my_prefix>
+    $ export APIGEE_USERNAME=MY_EMAIL
+    $ export APIGEE_PASSWORD=MY_PASS
+    $ export APIGEE_MFA_SECRET=MY_KEY
+    $ export APIGEE_ZONENAME=MY_ZONENAME
+    $ export APIGEE_IS_TOKEN=BOOL
+    $ export APIGEE_ORG=MY_ORG
+    $ export APIGEE_CLI_PREFIX=MY_PREFIX
 
 
 To use the configuration file, create an INI formatted file like this::
 
     [default]
-    username = my_email
-    org = my_org
-    mfa_secret = my_key
-    prefix = my_prefix
-    password = my_pass
+    username = MY_EMAIL
+    org = MY_ORG
+    mfa_secret = MY_KEY
+    prefix = MY_PREFIX
+    password = MY_PASS
 
     [produser]
-    org = my_org
-    username = my_email
-    password = my_pass
-    mfa_secret = my_key
+    org = MY_ORG
+    username = MY_EMAIL
+    password = MY_PASS
+    mfa_secret = MY_KEY
 
 and place it in ``~/.apigee/credentials``.
 
@@ -249,7 +251,7 @@ make use of the ``clean`` command to delete all undeployed revisions.
 
 You can also specify to keep the last few revisions::
 
-    $ apigee apis clean -n API_NAME --save-last 10
+    $ apigee apis clean -n API_NAME --save-last INTEGER
 
 To only show which revisions will be deleted but not actually delete anything, use the following option::
 
@@ -262,7 +264,7 @@ Some commands support the ``push`` subcommand which combines API calls to manage
 
 Push commands read JSON from a file and can be invoked like so::
 
-    $ apigee keyvaluemaps push -e <env> -f <file_path.json>
+    $ apigee keyvaluemaps push -e ENVIRONMENT -f FILENAME
 
 This will create the KVM if it does not exist, and update it if it does.
 
@@ -285,7 +287,7 @@ Configuring
 To configure remote sources for installing plugins, run::
 
     apigee plugins configure -a
-    
+
 This will open a text editor so that you can specify the remote sources.
 
 If you don't want changes to be automatically applied, then you can drop the ``-a`` option.
@@ -322,7 +324,7 @@ If you specified the ``-a`` option when running ``apigee plugins configure`` the
 Otherwise you can run::
 
      apigee plugins prune
-     
+
 ^^^^^^^
 Showing
 ^^^^^^^
