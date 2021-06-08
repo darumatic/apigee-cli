@@ -44,7 +44,6 @@ SETUP_ARGS = dict(
         'click-option-group',
         'colorama',
         'pyotp',
-        'requests',
         'tqdm',
         'tabulate',
         'pyjwt',
