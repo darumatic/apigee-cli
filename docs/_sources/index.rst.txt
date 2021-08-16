@@ -6,7 +6,7 @@
 Welcome to the Apigee Management API command-line interface documentation!
 ==========================================================================
 
-.. include:: ../README.rst
+.. include:: ../Welcome.rst
 
 .. toctree::
    :maxdepth: 1

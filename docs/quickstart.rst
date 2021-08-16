@@ -7,7 +7,7 @@ Quickstart
 Getting Started
 ---------------
 
-Before using apigee-cli, you need to tell it about your Apigee Edge credentials.  You
+Before using apigee-cli, you need to tell it about your Apigee Edge credentials. You
 can do this in three ways:
 
 * Environment variables
@@ -17,40 +17,51 @@ can do this in three ways:
 The quickest way to get started is to run the ``apigee configure`` command::
 
     $ apigee configure
-    Apigee username (email) []: my_email
-    Apigee password []: my_pass
-    Apigee MFA key (optional) []: my_key
+    Apigee username (email) []: MY_EMAIL
+    Apigee password []: MY_PASS
+    Apigee MFA key (optional) []: MY_KEY
     Identity zone name (to support SAML authentication) []:
     Use OAuth, no MFA (optional)? [y/N]: n
-    Default Apigee organization (recommended) []: my_org
+    Default Apigee organization (recommended) []: MY_ORG
     Default team/resource prefix (optional) []:
+
+You may not need to input anything for some of these prompts. In these cases, simply press ``enter`` to skip.
+
+You can also do the same thing using command-line arguments::
+
+    $ apigee configure -P default -u MY_EMAIL -p MY_PASS -o MY_ORG -mfa '' -z '' --no-token --prefix ''
+
+You may need to specify empty strings as above. Also note the ``--prefix`` option. This option
+will filter the output of some commands, such as the ``list`` type commands, by the prefix which may be useful to some people,
+but if you want to avoid confusion just keep this value empty. You can also explicitly specify the ``--prefix``
+for those commands if you need it on the fly.
 
 
 To use environment variables, do the following::
 
-    $ export APIGEE_USERNAME=<my_email>
-    $ export APIGEE_PASSWORD=<my_pass>
-    $ export APIGEE_MFA_SECRET=<my_key>
-    $ export APIGEE_ZONENAME=<my_zonename>
-    $ export APIGEE_IS_TOKEN=<bool>
-    $ export APIGEE_ORG=<my_org>
-    $ export APIGEE_CLI_PREFIX=<my_prefix>
+    $ export APIGEE_USERNAME=MY_EMAIL
+    $ export APIGEE_PASSWORD=MY_PASS
+    $ export APIGEE_MFA_SECRET=MY_KEY
+    $ export APIGEE_ZONENAME=MY_ZONENAME
+    $ export APIGEE_IS_TOKEN=BOOL
+    $ export APIGEE_ORG=MY_ORG
+    $ export APIGEE_CLI_PREFIX=MY_PREFIX
 
 
 To use the configuration file, create an INI formatted file like this::
 
     [default]
-    username = my_email
-    org = my_org
-    mfa_secret = my_key
-    prefix = my_prefix
-    password = my_pass
+    username = MY_EMAIL
+    org = MY_ORG
+    mfa_secret = MY_KEY
+    prefix = MY_PREFIX
+    password = MY_PASS
 
     [produser]
-    org = my_org
-    username = my_email
-    password = my_pass
-    mfa_secret = my_key
+    org = MY_ORG
+    username = MY_EMAIL
+    password = MY_PASS
+    mfa_secret = MY_KEY
 
 and place it in ``~/.apigee/credentials``.
 
@@ -58,20 +69,28 @@ As you can see, you can have multiple ``profiles`` defined in the configuration 
 profile to use by using the ``-P/--profile`` option. If no profile is specified
 the ``default`` profile is used.
 
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Using SAML authentication
+^^^^^^^^^^^^^^^^^^^^^^^^^
+If you specified an ``Identity zone name (to support SAML authentication)`` during setup,
+the CLI will automatically use SAML authentication.
+If you are not currently signed in by your identity provider, you will be prompted to sign in::
 
-.. _`Getting an OAuth Access Token`:
+    $ apigee apis list
+    SSO authorization page has automatically been opened in your default browser.
+    Follow the instructions in the browser to complete this authorization request.
 
----------------------------------
-Getting an OAuth Access Token
----------------------------------
+    If your browser did not automatically open, go to the following URL and sign in:
 
-To get an OAuth access token, configure an MFA key, then run::
+    https://{zoneName}.login.apigee.com/passcode
 
-    $ apigee auth get-access-token
+    then copy the Temporary Authentication Code.
 
-This will return ``None`` if an MFA key is not set.
+    Please enter the Temporary Authentication Code:
 
-.. _`Getting Help`:
+``zoneName`` will be the ``Identity zone name`` you previously configured.
+
+Refer to the official Apigee documentation to learn more about how to `Access the Edge API with SAML`_.
 
 ------------
 Getting Help
@@ -87,3 +106,4 @@ Getting Help
 .. _`Permissions reference`: https://docs.apigee.com/api-platform/system-administration/permissions
 .. _`Add permissions to testing role`: https://docs.apigee.com/api-platform/system-administration/managing-roles-api#addpermissionstotestingrole
 .. _pip: http://www.pip-installer.org/en/latest/
+.. _`Access the Edge API with SAML`: https://docs.apigee.com/api-platform/system-administration/using-saml

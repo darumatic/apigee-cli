@@ -84,8 +84,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#getting-an-oauth-access-token">Getting an OAuth Access Token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-saml-authentication">Using SAML authentication</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-help">Getting Help</a></li>
 </ul>
 </li>
@@ -168,7 +170,7 @@
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="getting-started">
 <span id="id1"></span><h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<p>Before using apigee-cli, you need to tell it about your Apigee Edge credentials.  You
+<p>Before using apigee-cli, you need to tell it about your Apigee Edge credentials. You
 can do this in three ways:</p>
 <ul class="simple">
 <li><p>Environment variables</p></li>
@@ -177,55 +179,77 @@ can do this in three ways:</p>
 </ul>
 <p>The quickest way to get started is to run the <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">configure</span></code> command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee configure
-Apigee username (email) []: my_email
-Apigee password []: my_pass
-Apigee MFA key (optional) []: my_key
+Apigee username (email) []: MY_EMAIL
+Apigee password []: MY_PASS
+Apigee MFA key (optional) []: MY_KEY
 Identity zone name (to support SAML authentication) []:
 Use OAuth, no MFA (optional)? [y/N]: n
-Default Apigee organization (recommended) []: my_org
+Default Apigee organization (recommended) []: MY_ORG
 Default team/resource prefix (optional) []:
 </pre></div>
 </div>
+<p>You may not need to input anything for some of these prompts. In these cases, simply press <code class="docutils literal notranslate"><span class="pre">enter</span></code> to skip.</p>
+<p>You can also do the same thing using command-line arguments:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee configure -P default -u MY_EMAIL -p MY_PASS -o MY_ORG -mfa &#39;&#39; -z &#39;&#39; --no-token --prefix &#39;&#39;
+</pre></div>
+</div>
+<p>You may need to specify empty strings as above. Also note the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> option. This option
+will filter the output of some commands, such as the <code class="docutils literal notranslate"><span class="pre">list</span></code> type commands, by the prefix which may be useful to some people,
+but if you want to avoid confusion just keep this value empty. You can also explicitly specify the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code>
+for those commands if you need it on the fly.</p>
 <p>To use environment variables, do the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_USERNAME=&lt;my_email&gt;
-$ export APIGEE_PASSWORD=&lt;my_pass&gt;
-$ export APIGEE_MFA_SECRET=&lt;my_key&gt;
-$ export APIGEE_ZONENAME=&lt;my_zonename&gt;
-$ export APIGEE_IS_TOKEN=&lt;bool&gt;
-$ export APIGEE_ORG=&lt;my_org&gt;
-$ export APIGEE_CLI_PREFIX=&lt;my_prefix&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_USERNAME=MY_EMAIL
+$ export APIGEE_PASSWORD=MY_PASS
+$ export APIGEE_MFA_SECRET=MY_KEY
+$ export APIGEE_ZONENAME=MY_ZONENAME
+$ export APIGEE_IS_TOKEN=BOOL
+$ export APIGEE_ORG=MY_ORG
+$ export APIGEE_CLI_PREFIX=MY_PREFIX
 </pre></div>
 </div>
 <p>To use the configuration file, create an INI formatted file like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">default</span><span class="p">]</span>
-<span class="n">username</span> <span class="o">=</span> <span class="n">my_email</span>
-<span class="n">org</span> <span class="o">=</span> <span class="n">my_org</span>
-<span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">my_key</span>
-<span class="n">prefix</span> <span class="o">=</span> <span class="n">my_prefix</span>
-<span class="n">password</span> <span class="o">=</span> <span class="n">my_pass</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">MY_EMAIL</span>
+<span class="n">org</span> <span class="o">=</span> <span class="n">MY_ORG</span>
+<span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">MY_KEY</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="n">MY_PREFIX</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">MY_PASS</span>
 
 <span class="p">[</span><span class="n">produser</span><span class="p">]</span>
-<span class="n">org</span> <span class="o">=</span> <span class="n">my_org</span>
-<span class="n">username</span> <span class="o">=</span> <span class="n">my_email</span>
-<span class="n">password</span> <span class="o">=</span> <span class="n">my_pass</span>
-<span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">my_key</span>
+<span class="n">org</span> <span class="o">=</span> <span class="n">MY_ORG</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">MY_EMAIL</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">MY_PASS</span>
+<span class="n">mfa_secret</span> <span class="o">=</span> <span class="n">MY_KEY</span>
 </pre></div>
 </div>
 <p>and place it in <code class="docutils literal notranslate"><span class="pre">~/.apigee/credentials</span></code>.</p>
 <p>As you can see, you can have multiple <code class="docutils literal notranslate"><span class="pre">profiles</span></code> defined in the configuration file. You can then specify which
 profile to use by using the <code class="docutils literal notranslate"><span class="pre">-P/--profile</span></code> option. If no profile is specified
 the <code class="docutils literal notranslate"><span class="pre">default</span></code> profile is used.</p>
-</div>
-<div class="section" id="getting-an-oauth-access-token">
-<span id="id2"></span><h2>Getting an OAuth Access Token<a class="headerlink" href="#getting-an-oauth-access-token" title="Permalink to this headline">¶</a></h2>
-<p>To get an OAuth access token, configure an MFA key, then run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee auth get-access-token
+<div class="section" id="using-saml-authentication">
+<h3>Using SAML authentication<a class="headerlink" href="#using-saml-authentication" title="Permalink to this headline">¶</a></h3>
+<p>If you specified an <code class="docutils literal notranslate"><span class="pre">Identity</span> <span class="pre">zone</span> <span class="pre">name</span> <span class="pre">(to</span> <span class="pre">support</span> <span class="pre">SAML</span> <span class="pre">authentication)</span></code> during setup,
+the CLI will automatically use SAML authentication.
+If you are not currently signed in by your identity provider, you will be prompted to sign in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis list
+SSO authorization page has automatically been opened in your default browser.
+Follow the instructions in the browser to complete this authorization request.
+
+If your browser did not automatically open, go to the following URL and sign in:
+
+https://{zoneName}.login.apigee.com/passcode
+
+then copy the Temporary Authentication Code.
+
+Please enter the Temporary Authentication Code:
 </pre></div>
 </div>
-<p>This will return <code class="docutils literal notranslate"><span class="pre">None</span></code> if an MFA key is not set.</p>
+<p><code class="docutils literal notranslate"><span class="pre">zoneName</span></code> will be the <code class="docutils literal notranslate"><span class="pre">Identity</span> <span class="pre">zone</span> <span class="pre">name</span></code> you previously configured.</p>
+<p>Refer to the official Apigee documentation to learn more about how to <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/using-saml">Access the Edge API with SAML</a>.</p>
+</div>
 </div>
 <div class="section" id="getting-help">
-<span id="id3"></span><h2>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://apidocs.apigee.com/management/apis">Apigee Product Documentation</a></p></li>
 <li><p><a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/permissions">Permissions reference</a></p></li>
