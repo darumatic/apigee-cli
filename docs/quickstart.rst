@@ -143,9 +143,9 @@ Push commands read JSON from a file and can be invoked like so::
 
 This will create the KVM if it does not exist, and update it if it does.
 
-----------------
-Managing plugins
-----------------
+---------------------------------
+Managing plugins (Advanced usage)
+---------------------------------
 The simple plugins manager uses Git to install commands from remote sources, thus you will need to have Git installed for installation to work.
 However, it is possible to install plugins manually by storing plugins in the correct location (to be documented).
 
