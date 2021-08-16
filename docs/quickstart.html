@@ -88,7 +88,16 @@
 <li class="toctree-l3"><a class="reference internal" href="#using-saml-authentication">Using SAML authentication</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#getting-help">Getting Help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploy-api-proxy-bundles">Deploy API Proxy bundles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cleaning-up-undeployed-revisions">Cleaning up undeployed revisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#push-commands">Push commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#managing-plugins">Managing plugins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuring">Configuring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating">Updating</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pruning">Pruning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#showing">Showing</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -248,13 +257,112 @@ Please enter the Temporary Authentication Code:
 <p>Refer to the official Apigee documentation to learn more about how to <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/using-saml">Access the Edge API with SAML</a>.</p>
 </div>
 </div>
-<div class="section" id="getting-help">
-<h2>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="deploy-api-proxy-bundles">
+<h2>Deploy API Proxy bundles<a class="headerlink" href="#deploy-api-proxy-bundles" title="Permalink to this headline">¶</a></h2>
+<p>You can also deploy API proxy bundles to Apigee.</p>
+<p>This command is an enhanced version of the Apigee API Proxy Deploy Tool.</p>
+<p>It supports a bunch of useful features such as MFA, SAML, seamless deployments and automatic handling of <code class="docutils literal notranslate"><span class="pre">missing</span></code> and broken deployments.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ apigee apis deploy -n API_NAME -e ENVIRONMENT -d DIRECTORY_WITH_APIPROXY
+</pre></div>
+</div>
+<p>Some notable options:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Deployment</span> <span class="n">options</span><span class="p">:</span> <span class="p">[</span><span class="n">mutually_exclusive</span><span class="p">]</span>
+                                <span class="n">The</span> <span class="n">deployment</span> <span class="n">options</span>
+  <span class="o">-</span><span class="n">i</span><span class="p">,</span> <span class="o">--</span><span class="n">import</span><span class="o">-</span><span class="n">only</span> <span class="o">/</span> <span class="o">-</span><span class="n">I</span><span class="p">,</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">import</span><span class="o">-</span><span class="n">only</span>
+                                <span class="kn">import</span> <span class="nn">only</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">deploy</span>
+  <span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="o">--</span><span class="n">seamless</span><span class="o">-</span><span class="n">deploy</span> <span class="o">/</span> <span class="o">-</span><span class="n">S</span><span class="p">,</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">seamless</span><span class="o">-</span><span class="n">deploy</span>
+                                <span class="n">seamless</span> <span class="n">deploy</span> <span class="n">the</span> <span class="n">bundle</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cleaning-up-undeployed-revisions">
+<h2>Cleaning up undeployed revisions<a class="headerlink" href="#cleaning-up-undeployed-revisions" title="Permalink to this headline">¶</a></h2>
+<p>If deploying via CI/CD you may end up with a lot of undeployed revisions. In this case, you can
+make use of the <code class="docutils literal notranslate"><span class="pre">clean</span></code> command to delete all undeployed revisions.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ apigee apis clean -n API_NAME
+</pre></div>
+</div>
+<p>You can also specify to keep the last few revisions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee apis clean -n API_NAME --save-last INTEGER
+</pre></div>
+</div>
+<p>To only show which revisions will be deleted but not actually delete anything, use the following option:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span> <span class="o">/</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span>  <span class="n">show</span> <span class="n">revisions</span> <span class="n">to</span> <span class="n">be</span> <span class="n">deleted</span> <span class="n">but</span> <span class="n">do</span> <span class="ow">not</span> <span class="n">delete</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="push-commands">
+<h2>Push commands<a class="headerlink" href="#push-commands" title="Permalink to this headline">¶</a></h2>
+<p>Some commands support the <code class="docutils literal notranslate"><span class="pre">push</span></code> subcommand which combines API calls to manage the creation, update and sometimes deletion of resources using a single command.</p>
+<p>Push commands read JSON from a file and can be invoked like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apigee keyvaluemaps push -e ENVIRONMENT -f FILENAME
+</pre></div>
+</div>
+<p>This will create the KVM if it does not exist, and update it if it does.</p>
+</div>
+<div class="section" id="managing-plugins">
+<h2>Managing plugins<a class="headerlink" href="#managing-plugins" title="Permalink to this headline">¶</a></h2>
+<p>The simple plugins manager uses Git to install commands from remote sources, thus you will need to have Git installed for installation to work.
+However, it is possible to install plugins manually by storing plugins in the correct location (to be documented).</p>
+<p>Currently, only the commands below are supported. More commands will be added to improve automation and user experience.</p>
+<p>The steps below show how to install commands from a public plugins repository located here:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://apidocs.apigee.com/management/apis">Apigee Product Documentation</a></p></li>
-<li><p><a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/permissions">Permissions reference</a></p></li>
-<li><p><a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/managing-roles-api#addpermissionstotestingrole">Add permissions to testing role</a></p></li>
+<li><p><a class="reference external" href="https://github.com/mdelotavo/apigee-cli-plugins">https://github.com/mdelotavo/apigee-cli-plugins</a></p></li>
 </ul>
+<div class="section" id="configuring">
+<h3>Configuring<a class="headerlink" href="#configuring" title="Permalink to this headline">¶</a></h3>
+<p>To configure remote sources for installing plugins, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">configure</span> <span class="o">-</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>This will open a text editor so that you can specify the remote sources.</p>
+<p>If you don’t want changes to be automatically applied, then you can drop the <code class="docutils literal notranslate"><span class="pre">-a</span></code> option.</p>
+<p>When the editor opens, copy and paste the following example configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">sources</span><span class="p">]</span>
+<span class="n">public</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">mdelotavo</span><span class="o">/</span><span class="n">apigee</span><span class="o">-</span><span class="n">cli</span><span class="o">-</span><span class="n">plugins</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>After saving the changes, the CLI will attempt to install the plugins from the specified Git URI.
+Here we use the HTTPS URI but you can also use SSH if you have configured it.</p>
+<p>You can also specify multiple sources, as long as the key (<code class="docutils literal notranslate"><span class="pre">public</span></code> in this case) is unique.
+The key will be the name of the repository on your local machine under <code class="docutils literal notranslate"><span class="pre">~/.apigee/plugins/</span></code>.</p>
+<p>If installation is successful, you should now see additional commands when you run <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">-h</span></code></p>
+</div>
+<div class="section" id="updating">
+<h3>Updating<a class="headerlink" href="#updating" title="Permalink to this headline">¶</a></h3>
+<p>If you specified the <code class="docutils literal notranslate"><span class="pre">-a</span></code> option when running <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">plugins</span> <span class="pre">configure</span></code> then install will occur automatically.
+Otherwise you can run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">update</span>
+</pre></div>
+</div>
+<p>This will install and update plugins.</p>
+</div>
+<div class="section" id="pruning">
+<h3>Pruning<a class="headerlink" href="#pruning" title="Permalink to this headline">¶</a></h3>
+<p>If you specified the <code class="docutils literal notranslate"><span class="pre">-a</span></code> option when running <code class="docutils literal notranslate"><span class="pre">apigee</span> <span class="pre">plugins</span> <span class="pre">configure</span></code> then the removal of plugins will occur automatically.
+Otherwise you can run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">prune</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="showing">
+<h3>Showing<a class="headerlink" href="#showing" title="Permalink to this headline">¶</a></h3>
+<p>To show the plugins you have configured, run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">show</span>
+</pre></div>
+</div>
+<p>You can also run the following commands if you specify the plugin name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apigee</span> <span class="n">plugins</span> <span class="n">show</span> <span class="o">-</span><span class="n">n</span> <span class="n">PLUGIN_NAME</span> <span class="o">--</span><span class="n">show</span><span class="o">-</span><span class="n">commit</span><span class="o">-</span><span class="n">only</span>
+<span class="n">apigee</span> <span class="n">plugins</span> <span class="n">show</span> <span class="o">-</span><span class="n">n</span> <span class="n">PLUGIN_NAME</span> <span class="o">--</span><span class="n">show</span><span class="o">-</span><span class="n">dependencies</span><span class="o">-</span><span class="n">only</span>
+</pre></div>
+</div>
+<p>Some plugins will not load if dependencies are not installed. You can run the following command to install them.
+In order for this to work, the plugin needs to have the <code class="docutils literal notranslate"><span class="pre">Requires</span></code> key in the JSON body of the <code class="docutils literal notranslate"><span class="pre">apigee-cli.info</span></code> file.
+More details coming soon.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pip3 install $(apigee plugins show -n PLUGIN_NAME --show-dependencies-only)
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
