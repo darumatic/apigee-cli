@@ -151,9 +151,7 @@ However, it is possible to install plugins manually by storing plugins in the co
 
 Currently, only the commands below are supported. More commands will be added to improve automation and user experience.
 
-The steps below show how to install commands from a public plugins repository located here:
-
-* https://github.com/mdelotavo/apigee-cli-plugins
+The steps below show how to install commands from a `public plugins repository`_.
 
 ^^^^^^^^^^^
 Configuring
@@ -226,3 +224,4 @@ More details coming soon.::
 .. _`Add permissions to testing role`: https://docs.apigee.com/api-platform/system-administration/managing-roles-api#addpermissionstotestingrole
 .. _pip: http://www.pip-installer.org/en/latest/
 .. _`Access the Edge API with SAML`: https://docs.apigee.com/api-platform/system-administration/using-saml
+.. _`public plugins repository`: https://github.com/mdelotavo/apigee-cli-plugins
