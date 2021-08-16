@@ -291,7 +291,8 @@ def set_header(auth_obj, headers={}):
             pass
         if access_token:
             decoded = jwt.decode(
-                access_token, options={'verify_signature': False, 'verify_aud': False}
+                access_token,
+                options={'verify_exp': False, 'verify_signature': False, 'verify_aud': False},
             )
             if (
                 decoded['exp'] < int(time.time())
