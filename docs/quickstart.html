@@ -88,6 +88,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#using-saml-authentication">Using SAML authentication</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#using-saml-with-automated-tasks">Using SAML with automated tasks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deploy-api-proxy-bundles">Deploy API Proxy bundles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cleaning-up-undeployed-revisions">Cleaning up undeployed revisions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#push-commands">Push commands</a></li>
@@ -256,6 +257,18 @@ Please enter the Temporary Authentication Code:
 <p><code class="docutils literal notranslate"><span class="pre">zoneName</span></code> will be the <code class="docutils literal notranslate"><span class="pre">Identity</span> <span class="pre">zone</span> <span class="pre">name</span></code> you previously configured.</p>
 <p>Refer to the official Apigee documentation to learn more about how to <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/using-saml">Access the Edge API with SAML</a>.</p>
 </div>
+</div>
+<div class="section" id="using-saml-with-automated-tasks">
+<h2>Using SAML with automated tasks<a class="headerlink" href="#using-saml-with-automated-tasks" title="Permalink to this headline">¶</a></h2>
+<p>The CLI also supports machine users as described in <a class="reference external" href="https://docs.apigee.com/private-cloud/v4.17.09/using-saml-automated-tasks">Using SAML with automated tasks</a> when SAML is enabled
+to support automation for common development tasks, such as test automation or Continuous Integration/Continuous Deployment (CI/CD).</p>
+<p>To tell the CLI that the current user <code class="docutils literal notranslate"><span class="pre">--profile</span></code> is a machine user and thus to not redirect you to an identity provider,
+you can set the following environment variable like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export APIGEE_CLI_IS_MACHINE_USER=true
+</pre></div>
+</div>
+<p>To continue using an ordinary user, you will need to unset this variable or set it to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Refer to the official Apigee documentation to learn more about identity zones: <a class="reference external" href="https://docs.apigee.com/api-platform/system-administration/saml-overview">SAML Overview</a>.</p>
 </div>
 <div class="section" id="deploy-api-proxy-bundles">
 <h2>Deploy API Proxy bundles<a class="headerlink" href="#deploy-api-proxy-bundles" title="Permalink to this headline">¶</a></h2>

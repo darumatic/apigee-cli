@@ -92,6 +92,21 @@ If you are not currently signed in by your identity provider, you will be prompt
 
 Refer to the official Apigee documentation to learn more about how to `Access the Edge API with SAML`_.
 
+-------------------------------
+Using SAML with automated tasks
+-------------------------------
+The CLI also supports machine users as described in `Using SAML with automated tasks`_ when SAML is enabled
+to support automation for common development tasks, such as test automation or Continuous Integration/Continuous Deployment (CI/CD).
+
+To tell the CLI that the current user ``--profile`` is a machine user and thus to not redirect you to an identity provider,
+you can set the following environment variable like so::
+
+    $ export APIGEE_CLI_IS_MACHINE_USER=true
+
+To continue using an ordinary user, you will need to unset this variable or set it to ``false``.
+
+Refer to the official Apigee documentation to learn more about identity zones: `SAML Overview`_.
+
 ------------------------
 Deploy API Proxy bundles
 ------------------------
@@ -225,3 +240,5 @@ More details coming soon.::
 .. _pip: http://www.pip-installer.org/en/latest/
 .. _`Access the Edge API with SAML`: https://docs.apigee.com/api-platform/system-administration/using-saml
 .. _`public plugins repository`: https://github.com/mdelotavo/apigee-cli-plugins
+.. _`SAML Overview`: https://docs.apigee.com/api-platform/system-administration/saml-overview
+.. _`Using SAML with automated tasks`: https://docs.apigee.com/private-cloud/v4.17.09/using-saml-automated-tasks
