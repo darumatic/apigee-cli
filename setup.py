@@ -18,7 +18,7 @@ SETUP_ARGS = dict(
     description=(description),
     long_description=long_description,
     long_description_content_type='text/x-rst',
-    url='https://github.com/mdelotavo/apigee-cli',
+    url='https://github.com/darumatic/apigee-cli',
     author='Matthew Delotavo',
     author_email='matthew.t.delotavo@gmail.com',
     license='Apache license 2.0',
@@ -50,7 +50,7 @@ SETUP_ARGS = dict(
         'python-gnupg>=0.3.5',
         'gitpython'
     ],
-    project_urls={'Documentation': 'https://mdelotavo.github.io/apigee-cli/index.html'},
+    project_urls={'Documentation': 'https://darumatic.github.io/apigee-cli/index.html'},
     python_requires='>=3.6',
 )
 

@@ -160,8 +160,8 @@ This is not an officially supported Google product.
 .. _`Add permissions to testing role`: https://docs.apigee.com/api-platform/system-administration/managing-roles-api#addpermissionstotestingrole
 .. _pip: http://www.pip-installer.org/en/latest/
 .. _`Universal Command Line Interface for Amazon Web Services`: https://github.com/aws/aws-cli
-.. _`The Apigee Management API command-line interface documentation`: https://mdelotavo.github.io/apigee-cli/index.html
-.. _`GitHub`: https://github.com/mdelotavo/apigee-cli
+.. _`The Apigee Management API command-line interface documentation`: https://darumatic.github.io/apigee-cli/index.html
+.. _`GitHub`: https://github.com/darumatic/apigee-cli
 .. _`Python Package Index (PyPI)`: https://pypi.org/project/apigeecli/
 .. _`Access the Edge API with SAML`: https://docs.apigee.com/api-platform/system-administration/using-saml
 
@@ -170,6 +170,6 @@ This is not an officially supported Google product.
 .. _`Tabulating deployments`: https://github.com/mdelotavo/apigee-cli-docs
 .. _`Tabulating resource permissions`: https://github.com/mdelotavo/apigee-cli-docs
 .. _`Troubleshooting`: https://github.com/mdelotavo/apigee-cli-docs
-.. _`Mirror`: https://github.com/darumatic/apigee-cli
+.. _`Mirror`: https://github.com/mdelotavo/apigee-cli
 
 .. _`Apigee CI/CD Docker releases`: https://hub.docker.com/r/darumatic/apigee-cicd
