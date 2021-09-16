@@ -16,9 +16,8 @@ from apigee.deployments.deployments import Deployments
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.targetservers.targetservers import Targetservers
 from apigee.utils import (extract_zip, is_dir, make_dirs, path_exists,
-                          paths_exist, remove_last_items_from_list,
-                          run_func_on_dir_files, run_func_on_iterable,
-                          split_path, write_zip)
+                          paths_exist, run_func_on_dir_files,
+                          run_func_on_iterable, split_path, write_zip)
 
 DELETE_API_PROXY_REVISION_PATH = (
     '{api_url}/v1/organizations/{org}/apis/{api_name}/revisions/{revision_number}'
@@ -40,6 +39,12 @@ class Apis(InformalApisInterface, InformalPullInterface):
             InformalPullInterface.__init__(self, args[0], args[1], args[2], args[3], **kwargs)
         else:
             InformalApisInterface.__init__(self, args[0], args[1])
+
+    def __get_and_export(self, resource_type, files, environment, dependencies=[], force=True):
+        resource = getattr(self, f'get_{resource_type}_dependencies')(files)
+        dependencies.extend(resource)
+        getattr(self, f'export_{resource_type}_dependencies')(environment, resource, force=force)
+        return dependencies
 
     def delete_api_proxy_revision(self, api_name, revision_number):
         uri = DELETE_API_PROXY_REVISION_PATH.format(
@@ -75,35 +80,15 @@ class Apis(InformalApisInterface, InformalPullInterface):
         resp.raise_for_status()
         return resp
 
-    @staticmethod
-    def filter_deployment_details(details):
-        return run_func_on_iterable(
-            details['environment'],
-            lambda d: {
-                'name': d['name'],
-                'revision': [revision['name'] for revision in d['revision']],
-            },
-        )
-
-    @staticmethod
-    def filter_deployed_revisions(details):
-        return list(set(run_func_on_iterable(details, lambda d: d['revision'], state_op='extend')))
-
-    @staticmethod
-    def filter_undeployed_revisions(revisions, deployed, save_last=0):
-        return remove_last_items_from_list(
-            sorted([int(rev) for rev in revisions if rev not in deployed]), save_last
-        )
-
     def delete_undeployed_revisions(self, api_name, save_last=0, dry_run=False):
-        details = Apis.filter_deployment_details(
+        details = ApisSerializer().filter_deployment_details(
             Deployments(self._auth, self._org_name, api_name)
             .get_api_proxy_deployment_details()
             .json()
         )
-        undeployed = Apis.filter_undeployed_revisions(
+        undeployed = ApisSerializer().filter_undeployed_revisions(
             self.list_api_proxy_revisions(api_name).json(),
-            Apis.filter_deployed_revisions(details),
+            ApisSerializer().filter_deployed_revisions(details),
             save_last=save_last,
         )
         console.echo(f'Undeployed revisions to be deleted: {undeployed}')
@@ -276,12 +261,6 @@ class Apis(InformalApisInterface, InformalPullInterface):
 
         return run_func_on_iterable(caches, _func)
 
-    def _get_and_export(self, resource_type, files, environment, dependencies=[], force=True):
-        resource = getattr(self, f'get_{resource_type}_dependencies')(files)
-        dependencies.extend(resource)
-        getattr(self, f'export_{resource_type}_dependencies')(environment, resource, force=force)
-        return dependencies
-
     def pull(self, api_name, dependencies=[], force=False, prefix=None, basepath=None):
         dependencies.append(api_name)
         make_dirs(self._work_tree)
@@ -296,7 +275,7 @@ class Apis(InformalApisInterface, InformalPullInterface):
         os.remove(self._zip_file)
         files = self.get_apiproxy_files(self._apiproxy_dir)
         for resource_type in ['keyvaluemap', 'targetserver', 'cache']:
-            self._get_and_export(
+            self._Apis__get_and_export(
                 resource_type, files, self._environment, dependencies=dependencies, force=force
             )
         return export, dependencies
