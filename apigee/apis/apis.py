@@ -35,11 +35,10 @@ FORCE_UNDEPLOY_API_PROXY_REVISION_PATH = '{api_url}/v1/organizations/{org}/apis/
 
 class Apis(InformalApisInterface, InformalPullInterface):
     def __init__(self, *args, **kwargs):
-        InformalApisInterface.__init__(self, args[0], args[1])
-        try:
+        if len(args) == 4:
             InformalPullInterface.__init__(self, args[0], args[1], args[2], args[3], **kwargs)
-        except IndexError:
-            pass
+        else:
+            InformalApisInterface.__init__(self, args[0], args[1])
 
     def delete_api_proxy_revision(self, api_name, revision_number):
         uri = DELETE_API_PROXY_REVISION_PATH.format(
