@@ -36,7 +36,8 @@ from apigee.references.commands import references
 from apigee.sharedflows.commands import sharedflows
 from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
-from apigee.utils import is_dir, run_func_on_dir_files, show_message
+from apigee.utils import (import_all_modules_in_directory, is_dir,
+                          run_func_on_dir_files, show_message)
 from apigee.virtualhosts.commands import virtualhosts
 
 # from click_aliases import ClickAliasedGroup
@@ -94,24 +95,11 @@ def main():
         plugins,
     }
 
-    def _load_all_modules_in_directory(plugins_init_file):
-        try:
-            spec = importlib.util.spec_from_file_location('plugins_modules', plugins_init_file)
-            module = importlib.util.module_from_spec(spec)
-            sys.modules[spec.name] = module
-            spec.loader.exec_module(module)
-            import plugins_modules
-            from plugins_modules import __all__ as all_plugins_modules
-
-            for module in all_plugins_modules:
-                _module = getattr(plugins_modules, module)
-                if isinstance(_module, (click.core.Command, click.core.Group)):
-                    cli_commands.add(_module)
-        except ImportError:
-            pass
-
     run_func_on_dir_files(
-        APIGEE_CLI_PLUGINS_DIRECTORY, _load_all_modules_in_directory, glob='[!.][!__]*/__init__.py'
+        APIGEE_CLI_PLUGINS_DIRECTORY,
+        import_all_modules_in_directory,
+        args=(cli_commands,),
+        glob='[!.][!__]*/__init__.py',
     )
 
     for command in cli_commands:

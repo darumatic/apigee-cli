@@ -1,3 +1,4 @@
+import importlib
 import inspect
 import json
 import logging
@@ -6,6 +7,8 @@ import re
 import sys
 import zipfile
 from pathlib import Path
+
+import click
 
 
 def add_to_dict_if_exists(options_dict, initial_dict={}):
@@ -48,6 +51,25 @@ def is_envvar_true(value):
 
 def is_file(f):
     return os.path.isfile(f)
+
+
+def import_all_modules_in_directory(plugins_init_file, existing_commands):
+    try:
+        spec = importlib.util.spec_from_file_location('plugins_modules', plugins_init_file)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = module
+        spec.loader.exec_module(module)
+        import plugins_modules
+        from plugins_modules import __all__ as all_plugins_modules
+
+        for module in all_plugins_modules:
+            _module = getattr(plugins_modules, module)
+            if isinstance(_module, (click.core.Command, click.core.Group)):
+                existing_commands.add(_module)
+    except ImportError:
+        logging.warning(
+            f'{inspect.stack()[0][3]}; will skip loading plugin: {module}', exc_info=True
+        )
 
 
 def make_dirs(path):
