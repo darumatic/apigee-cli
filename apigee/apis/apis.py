@@ -225,8 +225,8 @@ class Apis(InformalApisInterface, InformalPullInterface):
                     if child.attrib['name'] not in _state:
                         _state.add(child.attrib['name'])
                         return child.attrib['name']
-            except:
-                pass
+            except Exception as e:
+                logging.warning(f'{e}; file={f}', exc_info=True)
 
         return run_func_on_iterable(files, _func, args=(set(),))
 
@@ -253,8 +253,8 @@ class Apis(InformalApisInterface, InformalPullInterface):
                 if name and name not in _state:
                     _state.add(name)
                     return name
-            except:
-                pass
+            except Exception as e:
+                logging.warning(f'{e}; file={f}', exc_info=True)
 
         return run_func_on_iterable(files, _func, args=(set(),))
 
@@ -275,57 +275,6 @@ class Apis(InformalApisInterface, InformalPullInterface):
                 f.write(resp)
 
         return run_func_on_iterable(caches, _func)
-
-    @staticmethod
-    def replace_substring(file, old, new):
-        with open(file, 'r') as f:
-            body = ""
-            try:
-                body = f.read()
-            except Exception as e:
-                console.echo(type(e).__name__, e)
-                console.echo(f'Ignoring {os.path.relpath(file)}')
-            if old in body:
-                with open(file, 'w') as nf:
-                    nf.write(body.replace(old, new))
-                console.echo(f'M  {os.path.relpath(file)}')
-
-    def prefix_dependencies_in_work_tree(self, dependencies, prefix):
-        dependencies = [d for d in dependencies if not d.startswith(prefix)]
-
-        def _cond(file_path):
-            return not is_dir(file_path) and '.git' not in split_path(file_path)
-
-        def _func(file_path):
-            if _cond(file_path):
-                for d in dependencies:
-                    Apis.replace_substring(file_path, d, prefix + d)
-
-        return run_func_on_dir_files(self._work_tree, _func)
-
-    def get_apiproxy_basepath(self, directory):
-        default_file = str(Path(directory) / 'apiproxy/proxies/default.xml')
-        tree = et.parse(default_file)
-        try:
-            return tree.find('.//BasePath').text, default_file
-        except AttributeError:
-            sys.exit(f'No BasePath found in {default_file}')
-
-    def set_apiproxy_basepath(self, basepath, file):
-        default_file = os.path.abspath(file)
-        tree = et.parse(default_file)
-        current_basepath = None
-        try:
-            current_basepath = tree.find('.//BasePath').text
-        except AttributeError:
-            sys.exit(f'No BasePath found in {default_file}')
-        with open(default_file, 'r+') as f:
-            body = f.read().replace(current_basepath, basepath)
-            f.seek(0)
-            f.write(body)
-            f.truncate()
-        console.echo(f'{current_basepath} -> {basepath}')
-        console.echo(f'M  {os.path.relpath(default_file)}')
 
     def _get_and_export(self, resource_type, files, environment, dependencies=[], force=True):
         resource = getattr(self, f'get_{resource_type}_dependencies')(files)
@@ -350,9 +299,4 @@ class Apis(InformalApisInterface, InformalPullInterface):
             self._get_and_export(
                 resource_type, files, self._environment, dependencies=dependencies, force=force
             )
-        if prefix:
-            self.prefix_dependencies_in_work_tree(set(dependencies), prefix)
-        if basepath:
-            _, file = self.get_apiproxy_basepath(self._apiproxy_dir)
-            self.set_apiproxy_basepath(basepath, file)
         return export, dependencies

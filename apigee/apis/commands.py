@@ -334,8 +334,11 @@ def _pull(
 @click.option(
     '--prefix',
     help='prefix to prepend to names. WARNING: this is not foolproof. make sure to review the changes.',
+    hidden=True,
 )
-@click.option('-b', '--basepath', help='set default basepath in apiproxy/proxies/default.xml')
+@click.option(
+    '-b', '--basepath', help='set default basepath in apiproxy/proxies/default.xml', hidden=True
+)
 def pull(*args, **kwargs):
     _pull(*args, **kwargs)
 
