@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import sys
 import xml.etree.ElementTree as et
@@ -191,8 +192,8 @@ class Apis(InformalApisInterface, InformalPullInterface):
                     if root.attrib['mapIdentifier'] not in _state:
                         _state.add(root.attrib['mapIdentifier'])
                         return root.attrib['mapIdentifier']
-            except:
-                pass
+            except Exception as e:
+                logging.warning(f'{e}; file={f}', exc_info=True)
 
         return run_func_on_iterable(files, _func, args=(set(),))
 

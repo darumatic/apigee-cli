@@ -1,4 +1,6 @@
+import inspect
 import json
+import logging
 import os
 import re
 import sys
@@ -53,7 +55,7 @@ def make_dirs(path):
         try:
             os.makedirs(path)
         except FileExistsError:
-            pass
+            logging.warning(f'{inspect.stack()[0][3]}; will ignore FileExistsError')
 
 
 def path_exists(file):
@@ -73,8 +75,9 @@ def read_file(file, type='text'):
         return f.read()
 
 
-# def serializepath(path_items, separator='/'):
-#     pass
+def remove_file_above_size(file, size_kb=100):
+    if os.path.getsize(file) > size_kb * 1024:
+        os.remove(file)
 
 
 def remove_last_items_from_list(init_list, integer=0):
@@ -126,7 +129,7 @@ def touch(path):
     except FileNotFoundError:
         os.makedirs(os.path.split(path)[0])
     except FileExistsError:
-        pass
+        logging.warning(f'{inspect.stack()[0][3]}; will ignore FileExistsError')
 
 
 def write_file(content, path, fs_write=True, indent=None, eof=True):

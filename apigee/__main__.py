@@ -26,7 +26,7 @@ from apigee.cls import AliasedGroup
 from apigee.configure.commands import configure
 from apigee.deployments.commands import deployments
 from apigee.developers.commands import developers
-from apigee.exceptions import exception_handler
+from apigee.exceptions import exception_handler, setup_global_logger
 from apigee.keystores.commands import keystores
 from apigee.keyvaluemaps.commands import keyvaluemaps
 from apigee.maskconfigs.commands import maskconfigs
@@ -43,6 +43,8 @@ from apigee.virtualhosts.commands import virtualhosts
 
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+
+setup_global_logger()
 
 
 @click.group(
