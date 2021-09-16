@@ -274,7 +274,7 @@ class Apis(InformalApisInterface, InformalPullInterface):
         extract_zip(self._zip_file, self._apiproxy_dir)
         os.remove(self._zip_file)
         files = self.get_apiproxy_files(self._apiproxy_dir)
-        for resource_type in ['keyvaluemap', 'targetserver', 'cache']:
+        for resource_type in ('keyvaluemap', 'targetserver', 'cache'):
             self._Apis__get_and_export(
                 resource_type, files, self._environment, dependencies=dependencies, force=force
             )
