@@ -1,3 +1,4 @@
+import builtins
 import json
 from os import getenv
 from pathlib import Path
@@ -34,3 +35,6 @@ APIGEE_SAML_LOGIN_URL = 'https://{zonename}.login.apigee.com/passcode'
 APIGEE_USERNAME = getenv('APIGEE_USERNAME')
 APIGEE_ZONENAME = getenv('APIGEE_ZONENAME')
 APIGEE_ZONENAME_OAUTH_URL = 'https://{zonename}.login.apigee.com/oauth/token'
+
+builtins.APIGEE_CLI_TOGGLE_SILENT = APIGEE_CLI_TOGGLE_SILENT
+builtins.APIGEE_CLI_TOGGLE_VERBOSE = APIGEE_CLI_TOGGLE_VERBOSE

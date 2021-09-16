@@ -5,13 +5,8 @@ import sys
 def echo(
     *message, status=None, silent=False, curr_verbosity=0, expc_verbosity=0, end='\n', flush=False
 ):
-    toggle_silent = False
-    toggle_verbose = 0
-    try:
-        toggle_silent = builtins.APIGEE_CLI_TOGGLE_SILENT
-        toggle_verbose = builtins.APIGEE_CLI_TOGGLE_VERBOSE
-    except AttributeError:
-        pass
+    toggle_silent = builtins.APIGEE_CLI_TOGGLE_SILENT
+    toggle_verbose = builtins.APIGEE_CLI_TOGGLE_VERBOSE
     if silent or toggle_silent:
         if status:
             sys.exit(status)
