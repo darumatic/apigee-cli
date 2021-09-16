@@ -24,8 +24,24 @@ def extract_zip(source, dest):
         zip_ref.extractall(dest)
 
 
+def generate_path_str(*args):
+    if not args:
+        return
+    path = None
+    for arg in args:
+        if not path:
+            path = Path(arg)
+        else:
+            path /= arg
+    return str(path)
+
+
 def is_dir(d):
     return os.path.isdir(d)
+
+
+def is_envvar_true(value):
+    return value in (True, 'True', 'true', '1')
 
 
 def is_file(f):
