@@ -1058,13 +1058,13 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.filter_deployed_revisions">filter_deployed_revisions() (apigee.apis.apis.Apis static method)</a>
+      <li><a href="source/apigee.apis.html#apigee.apis.serializer.ApisSerializer.filter_deployed_revisions">filter_deployed_revisions() (apigee.apis.serializer.ApisSerializer method)</a>
 </li>
-      <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.filter_deployment_details">filter_deployment_details() (apigee.apis.apis.Apis static method)</a>
+      <li><a href="source/apigee.apis.html#apigee.apis.serializer.ApisSerializer.filter_deployment_details">filter_deployment_details() (apigee.apis.serializer.ApisSerializer method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.filter_undeployed_revisions">filter_undeployed_revisions() (apigee.apis.apis.Apis static method)</a>
+      <li><a href="source/apigee.apis.html#apigee.apis.serializer.ApisSerializer.filter_undeployed_revisions">filter_undeployed_revisions() (apigee.apis.serializer.ApisSerializer method)</a>
 </li>
       <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.force_undeploy_api_proxy_revision">force_undeploy_api_proxy_revision() (apigee.apis.apis.Apis method)</a>
 </li>
@@ -1077,6 +1077,8 @@
       <li><a href="source/apigee.html#apigee.auth.gen_auth">gen_auth() (in module apigee.auth)</a>
 </li>
       <li><a href="source/apigee.keystores.html#apigee.keystores.keystores.Keystores.generate_a_csr_for_an_alias">generate_a_csr_for_an_alias() (apigee.keystores.keystores.Keystores method)</a>
+</li>
+      <li><a href="source/apigee.html#apigee.utils.generate_path_str">generate_path_str() (in module apigee.utils)</a>
 </li>
       <li><a href="source/apigee.keyvaluemaps.html#apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps.get_a_keys_value_in_an_environment_scoped_keyvaluemap">get_a_keys_value_in_an_environment_scoped_keyvaluemap() (apigee.keyvaluemaps.keyvaluemaps.Keyvaluemaps method)</a>
 </li>
@@ -1103,8 +1105,6 @@
       <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.get_api_proxy">get_api_proxy() (apigee.apis.apis.Apis method)</a>
 </li>
       <li><a href="source/apigee.deployments.html#apigee.deployments.deployments.Deployments.get_api_proxy_deployment_details">get_api_proxy_deployment_details() (apigee.deployments.deployments.Deployments method)</a>
-</li>
-      <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.get_apiproxy_basepath">get_apiproxy_basepath() (apigee.apis.apis.Apis method)</a>
 </li>
       <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.get_apiproxy_files">get_apiproxy_files() (apigee.apis.apis.Apis method)</a>
 </li>
@@ -1182,6 +1182,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows.import_a_shared_flow">import_a_shared_flow() (apigee.sharedflows.sharedflows.Sharedflows method)</a>
 </li>
+      <li><a href="source/apigee.html#apigee.utils.import_all_modules_in_directory">import_all_modules_in_directory() (in module apigee.utils)</a>
+</li>
       <li><a href="source/apigee.plugins.html#apigee.plugins.commands.info">info() (in module apigee.plugins.commands)</a>
 </li>
       <li><a href="source/apigee.apis.interfaces.html#apigee.apis.interfaces.apis_interface.InformalApisInterface">InformalApisInterface (class in apigee.apis.interfaces.apis_interface)</a>
@@ -1200,9 +1202,9 @@
 </li>
       <li><a href="source/apigee.html#apigee.crypto.is_encrypted">is_encrypted() (in module apigee.crypto)</a>
 </li>
-      <li><a href="source/apigee.html#apigee.utils.is_file">is_file() (in module apigee.utils)</a>
+      <li><a href="source/apigee.html#apigee.utils.is_envvar_true">is_envvar_true() (in module apigee.utils)</a>
 </li>
-      <li><a href="source/apigee.html#apigee.is_true">is_true() (in module apigee)</a>
+      <li><a href="source/apigee.html#apigee.utils.is_file">is_file() (in module apigee.utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1519,14 +1521,12 @@
 </li>
       <li><a href="source/apigee.permissions.html#apigee.permissions.serializer.PermissionsSerializer">PermissionsSerializer (class in apigee.permissions.serializer)</a>
 </li>
-      <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.prefix_dependencies_in_work_tree">prefix_dependencies_in_work_tree() (apigee.apis.apis.Apis method)</a>
-</li>
       <li><a href="source/apigee.apis.html#apigee.apis.deploy.printDeployments">printDeployments() (in module apigee.apis.deploy)</a>
+</li>
+      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.prune_all">prune_all() (in module apigee.plugins.commands)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/apigee.plugins.html#apigee.plugins.commands.prune_all">prune_all() (in module apigee.plugins.commands)</a>
-</li>
       <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.pull">pull() (apigee.apis.apis.Apis method)</a>
 </li>
       <li><a href="source/apigee.plugins.html#apigee.plugins.commands.pull_all">pull_all() (in module apigee.plugins.commands)</a>
@@ -1555,11 +1555,11 @@
 </li>
       <li><a href="source/apigee.references.html#apigee.references.serializer.ReferencesSerializer">ReferencesSerializer (class in apigee.references.serializer)</a>
 </li>
+      <li><a href="source/apigee.html#apigee.utils.remove_file_above_size">remove_file_above_size() (in module apigee.utils)</a>
+</li>
       <li><a href="source/apigee.html#apigee.utils.remove_last_items_from_list">remove_last_items_from_list() (in module apigee.utils)</a>
 </li>
       <li><a href="source/apigee.userroles.html#apigee.userroles.userroles.Userroles.remove_user_membership_in_role">remove_user_membership_in_role() (apigee.userroles.userroles.Userroles method)</a>
-</li>
-      <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.replace_substring">replace_substring() (apigee.apis.apis.Apis static method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -1619,11 +1619,11 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/apigee.apis.html#apigee.apis.apis.Apis.set_apiproxy_basepath">set_apiproxy_basepath() (apigee.apis.apis.Apis method)</a>
-</li>
       <li><a href="source/apigee.developers.html#apigee.developers.developers.Developers.set_developer_status">set_developer_status() (apigee.developers.developers.Developers method)</a>
 </li>
       <li><a href="source/apigee.html#apigee.auth.set_header">set_header() (in module apigee.auth)</a>
+</li>
+      <li><a href="source/apigee.html#apigee.exceptions.setup_global_logger">setup_global_logger() (in module apigee.exceptions)</a>
 </li>
       <li><a href="source/apigee.sharedflows.html#apigee.sharedflows.sharedflows.Sharedflows">Sharedflows (class in apigee.sharedflows.sharedflows)</a>
 </li>
@@ -1636,8 +1636,6 @@
       <li><a href="source/apigee.userroles.html#apigee.userroles.userroles.Userroles.sort_permissions">sort_permissions() (apigee.userroles.userroles.Userroles static method)</a>
 </li>
       <li><a href="source/apigee.html#apigee.utils.split_path">split_path() (in module apigee.utils)</a>
-</li>
-      <li><a href="source/apigee.html#apigee.str_path">str_path() (in module apigee)</a>
 </li>
       <li><a href="source/apigee.apis.html#apigee.apis.deploy.Struct">Struct (class in apigee.apis.deploy)</a>
 

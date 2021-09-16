@@ -218,21 +218,6 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="apigee.apis.apis.Apis.filter_deployed_revisions">
-<em class="property">static </em><code class="sig-name descname">filter_deployed_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">details</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.filter_deployed_revisions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.Apis.filter_deployment_details">
-<em class="property">static </em><code class="sig-name descname">filter_deployment_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">details</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.filter_deployment_details" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.Apis.filter_undeployed_revisions">
-<em class="property">static </em><code class="sig-name descname">filter_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">revisions</span></em>, <em class="sig-param"><span class="n">deployed</span></em>, <em class="sig-param"><span class="n">save_last</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.filter_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt id="apigee.apis.apis.Apis.force_undeploy_api_proxy_revision">
 <code class="sig-name descname">force_undeploy_api_proxy_revision</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">revision_number</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.force_undeploy_api_proxy_revision" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -240,11 +225,6 @@
 <dl class="py method">
 <dt id="apigee.apis.apis.Apis.get_api_proxy">
 <code class="sig-name descname">get_api_proxy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.get_api_proxy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.Apis.get_apiproxy_basepath">
-<code class="sig-name descname">get_apiproxy_basepath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">directory</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.get_apiproxy_basepath" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -278,23 +258,8 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="apigee.apis.apis.Apis.prefix_dependencies_in_work_tree">
-<code class="sig-name descname">prefix_dependencies_in_work_tree</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dependencies</span></em>, <em class="sig-param"><span class="n">prefix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.prefix_dependencies_in_work_tree" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt id="apigee.apis.apis.Apis.pull">
 <code class="sig-name descname">pull</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">api_name</span></em>, <em class="sig-param"><span class="n">dependencies</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">force</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">basepath</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.pull" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.Apis.replace_substring">
-<em class="property">static </em><code class="sig-name descname">replace_substring</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em>, <em class="sig-param"><span class="n">old</span></em>, <em class="sig-param"><span class="n">new</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.replace_substring" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="apigee.apis.apis.Apis.set_apiproxy_basepath">
-<code class="sig-name descname">set_apiproxy_basepath</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">basepath</span></em>, <em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.set_apiproxy_basepath" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -363,6 +328,21 @@
 <dt id="apigee.apis.serializer.ApisSerializer">
 <em class="property">class </em><code class="sig-prename descclassname">apigee.apis.serializer.</code><code class="sig-name descname">ApisSerializer</code><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="apigee.apis.serializer.ApisSerializer.filter_deployed_revisions">
+<code class="sig-name descname">filter_deployed_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">details</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.filter_deployed_revisions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.apis.serializer.ApisSerializer.filter_deployment_details">
+<code class="sig-name descname">filter_deployment_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">details</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.filter_deployment_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.apis.serializer.ApisSerializer.filter_undeployed_revisions">
+<code class="sig-name descname">filter_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">revisions</span></em>, <em class="sig-param"><span class="n">deployed</span></em>, <em class="sig-param"><span class="n">save_last</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.filter_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt id="apigee.apis.serializer.ApisSerializer.serialize_details">
 <code class="sig-name descname">serialize_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">apis</span></em>, <em class="sig-param"><span class="n">format</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.serialize_details" title="Permalink to this definition">¶</a></dt>
