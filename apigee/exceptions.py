@@ -16,7 +16,7 @@ def setup_global_logger():
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     f_handler.setFormatter(formatter)
     logging.getLogger("").addHandler(f_handler)
-    logging.StreamHandler(stream=None)
+    # logging.StreamHandler(stream=None)
 
 
 class InvalidApisError(Exception):
