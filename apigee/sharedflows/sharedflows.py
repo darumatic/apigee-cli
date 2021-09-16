@@ -122,11 +122,11 @@ class Sharedflows:
         resp.raise_for_status()
         console.echo('Done')
         if do_deployments_exist:
-            console.echo('Attempting undeployment... ')
+            # console.echo('Attempting undeployment... ')
             self.undeploy_shared_flow_revisions_in_environment(
                 environment, shared_flow_name, except_revisions={revision_number}
             )
-            console.echo('Done.')
+            # console.echo('Done.')
         return resp
 
     def undeploy_shared_flow_revisions_in_environment(
