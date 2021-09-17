@@ -32,7 +32,7 @@ from apigee.utils import make_dirs
 from apigee.verbose import common_verbose_options
 
 
-def _attach_username_option(func, profile):
+def attach_username_option(func, profile):
     username = get_credential(profile, 'username')
     username_envvar = os.environ.get(f'APIGEE_USERNAME', '')
     if username:
@@ -48,7 +48,7 @@ def _attach_username_option(func, profile):
     return func
 
 
-def _attach_password_option(func, profile):
+def attach_password_option(func, profile):
     password = get_credential(profile, 'password')
     password_envvar = os.environ.get(f'APIGEE_PASSWORD', '')
     if password:
@@ -64,7 +64,7 @@ def _attach_password_option(func, profile):
     return func
 
 
-def _attach_mfa_secret_option(func, profile):
+def attach_mfa_secret_option(func, profile):
     mfa_secret = get_credential(profile, 'mfa_secret')
     mfa_envvar = os.environ.get(f'APIGEE_MFA_SECRET', '')
     if mfa_secret:
@@ -80,7 +80,7 @@ def _attach_mfa_secret_option(func, profile):
     return func
 
 
-def _attach_is_token_option(func, profile):
+def attach_is_token_option(func, profile):
     is_token = get_credential(profile, 'is_token')
     is_token_envvar = os.environ.get(f'APIGEE_IS_TOKEN', '')
     if is_token in (True, 'True', 'true', '1'):
@@ -107,7 +107,7 @@ def _attach_is_token_option(func, profile):
     return func
 
 
-def _attach_zonename_option(func, profile):
+def attach_zonename_option(func, profile):
     zonename = get_credential(profile, 'zonename')
     zonename_envvar = os.environ.get('APIGEE_ZONENAME', '')
     if zonename:
@@ -123,7 +123,7 @@ def _attach_zonename_option(func, profile):
     return func
 
 
-def _attach_org_option(func, profile):
+def attach_org_option(func, profile):
     org = get_credential(profile, 'org')
     org_envvar = os.environ.get(f'APIGEE_ORG', '')
     if org:
@@ -143,12 +143,12 @@ def common_auth_options(func):
                 profile = sys.argv[i + 1]
             except IndexError:
                 pass
-    _attach_username_option(func, profile)
-    _attach_password_option(func, profile)
-    _attach_mfa_secret_option(func, profile)
-    _attach_is_token_option(func, profile)
-    _attach_zonename_option(func, profile)
-    _attach_org_option(func, profile)
+    attach_username_option(func, profile)
+    attach_password_option(func, profile)
+    attach_mfa_secret_option(func, profile)
+    attach_is_token_option(func, profile)
+    attach_zonename_option(func, profile)
+    attach_org_option(func, profile)
     func = click.option(
         '-P',
         '--profile',
@@ -165,7 +165,7 @@ def gen_auth(username=None, password=None, mfa_secret=None, token=None, zonename
     )
 
 
-def _get_access_token_for_token(auth, username, password, oauth_url, post_headers, session):
+def get_access_token_for_token(auth, username, password, oauth_url, post_headers, session):
     if auth.zonename:
         oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
     post_body = f'username={urllib.parse.quote(username)}&password={urllib.parse.quote(password)}&grant_type=password&response_type=token'
@@ -175,7 +175,7 @@ def _get_access_token_for_token(auth, username, password, oauth_url, post_header
         console.echo(ce)
 
 
-def _get_access_token_for_mfa(auth, username, password, oauth_url, post_headers, session):
+def get_access_token_for_mfa(auth, username, password, oauth_url, post_headers, session):
     mfa_secret = auth.mfa_secret
     totp = pyotp.TOTP(mfa_secret)
     try:
@@ -198,7 +198,7 @@ def _get_access_token_for_mfa(auth, username, password, oauth_url, post_headers,
         )
 
 
-def _get_access_token_for_sso(auth, username, password, oauth_url, post_headers, session):
+def get_access_token_for_sso(auth, username, password, oauth_url, post_headers, session):
     oauth_url = APIGEE_ZONENAME_OAUTH_URL.format(zonename=auth.zonename)
     passcode_url = APIGEE_SAML_LOGIN_URL.format(zonename=auth.zonename)
     webbrowser.open(passcode_url)
@@ -222,7 +222,7 @@ def _get_access_token_for_sso(auth, username, password, oauth_url, post_headers,
         pass
 
 
-def _gen_auth_error_message(error):
+def generate_auth_error_message(error):
     error_message = f'An exception of type {type(error).__name__} occurred. Arguments:\n{error}\nDouble check your credentials and try again.'
     if APIGEE_CLI_IS_MACHINE_USER:
         return f'{error_message} \nWARNING: APIGEE_CLI_IS_MACHINE_USER={APIGEE_CLI_IS_MACHINE_USER}'
@@ -251,15 +251,15 @@ def get_access_token(
         'Authorization': 'Basic ZWRnZWNsaTplZGdlY2xpc2VjcmV0',
     }
     if auth.token or APIGEE_CLI_IS_MACHINE_USER:
-        response_post = _get_access_token_for_token(
+        response_post = get_access_token_for_token(
             auth, username, password, oauth_url, post_headers, session
         )
     elif auth.mfa_secret:
-        response_post = _get_access_token_for_mfa(
+        response_post = get_access_token_for_mfa(
             auth, username, password, oauth_url, post_headers, session
         )
     elif auth.zonename:
-        response_post = _get_access_token_for_sso(
+        response_post = get_access_token_for_sso(
             auth, username, password, oauth_url, post_headers, session
         )
     else:
@@ -267,7 +267,7 @@ def get_access_token(
     try:
         return response_post.json()['access_token']
     except KeyError as ke:
-        sys.exit(_gen_auth_error_message(ke))
+        sys.exit(generate_auth_error_message(ke))
 
 
 def get_credential(section, key):
