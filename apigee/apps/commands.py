@@ -4,7 +4,7 @@ from click_option_group import MutuallyExclusiveOptionGroup, optgroup
 from apigee import console
 from apigee.apps.apps import Apps
 from apigee.auth import common_auth_options, gen_auth
-from apigee.cls import OptionEatAll
+# from apigee.cls import OptionEatAll
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
@@ -215,7 +215,7 @@ def _create_a_consumer_key_and_secret(
             secret_length=secret_length,
             key_suffix=key_suffix,
             key_delimiter=key_delimiter,
-            products=products,
+            products=list(products),
         )
         .text
     )
@@ -251,15 +251,15 @@ def _create_a_consumer_key_and_secret(
 @click.option(
     '--key-delimiter', default='-', help='separates consumerKey and key suffix with a delimiter.'
 )
-# @click.option("products", "--products", multiple=True, default=[], help="A list of API products to be associated with the app's credentials")
-@click.option(
-    'products',
-    '--products',
-    metavar='LIST',
-    cls=OptionEatAll,
-    default=[],
-    help="A list of API products to be associated with the app's credentials",
-)
+@click.option("products", "--products", multiple=True, default=[], help="A list of API products to be associated with the app's credentials")
+# @click.option(
+#     'products',
+#     '--products',
+#     metavar='LIST',
+#     cls=OptionEatAll,
+#     default=[],
+#     help="A list of API products to be associated with the app's credentials",
+# )
 def create_creds(*args, **kwargs):
     # click.echo(kwargs.get('products'))
     # import sys;sys.exit(1)

@@ -2,7 +2,7 @@ import click
 
 from apigee import console
 from apigee.auth import common_auth_options, gen_auth
-from apigee.cls import OptionEatAll
+# from apigee.cls import OptionEatAll
 # from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.userroles.userroles import Userroles
@@ -80,7 +80,7 @@ def _create_a_user_role_in_an_organization(
     username, password, mfa_secret, token, zonename, org, profile, names, **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, names)
+        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, list(names))
         .create_a_user_role_in_an_organization()
         .text
     )
@@ -90,8 +90,11 @@ def _create_a_user_role_in_an_organization(
 @common_auth_options
 @common_verbose_options
 @common_silent_options
+# @click.option(
+#     '-n', '--names', metavar='LIST', cls=OptionEatAll, help='list of role names', required=True
+# )
 @click.option(
-    '-n', '--names', metavar='LIST', cls=OptionEatAll, help='list of role names', required=True
+    '-n', '--names',multiple=True, help='list of role names', required=True
 )
 def create(*args, **kwargs):
     console.echo(_create_a_user_role_in_an_organization(*args, **kwargs))

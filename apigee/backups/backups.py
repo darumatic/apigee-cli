@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from pathlib import Path
 
@@ -59,7 +60,24 @@ class Backups:
                 raise InvalidApisError
         self._apis = value
 
-    def _progress_callback(self, desc=''):
+    @staticmethod
+    def generate_download_path(root_path, is_snapshot=False, subpaths=[]):
+        path = root_path
+        if is_snapshot:
+            path /= 'snapshots'
+        for subpath in subpaths:
+            path /= subpath
+        return str(path)
+
+    @staticmethod
+    def log_error(error, append_msg=''):
+        error_message = (
+            f'Ignoring {type(error).__name__} {error.response.status_code} error' + append_msg
+        )
+        logging.warning(error_message)
+        console.echo(error_message)
+
+    def __progress_callback(self, desc=''):
         if not isinstance(self.progress_bar, tqdm):
             self.progress_bar = tqdm(
                 total=self.snapshot_size,
@@ -71,14 +89,6 @@ class Backups:
             self.progress_bar.set_description(desc)
         self.progress_bar.update(1)
 
-    def _gen_download_path(self, is_snapshot=False, subpaths=[]):
-        path = self.org_path
-        if is_snapshot:
-            path /= 'snapshots'
-        for subpath in subpaths:
-            path /= subpath
-        return str(path)
-
     def download_apis_snapshot(self):
         for api in Apis(self.auth, self.org_name, None).list_api_proxies(
             prefix=self.prefix, format='dict'
@@ -88,17 +98,18 @@ class Backups:
             )
             write_file(
                 self.snapshot_data.apis[api],
-                self._gen_download_path(is_snapshot=True, subpaths=['apis', f'{api}.json']),
+                Backups.generate_download_path(
+                    self.org_path, is_snapshot=True, subpaths=['apis', f'{api}.json']
+                ),
                 fs_write=self.fs_write,
                 indent=2,
             )
-        return self.snapshot_data.apis
 
     def download_apis(self):
         for api, metadata in self.snapshot_data.apis.items():
             for revision in metadata['revision']:
-                output_file = self._gen_download_path(
-                    subpaths=['apis', api, revision, f'{api}.zip']
+                output_file = Backups.generate_download_path(
+                    self.org_path, subpaths=['apis', api, revision, f'{api}.zip']
                 )
                 target_directory = os.path.dirname(output_file)
                 try:
@@ -108,31 +119,24 @@ class Backups:
                     extract_zip(output_file, target_directory)
                     os.remove(output_file)
                 except HTTPError as e:
-                    console.echo(
-                        f'Ignoring {type(e).__name__} {e.response.status_code} error for API Proxy ({api}, revision {revision})'
-                    )
-            self._progress_callback(desc='APIs')
-        return self.snapshot_data.apis
+                    Backups.log_error(e, append_msg=' for API Proxy ({api}, revision {revision})')
+            self._Backups__progress_callback(desc='APIs')
 
     def download_keyvaluemaps_snapshot(self):
         for environment in self.environments:
-            try:
-                self.snapshot_data.keyvaluemaps[environment] = Keyvaluemaps(
-                    self.auth, self.org_name, None
-                ).list_keyvaluemaps_in_an_environment(
-                    environment, prefix=self.prefix, format='dict'
-                )
-            except HTTPError:
-                self.snapshot_data.keyvaluemaps[environment] = []
+            self.snapshot_data.keyvaluemaps[environment] = Keyvaluemaps(
+                self.auth, self.org_name, None
+            ).list_keyvaluemaps_in_an_environment(environment, prefix=self.prefix, format='dict')
             write_file(
                 self.snapshot_data.keyvaluemaps[environment],
-                self._gen_download_path(
-                    is_snapshot=True, subpaths=['keyvaluemaps', environment, 'keyvaluemaps.json']
+                Backups.generate_download_path(
+                    self.org_path,
+                    is_snapshot=True,
+                    subpaths=['keyvaluemaps', environment, 'keyvaluemaps.json'],
                 ),
                 fs_write=self.fs_write,
                 indent=2,
             )
-        return self.snapshot_data.keyvaluemaps
 
     def download_keyvaluemaps(self):
         for environment in self.environments:
@@ -142,37 +146,30 @@ class Backups:
                         Keyvaluemaps(self.auth, self.org_name, kvm)
                         .get_keyvaluemap_in_an_environment(environment)
                         .text,
-                        self._gen_download_path(
-                            subpaths=['keyvaluemaps', environment, f'{kvm}.json']
+                        Backups.generate_download_path(
+                            self.org_path, subpaths=['keyvaluemaps', environment, f'{kvm}.json']
                         ),
                         fs_write=self.fs_write,
                     )
                 except HTTPError as e:
-                    console.echo(
-                        f'Ignoring {type(e).__name__} {e.response.status_code} error for KVM ({kvm})'
-                    )
-                self._progress_callback(desc='KeyValueMaps')
-        return self.snapshot_data.keyvaluemaps
+                    Backups.log_error(e, append_msg=' for KVM ({kvm})')
+                self._Backups__progress_callback(desc='KeyValueMaps')
 
     def download_targetservers_snapshot(self):
         for environment in self.environments:
-            try:
-                self.snapshot_data.targetservers[environment] = Targetservers(
-                    self.auth, self.org_name, None
-                ).list_targetservers_in_an_environment(
-                    environment, prefix=self.prefix, format='dict'
-                )
-            except HTTPError:
-                self.snapshot_data.targetservers[environment] = []
+            self.snapshot_data.targetservers[environment] = Targetservers(
+                self.auth, self.org_name, None
+            ).list_targetservers_in_an_environment(environment, prefix=self.prefix, format='dict')
             write_file(
                 self.snapshot_data.targetservers[environment],
-                self._gen_download_path(
-                    is_snapshot=True, subpaths=['targetservers', environment, 'targetservers.json']
+                Backups.generate_download_path(
+                    self.org_path,
+                    is_snapshot=True,
+                    subpaths=['targetservers', environment, 'targetservers.json'],
                 ),
                 fs_write=self.fs_write,
                 indent=2,
             )
-        return self.snapshot_data.targetservers
 
     def download_targetservers(self):
         for environment in self.environments:
@@ -182,35 +179,29 @@ class Backups:
                         Targetservers(self.auth, self.org_name, targetserver)
                         .get_targetserver(environment)
                         .text,
-                        self._gen_download_path(
-                            subpaths=['targetservers', environment, f'{targetserver}.json']
+                        Backups.generate_download_path(
+                            self.org_path,
+                            subpaths=['targetservers', environment, f'{targetserver}.json'],
                         ),
                         fs_write=self.fs_write,
                     )
                 except HTTPError as e:
-                    console.echo(
-                        f'Ignoring {type(e).__name__} {e.response.status_code} error for TargetServer ({targetserver})'
-                    )
-                self._progress_callback(desc='TargetServers')
-        return self.snapshot_data.targetservers
+                    Backups.log_error(e, append_msg=' for TargetServer ({targetserver})')
+                self._Backups__progress_callback(desc='TargetServers')
 
     def download_caches_snapshot(self):
         for environment in self.environments:
-            try:
-                self.snapshot_data.caches[environment] = Caches(
-                    self.auth, self.org_name, None
-                ).list_caches_in_an_environment(environment, prefix=self.prefix, format='dict')
-            except HTTPError:
-                self.snapshot_data.caches[environment] = []
+            self.snapshot_data.caches[environment] = Caches(
+                self.auth, self.org_name, None
+            ).list_caches_in_an_environment(environment, prefix=self.prefix, format='dict')
             write_file(
                 self.snapshot_data.caches[environment],
-                self._gen_download_path(
-                    is_snapshot=True, subpaths=['caches', environment, 'caches.json']
+                Backups.generate_download_path(
+                    self.org_path, is_snapshot=True, subpaths=['caches', environment, 'caches.json']
                 ),
                 fs_write=self.fs_write,
                 indent=2,
             )
-        return self.snapshot_data.caches
 
     def download_caches(self):
         for environment in self.environments:
@@ -220,15 +211,14 @@ class Backups:
                         Caches(self.auth, self.org_name, cache)
                         .get_information_about_a_cache(environment)
                         .text,
-                        self._gen_download_path(subpaths=['caches', environment, f'{cache}.json']),
+                        Backups.generate_download_path(
+                            self.org_path, subpaths=['caches', environment, f'{cache}.json']
+                        ),
                         fs_write=self.fs_write,
                     )
                 except HTTPError as e:
-                    console.echo(
-                        f'Ignoring {type(e).__name__} {e.response.status_code} error for Cache ({cache})'
-                    )
-                self._progress_callback(desc='Caches')
-        return self.snapshot_data.caches
+                    Backups.log_error(e, append_msg=' for Cache ({cache})')
+                self._Backups__progress_callback(desc='Caches')
 
     def download_developers_snapshot(self):
         self.snapshot_data.developers = Developers(self.auth, self.org_name, None).list_developers(
@@ -236,26 +226,26 @@ class Backups:
         )
         write_file(
             self.snapshot_data.developers,
-            self._gen_download_path(is_snapshot=True, subpaths=['developers', 'developers.json']),
+            Backups.generate_download_path(
+                self.org_path, is_snapshot=True, subpaths=['developers', 'developers.json']
+            ),
             fs_write=self.fs_write,
             indent=2,
         )
-        return self.snapshot_data.developers
 
     def download_developers(self):
         for developer in self.snapshot_data.developers:
             try:
                 write_file(
                     Developers(self.auth, self.org_name, developer).get_developer().text,
-                    self._gen_download_path(subpaths=['developers', f'{developer}.json']),
+                    Backups.generate_download_path(
+                        self.org_path, subpaths=['developers', f'{developer}.json']
+                    ),
                     fs_write=self.fs_write,
                 )
             except HTTPError as e:
-                console.echo(
-                    f'Ignoring {type(e).__name__} {e.response.status_code} error for Developer ({developer})'
-                )
-            self._progress_callback(desc='Developers')
-        return self.snapshot_data.developers
+                Backups.log_error(e, append_msg=' for Developer ({developer})')
+            self._Backups__progress_callback(desc='Developers')
 
     def download_apiproducts_snapshot(self):
         self.snapshot_data.apiproducts = Apiproducts(
@@ -263,26 +253,26 @@ class Backups:
         ).list_api_products(prefix=self.prefix, format='dict')
         write_file(
             self.snapshot_data.apiproducts,
-            self._gen_download_path(is_snapshot=True, subpaths=['apiproducts', 'apiproducts.json']),
+            Backups.generate_download_path(
+                self.org_path, is_snapshot=True, subpaths=['apiproducts', 'apiproducts.json']
+            ),
             fs_write=self.fs_write,
             indent=2,
         )
-        return self.snapshot_data.apiproducts
 
     def download_apiproducts(self):
         for apiproduct in self.snapshot_data.apiproducts:
             try:
                 write_file(
                     Apiproducts(self.auth, self.org_name, apiproduct).get_api_product().text,
-                    self._gen_download_path(subpaths=['apiproducts', f'{apiproduct}.json']),
+                    Backups.generate_download_path(
+                        self.org_path, subpaths=['apiproducts', f'{apiproduct}.json']
+                    ),
                     fs_write=self.fs_write,
                 )
             except HTTPError as e:
-                console.echo(
-                    f'Ignoring {type(e).__name__} {e.response.status_code} error for API Product ({apiproduct})'
-                )
-            self._progress_callback(desc='API Products')
-        return self.snapshot_data.apiproducts
+                Backups.log_error(e, append_msg=' for API Product ({apiproduct})')
+            self._Backups__progress_callback(desc='API Products')
 
     def download_apps_snapshot(self, expand=False, count=1000, startkey=""):
         self.snapshot_data.apps = Apps(self.auth, self.org_name, None).list_apps_for_all_developers(
@@ -296,11 +286,12 @@ class Backups:
         for app, details in self.snapshot_data.apps.items():
             write_file(
                 details,
-                self._gen_download_path(is_snapshot=True, subpaths=['apps', f'{app}.json']),
+                Backups.generate_download_path(
+                    self.org_path, is_snapshot=True, subpaths=['apps', f'{app}.json']
+                ),
                 fs_write=self.fs_write,
                 indent=2,
             )
-        return self.snapshot_data.apps
 
     def download_apps(self):
         for developer, apps in self.snapshot_data.apps.items():
@@ -310,15 +301,14 @@ class Backups:
                         Apps(self.auth, self.org_name, app)
                         .get_developer_app_details(developer)
                         .text,
-                        self._gen_download_path(subpaths=['apps', developer, f'{app}.json']),
+                        Backups.generate_download_path(
+                            self.org_path, subpaths=['apps', developer, f'{app}.json']
+                        ),
                         fs_write=self.fs_write,
                     )
                 except HTTPError as e:
-                    console.echo(
-                        f'Ignoring {type(e).__name__} {e.response.status_code} error for Developer App ({app})'
-                    )
-                self._progress_callback(desc='Developer Apps')
-        return self.snapshot_data.apps
+                    Backups.log_error(e, append_msg=' for Developer App ({app})')
+                self._Backups__progress_callback(desc='Developer Apps')
 
     def download_userroles_snapshot(self):
         self.snapshot_data.userroles = (
@@ -330,26 +320,27 @@ class Backups:
             ]
         write_file(
             self.snapshot_data.userroles,
-            self._gen_download_path(is_snapshot=True, subpaths=['userroles', 'userroles.json']),
+            Backups.generate_download_path(
+                self.org_path, is_snapshot=True, subpaths=['userroles', 'userroles.json']
+            ),
             fs_write=self.fs_write,
             indent=2,
         )
-        return self.snapshot_data.userroles
 
-    def _download_users_for_a_role(self, role_name):
+    def download_users_for_a_role(self, role_name):
         try:
             write_file(
                 Userroles(self.auth, self.org_name, role_name).get_users_for_a_role().json(),
-                self._gen_download_path(subpaths=['userroles', role_name, 'users.json']),
+                Backups.generate_download_path(
+                    self.org_path, subpaths=['userroles', role_name, 'users.json']
+                ),
                 fs_write=self.fs_write,
                 indent=2,
             )
         except HTTPError as e:
-            console.echo(
-                f'Ignoring {type(e).__name__} {e.response.status_code} error for User Role ({role_name}) users'
-            )
+            Backups.log_error(e, append_msg=' for User Role ({role_name}) users')
 
-    def _download_resource_permissions(self, role_name):
+    def download_resource_permissions(self, role_name):
         try:
             write_file(
                 json.dumps(
@@ -360,24 +351,21 @@ class Backups:
                     ),
                     indent=2,
                 ),
-                self._gen_download_path(
-                    subpaths=['userroles', role_name, 'resource_permissions.json']
+                Backups.generate_download_path(
+                    self.org_path, subpaths=['userroles', role_name, 'resource_permissions.json']
                 ),
                 fs_write=self.fs_write,
             )
         except HTTPError as e:
-            console.echo(
-                f'Ignoring {type(e).__name__} {e.response.status_code} error for User Role ({role_name}) resource permissions'
-            )
+            Backups.log_error(e, append_msg=' for User Role ({role_name}) resource permissions')
 
     def download_userroles(self):
         for role_name in self.snapshot_data.userroles:
-            self._download_users_for_a_role(role_name)
-            self._download_resource_permissions(role_name)
-            self._progress_callback(desc='User Roles')
-        return self.snapshot_data.userroles
+            self.download_users_for_a_role(role_name)
+            self.download_resource_permissions(role_name)
+            self._Backups__progress_callback(desc='User Roles')
 
-    def _calculate_snapshot_size(self):
+    def __calculate_snapshot_size(self):
         count = 0
         for x in self.snapshot_data.__dict__:
             if x == 'apis':
@@ -402,8 +390,7 @@ class Backups:
                 console.echo(f'Retrieving {api} listing... ', end='', flush=True)
             getattr(self, f'download_{api}_snapshot')()
             console.echo('Done')
-        self.snapshot_size = self._calculate_snapshot_size()
-        return self.snapshot_data
+        self.snapshot_size = self._Backups__calculate_snapshot_size()
 
     def take_snapshot(self):
         self.get_snapshots()
@@ -412,4 +399,3 @@ class Backups:
             getattr(self, f'download_{api}')()
         self.progress_bar.close()
         console.echo('Done.')
-        return self.snapshot_data
