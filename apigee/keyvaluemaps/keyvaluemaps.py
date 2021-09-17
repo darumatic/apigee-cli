@@ -1,13 +1,10 @@
 import json
-import sys
 
 import requests
 from requests.exceptions import HTTPError
 from tqdm import tqdm
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
-from apigee.crypto import (ENCRYPTED_HEADER_BEGIN, ENCRYPTED_HEADER_END,
-                           decrypt_message, encrypt_message, is_encrypted)
 from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
 from apigee.utils import read_file
 
@@ -76,6 +73,23 @@ class Keyvaluemaps:
     @map_name.setter
     def map_name(self, value):
         self._map_name = value
+
+    def __create_or_update_entry(self, environment, entry):
+        try:
+            self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry['name'])
+            self.update_an_entry_in_an_environment_scoped_kvm(
+                environment, entry['name'], entry['value']
+            )
+        except HTTPError as e:
+            if e.response.status_code != 404:
+                raise e
+            self.create_an_entry_in_an_environment_scoped_kvm(
+                environment, entry['name'], entry['value']
+            )
+
+    def __delete_entries(self, environment, deleted_keys):
+        for idx, entry in enumerate(tqdm(deleted_keys, **TQDM_KWARGS('Deleting'))):
+            self.delete_keyvaluemap_entry_in_an_environment(environment, entry['name'])
 
     def create_keyvaluemap_in_an_environment(self, environment, request_body):
         uri = CREATE_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH.format(
@@ -209,69 +223,11 @@ class Keyvaluemaps:
         # return KeyvaluemapsSerializer().serialize_details(resp, 'json', prefix=prefix)
         return resp
 
-    def _diff_kvms(self, kvm1, kvm2):
-        current_keys = [entry['name'] for entry in kvm1['entry']]
-        deleted_keys = [entry for entry in kvm2['entry'] if entry['name'] not in current_keys]
-        return current_keys, deleted_keys
-
-    def _create_or_update_entry(self, environment, entry):
-        try:
-            self.get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry['name'])
-            self.update_an_entry_in_an_environment_scoped_kvm(
-                environment, entry['name'], entry['value']
-            )
-        except HTTPError as e:
-            if e.response.status_code != 404:
-                raise e
-            self.create_an_entry_in_an_environment_scoped_kvm(
-                environment, entry['name'], entry['value']
-            )
-
-    def _delete_entries(self, environment, deleted_keys):
-        for idx, entry in enumerate(tqdm(deleted_keys, **TQDM_KWARGS('Deleting'))):
-            self.delete_keyvaluemap_entry_in_an_environment(environment, entry['name'])
-
-    @staticmethod
-    def encrypt_value(kvm_dict, index, secret):
-        plaintext = kvm_dict['entry'][index]['value']
-        kvm_dict['entry'][index][
-            'value'
-        ] = f'{ENCRYPTED_HEADER_BEGIN}{encrypt_message(secret, plaintext)}{ENCRYPTED_HEADER_END}'
-
-    @staticmethod
-    def decrypt_value(kvm_dict, index, secret):
-        ciphertext = kvm_dict['entry'][index]['value']
-        decrypted = decrypt_message(secret, ciphertext)
-        if decrypted == '':
-            sys.exit('Incorrect symmetric key.')
-        kvm_dict['entry'][index]['value'] = decrypted
-
-    @staticmethod
-    def encrypt_decrypt_keyvaluemap(kvm_dict, secret, encrypt=True):
-        crypto_count = 0
-
-        def _func(value, kvm, index, secret):
-            operation = ''
-            if encrypt:
-                operation = 'encrypt_value' if not is_encrypted(value) else ''
-            else:
-                operation = 'decrypt_value' if is_encrypted(value) else ''
-            if operation:
-                getattr(Keyvaluemaps, operation)(kvm, index, secret)
-                return 1
-            return 0
-
-        if kvm_dict['encrypted'] and kvm_dict['entry']:
-            for idx, entry in enumerate(kvm_dict['entry']):
-                if entry.get('name') and entry.get('value'):
-                    crypto_count += _func(kvm_dict['entry'][idx]['value'], kvm_dict, idx, secret)
-        return kvm_dict, crypto_count
-
     def push_keyvaluemap(self, environment, file, secret=None):
         local_map = read_file(file, type='json')
         if secret:
             console.echo('Decrypting... ', end='', flush=True)
-            local_map, decrypted_count = self.encrypt_decrypt_keyvaluemap(
+            local_map, decrypted_count = KeyvaluemapsSerializer().encrypt_decrypt_keyvaluemap(
                 local_map, secret, encrypt=False
             )
             if decrypted_count:
@@ -281,16 +237,16 @@ class Keyvaluemaps:
         self._map_name = local_map['name']
         try:
             remote_map = self.get_keyvaluemap_in_an_environment(environment).json()
-            _, deleted_keys = self._diff_kvms(local_map, remote_map)
+            _, deleted_keys = KeyvaluemapsSerializer().diff_kvms(local_map, remote_map)
             local_map_updated = {
                 'entry': [entry for entry in local_map['entry'] if entry not in remote_map['entry']]
             }
             if deleted_keys:
-                self._delete_entries(environment, deleted_keys)
+                self._Keyvaluemaps__delete_entries(environment, deleted_keys)
                 console.echo('Removed entries.')
             if local_map_updated['entry']:
                 for entry in tqdm(local_map_updated['entry'], **TQDM_KWARGS('Updating')):
-                    self._create_or_update_entry(environment, entry)
+                    self._Keyvaluemaps__create_or_update_entry(environment, entry)
                 console.echo('Updated entries.')
             if not deleted_keys and not local_map_updated['entry']:
                 console.echo('All entries up-to-date.')

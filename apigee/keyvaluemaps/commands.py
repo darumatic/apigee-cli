@@ -7,6 +7,7 @@ from apigee.auth import common_auth_options, gen_auth
 from apigee.crypto import (ENCRYPTED_HEADER_BEGIN, ENCRYPTED_HEADER_END,
                            decrypt_message, encrypt_message, is_encrypted)
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
+from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.utils import read_file, write_file
@@ -373,7 +374,7 @@ def encrypt_file(symmetric_key, file, verbose, silent):
     contents = read_file(file, type='json')
     encrypted_count = 0
     console.echo('Encrypting... ', end='', flush=True)
-    contents, encrypted_count = Keyvaluemaps.encrypt_decrypt_keyvaluemap(
+    contents, encrypted_count = KeyvaluemapsSerializer().encrypt_decrypt_keyvaluemap(
         contents, symmetric_key, encrypt=True
     )
     if encrypted_count:
@@ -400,7 +401,7 @@ def decrypt_file(symmetric_key, file, verbose, silent):
     contents = read_file(file, type='json')
     decrypted_count = 0
     console.echo('Decrypting... ', end='', flush=True)
-    contents, decrypted_count = Keyvaluemaps.encrypt_decrypt_keyvaluemap(
+    contents, decrypted_count = KeyvaluemapsSerializer().encrypt_decrypt_keyvaluemap(
         contents, symmetric_key, encrypt=False
     )
     if decrypted_count:
