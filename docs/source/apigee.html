@@ -321,6 +321,36 @@
 <div class="section" id="module-apigee.auth">
 <span id="apigee-auth-module"></span><h2>apigee.auth module<a class="headerlink" href="#module-apigee.auth" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
+<dt id="apigee.auth.attach_is_token_option">
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">attach_is_token_option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.attach_is_token_option" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="apigee.auth.attach_mfa_secret_option">
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">attach_mfa_secret_option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.attach_mfa_secret_option" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="apigee.auth.attach_org_option">
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">attach_org_option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.attach_org_option" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="apigee.auth.attach_password_option">
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">attach_password_option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.attach_password_option" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="apigee.auth.attach_username_option">
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">attach_username_option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.attach_username_option" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="apigee.auth.attach_zonename_option">
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">attach_zonename_option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.attach_zonename_option" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="apigee.auth.auth_with_prefix">
 <code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">auth_with_prefix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth_obj</span></em>, <em class="sig-param"><span class="n">org</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">file</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">'name'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.auth_with_prefix" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -336,8 +366,28 @@
 <dd></dd></dl>
 
 <dl class="py function">
+<dt id="apigee.auth.generate_auth_error_message">
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">generate_auth_error_message</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">error</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.generate_auth_error_message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="apigee.auth.get_access_token">
 <code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">get_access_token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">retries</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">backoff_factor</span><span class="o">=</span><span class="default_value">0.3</span></em>, <em class="sig-param"><span class="n">status_forcelist</span><span class="o">=</span><span class="default_value">500, 502, 504</span></em>, <em class="sig-param"><span class="n">session</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="apigee.auth.get_access_token_for_mfa">
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">get_access_token_for_mfa</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">oauth_url</span></em>, <em class="sig-param"><span class="n">post_headers</span></em>, <em class="sig-param"><span class="n">session</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token_for_mfa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="apigee.auth.get_access_token_for_sso">
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">get_access_token_for_sso</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">oauth_url</span></em>, <em class="sig-param"><span class="n">post_headers</span></em>, <em class="sig-param"><span class="n">session</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token_for_sso" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="apigee.auth.get_access_token_for_token">
+<code class="sig-prename descclassname">apigee.auth.</code><code class="sig-name descname">get_access_token_for_token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">oauth_url</span></em>, <em class="sig-param"><span class="n">post_headers</span></em>, <em class="sig-param"><span class="n">session</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.auth.get_access_token_for_token" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -368,14 +418,9 @@
 
 <dl class="py class">
 <dt id="apigee.cls.OptionEatAll">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.cls.</code><code class="sig-name descname">OptionEatAll</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.cls.OptionEatAll" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.cls.</code><code class="sig-name descname">OptionEatAll</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param_decls</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Sequence<span class="p">[</span>str<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">show_default</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">prompt</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>bool<span class="p">, </span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">confirmation_prompt</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>bool<span class="p">, </span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">prompt_required</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">hide_input</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">is_flag</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>bool<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">flag_value</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Any<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">multiple</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">count</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">allow_from_autoenv</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">type</span><span class="p">:</span> <span class="n">Union[click.types.ParamType, Any, None]</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">help</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">hidden</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">show_choices</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_envvar</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">attrs</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.cls.OptionEatAll" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">click.core.Option</span></code></p>
 <p><a class="reference external" href="https://stackoverflow.com/a/48394004">https://stackoverflow.com/a/48394004</a></p>
-<dl class="py method">
-<dt id="apigee.cls.OptionEatAll.add_to_parser">
-<code class="sig-name descname">add_to_parser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span></em>, <em class="sig-param"><span class="n">ctx</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.cls.OptionEatAll.add_to_parser" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 </div>
