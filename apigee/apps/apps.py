@@ -191,16 +191,16 @@ class Apps:
             self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
         # app = self.get_developer_app_details(developer)
+        def _rand(length):
+            return "".join(
+                random.SystemRandom().choice(string.ascii_letters + string.digits)
+                for _ in range(length)
+            )
+
         if not consumer_key:
-            consumer_key = "".join(
-                random.SystemRandom().choice(string.ascii_letters + string.digits)
-                for _ in range(key_length)
-            )
+            consumer_key = _rand(key_length)
         if not consumer_secret:
-            consumer_secret = "".join(
-                random.SystemRandom().choice(string.ascii_letters + string.digits)
-                for _ in range(secret_length)
-            )
+            consumer_secret = _rand(secret_length)
         if key_suffix:
             consumer_key += key_delimiter
             consumer_key += key_suffix

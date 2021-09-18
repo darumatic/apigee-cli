@@ -215,7 +215,7 @@ def _create_a_consumer_key_and_secret(
             secret_length=secret_length,
             key_suffix=key_suffix,
             key_delimiter=key_delimiter,
-            products=list(products),
+            products=products,
         )
         .text
     )
@@ -227,7 +227,7 @@ def _create_a_consumer_key_and_secret(
 @common_auth_options
 @common_verbose_options
 @common_silent_options
-@click.option('-n', '--name', help='name', required=True)
+@click.option('-n', '--name', help='app name', required=True)
 @click.option('--developer', help='developer email or id', required=True)
 @optgroup.group(
     'consumerKey options', cls=MutuallyExclusiveOptionGroup, help='The consumerKey options'
@@ -251,7 +251,13 @@ def _create_a_consumer_key_and_secret(
 @click.option(
     '--key-delimiter', default='-', help='separates consumerKey and key suffix with a delimiter.'
 )
-@click.option("products", "--products", multiple=True, default=[], help="A list of API products to be associated with the app's credentials")
+@click.option(
+    '--products',
+    multiple=True,
+    default=[],
+    show_default=True,
+    help="API products to be associated with the app's credentials",
+)
 # @click.option(
 #     'products',
 #     '--products',
