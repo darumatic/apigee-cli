@@ -111,17 +111,14 @@ class Userroles:
         resp.raise_for_status()
         return resp
 
-    def create_a_user_role_in_an_organization(self):
+    def create_a_user_role_in_an_organization(self, roles):
         uri = CREATE_A_USER_ROLE_IN_AN_ORGANIZATION_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name
         )
         hdrs = auth.set_header(
             self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
         )
-        roles = []
-        for role in self._role_name:
-            roles.append({'name': role})
-        body = {'role': roles}
+        body = {'role': [{'name': role} for role in roles]}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
