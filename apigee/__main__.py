@@ -13,7 +13,8 @@ from functools import update_wrapper
 import click
 import requests
 
-from apigee import (APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH, APP,
+from apigee import (APIGEE_CLI_EXCEPTIONS_LOG_FILE,
+                    APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH, APP,
                     CMD)
 from apigee import __version__ as version
 from apigee.apiproducts.commands import apiproducts
@@ -45,8 +46,6 @@ from apigee.virtualhosts.commands import virtualhosts
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
-setup_global_logger()
-
 
 @click.group(
     context_settings=CONTEXT_SETTINGS, cls=AliasedGroup, invoke_without_command=False, chain=False
@@ -73,6 +72,8 @@ def cli(ctx):
 
 @exception_handler
 def main():
+    setup_global_logger(APIGEE_CLI_EXCEPTIONS_LOG_FILE)
+
     cli_commands = {
         backups,
         configure,

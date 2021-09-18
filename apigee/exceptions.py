@@ -5,8 +5,8 @@ import json
 import logging
 import sys
 
-from apigee import APIGEE_CLI_EXCEPTIONS_LOG_FILE, console
-from apigee.utils import remove_file_above_size, touch
+from apigee import console
+from apigee.utils import remove_file_above_size
 
 
 class InvalidApisError(Exception):
@@ -17,14 +17,13 @@ class NotYetImplementedError(Exception):
     pass
 
 
-def setup_global_logger():
-    remove_file_above_size(APIGEE_CLI_EXCEPTIONS_LOG_FILE, size_kb=1000)
-    f_handler = logging.FileHandler(APIGEE_CLI_EXCEPTIONS_LOG_FILE)
-    f_handler.setLevel(logging.WARNING)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    f_handler.setFormatter(formatter)
-    logging.getLogger("").addHandler(f_handler)
-    # logging.StreamHandler(stream=None)
+def setup_global_logger(log_file):
+    logging.basicConfig(
+        filename=log_file,
+        level=logging.WARNING,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    )
+    remove_file_above_size(log_file, size_kb=1000)
 
 
 def exception_handler(func):
