@@ -76,7 +76,7 @@ def _take_snapshot(
 #     '-e', '--environments', metavar='LIST', cls=OptionEatAll, default=['test', 'prod'], help=''
 # )
 @click.option(
-    '-e', '--environments',multiple=True,show_default=True, default=['test', 'prod'], help='',
+    '-e', '--environments', multiple=True, show_default=True, default=['test', 'prod'], help=''
 )
 def take_snapshot(*args, **kwargs):
     _take_snapshot(*args, **kwargs)
