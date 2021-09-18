@@ -16,4 +16,5 @@ class AliasedGroup(click.Group):
 
 class OptionEatAll(click.Option):
     """https://stackoverflow.com/a/48394004"""
+
     pass
