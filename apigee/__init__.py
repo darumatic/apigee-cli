@@ -7,7 +7,7 @@ from apigee import utils
 
 APP = 'apigeecli'
 CMD = 'apigee'
-__version__ = '0.49.6'
+__version__ = '0.50.0'
 description = '(Unofficial) Apigee Management API command-line interface with multi-factor authentication (MFA) and single sign-on (SSO)/SAML support'
 long_description = """(Unofficial) Apigee Management API command-line interface with multi-factor authentication (MFA) and single sign-on (SSO)/SAML support"""
 
