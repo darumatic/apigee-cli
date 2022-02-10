@@ -11,9 +11,6 @@ def verbose_callback(ctx, param, value):
     http_client.HTTPConnection.debuglevel = value
     logging.basicConfig()
     logging.getLogger().setLevel(logging.DEBUG)
-    # requests_log = logging.getLogger('requests.packages.urllib3')
-    # requests_log.setLevel(logging.DEBUG)
-    # requests_log.propagate = True
 
 
 def common_verbose_options(func):

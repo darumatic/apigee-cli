@@ -6,7 +6,7 @@ import logging
 import sys
 
 from apigee import console
-from apigee.utils import remove_file_above_size
+from apigee.utils import remove_file_above_size, touch
 
 
 class InvalidApisError(Exception):
@@ -18,6 +18,7 @@ class NotYetImplementedError(Exception):
 
 
 def setup_global_logger(log_file):
+    touch(log_file)
     logging.basicConfig(
         filename=log_file,
         level=logging.WARNING,

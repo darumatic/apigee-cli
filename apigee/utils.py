@@ -146,10 +146,10 @@ def split_path(path, delimiter='[/\\\\]'):
 
 def touch(path):
     try:
-        with open(path, 'x'):
-            os.utime(path, None)
-    except FileNotFoundError:
-        os.makedirs(os.path.split(path)[0])
+        make_dirs(os.path.split(path)[0])
+        if not os.path.exists(path):
+            with open(path, 'x'):
+                os.utime(path, None)
     except FileExistsError:
         logging.warning(f'{inspect.stack()[0][3]}; will ignore FileExistsError')
 
