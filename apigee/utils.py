@@ -73,6 +73,8 @@ def import_all_modules_in_directory(plugins_init_file, existing_commands):
 
 
 def make_dirs(path):
+    if not path:
+        return
     if not os.path.exists(path):
         try:
             os.makedirs(path)
