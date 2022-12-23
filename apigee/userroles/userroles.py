@@ -5,33 +5,37 @@ import requests
 from apigee import APIGEE_ADMIN_API_URL, auth
 
 ADD_A_USER_TO_A_ROLE_PATH = (
-    '{api_url}/v1/organizations/{org}/userroles/{role_name}/users?id={user_email}'
+    "{api_url}/v1/organizations/{org}/userroles/{role_name}/users?id={user_email}"
 )
 ADD_PERMISSIONS_FOR_A_RESOURCE_TO_A_USER_ROLE_PATH = (
-    '{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions'
+    "{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions"
 )
 ADD_PERMISSIONS_FOR_MULTIPLE_RESOURCES_TO_A_USER_ROLE_PATH = (
-    '{api_url}/v1/organizations/{org}/userroles/{role_name}/resourcepermissions'
+    "{api_url}/v1/organizations/{org}/userroles/{role_name}/resourcepermissions"
 )
-CREATE_A_USER_ROLE_IN_AN_ORGANIZATION_PATH = '{api_url}/v1/organizations/{org}/userroles'
-DELETE_A_PERMISSION_FOR_A_RESOURCE_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions/{permission}?path={resource_path}'
-DELETE_RESOURCE_FROM_PERMISSIONS_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions?path={resource_path}&delete=true'
-DELETE_A_USER_ROLE_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}'
-GET_A_ROLE_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}'
+CREATE_A_USER_ROLE_IN_AN_ORGANIZATION_PATH = (
+    "{api_url}/v1/organizations/{org}/userroles"
+)
+DELETE_A_PERMISSION_FOR_A_RESOURCE_PATH = "{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions/{permission}?path={resource_path}"
+DELETE_RESOURCE_FROM_PERMISSIONS_PATH = "{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions?path={resource_path}&delete=true"
+DELETE_A_USER_ROLE_PATH = "{api_url}/v1/organizations/{org}/userroles/{role_name}"
+GET_A_ROLE_PATH = "{api_url}/v1/organizations/{org}/userroles/{role_name}"
 GET_RESOURCE_PERMISSIONS_FOR_A_SPECIFIC_ROLE_PATH = (
-    '{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions'
+    "{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions"
 )
-GET_USERS_FOR_A_ROLE_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}/users'
+GET_USERS_FOR_A_ROLE_PATH = (
+    "{api_url}/v1/organizations/{org}/userroles/{role_name}/users"
+)
 LIST_PERMISSIONS_FOR_A_RESOURCE_PATH = (
-    '{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions'
+    "{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions"
 )
-LIST_USER_ROLES_PATH = '{api_url}/v1/organizations/{org}/userroles'
+LIST_USER_ROLES_PATH = "{api_url}/v1/organizations/{org}/userroles"
 REMOVE_USER_MEMBERSHIP_IN_ROLE_PATH = (
-    '{api_url}/v1/organizations/{org}/userroles/{role_name}/users/{user_email}'
+    "{api_url}/v1/organizations/{org}/userroles/{role_name}/users/{user_email}"
 )
-VERIFY_A_USER_ROLES_PERMISSION_ON_A_SPECIFIC_RBAC_RESOURCE_PATH = '{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions/{permission}?path={resource_path}'
+VERIFY_A_USER_ROLES_PERMISSION_ON_A_SPECIFIC_RBAC_RESOURCE_PATH = "{api_url}/v1/organizations/{org}/userroles/{role_name}/permissions/{permission}?path={resource_path}"
 VERIFY_USER_ROLE_MEMBERSHIP_PATH = (
-    '{api_url}/v1/organizations/{org}/userroles/{role_name}/users/{user_email}'
+    "{api_url}/v1/organizations/{org}/userroles/{role_name}/users/{user_email}"
 )
 
 
@@ -78,8 +82,8 @@ class Userroles:
         hdrs = auth.set_header(
             self._auth,
             headers={
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
             },
         )
         resp = requests.post(uri, headers=hdrs)
@@ -91,7 +95,8 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -99,12 +104,13 @@ class Userroles:
         return resp
 
     def add_permissions_for_multiple_resources_to_a_user_role(self, request_body):
-        uri = f'{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/userroles/{self._role_name}/resourcepermissions'
+        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/userroles/{self._role_name}/resourcepermissions"
         uri = ADD_PERMISSIONS_FOR_MULTIPLE_RESOURCES_TO_A_USER_ROLE_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -116,9 +122,10 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
-        body = {'role': [{'name': role} for role in roles]}
+        body = {"role": [{"name": role} for role in roles]}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
@@ -133,7 +140,10 @@ class Userroles:
         )
         hdrs = auth.set_header(
             self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/octet-stream'},
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/octet-stream",
+            },
         )
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
@@ -148,7 +158,10 @@ class Userroles:
         )
         hdrs = auth.set_header(
             self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/octet-stream'},
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/octet-stream",
+            },
         )
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
@@ -161,8 +174,8 @@ class Userroles:
         hdrs = auth.set_header(
             self._auth,
             headers={
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
             },
         )
         resp = requests.delete(uri, headers=hdrs)
@@ -174,7 +187,8 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -185,10 +199,13 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         if resource_path:
-            uri += f'?path={resource_path}'
+            uri += f"?path={resource_path}"
         hdrs = auth.set_header(
             self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/octet-stream'},
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/octet-stream",
+            },
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -199,7 +216,8 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -210,16 +228,20 @@ class Userroles:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, role_name=self._role_name
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def list_user_roles(self):
-        uri = LIST_USER_ROLES_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name)
+        uri = LIST_USER_ROLES_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name
+        )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -233,13 +255,16 @@ class Userroles:
             user_email=user_email,
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def verify_a_user_roles_permission_on_a_specific_RBAC_resource(self, permission, resource_path):
+    def verify_a_user_roles_permission_on_a_specific_RBAC_resource(
+        self, permission, resource_path
+    ):
         uri = VERIFY_A_USER_ROLES_PERMISSION_ON_A_SPECIFIC_RBAC_RESOURCE_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,
@@ -249,7 +274,10 @@ class Userroles:
         )
         hdrs = auth.set_header(
             self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/octet-stream'},
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/octet-stream",
+            },
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -263,7 +291,8 @@ class Userroles:
             user_email=user_email,
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
@@ -271,6 +300,6 @@ class Userroles:
 
     @staticmethod
     def sort_permissions(resource_permissions):
-        for i in range(len(resource_permissions.get('resourcePermission'))):
-            resource_permissions['resourcePermission'][i]['permissions'].sort()
+        for rp in range(len(resource_permissions.get("resourcePermission"))):
+            resource_permissions["resourcePermission"][rp]["permissions"].sort()
         return resource_permissions

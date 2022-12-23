@@ -3,24 +3,27 @@ import click
 from apigee import console
 from apigee.auth import common_auth_options, gen_auth
 from apigee.backups.backups import Backups
+
 # from apigee.cls import OptionEatAll
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
 APIS_CHOICES = {
-    'apis',
-    'keyvaluemaps',
-    'targetservers',
-    'caches',
-    'developers',
-    'apiproducts',
-    'apps',
-    'userroles',
+    "apis",
+    "keyvaluemaps",
+    "targetservers",
+    "caches",
+    "developers",
+    "apiproducts",
+    "apps",
+    "userroles",
 }
 
 
-@click.group(help='Download configuration files from Apigee that can later be restored.')
+@click.group(
+    help="Download configuration files from Apigee that can later be restored."
+)
 def backups():
     pass
 
@@ -46,26 +49,26 @@ def _take_snapshot(
         org,
         target_directory,
         prefix=prefix,
-        fs_write=True,
+        # fs_write=True,
         apis=apis,
-        environments=list(environments),
+        envs=list(environments),
     ).take_snapshot()
 
 
 @backups.command(
-    help='Downloads and generates local snapshots of specified Apigee resources e.g. API proxies, KVMs, target servers, etc.'
+    help="Downloads and generates local snapshots of specified Apigee resources e.g. API proxies, KVMs, target servers, etc."
 )
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
 @click.option(
-    '--target-directory',
+    "--target-directory",
     type=click.Path(exists=False, dir_okay=True, file_okay=False, resolve_path=False),
     required=True,
 )
 @click.option(
-    '--apis',
+    "--apis",
     type=click.Choice(APIS_CHOICES, case_sensitive=False),
     multiple=True,
     default=APIS_CHOICES,
@@ -76,7 +79,12 @@ def _take_snapshot(
 #     '-e', '--environments', metavar='LIST', cls=OptionEatAll, default=['test', 'prod'], help=''
 # )
 @click.option(
-    '-e', '--environments', multiple=True, show_default=True, default=['test', 'prod'], help=''
+    "-e",
+    "--environments",
+    multiple=True,
+    show_default=True,
+    default=["test", "prod"],
+    help="",
 )
 def take_snapshot(*args, **kwargs):
     _take_snapshot(*args, **kwargs)

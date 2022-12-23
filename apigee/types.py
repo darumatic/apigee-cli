@@ -1,12 +1,12 @@
 APIS = {
-    'apis',
-    'keyvaluemaps',
-    'targetservers',
-    'caches',
-    'developers',
-    'apiproducts',
-    'apps',
-    'userroles',
+    "apis",
+    "keyvaluemaps",
+    "targetservers",
+    "caches",
+    "developers",
+    "apiproducts",
+    "apps",
+    "userroles",
 }
 
 

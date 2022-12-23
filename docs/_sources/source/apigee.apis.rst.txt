@@ -36,6 +36,14 @@ apigee.apis.deploy module
    :undoc-members:
    :show-inheritance:
 
+apigee.apis.pull module
+-----------------------
+
+.. automodule:: apigee.apis.pull
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.apis.serializer module
 -----------------------------
 

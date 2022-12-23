@@ -5,36 +5,26 @@ import string
 import requests
 from requests.exceptions import HTTPError
 
-from apigee import (APIGEE_ADMIN_API_URL,
-                    APIGEE_CLI_AUTHORIZATION_DEVELOPER_ATTRIBUTE, auth,
-                    console)
+from apigee import APIGEE_ADMIN_API_URL, auth
 from apigee.developers.serializer import DevelopersSerializer
 
-CREATE_DEVELOPER_PATH = '{api_url}/v1/organizations/{org}/developers'
-DELETE_DEVELOPER_PATH = '{api_url}/v1/organizations/{org}/developers/{developer_email}'
-GET_DEVELOPER_PATH = '{api_url}/v1/organizations/{org}/developers/{developer_email}'
-GET_DEVELOPER_BY_APP_PATH = '{api_url}/v1/organizations/{org}/developers?app={app_name}'
-LIST_DEVELOPERS_PATH = (
-    '{api_url}/v1/organizations/{org}/developers?expand={expand}&count={count}&startKey={startkey}'
-)
+CREATE_DEVELOPER_PATH = "{api_url}/v1/organizations/{org}/developers"
+DELETE_DEVELOPER_PATH = "{api_url}/v1/organizations/{org}/developers/{developer_email}"
+GET_DEVELOPER_PATH = "{api_url}/v1/organizations/{org}/developers/{developer_email}"
+GET_DEVELOPER_BY_APP_PATH = "{api_url}/v1/organizations/{org}/developers?app={app_name}"
+LIST_DEVELOPERS_PATH = "{api_url}/v1/organizations/{org}/developers?expand={expand}&count={count}&startKey={startkey}"
 SET_DEVELOPER_STATUS_PATH = (
-    '{api_url}/v1/organizations/{org}/developers/{developer_email}?action={action}'
+    "{api_url}/v1/organizations/{org}/developers/{developer_email}?action={action}"
 )
-UPDATE_DEVELOPER_PATH = '{api_url}/v1/organizations/{org}/developers/{developer_email}'
-GET_DEVELOPER_ATTRIBUTE_PATH = (
-    '{api_url}/v1/organizations/{org}/developers/{developer_email}/attributes/{attribute_name}'
-)
-UPDATE_A_DEVELOPER_ATTRIBUTE_PATH = (
-    '{api_url}/v1/organizations/{org}/developers/{developer_email}/attributes/{attribute_name}'
-)
-DELETE_DEVELOPER_ATTRIBUTE_PATH = (
-    '{api_url}/v1/organizations/{org}/developers/{developer_email}/attributes/{attribute_name}'
-)
+UPDATE_DEVELOPER_PATH = "{api_url}/v1/organizations/{org}/developers/{developer_email}"
+GET_DEVELOPER_ATTRIBUTE_PATH = "{api_url}/v1/organizations/{org}/developers/{developer_email}/attributes/{attribute_name}"
+UPDATE_A_DEVELOPER_ATTRIBUTE_PATH = "{api_url}/v1/organizations/{org}/developers/{developer_email}/attributes/{attribute_name}"
+DELETE_DEVELOPER_ATTRIBUTE_PATH = "{api_url}/v1/organizations/{org}/developers/{developer_email}/attributes/{attribute_name}"
 GET_ALL_DEVELOPER_ATTRIBUTES_PATH = (
-    '{api_url}/v1/organizations/{org}/developers/{developer_email}/attributes'
+    "{api_url}/v1/organizations/{org}/developers/{developer_email}/attributes"
 )
 UPDATE_ALL_DEVELOPER_ATTRIBUTES_PATH = (
-    '{api_url}/v1/organizations/{org}/developers/{developer_email}/attributes'
+    "{api_url}/v1/organizations/{org}/developers/{developer_email}/attributes"
 )
 
 
@@ -71,17 +61,22 @@ class Developers:
     def __call__(self):
         pass
 
-    def create_developer(self, first_name, last_name, user_name, attributes='{"attributes" : [ ]}'):
-        uri = CREATE_DEVELOPER_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name)
+    def create_developer(
+        self, first_name, last_name, user_name, attributes='{"attributes" : [ ]}'
+    ):
+        uri = CREATE_DEVELOPER_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name
+        )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         body = {
-            'email': self._developer_email,
-            'firstName': first_name,
-            'lastName': last_name,
-            'userName': user_name,
-            'attributes': json.loads(attributes)['attributes'],
+            "email": self._developer_email,
+            "firstName": first_name,
+            "lastName": last_name,
+            "userName": user_name,
+            "attributes": json.loads(attributes)["attributes"],
         }
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
@@ -89,18 +84,22 @@ class Developers:
 
     def delete_developer(self):
         uri = DELETE_DEVELOPER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, developer_email=self._developer_email
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            developer_email=self._developer_email,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def get_developer(self):
         uri = GET_DEVELOPER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, developer_email=self._developer_email
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            developer_email=self._developer_email,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -109,12 +108,14 @@ class Developers:
         uri = GET_DEVELOPER_BY_APP_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, app_name=app_name
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_developers(self, prefix=None, expand=False, count=1000, startkey="", format='json'):
+    def list_developers(
+        self, prefix=None, expand=False, count=1000, startkey="", format="json"
+    ):
         uri = LIST_DEVELOPERS_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,
@@ -122,7 +123,7 @@ class Developers:
             count=count,
             startkey=startkey,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return DevelopersSerializer().serialize_details(resp, format, prefix=prefix)
@@ -136,7 +137,10 @@ class Developers:
         )
         hdrs = auth.set_header(
             self._auth,
-            headers={'Accept': 'application/json', 'Content-Type': 'application/octet-stream'},
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/octet-stream",
+            },
         )
         resp = requests.post(uri, headers=hdrs)
         resp.raise_for_status()
@@ -144,10 +148,13 @@ class Developers:
 
     def update_developer(self, request_body):
         uri = UPDATE_DEVELOPER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, developer_email=self._developer_email
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            developer_email=self._developer_email,
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
@@ -161,7 +168,7 @@ class Developers:
             developer_email=self._developer_email,
             attribute_name=attribute_name,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -173,8 +180,8 @@ class Developers:
             developer_email=self._developer_email,
             attribute_name=attribute_name,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
-        body = {'value': updated_value}
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        body = {"value": updated_value}
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
@@ -186,26 +193,31 @@ class Developers:
             developer_email=self._developer_email,
             attribute_name=attribute_name,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def get_all_developer_attributes(self):
         uri = GET_ALL_DEVELOPER_ATTRIBUTES_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, developer_email=self._developer_email
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            developer_email=self._developer_email,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
     def update_all_developer_attributes(self, request_body):
         uri = UPDATE_ALL_DEVELOPER_ATTRIBUTES_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, developer_email=self._developer_email
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            developer_email=self._developer_email,
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)

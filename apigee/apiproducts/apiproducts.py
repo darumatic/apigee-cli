@@ -7,13 +7,11 @@ from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.apiproducts.serializer import ApiproductsSerializer
 from apigee.utils import read_file
 
-CREATE_API_PRODUCT_PATH = '{api_url}/v1/organizations/{org}/apiproducts'
-DELETE_API_PRODUCT_PATH = '{api_url}/v1/organizations/{org}/apiproducts/{name}'
-GET_API_PRODUCT_PATH = '{api_url}/v1/organizations/{org}/apiproducts/{name}'
-LIST_API_PRODUCTS_PATH = (
-    '{api_url}/v1/organizations/{org}/apiproducts?expand={expand}&count={count}&startKey={startkey}'
-)
-UPDATE_API_PRODUCT_PATH = '{api_url}/v1/organizations/{org}/apiproducts/{name}'
+CREATE_API_PRODUCT_PATH = "{api_url}/v1/organizations/{org}/apiproducts"
+DELETE_API_PRODUCT_PATH = "{api_url}/v1/organizations/{org}/apiproducts/{name}"
+GET_API_PRODUCT_PATH = "{api_url}/v1/organizations/{org}/apiproducts/{name}"
+LIST_API_PRODUCTS_PATH = "{api_url}/v1/organizations/{org}/apiproducts?expand={expand}&count={count}&startKey={startkey}"
+UPDATE_API_PRODUCT_PATH = "{api_url}/v1/organizations/{org}/apiproducts/{name}"
 
 
 class Apiproducts:
@@ -50,9 +48,12 @@ class Apiproducts:
         self._apiproduct_name = value
 
     def create_api_product(self, request_body):
-        uri = CREATE_API_PRODUCT_PATH.format(api_url=APIGEE_ADMIN_API_URL, org=self._org_name)
+        uri = CREATE_API_PRODUCT_PATH.format(
+            api_url=APIGEE_ADMIN_API_URL, org=self._org_name
+        )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -63,7 +64,7 @@ class Apiproducts:
         uri = DELETE_API_PRODUCT_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._apiproduct_name
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -72,12 +73,14 @@ class Apiproducts:
         uri = GET_API_PRODUCT_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._apiproduct_name
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_api_products(self, prefix=None, expand=False, count=1000, startkey="", format='json'):
+    def list_api_products(
+        self, prefix=None, expand=False, count=1000, startkey="", format="json"
+    ):
         uri = LIST_API_PRODUCTS_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,
@@ -85,7 +88,7 @@ class Apiproducts:
             count=count,
             startkey=startkey,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return ApiproductsSerializer().serialize_details(resp, format, prefix=prefix)
@@ -95,7 +98,8 @@ class Apiproducts:
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._apiproduct_name
         )
         hdrs = auth.set_header(
-            self._auth, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}
+            self._auth,
+            headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
@@ -103,14 +107,14 @@ class Apiproducts:
         return resp
 
     def push_apiproducts(self, file):
-        apiproduct = read_file(file, type='json')
-        self._apiproduct_name = apiproduct['name']
+        apiproduct = read_file(file, type="json")
+        self._apiproduct_name = apiproduct["name"]
         try:
             self.get_api_product()
-            console.echo(f'Updating {self._apiproduct_name}')
+            console.echo(f"Updating {self._apiproduct_name}")
             console.echo(self.update_api_product(json.dumps(apiproduct)).text)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
-            console.echo(f'Creating {self._apiproduct_name}')
+            console.echo(f"Creating {self._apiproduct_name}")
             console.echo(self.create_api_product(json.dumps(apiproduct)).text)

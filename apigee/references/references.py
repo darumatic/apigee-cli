@@ -7,20 +7,14 @@ from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.references.serializer import ReferencesSerializer
 
 LIST_ALL_REFERENCES_PATH = (
-    '{api_url}/v1/organizations/{org_name}/environments/{environment}/references'
+    "{api_url}/v1/organizations/{org_name}/environments/{environment}/references"
 )
-GET_REFERENCE_PATH = (
-    '{api_url}/v1/organizations/{org_name}/environments/{environment}/references/{ref_name}'
-)
-DELETE_REFERENCE_PATH = (
-    '{api_url}/v1/organizations/{org_name}/environments/{environment}/references/{ref_name}'
-)
+GET_REFERENCE_PATH = "{api_url}/v1/organizations/{org_name}/environments/{environment}/references/{ref_name}"
+DELETE_REFERENCE_PATH = "{api_url}/v1/organizations/{org_name}/environments/{environment}/references/{ref_name}"
 CREATE_REFERENCE_PATH = (
-    '{api_url}/v1/organizations/{org_name}/environments/{environment}/references'
+    "{api_url}/v1/organizations/{org_name}/environments/{environment}/references"
 )
-UPDATE_REFERENCE_PATH = (
-    '{api_url}/v1/organizations/{org_name}/environments/{environment}/references/{ref_name}'
-)
+UPDATE_REFERENCE_PATH = "{api_url}/v1/organizations/{org_name}/environments/{environment}/references/{ref_name}"
 
 
 class References:
@@ -56,11 +50,13 @@ class References:
     def ref_name(self, value):
         self._ref_name = value
 
-    def list_all_references(self, environment, prefix=None, format='json'):
+    def list_all_references(self, environment, prefix=None, format="json"):
         uri = LIST_ALL_REFERENCES_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org_name=self._org_name, environment=environment
+            api_url=APIGEE_ADMIN_API_URL,
+            org_name=self._org_name,
+            environment=environment,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return ReferencesSerializer().serialize_details(resp, format, prefix=prefix)
@@ -72,7 +68,7 @@ class References:
             environment=environment,
             ref_name=self._ref_name,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
