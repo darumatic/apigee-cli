@@ -169,13 +169,8 @@
 <span id="apigee-deployments-deployments-module"></span><h2>apigee.deployments.deployments module<a class="headerlink" href="#module-apigee.deployments.deployments" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="apigee.deployments.deployments.Deployments">
-<em class="property">class </em><code class="sig-prename descclassname">apigee.deployments.deployments.</code><code class="sig-name descname">Deployments</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">org_name</span></em>, <em class="sig-param"><span class="n">api_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.deployments.deployments.Deployments" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">apigee.deployments.deployments.</code><code class="sig-name descname">Deployments</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">auth</span></em>, <em class="sig-param"><span class="n">org_name</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.deployments.deployments.Deployments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt id="apigee.deployments.deployments.Deployments.api_name">
-<em class="property">property </em><code class="sig-name descname">api_name</code><a class="headerlink" href="#apigee.deployments.deployments.Deployments.api_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt id="apigee.deployments.deployments.Deployments.auth">
 <em class="property">property </em><code class="sig-name descname">auth</code><a class="headerlink" href="#apigee.deployments.deployments.Deployments.auth" title="Permalink to this definition">¶</a></dt>
@@ -184,6 +179,16 @@
 <dl class="py method">
 <dt id="apigee.deployments.deployments.Deployments.get_api_proxy_deployment_details">
 <code class="sig-name descname">get_api_proxy_deployment_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">formatted</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'text'</span></em>, <em class="sig-param"><span class="n">showindex</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">tablefmt</span><span class="o">=</span><span class="default_value">'plain'</span></em>, <em class="sig-param"><span class="n">revision_name_only</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.deployments.deployments.Deployments.get_api_proxy_deployment_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.deployments.deployments.Deployments.get_shared_flow_deployment_details">
+<code class="sig-name descname">get_shared_flow_deployment_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">formatted</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'text'</span></em>, <em class="sig-param"><span class="n">showindex</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">tablefmt</span><span class="o">=</span><span class="default_value">'plain'</span></em>, <em class="sig-param"><span class="n">revision_name_only</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.deployments.deployments.Deployments.get_shared_flow_deployment_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.deployments.deployments.Deployments.name">
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#apigee.deployments.deployments.Deployments.name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

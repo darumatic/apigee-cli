@@ -172,8 +172,23 @@
 <em class="property">class </em><code class="sig-prename descclassname">apigee.sharedflows.serializer.</code><code class="sig-name descname">SharedflowsSerializer</code><a class="headerlink" href="#apigee.sharedflows.serializer.SharedflowsSerializer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
+<dt id="apigee.sharedflows.serializer.SharedflowsSerializer.filter_deployed_revisions">
+<em class="property">static </em><code class="sig-name descname">filter_deployed_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">details</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.serializer.SharedflowsSerializer.filter_deployed_revisions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.sharedflows.serializer.SharedflowsSerializer.filter_deployment_details">
+<em class="property">static </em><code class="sig-name descname">filter_deployment_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">details</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.serializer.SharedflowsSerializer.filter_deployment_details" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.sharedflows.serializer.SharedflowsSerializer.filter_undeployed_revisions">
+<em class="property">static </em><code class="sig-name descname">filter_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">revisions</span></em>, <em class="sig-param"><span class="n">deployed</span></em>, <em class="sig-param"><span class="n">save_last</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.serializer.SharedflowsSerializer.filter_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="apigee.sharedflows.serializer.SharedflowsSerializer.serialize_details">
-<code class="sig-name descname">serialize_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sharedflows</span></em>, <em class="sig-param"><span class="n">format</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.serializer.SharedflowsSerializer.serialize_details" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">serialize_details</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sharedflows</span></em>, <em class="sig-param"><span class="n">format</span></em>, <em class="sig-param"><span class="n">prefix</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.serializer.SharedflowsSerializer.serialize_details" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -196,8 +211,23 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="apigee.sharedflows.sharedflows.Sharedflows.delete_a_shared_flow_revision">
+<code class="sig-name descname">delete_a_shared_flow_revision</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shared_flow_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.delete_a_shared_flow_revision" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.sharedflows.sharedflows.Sharedflows.delete_undeployed_revisions">
+<code class="sig-name descname">delete_undeployed_revisions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shared_flow_name</span></em>, <em class="sig-param"><span class="n">save_last</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.delete_undeployed_revisions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="apigee.sharedflows.sharedflows.Sharedflows.deploy_a_shared_flow">
 <code class="sig-name descname">deploy_a_shared_flow</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">environment</span></em>, <em class="sig-param"><span class="n">shared_flow_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em>, <em class="sig-param"><span class="n">override</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">delay</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">shared_flow_file</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.deploy_a_shared_flow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="apigee.sharedflows.sharedflows.Sharedflows.export_shared_flow">
+<code class="sig-name descname">export_shared_flow</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shared_flow_name</span></em>, <em class="sig-param"><span class="n">revision_number</span></em>, <em class="sig-param"><span class="n">output_file</span></em>, <em class="sig-param"><span class="n">fs_write</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.export_shared_flow" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
