@@ -15,9 +15,9 @@ def verbose_callback(ctx, param, value):
 
 def common_verbose_options(func):
     func = click.option(
-        '-v',
-        '--verbose',
-        show_default='toggle verbose output',
+        "-v",
+        "--verbose",
+        show_default="toggle verbose output",
         count=True,
         callback=verbose_callback,
     )(func)

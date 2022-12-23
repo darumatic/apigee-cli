@@ -4,17 +4,19 @@ import json
 class VirtualhostsSerializer:
     def serialize_details(self, virtualhosts, format, prefix=None):
         resp = virtualhosts
-        if format == 'text':
+        if format == "text":
             return virtualhosts.text
         virtualhosts = virtualhosts.json()
         if prefix:
             virtualhosts = [
-                virtualhost for virtualhost in virtualhosts if virtualhost.startswith(prefix)
+                virtualhost
+                for virtualhost in virtualhosts
+                if virtualhost.startswith(prefix)
             ]
-        if format == 'json':
+        if format == "json":
             return json.dumps(virtualhosts)
-        elif format == 'table':
+        elif format == "table":
             pass
-        elif format == 'dict':
+        elif format == "dict":
             return virtualhosts
         return resp

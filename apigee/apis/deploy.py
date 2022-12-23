@@ -38,7 +38,7 @@ Directory = None
 Organization = None
 Environment = None
 Name = None
-BasePath = '/'
+BasePath = "/"
 ShouldDeploy = True
 ShouldOverride = False
 GracePeriod = 15
@@ -57,7 +57,7 @@ class Struct:
 
 
 def httpCall(verb, uri, headers, body):
-    if httpScheme == 'https':
+    if httpScheme == "https":
         conn = http.client.HTTPSConnection(httpHost)
     else:
         conn = http.client.HTTPConnection(httpHost)
@@ -104,9 +104,9 @@ def getElementVal(n, name):
 # Return TRUE if any component of the file path contains a directory name that
 # starts with a "." like '.svn', but not '.' or '..'
 def pathContainsDot(p):
-    c = re.compile('\.\w+')
+    c = re.compile("\.\w+")
 
-    for pc in p.split('/'):
+    for pc in p.split("/"):
         if c.match(pc) != None:
             return True
 
@@ -115,9 +115,12 @@ def pathContainsDot(p):
 
 def getDeployments():
     # Print info on deployments
-    hdrs = {'Accept': 'application/xml'}
+    hdrs = {"Accept": "application/xml"}
     resp = httpCall(
-        'GET', '/v1/organizations/%s/apis/%s/deployments' % (Organization, Name), hdrs, None
+        "GET",
+        "/v1/organizations/%s/apis/%s/deployments" % (Organization, Name),
+        hdrs,
+        None,
     )
 
     if resp.status != 200:
@@ -125,32 +128,32 @@ def getDeployments():
 
     ret = []
     deployments = xml.dom.minidom.parse(resp)
-    environments = deployments.getElementsByTagName('Environment')
+    environments = deployments.getElementsByTagName("Environment")
 
     for env in environments:
-        envName = env.getAttribute('name')
-        revisions = env.getElementsByTagName('Revision')
+        envName = env.getAttribute("name")
+        revisions = env.getElementsByTagName("Revision")
         for rev in revisions:
-            revNum = int(rev.getAttribute('name'))
+            revNum = int(rev.getAttribute("name"))
             error = None
-            state = getElementVal(rev, 'State')
-            basePaths = rev.getElementsByTagName('BasePath')
+            state = getElementVal(rev, "State")
+            basePaths = rev.getElementsByTagName("BasePath")
 
             if len(basePaths) > 0:
                 basePath = getElementText(basePaths[0])
             else:
-                basePath = 'unknown'
+                basePath = "unknown"
 
             # svrs = rev.getElementsByTagName('Server')
             status = {
-                'environment': envName,
-                'revision': revNum,
-                'basePath': basePath,
-                'state': state,
+                "environment": envName,
+                "revision": revNum,
+                "basePath": basePath,
+                "state": state,
             }
 
             if error != None:
-                status['error'] = error
+                status["error"] = error
 
             ret.append(status)
 
@@ -159,30 +162,32 @@ def getDeployments():
 
 def printDeployments(dep, check_revision=None):
     if check_revision:
-        revisions = [d['revision'] for d in dep]
+        revisions = [d["revision"] for d in dep]
         if check_revision not in revisions:
-            sys.exit('Error: proxy version %i not found' % check_revision)
-        console.echo('Proxy version %i found' % check_revision)
+            sys.exit("Error: proxy version %i not found" % check_revision)
+        console.echo("Proxy version %i found" % check_revision)
     for d in dep:
-        console.echo('Environment: %s' % d['environment'])
-        console.echo('  Revision: %i BasePath = %s' % (d['revision'], d['basePath']))
-        console.echo('  State: %s' % d['state'])
-        if d['state'] == 'missing':
-            console.echo('Missing deployment. Attempting deletion...')
+        console.echo("Environment: %s" % d["environment"])
+        console.echo("  Revision: %i BasePath = %s" % (d["revision"], d["basePath"]))
+        console.echo("  State: %s" % d["state"])
+        if d["state"] == "missing":
+            console.echo("Missing deployment. Attempting deletion...")
             try:
                 Apis(Auth, Organization).undeploy_api_proxy_revision(
-                    Name, d['environment'], d['revision']
+                    Name, d["environment"], d["revision"]
                 )
                 console.echo(
-                    Apis(Auth, Organization).delete_api_proxy_revision(Name, d['revision']).text
+                    Apis(Auth, Organization)
+                    .delete_api_proxy_revision(Name, d["revision"])
+                    .text
                 )
             except HTTPError as e:
                 if e.response.status_code != 400:
                     raise e
-        elif d['state'] != 'deployed':
+        elif d["state"] != "deployed":
             sys.exit(1)
-        if 'error' in d:
-            console.echo('  Error: %s' % d['error'])
+        if "error" in d:
+            console.echo("  Error: %s" % d["error"])
 
 
 def deploy(args):
@@ -196,7 +201,7 @@ def deploy(args):
     global Auth
 
     # ApigeeHost = 'https://api.enterprise.apigee.com'
-    UserPW = args.username + ':' + args.password
+    UserPW = args.username + ":" + args.password
     Directory = args.directory
     Organization = args.org
     Environment = args.environment
@@ -237,81 +242,86 @@ def deploy(args):
     if Directory != None:
         # Construct a ZIPped copy of the bundle in memory
         tf = io.BytesIO()
-        zipout = zipfile.ZipFile(tf, 'w')
+        zipout = zipfile.ZipFile(tf, "w")
 
         dirList = os.walk(Directory)
         for dirEntry in dirList:
             if not pathContainsDot(dirEntry[0]):
                 for fileEntry in dirEntry[2]:
-                    if not fileEntry.endswith('~'):
+                    if not fileEntry.endswith("~"):
                         fn = os.path.join(dirEntry[0], fileEntry)
-                        en = os.path.join(os.path.relpath(dirEntry[0], Directory), fileEntry)
-                        console.echo('Writing %s to %s' % (fn, en))
+                        en = os.path.join(
+                            os.path.relpath(dirEntry[0], Directory), fileEntry
+                        )
+                        console.echo("Writing %s to %s" % (fn, en))
                         zipout.write(fn, en)
 
         zipout.close()
         body = tf.getvalue()
     elif ZipFile != None:
-        f = open(ZipFile, 'r')
+        f = open(ZipFile, "r")
         body = f.read()
         f.close()
 
     # Upload the bundle to the API
-    hdrs = {'Content-Type': 'application/octet-stream', 'Accept': 'application/json'}
-    uri = '/v1/organizations/%s/apis?action=import&name=%s' % (Organization, Name)
-    resp = httpCall('POST', uri, hdrs, body)
+    hdrs = {"Content-Type": "application/octet-stream", "Accept": "application/json"}
+    uri = "/v1/organizations/%s/apis?action=import&name=%s" % (Organization, Name)
+    resp = httpCall("POST", uri, hdrs, body)
 
     if resp.status != 200 and resp.status != 201:
         console.echo(
-            'Import failed to %s with status %i:\n%s' % (uri, resp.status, resp.read().decode())
+            "Import failed to %s with status %i:\n%s"
+            % (uri, resp.status, resp.read().decode())
         )
         sys.exit(2)
 
     deployment = json.loads(resp.read().decode())
-    revision = int(deployment['revision'])
+    revision = int(deployment["revision"])
 
-    console.echo('Imported new proxy version %i' % revision)
+    console.echo("Imported new proxy version %i" % revision)
 
     if ShouldDeploy and not ShouldOverride:
         # Undeploy duplicates
         deps = getDeployments()
         for d in deps:
             if (
-                d['environment'] == Environment
-                and d['basePath'] == BasePath
-                and d['revision'] != revision
+                d["environment"] == Environment
+                and d["basePath"] == BasePath
+                and d["revision"] != revision
             ):
                 console.echo(
-                    'Undeploying revision %i in same environment and path:' % d['revision']
+                    "Undeploying revision %i in same environment and path:"
+                    % d["revision"]
                 )
                 conn = http.client.HTTPSConnection(httpHost)
                 resp = httpCall(
-                    'POST',
+                    "POST",
                     (
-                        '/v1/organizations/%s/apis/%s/deployments'
-                        + '?action=undeploy'
-                        + '&env=%s'
-                        + '&revision=%i'
+                        "/v1/organizations/%s/apis/%s/deployments"
+                        + "?action=undeploy"
+                        + "&env=%s"
+                        + "&revision=%i"
                     )
-                    % (Organization, Name, Environment, d['revision']),
+                    % (Organization, Name, Environment, d["revision"]),
                     None,
                     None,
                 )
                 if resp.status != 200 and resp.status != 204:
                     console.echo(
-                        'Error %i on undeployment:\n%s' % (resp.status, resp.read().decode())
+                        "Error %i on undeployment:\n%s"
+                        % (resp.status, resp.read().decode())
                     )
 
         # Deploy the bundle
-        hdrs = {'Accept': 'application/json'}
+        hdrs = {"Accept": "application/json"}
         resp = httpCall(
-            'POST',
+            "POST",
             (
-                '/v1/organizations/%s/apis/%s/deployments'
-                + '?action=deploy'
-                + '&env=%s'
-                + '&revision=%i'
-                + '&basepath=%s'
+                "/v1/organizations/%s/apis/%s/deployments"
+                + "?action=deploy"
+                + "&env=%s"
+                + "&revision=%i"
+                + "&basepath=%s"
             )
             % (Organization, Name, Environment, revision, BasePath),
             hdrs,
@@ -319,19 +329,22 @@ def deploy(args):
         )
 
         if resp.status != 200 and resp.status != 201:
-            console.echo('Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode()))
+            console.echo(
+                "Deploy failed with status %i:\n%s"
+                % (resp.status, resp.read().decode())
+            )
             sys.exit(2)
 
     if ShouldOverride:
         # Seamless Deploy the bundle
-        console.echo('Seamless deploy %s' % Name)
-        hdrs = {'Content-Type': 'application/x-www-form-urlencoded'}
+        console.echo("Seamless deploy %s" % Name)
+        hdrs = {"Content-Type": "application/x-www-form-urlencoded"}
         resp = httpCall(
-            'POST',
+            "POST",
             (
-                '/v1/organizations/%s/environments/%s/apis/%s/revisions/%s/deployments'
-                + '?override=true'
-                + '&delay=%s'
+                "/v1/organizations/%s/environments/%s/apis/%s/revisions/%s/deployments"
+                + "?override=true"
+                + "&delay=%s"
             )
             % (Organization, Environment, Name, revision, GracePeriod),
             hdrs,
@@ -339,7 +352,10 @@ def deploy(args):
         )
 
         if resp.status != 200 and resp.status != 201:
-            console.echo('Deploy failed with status %i:\n%s' % (resp.status, resp.read().decode()))
+            console.echo(
+                "Deploy failed with status %i:\n%s"
+                % (resp.status, resp.read().decode())
+            )
             sys.exit(2)
 
     deps = getDeployments()
@@ -354,5 +370,5 @@ def main():
     pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

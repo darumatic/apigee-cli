@@ -25,11 +25,11 @@ def convert_to_set(iterable):
 
 
 def extract_zip(source, dest):
-    with zipfile.ZipFile(source, 'r') as zip_ref:
+    with zipfile.ZipFile(source, "r") as zip_ref:
         zip_ref.extractall(dest)
 
 
-def generate_path_str(*args):
+def build_path_str(*args):
     if not args:
         return
     path = None
@@ -46,7 +46,7 @@ def is_dir(d):
 
 
 def is_envvar_true(value):
-    return value in (True, 'True', 'true', '1')
+    return value in (True, "True", "true", "1")
 
 
 def is_file(f):
@@ -55,7 +55,9 @@ def is_file(f):
 
 def import_all_modules_in_directory(plugins_init_file, existing_commands):
     try:
-        spec = importlib.util.spec_from_file_location('plugins_modules', plugins_init_file)
+        spec = importlib.util.spec_from_file_location(
+            "plugins_modules", plugins_init_file
+        )
         module = importlib.util.module_from_spec(spec)
         sys.modules[spec.name] = module
         spec.loader.exec_module(module)
@@ -68,7 +70,8 @@ def import_all_modules_in_directory(plugins_init_file, existing_commands):
                 existing_commands.add(_module)
     except ImportError:
         logging.warning(
-            f'{inspect.stack()[0][3]}; will skip loading plugin: {module}', exc_info=True
+            f"{inspect.stack()[0][3]}; will skip loading plugin: {module}",
+            exc_info=True,
         )
 
 
@@ -79,12 +82,12 @@ def make_dirs(path):
         try:
             os.makedirs(path)
         except FileExistsError:
-            logging.warning(f'{inspect.stack()[0][3]}; will ignore FileExistsError')
+            logging.warning(f"{inspect.stack()[0][3]}; will ignore FileExistsError")
 
 
 def path_exists(file):
     if os.path.exists(file):
-        sys.exit(f'error: {file} already exists')
+        sys.exit(f"error: {file} already exists")
 
 
 def paths_exist(files):
@@ -92,9 +95,9 @@ def paths_exist(files):
         path_exists(file)
 
 
-def read_file(file, type='text'):
-    with open(file, 'r') as f:
-        if type == 'json':
+def read_file(file, type="text"):
+    with open(file, "r") as f:
+        if type == "json":
             return json.loads(f.read())
         return f.read()
 
@@ -118,7 +121,7 @@ def resolve_target_directory(target_directory=None):
     return os.getcwd()
 
 
-def run_func_on_dir_files(dir, func, glob='**/*', args=(), kwargs={}):
+def run_func_on_dir_files(dir, func, glob="**/*", args=(), kwargs={}):
     state = []
     for file_path in Path(resolve_target_directory(dir)).resolve().glob(glob):
         _tuple = (str(file_path),)
@@ -128,7 +131,7 @@ def run_func_on_dir_files(dir, func, glob='**/*', args=(), kwargs={}):
     return state
 
 
-def run_func_on_iterable(iterable, func, state_op='append', args=(), kwargs={}):
+def run_func_on_iterable(iterable, func, state_op="append", args=(), kwargs={}):
     state = []
     for item in iterable:
         _tuple = (item,)
@@ -142,7 +145,7 @@ def show_message(msg):
     print(msg)
 
 
-def split_path(path, delimiter='[/\\\\]'):
+def split_path(path, delimiter="[/\\\\]"):
     return re.split(delimiter, path)
 
 
@@ -150,33 +153,33 @@ def touch(path):
     try:
         make_dirs(os.path.split(path)[0])
         if not os.path.exists(path):
-            with open(path, 'x'):
+            with open(path, "x"):
                 os.utime(path, None)
     except FileExistsError:
-        logging.warning(f'{inspect.stack()[0][3]}; will ignore FileExistsError')
+        logging.warning(f"{inspect.stack()[0][3]}; will ignore FileExistsError")
 
 
 def write_file(content, path, fs_write=True, indent=None, eof=True):
     if not fs_write:
         return
     touch(path)
-    with open(path, 'w') as f:
+    with open(path, "w") as f:
         if isinstance(content, str):
             if eof:
-                content = f'{content}\n'
+                content = f"{content}\n"
             f.write(content)
         elif isinstance(content, dict) or isinstance(content, list):
             if isinstance(indent, int):
-                content = f'{json.dumps(content, indent=indent)}'
+                content = f"{json.dumps(content, indent=indent)}"
             else:
-                content = f'{json.dumps(content)}'
+                content = f"{json.dumps(content)}"
             if eof:
-                f.write(f'{content}\n')
+                f.write(f"{content}\n")
             else:
                 f.write(content)
 
 
 def write_zip(file, content):
     touch(file)
-    with open(file, 'wb') as f:
+    with open(file, "wb") as f:
         f.write(content)

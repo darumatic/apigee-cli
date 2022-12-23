@@ -7,20 +7,14 @@ from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.virtualhosts.serializer import VirtualhostsSerializer
 
 CREATE_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = (
-    '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts'
+    "{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts"
 )
-DELETE_A_VIRTUAL_HOST_FROM_AN_ENVIRONMENT_PATH = (
-    '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}'
-)
-GET_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = (
-    '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}'
-)
+DELETE_A_VIRTUAL_HOST_FROM_AN_ENVIRONMENT_PATH = "{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}"
+GET_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = "{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}"
 LIST_VIRTUAL_HOSTS_FOR_AN_ENVIRONMENT_PATH = (
-    '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts'
+    "{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts"
 )
-UPDATE_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = (
-    '{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}'
-)
+UPDATE_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = "{api_url}/v1/o/{org_name}/environments/{environment}/virtualhosts/{virtualhost_name}"
 
 
 class Virtualhosts:
@@ -69,16 +63,20 @@ class Virtualhosts:
             environment=environment,
             virtualhost_name=self._virtualhost_name,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
 
-    def list_virtual_hosts_for_an_environment(self, environment, prefix=None, format='json'):
+    def list_virtual_hosts_for_an_environment(
+        self, environment, prefix=None, format="json"
+    ):
         uri = LIST_VIRTUAL_HOSTS_FOR_AN_ENVIRONMENT_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org_name=self._org_name, environment=environment
+            api_url=APIGEE_ADMIN_API_URL,
+            org_name=self._org_name,
+            environment=environment,
         )
-        hdrs = auth.set_header(self._auth, headers={'Accept': 'application/json'})
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return VirtualhostsSerializer().serialize_details(resp, format, prefix=prefix)

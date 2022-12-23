@@ -8,7 +8,9 @@ from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
 
-@click.group(help='A list of URIs used to create, modify, and delete keystores and truststores.')
+@click.group(
+    help="A list of URIs used to create, modify, and delete keystores and truststores."
+)
 def keystores():
     pass
 
@@ -17,7 +19,7 @@ def _create_a_keystore_or_truststore(*args, **kwargs):
     pass
 
 
-@keystores.command(help='')
+@keystores.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -29,7 +31,7 @@ def _delete_a_keystore_or_truststore(*args, **kwargs):
     pass
 
 
-@keystores.command(help='')
+@keystores.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -54,18 +56,29 @@ def _list_all_keystores_and_truststores(
     ).list_all_keystores_and_truststores(environment, prefix=prefix)
 
 
-@keystores.command(help='Returns a list of all keystores and truststores in the environment.')
+@keystores.command(
+    help="Returns a list of all keystores and truststores in the environment."
+)
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def list(*args, **kwargs):
     console.echo(_list_all_keystores_and_truststores(*args, **kwargs))
 
 
 def _get_a_keystore_or_truststore(
-    username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    environment,
+    **kwargs
 ):
     return (
         Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -74,12 +87,12 @@ def _get_a_keystore_or_truststore(
     )
 
 
-@keystores.command(help='Returns a specific keystore or truststore in the environment.')
+@keystores.command(help="Returns a specific keystore or truststore in the environment.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option('-n', '--name', help='keystore name', required=True)
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-n", "--name", help="keystore name", required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def get(*args, **kwargs):
     console.echo(_get_a_keystore_or_truststore(*args, **kwargs))
 
@@ -88,7 +101,7 @@ def _test_a_keystore_or_truststore(*args, **kwargs):
     pass
 
 
-@keystores.command(help='')
+@keystores.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -116,13 +129,13 @@ def _get_cert_details_from_a_keystore_or_truststore(
     )
 
 
-@keystores.command(help='Returns a specific cert from a keystore or truststore.')
+@keystores.command(help="Returns a specific cert from a keystore or truststore.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option('-n', '--name', help='keystore name', required=True)
-@click.option('--cert-name', help='cert name', required=True)
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-n", "--name", help="keystore name", required=True)
+@click.option("--cert-name", help="cert name", required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def get_cert(*args, **kwargs):
     console.echo(_get_cert_details_from_a_keystore_or_truststore(*args, **kwargs))
 
@@ -145,13 +158,13 @@ def _get_all_certs_from_a_keystore_or_truststore(
     ).get_all_certs_from_a_keystore_or_truststore(environment, prefix=prefix)
 
 
-@keystores.command(help='Returns all certs from a keystore or truststore.')
+@keystores.command(help="Returns all certs from a keystore or truststore.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
-@click.option('-n', '--name', help='keystore name', required=True)
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-n", "--name", help="keystore name", required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def get_all_certs(*args, **kwargs):
     console.echo(_get_all_certs_from_a_keystore_or_truststore(*args, **kwargs))
 
@@ -160,7 +173,7 @@ def _delete_cert_from_a_keystore_or_truststore(*args, **kwargs):
     pass
 
 
-@keystores.command(help='')
+@keystores.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -188,13 +201,13 @@ def _export_a_cert(
     )
 
 
-@keystores.command(help='Export a cert from a keystore or truststore.')
+@keystores.command(help="Export a cert from a keystore or truststore.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option('-n', '--name', help='keystore name', required=True)
-@click.option('--cert-name', help='cert name', required=True)
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-n", "--name", help="keystore name", required=True)
+@click.option("--cert-name", help="cert name", required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def export(*args, **kwargs):
     console.echo(_export_a_cert(*args, **kwargs))
 
@@ -203,7 +216,7 @@ def _upload_a_certificate_to_a_truststore(*args, **kwargs):
     pass
 
 
-@keystores.command(help='')
+@keystores.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -215,7 +228,7 @@ def _upload_a_jar_file_to_a_keystore(*args, **kwargs):
     pass
 
 
-@keystores.command(help='')
+@keystores.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -227,7 +240,7 @@ def _create_an_alias_by_generating_a_self_signed_certificate(*args, **kwargs):
     pass
 
 
-@keystores.command(help='')
+@keystores.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -253,13 +266,13 @@ def _list_aliases(
     ).list_aliases(environment, prefix=prefix)
 
 
-@keystores.command(help='Returns a list of all the aliases in the keystore.')
+@keystores.command(help="Returns a list of all the aliases in the keystore.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
-@click.option('-n', '--name', help='keystore name', required=True)
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-n", "--name", help="keystore name", required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def list_aliases(*args, **kwargs):
     console.echo(_list_aliases(*args, **kwargs))
 
@@ -284,13 +297,13 @@ def _get_alias(
     )
 
 
-@keystores.command(help='Returns details about an alias.')
+@keystores.command(help="Returns details about an alias.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option('-n', '--name', help='keystore name', required=True)
-@click.option('--alias-name', help='alias name', required=True)
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-n", "--name", help="keystore name", required=True)
+@click.option("--alias-name", help="alias name", required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def get_alias(*args, **kwargs):
     console.echo(_get_alias(*args, **kwargs))
 
@@ -299,7 +312,7 @@ def _update_the_certificate_in_an_alias(*args, **kwargs):
     pass
 
 
-@keystores.command(help='')
+@keystores.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -311,7 +324,7 @@ def _generate_a_csr_for_an_alias(*args, **kwargs):
     pass
 
 
-@keystores.command(help='')
+@keystores.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -340,14 +353,14 @@ def _export_a_certificate_for_an_alias(
 
 
 @keystores.command(
-    help='Exports a certificate or certificate chain for the specified alias in a keystore.'
+    help="Exports a certificate or certificate chain for the specified alias in a keystore."
 )
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option('-n', '--name', help='keystore name', required=True)
-@click.option('--alias-name', help='alias name', required=True)
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-n", "--name", help="keystore name", required=True)
+@click.option("--alias-name", help="alias name", required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def export_cert_for_alias(*args, **kwargs):
     console.echo(_export_a_certificate_for_an_alias(*args, **kwargs))
 
@@ -356,7 +369,7 @@ def _delete_alias(*args, **kwargs):
     pass
 
 
-@keystores.command(help='')
+@keystores.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options

@@ -8,7 +8,7 @@ from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
 
 
-@click.group(help='References in an organization and environment.')
+@click.group(help="References in an organization and environment.")
 def references():
     pass
 
@@ -30,18 +30,27 @@ def _list_all_references(
     ).list_all_references(environment, prefix=prefix)
 
 
-@references.command(help='List all references in an organization and environment.')
+@references.command(help="List all references in an organization and environment.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def list(*args, **kwargs):
     console.echo(_list_all_references(*args, **kwargs))
 
 
 def _get_reference(
-    username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    environment,
+    **kwargs
 ):
     return (
         References(gen_auth(username, password, mfa_secret, token, zonename), org, name)
@@ -50,12 +59,12 @@ def _get_reference(
     )
 
 
-@references.command(help='Get reference in an organization and environment.')
+@references.command(help="Get reference in an organization and environment.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option('-n', '--name', help='reference name', required=True)
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-n", "--name", help="reference name", required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def get(*args, **kwargs):
     console.echo(_get_reference(*args, **kwargs))
 
@@ -64,7 +73,7 @@ def _delete_reference(*args, **kwargs):
     pass
 
 
-@references.command(help='')
+@references.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -76,7 +85,7 @@ def _create_reference(*args, **kwargs):
     pass
 
 
-@references.command(help='')
+@references.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -88,7 +97,7 @@ def _update_reference(*args, **kwargs):
     pass
 
 
-@references.command(help='')
+@references.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options

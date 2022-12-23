@@ -19,7 +19,7 @@ def _create_a_virtual_host_for_an_environment(*args, **kwargs):
     pass
 
 
-@virtualhosts.command(help='')
+@virtualhosts.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -31,7 +31,7 @@ def _delete_a_virtual_host_from_an_environment(*args, **kwargs):
     pass
 
 
-@virtualhosts.command(help='')
+@virtualhosts.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
@@ -40,21 +40,32 @@ def delete(*args, **kwargs):
 
 
 def _get_a_virtual_host_for_an_environment(
-    username, password, mfa_secret, token, zonename, org, profile, name, environment, **kwargs
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    environment,
+    **kwargs
 ):
     return (
-        Virtualhosts(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Virtualhosts(
+            gen_auth(username, password, mfa_secret, token, zonename), org, name
+        )
         .get_a_virtual_host_for_an_environment(environment)
         .text
     )
 
 
-@virtualhosts.command(help='Gets details for a named virtual host.')
+@virtualhosts.command(help="Gets details for a named virtual host.")
 @common_auth_options
 @common_silent_options
 @common_verbose_options
-@click.option('-n', '--name', help='reference name', required=True)
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-n", "--name", help="reference name", required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def get(*args, **kwargs):
     console.echo(_get_a_virtual_host_for_an_environment(*args, **kwargs))
 
@@ -76,12 +87,12 @@ def _list_virtual_hosts_for_an_environment(
     ).list_virtual_hosts_for_an_environment(environment, prefix=prefix)
 
 
-@virtualhosts.command(help='Get a list of named virtual hosts for an environment.')
+@virtualhosts.command(help="Get a list of named virtual hosts for an environment.")
 @common_auth_options
 @common_prefix_options
 @common_silent_options
 @common_verbose_options
-@click.option('-e', '--environment', help='environment', required=True)
+@click.option("-e", "--environment", help="environment", required=True)
 def list(*args, **kwargs):
     console.echo(_list_virtual_hosts_for_an_environment(*args, **kwargs))
 
@@ -90,7 +101,7 @@ def _update_virtual_host_for_an_environment(*args, **kwargs):
     pass
 
 
-@virtualhosts.command(help='')
+@virtualhosts.command(help="")
 @common_auth_options
 @common_silent_options
 @common_verbose_options

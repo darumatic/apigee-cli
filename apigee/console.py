@@ -3,7 +3,13 @@ import sys
 
 
 def echo(
-    *message, status=None, silent=False, curr_verbosity=0, expc_verbosity=0, end='\n', flush=False
+    *message,
+    status=None,
+    silent=False,
+    curr_verbosity=0,
+    expc_verbosity=0,
+    end="\n",
+    flush=False
 ):
     toggle_silent = builtins.APIGEE_CLI_TOGGLE_SILENT
     toggle_verbose = builtins.APIGEE_CLI_TOGGLE_VERBOSE

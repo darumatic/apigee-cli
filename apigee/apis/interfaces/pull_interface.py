@@ -15,11 +15,15 @@ class InformalPullInterface:
             self._work_tree = os.getcwd()
         self._revision_number = revision_number
         self._environment = environment
-        self._keyvaluemaps_dir = str(Path(self._work_tree) / 'keyvaluemaps' / environment)
-        self._targetservers_dir = str(Path(self._work_tree) / 'targetservers' / environment)
-        self._caches_dir = str(Path(self._work_tree) / 'caches' / environment)
+        self._keyvaluemaps_dir = str(
+            Path(self._work_tree) / "keyvaluemaps" / environment
+        )
+        self._targetservers_dir = str(
+            Path(self._work_tree) / "targetservers" / environment
+        )
+        self._caches_dir = str(Path(self._work_tree) / "caches" / environment)
         self._apiproxy_dir = str(Path(self._work_tree))
-        self._zip_file = str(Path(self._apiproxy_dir).with_suffix('.zip'))
+        self._zip_file = str(Path(self._apiproxy_dir).with_suffix(".zip"))
 
     def __call__(self, *args, **kwargs):
         self.pull(*args, **kwargs)
