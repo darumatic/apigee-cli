@@ -28,7 +28,6 @@ apigee.targetservers.targetservers module
    :undoc-members:
    :show-inheritance:
 
-
 Module contents
 ---------------
 

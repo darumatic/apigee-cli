@@ -28,7 +28,6 @@ apigee.virtualhosts.virtualhosts module
    :undoc-members:
    :show-inheritance:
 
-
 Module contents
 ---------------
 

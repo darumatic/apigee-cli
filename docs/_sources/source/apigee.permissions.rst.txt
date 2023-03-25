@@ -28,7 +28,6 @@ apigee.permissions.serializer module
    :undoc-members:
    :show-inheritance:
 
-
 Module contents
 ---------------
 

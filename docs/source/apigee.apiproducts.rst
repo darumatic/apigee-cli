@@ -28,7 +28,6 @@ apigee.apiproducts.serializer module
    :undoc-members:
    :show-inheritance:
 
-
 Module contents
 ---------------
 

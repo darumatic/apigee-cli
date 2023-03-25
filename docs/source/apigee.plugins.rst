@@ -12,7 +12,6 @@ apigee.plugins.commands module
    :undoc-members:
    :show-inheritance:
 
-
 Module contents
 ---------------
 

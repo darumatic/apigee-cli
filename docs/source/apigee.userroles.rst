@@ -20,7 +20,6 @@ apigee.userroles.userroles module
    :undoc-members:
    :show-inheritance:
 
-
 Module contents
 ---------------
 

@@ -1,14 +1,6 @@
 apigee.apis package
 ===================
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   apigee.apis.interfaces
-
 Submodules
 ----------
 
@@ -51,7 +43,6 @@ apigee.apis.serializer module
    :members:
    :undoc-members:
    :show-inheritance:
-
 
 Module contents
 ---------------
