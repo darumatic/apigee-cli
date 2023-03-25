@@ -108,8 +108,6 @@ When to use this over the official tool
 `Apigee Corporation maintains their own fully-featured CLI for the Apigee Management API`_
 that can be used as an SDK to orchestrate tasks and may be more than suitable for your needs.
 
-Our Apigee CLI provides a simpler command-line experience with CI/CD and SSO features in mind.
-
 We built and use the Apigee CLI to implement and distribute features that allow our clients
 to manage CI/CD, perform self-service operations and promote our DevOps workflows
 which are difficult to perform using official tools.
