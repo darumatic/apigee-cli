@@ -47,6 +47,6 @@ setup(
         "tqdm",
     ],
     project_urls={"Documentation": "https://darumatic.github.io/apigee-cli/index.html"},
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     packages=find_packages(),
 )
