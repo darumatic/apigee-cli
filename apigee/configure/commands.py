@@ -2,7 +2,6 @@ import configparser
 import sys
 
 import click
-from click_aliases import ClickAliasedGroup
 
 from apigee import APIGEE_CLI_CREDENTIALS_FILE, APIGEE_CLI_DIRECTORY
 from apigee.utils import make_dirs
@@ -76,7 +75,13 @@ except KeyError:
     default=profile_dict["zonename"],
     show_default=True,
 )
-@click.option("--token/--no-token", default=profile_dict["is_token"] in (True, "True", "true", "1"), help="specify to use oauth without MFA", prompt="Use OAuth, no MFA (optional)?", show_default=True)
+@click.option(
+    "--token/--no-token",
+    default=profile_dict["is_token"] in (True, "True", "true", "1"),
+    help="specify to use oauth without MFA",
+    prompt="Use OAuth, no MFA (optional)?",
+    show_default=True,
+)
 @click.option(
     "-o",
     "--org",

@@ -1,7 +1,4 @@
-import json
-
 import requests
-from tabulate import tabulate
 
 from apigee import APIGEE_ADMIN_API_URL, auth
 from apigee.deployments.serializer import DeploymentsSerializer

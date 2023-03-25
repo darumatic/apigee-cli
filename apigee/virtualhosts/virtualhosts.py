@@ -1,9 +1,6 @@
-import json
-
 import requests
-from requests.exceptions import HTTPError
 
-from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee import APIGEE_ADMIN_API_URL, auth
 from apigee.virtualhosts.serializer import VirtualhostsSerializer
 
 CREATE_A_VIRTUAL_HOST_FOR_AN_ENVIRONMENT_PATH = (

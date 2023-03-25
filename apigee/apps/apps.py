@@ -3,8 +3,6 @@ import random
 import string
 
 import requests
-from requests.exceptions import HTTPError
-from tqdm import tqdm
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.apps.serializer import AppsSerializer
@@ -119,13 +117,16 @@ class Apps:
 
     def list_org_apps(self):
         uri = LIST_ORGANIZATION_APPS_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name,
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
         )
         return self._extracted_from_list_developer_apps_8(uri)
 
     def get_org_app(self):
         uri = GET_ORGANIZATION_APP_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._app_name,
+            api_url=APIGEE_ADMIN_API_URL,
+            org=self._org_name,
+            name=self._app_name,
         )
         return self._extracted_from_list_developer_apps_8(uri)
 

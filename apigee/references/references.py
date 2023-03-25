@@ -1,9 +1,6 @@
-import json
-
 import requests
-from requests.exceptions import HTTPError
 
-from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee import APIGEE_ADMIN_API_URL, auth
 from apigee.references.serializer import ReferencesSerializer
 
 LIST_ALL_REFERENCES_PATH = (

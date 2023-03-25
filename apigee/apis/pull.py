@@ -8,14 +8,8 @@ from apigee.apis.apis import Apis
 from apigee.caches.caches import Caches
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.targetservers.targetservers import Targetservers
-from apigee.utils import (
-    make_dirs,
-    path_exists,
-    paths_exist,
-    run_func_on_dir_files,
-    run_func_on_iterable,
-    extract_zip,
-)
+from apigee.utils import (extract_zip, make_dirs, path_exists, paths_exist,
+                          run_func_on_dir_files, run_func_on_iterable)
 
 
 class PullApis:

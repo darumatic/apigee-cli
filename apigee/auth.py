@@ -1,8 +1,7 @@
 import base64
 import binascii
 import configparser
-import inspect
-import json
+import contextlib
 import os
 import sys
 import time
@@ -12,31 +11,26 @@ import urllib.request
 import webbrowser
 
 import click
-import contextlib
 import jwt
 import pyotp
 import requests
 from requests.adapters import HTTPAdapter
 from requests.exceptions import ConnectionError
-from requests.packages.urllib3.util.retry import Retry
 
-from apigee import (
-    APIGEE_CLI_ACCESS_TOKEN_FILE,
-    APIGEE_CLI_CREDENTIALS_FILE,
-    APIGEE_CLI_DIRECTORY,
-    APIGEE_CLI_IS_MACHINE_USER,
-    APIGEE_OAUTH_URL,
-    APIGEE_SAML_LOGIN_URL,
-    APIGEE_ZONENAME_OAUTH_URL,
-    console,
-)
+from apigee import (APIGEE_CLI_ACCESS_TOKEN_FILE, APIGEE_CLI_CREDENTIALS_FILE,
+                    APIGEE_CLI_DIRECTORY, APIGEE_CLI_IS_MACHINE_USER,
+                    APIGEE_OAUTH_URL, APIGEE_SAML_LOGIN_URL,
+                    APIGEE_ZONENAME_OAUTH_URL, console)
 from apigee.cls import AliasedGroup
-
 # from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.types import Struct
 from apigee.utils import make_dirs
 from apigee.verbose import common_verbose_options
+
+# from requests.packages.urllib3.util.retry import Retry
+
+
 
 
 def attach_username_option(func, profile):
@@ -283,20 +277,22 @@ def build_auth_error_message(error):
     return error_message
 
 
-def get_access_token(
-    auth, retries=4, backoff_factor=0.3, status_forcelist=(500, 502, 504), session=None
-):
+# def get_access_token(
+#     auth, retries=4, backoff_factor=0.3, status_forcelist=(500, 502, 504), session=None
+# ):
+def get_access_token(auth, session=None):
     oauth_url = APIGEE_OAUTH_URL
     username = auth.username
     password = auth.password
-    retry = Retry(
-        total=retries,
-        read=retries,
-        connect=retries,
-        backoff_factor=backoff_factor,
-        status_forcelist=status_forcelist,
-    )
-    adapter = HTTPAdapter(max_retries=retry)
+    # retry = Retry(
+    #     total=retries,
+    #     read=retries,
+    #     connect=retries,
+    #     backoff_factor=backoff_factor,
+    #     status_forcelist=status_forcelist,
+    # )
+    # adapter = HTTPAdapter(max_retries=retry)
+    adapter = HTTPAdapter()
     session = requests.Session()
     session.mount("https://", adapter)
     post_headers = {

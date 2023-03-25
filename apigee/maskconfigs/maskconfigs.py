@@ -4,7 +4,6 @@ import requests
 from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
-from apigee.maskconfigs.serializer import MaskconfigsSerializer
 from apigee.utils import read_file
 
 CREATE_DATA_MASKS_FOR_AN_API_PROXY_PATH = (

@@ -1,9 +1,6 @@
 import json
-import random
-import string
 
 import requests
-from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth
 from apigee.developers.serializer import DevelopersSerializer

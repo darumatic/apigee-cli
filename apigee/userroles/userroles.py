@@ -96,14 +96,16 @@ class Userroles:
         )
 
     def add_permissions_for_multiple_resources_to_a_user_role(self, request_body):
-        uri = f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/userroles/{self._role_name}/resourcepermissions"
+        f"{APIGEE_ADMIN_API_URL}/v1/organizations/{self._org_name}/userroles/{self._role_name}/resourcepermissions"
         return self._extracted_from_add_permissions_for_multiple_resources_to_a_user_role_2(
             ADD_PERMISSIONS_FOR_MULTIPLE_RESOURCES_TO_A_USER_ROLE_PATH,
             request_body,
         )
 
     # TODO Rename this here and in `add_permissions_for_a_resource_to_a_user_role` and `add_permissions_for_multiple_resources_to_a_user_role`
-    def _extracted_from_add_permissions_for_multiple_resources_to_a_user_role_2(self, arg0, request_body):
+    def _extracted_from_add_permissions_for_multiple_resources_to_a_user_role_2(
+        self, arg0, request_body
+    ):
         uri = arg0.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,

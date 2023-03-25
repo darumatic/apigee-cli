@@ -4,7 +4,6 @@ from click_option_group import MutuallyExclusiveOptionGroup, optgroup
 from apigee import console
 from apigee.apps.apps import Apps
 from apigee.auth import common_auth_options, gen_auth
-
 # from apigee.cls import OptionEatAll
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
@@ -268,7 +267,10 @@ def _delete_key_for_a_developer_app(
 ):
     return (
         Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .delete_key_for_a_developer_app(developer, consumer_key=consumer_key,)
+        .delete_key_for_a_developer_app(
+            developer,
+            consumer_key=consumer_key,
+        )
         .text
     )
 
@@ -301,7 +303,9 @@ def _update_key_for_a_developer_app(
     return (
         Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .update_key_for_a_developer_app(
-            developer, consumer_key=consumer_key, action=action,
+            developer,
+            consumer_key=consumer_key,
+            action=action,
         )
         .text
     )
@@ -331,7 +335,25 @@ def revoke_creds(*args, **kwargs):
     console.echo(_update_key_for_a_developer_app(*args, **kwargs))
 
 
-def _create_a_consumer_key_and_secret(username, password, mfa_secret, token, zonename, org, profile, name, developer, consumer_key=None, consumer_secret=None, key_length=32, secret_length=32, key_suffix=None, key_delimiter="-", products=None, **kwargs):
+def _create_a_consumer_key_and_secret(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    developer,
+    consumer_key=None,
+    consumer_secret=None,
+    key_length=32,
+    secret_length=32,
+    key_suffix=None,
+    key_delimiter="-",
+    products=None,
+    **kwargs
+):
     if products is None:
         products = []
     return (

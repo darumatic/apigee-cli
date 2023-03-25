@@ -1,5 +1,4 @@
 import configparser
-import json
 import os
 import shutil
 import stat
@@ -10,21 +9,12 @@ from pathlib import Path
 import click
 from click_option_group import MutuallyExclusiveOptionGroup, optgroup
 
-from apigee import (
-    APIGEE_CLI_PLUGINS_CONFIG_FILE,
-    APIGEE_CLI_PLUGINS_DIRECTORY,
-    APIGEE_CLI_PLUGINS_PATH,
-    console,
-)
+from apigee import (APIGEE_CLI_PLUGINS_CONFIG_FILE,
+                    APIGEE_CLI_PLUGINS_DIRECTORY, APIGEE_CLI_PLUGINS_PATH,
+                    console)
 from apigee.silent import common_silent_options
-from apigee.utils import (
-    is_dir,
-    is_file,
-    make_dirs,
-    read_file,
-    run_func_on_dir_files,
-    touch,
-)
+from apigee.utils import (is_dir, is_file, make_dirs, read_file,
+                          run_func_on_dir_files, touch)
 from apigee.verbose import common_verbose_options
 
 is_git_installed = False
@@ -33,8 +23,7 @@ plugins_command_help = (
 )
 
 try:
-    import git
-    from git import Git, Repo
+    from git import Repo
 
     is_git_installed = True
 except ImportError:

@@ -6,7 +6,7 @@ from pathlib import Path
 from requests.exceptions import HTTPError
 from tqdm import tqdm
 
-from apigee import APIGEE_ADMIN_API_URL, auth, console
+from apigee import console
 from apigee.apiproducts.apiproducts import Apiproducts
 from apigee.apis.apis import Apis
 from apigee.apps.apps import Apps
@@ -16,15 +16,9 @@ from apigee.exceptions import InvalidApisError
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
 from apigee.permissions.permissions import Permissions
 from apigee.targetservers.targetservers import Targetservers
-from apigee.types import APIS, Struct, empty_snapshot
+from apigee.types import APIS, empty_snapshot
 from apigee.userroles.userroles import Userroles
-from apigee.utils import (
-    build_path_str,
-    extract_zip,
-    resolve_target_directory,
-    touch,
-    write_file,
-)
+from apigee.utils import extract_zip, resolve_target_directory, write_file
 
 APIS_SNAPSHOT_SUBPATH = "snapshots/apis/{api}.json"
 # APIS_SUBPATH = 'apis/{api}/revision/{api}.zip'

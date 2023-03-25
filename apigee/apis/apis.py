@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import requests
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console

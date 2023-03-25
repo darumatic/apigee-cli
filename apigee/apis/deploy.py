@@ -15,8 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import base64
-import getopt
 import http.client
 import io
 import json
@@ -262,7 +260,7 @@ def deploy(args):  # sourcery skip: low-code-quality
                     "Undeploying revision %i in same environment and path:"
                     % d["revision"]
                 )
-                conn = http.client.HTTPSConnection(httpHost)
+                http.client.HTTPSConnection(httpHost)
                 resp = httpCall(
                     "POST",
                     (

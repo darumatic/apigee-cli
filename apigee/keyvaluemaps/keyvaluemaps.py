@@ -6,13 +6,8 @@ from requests.exceptions import HTTPError
 from tqdm import tqdm
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
-from apigee.crypto import (
-    ENCRYPTED_HEADER_BEGIN,
-    ENCRYPTED_HEADER_END,
-    decrypt_message,
-    encrypt_message,
-    is_encrypted,
-)
+from apigee.crypto import (ENCRYPTED_HEADER_BEGIN, ENCRYPTED_HEADER_END,
+                           decrypt_message, encrypt_message, is_encrypted)
 from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
 from apigee.utils import read_file
 
@@ -189,10 +184,8 @@ class Keyvaluemaps:
             environment=environment,
             name=self._map_name,
         )
-        return (
-            self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
-                uri
-            )
+        return self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
+            uri
         )
 
     def get_a_keys_value_in_an_environment_scoped_keyvaluemap(
@@ -205,10 +198,8 @@ class Keyvaluemaps:
             name=self._map_name,
             entry_name=entry_name,
         )
-        return (
-            self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
-                uri
-            )
+        return self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
+            uri
         )
 
     def list_keyvaluemaps_in_an_environment(
@@ -217,10 +208,8 @@ class Keyvaluemaps:
         uri = LIST_KEYVALUEMAPS_IN_AN_ENVIRONMENT_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
         )
-        resp = (
-            self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
-                uri
-            )
+        resp = self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
+            uri
         )
         return KeyvaluemapsSerializer().serialize_details(resp, format, prefix=prefix)
 
@@ -244,23 +233,21 @@ class Keyvaluemaps:
             },
         )
         body = json.loads(request_body)
-        return (
-            self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
-                uri, hdrs, body
-            )
+        return self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+            uri, hdrs, body
         )
 
-    def create_an_entry_in_an_environment_scoped_kvm(self, environment, entry_name, entry_value):
+    def create_an_entry_in_an_environment_scoped_kvm(
+        self, environment, entry_name, entry_value
+    ):
         uri = CREATE_AN_ENTRY_IN_AN_ENVIRONMENT_SCOPED_KVM_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,
             environment=environment,
             name=self._map_name,
         )
-        return (
-            self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
-                entry_name, entry_value, uri
-            )
+        return self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+            entry_name, entry_value, uri
         )
 
     # TODO Rename this here and in `create_keyvaluemap_in_an_environment`, `update_keyvaluemap_in_an_environment`, `create_an_entry_in_an_environment_scoped_kvm` and `update_an_entry_in_an_environment_scoped_kvm`
@@ -274,14 +261,14 @@ class Keyvaluemaps:
             name=self._map_name,
             entry_name=entry_name,
         )
-        return (
-            self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
-                entry_name, updated_value, uri
-            )
+        return self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+            entry_name, updated_value, uri
         )
 
     # TODO Rename this here and in `create_keyvaluemap_in_an_environment`, `update_keyvaluemap_in_an_environment`, `create_an_entry_in_an_environment_scoped_kvm` and `update_an_entry_in_an_environment_scoped_kvm`
-    def _extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(self, entry_name, arg1, uri):
+    def _extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+        self, entry_name, arg1, uri
+    ):
         hdrs = auth.set_header(
             self._auth,
             headers={
@@ -290,14 +277,14 @@ class Keyvaluemaps:
             },
         )
         body = {"name": entry_name, "value": arg1}
-        return (
-            self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
-                uri, hdrs, body
-            )
+        return self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+            uri, hdrs, body
         )
 
     # TODO Rename this here and in `create_keyvaluemap_in_an_environment`, `update_keyvaluemap_in_an_environment`, `create_an_entry_in_an_environment_scoped_kvm` and `update_an_entry_in_an_environment_scoped_kvm`
-    def _extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(self, uri, hdrs, body):
+    def _extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+        self, uri, hdrs, body
+    ):
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
@@ -313,10 +300,8 @@ class Keyvaluemaps:
             startkey=startkey,
             count=count,
         )
-        return (
-            self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
-                uri
-            )
+        return self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
+            uri
         )
 
     # TODO Rename this here and in `get_keyvaluemap_in_an_environment`, `get_a_keys_value_in_an_environment_scoped_keyvaluemap`, `list_keyvaluemaps_in_an_environment` and `list_keys_in_an_environment_scoped_keyvaluemap`
@@ -369,9 +354,7 @@ class Keyvaluemaps:
             self.delete_entries(environment, deleted_keys)
             console.echo("Removed entries.")
         if local_map_updated["entry"]:
-            for entry in tqdm(
-                local_map_updated["entry"], **TQDM_KWARGS("Updating")
-            ):
+            for entry in tqdm(local_map_updated["entry"], **TQDM_KWARGS("Updating")):
                 self.create_or_update_entry(environment, entry)
             console.echo("Updated entries.")
         if not deleted_keys and not local_map_updated["entry"]:

@@ -1,25 +1,11 @@
 #!/usr/bin/env python
 # __main__.py
 
-import codecs
-import configparser
-import importlib
-import os
-import re
-import sys
-import time
-from functools import update_wrapper
 
 import click
-import requests
 
-from apigee import (
-    APIGEE_CLI_EXCEPTIONS_LOG_FILE,
-    APIGEE_CLI_PLUGINS_DIRECTORY,
-    APIGEE_CLI_PLUGINS_PATH,
-    APP,
-    CMD,
-)
+from apigee import (APIGEE_CLI_EXCEPTIONS_LOG_FILE,
+                    APIGEE_CLI_PLUGINS_DIRECTORY, CMD)
 from apigee import __version__ as version
 from apigee.apiproducts.commands import apiproducts
 from apigee.apis.commands import apis
@@ -41,12 +27,7 @@ from apigee.references.commands import references
 from apigee.sharedflows.commands import sharedflows
 from apigee.targetservers.commands import targetservers
 from apigee.userroles.commands import userroles
-from apigee.utils import (
-    import_all_modules_in_directory,
-    is_dir,
-    run_func_on_dir_files,
-    show_message,
-)
+from apigee.utils import import_all_modules_in_directory, run_func_on_dir_files
 from apigee.virtualhosts.commands import virtualhosts
 
 # from click_aliases import ClickAliasedGroup
