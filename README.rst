@@ -4,7 +4,7 @@ apigee-cli
 
 |License| |Python version| |Downloads| |PyPI Version|
 
-``apigee-cli`` is an unofficial command-line interface for the Apigee Edge Management API. It aims to simplify the use of Apigee Edge API by providing a user-friendly command-line experience with features such as CI/CD and SSO integration. The tool is highly experimental and not an officially supported Google product, nor is it affiliated with Apigee or Google in any way. For more details on how to use the CLI, please refer to `The Apigee Management API command-line interface documentation`_.
+apigee-cli is a command-line interface tool designed to simplify the use of the Apigee Edge Management API. It provides a user-friendly experience with features such as SSO support. While the tool is not officially supported by Google or Apigee, it can be used for general administrative tasks, as a package for developers, and to support automation for common development tasks such as CI/CD. With the apigee-cli, you can manage your Apigee Edge credentials using environment variables, config files, or command-line arguments. The tool is highly experimental and is not affiliated with Apigee or Google in any way. For more information on getting started with the apigee-cli or for troubleshooting help, refer to the documentation and links provided.
 
 ------------
 Installation
@@ -116,7 +116,6 @@ which are difficult to perform using official tools.
 Getting Help
 ------------
 
-* `The Apigee Management API command-line interface documentation`_
 * `Apigee Product Documentation`_
 
 ----------
