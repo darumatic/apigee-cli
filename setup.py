@@ -1,22 +1,20 @@
 import os
-import re
-import sys
 
-# read the contents of your README file
-from os import path
+from setuptools import find_packages, setup
 
 from apigee import APP
 from apigee import __version__ as version
 from apigee import description
 
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, "README.rst"), encoding="utf-8") as f:
+# Read the contents of your README file
+this_directory = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(this_directory, "README.rst"), encoding="utf-8") as f:
     long_description = f.read()
 
-SETUP_ARGS = dict(
+setup(
     name=APP,
     version=version,
-    description=(description),
+    description=description,
     long_description=long_description,
     long_description_content_type="text/x-rst",
     url="https://github.com/darumatic/apigee-cli",
@@ -32,11 +30,6 @@ SETUP_ARGS = dict(
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.7",
     ],
-    # py_modules = ['apigee',],
-    # entry_points='''
-    #     [console_scripts]
-    #     apigee=apigee.__main__:main
-    # ''',
     entry_points={"console_scripts": ["apigee=apigee.__main__:main"]},
     install_requires=[
         "click",
@@ -55,10 +48,5 @@ SETUP_ARGS = dict(
     ],
     project_urls={"Documentation": "https://darumatic.github.io/apigee-cli/index.html"},
     python_requires=">=3.7",
+    packages=find_packages(),
 )
-
-if __name__ == "__main__":
-    from setuptools import setup, find_packages
-
-    SETUP_ARGS["packages"] = find_packages()
-    setup(**SETUP_ARGS)
