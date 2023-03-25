@@ -277,12 +277,12 @@ class Keyvaluemaps:
             },
         )
         body = {"name": entry_name, "value": arg1}
-        return self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+        return self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_11(
             uri, hdrs, body
         )
 
     # TODO Rename this here and in `create_keyvaluemap_in_an_environment`, `update_keyvaluemap_in_an_environment`, `create_an_entry_in_an_environment_scoped_kvm` and `update_an_entry_in_an_environment_scoped_kvm`
-    def _extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+    def _extracted_from_update_an_entry_in_an_environment_scoped_kvm_11(
         self, uri, hdrs, body
     ):
         resp = requests.post(uri, headers=hdrs, json=body)
