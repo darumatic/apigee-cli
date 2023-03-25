@@ -48,7 +48,9 @@ RESOURCE_PERMISSIONS_SUBPATH = "userroles/{role_name}/resource_permissions.json"
 
 
 class Backups:
-    def __init__(self, auth, org_name, work_dir, prefix=None, apis=APIS, envs=[]):
+    def __init__(self, auth, org_name, work_dir, prefix=None, apis=APIS, envs=None):
+        if envs is None:
+            envs = []
         self.auth = auth
         self.org_name = org_name
         self.work_dir = resolve_target_directory(work_dir)
@@ -269,7 +271,7 @@ class Backups:
         self.snapshot_data.apps = {
             k: v for k, v in self.snapshot_data.apps.items() if v
         }
-        for app, details in self.snapshot_data.apps.items():
+        for details in self.snapshot_data.apps.values():
             self.save(details, APPS_SNAPSHOT_SUBPATH)
 
     def download_apps(self):

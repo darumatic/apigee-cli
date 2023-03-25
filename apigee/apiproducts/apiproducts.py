@@ -73,10 +73,7 @@ class Apiproducts:
         uri = GET_API_PRODUCT_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._apiproduct_name
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_list_api_products_5(uri)
 
     def list_api_products(
         self, prefix=None, expand=False, count=1000, startkey="", format="json"
@@ -88,10 +85,15 @@ class Apiproducts:
             count=count,
             startkey=startkey,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        resp = self._extracted_from_list_api_products_5(uri)
         return ApiproductsSerializer().serialize_details(resp, format, prefix=prefix)
+
+    # TODO Rename this here and in `get_api_product` and `list_api_products`
+    def _extracted_from_list_api_products_5(self, uri):
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        result = requests.get(uri, headers=hdrs)
+        result.raise_for_status()
+        return result
 
     def update_api_product(self, request_body):
         uri = UPDATE_API_PRODUCT_PATH.format(

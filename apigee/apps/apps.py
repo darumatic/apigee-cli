@@ -69,14 +69,7 @@ class Apps:
         uri = CREATE_DEVELOPER_APP_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, developer=developer
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
-        )
-        body = json.loads(request_body)
-        resp = requests.post(uri, headers=hdrs, json=body)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_add_api_product_to_key_5(request_body, uri)
 
     def delete_developer_app(self, developer):
         uri = DELETE_DEVELOPER_APP_PATH.format(
@@ -86,9 +79,7 @@ class Apps:
             name=self._app_name,
         )
         hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.delete(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_delete_key_for_a_developer_app_9(uri, hdrs)
 
     def create_empty_developer_app(self, developer, display_name="", callback_url=""):
         uri = CREATE_EMPTY_DEVELOPER_APP_PATH.format(
@@ -124,28 +115,19 @@ class Apps:
             developer=developer,
             name=self._app_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_list_developer_apps_8(uri)
 
     def list_org_apps(self):
         uri = LIST_ORGANIZATION_APPS_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_list_developer_apps_8(uri)
 
     def get_org_app(self):
         uri = GET_ORGANIZATION_APP_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, name=self._app_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_list_developer_apps_8(uri)
 
     def list_developer_apps(
         self,
@@ -159,14 +141,16 @@ class Apps:
         uri = LIST_DEVELOPER_APPS_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, developer=developer
         )
-        if expand:
-            uri += f"?expand={expand}"
-        else:
-            uri += f"?count={count}&startKey={startkey}"
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        uri += f"?expand={expand}" if expand else f"?count={count}&startKey={startkey}"
+        resp = self._extracted_from_list_developer_apps_8(uri)
         return AppsSerializer().serialize_details(resp, format, prefix=prefix)
+
+    # TODO Rename this here and in `get_developer_app_details`, `list_org_apps`, `get_org_app` and `list_developer_apps`
+    def _extracted_from_list_developer_apps_8(self, uri):
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        result = requests.get(uri, headers=hdrs)
+        result.raise_for_status()
+        return result
 
     def list_apps_for_all_developers(
         self,
@@ -178,9 +162,8 @@ class Apps:
         format="dict",
         progress_bar=False,
     ):
-        apps = {}
-        for developer in list_of_developers:
-            apps[developer] = self.list_developer_apps(
+        return {
+            developer: self.list_developer_apps(
                 developer,
                 prefix=prefix,
                 expand=expand,
@@ -188,7 +171,8 @@ class Apps:
                 startkey=startkey,
                 format=format,
             )
-        return apps
+            for developer in list_of_developers
+        }
 
     def delete_key_for_a_developer_app(self, developer, consumer_key):
         uri = DELETE_KEY_FOR_A_DEVELOPER_APP_PATH.format(
@@ -199,6 +183,10 @@ class Apps:
             consumer_key=consumer_key,
         )
         hdrs = auth.set_header(self._auth, {"Accept": "application/json"})
+        return self._extracted_from_delete_key_for_a_developer_app_9(uri, hdrs)
+
+    # TODO Rename this here and in `delete_developer_app` and `delete_key_for_a_developer_app`
+    def _extracted_from_delete_key_for_a_developer_app_9(self, uri, hdrs):
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -261,9 +249,16 @@ class Apps:
             name=self._app_name,
             consumer_key=consumer_key,
         )
+        return self._extracted_from_add_api_product_to_key_5(request_body, uri)
+
+    # TODO Rename this here and in `create_developer_app` and `add_api_product_to_key`
+    def _extracted_from_add_api_product_to_key_5(self, request_body, uri):
         hdrs = auth.set_header(
             self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -289,9 +284,7 @@ class Apps:
         with open(file, "r") as f:
             app = json.loads(f.read())
         self._app_name = app["name"]
-        request_body = {}
-        request_body["name"] = app["name"]
-        request_body["attributes"] = app.get("attributes")
+        request_body = {"name": app["name"], "attributes": app.get("attributes")}
         request_body["scopes"] = app.get("scopes")
         request_body["callbackUrl"] = app.get("callbackUrl")
         request_body = {k: v for k, v in request_body.items() if v}

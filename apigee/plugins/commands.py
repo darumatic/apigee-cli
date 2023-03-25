@@ -219,7 +219,7 @@ def prune_all(section="sources"):
         if not is_dir(path):
             return
         name = Path(path).stem
-        if name in sources.keys():
+        if name in sources:
             return
         console.echo(f"Removing {name}... ", end="", flush=True)
         plugin_directory = Path(APIGEE_CLI_PLUGINS_DIRECTORY) / name

@@ -66,9 +66,7 @@ class Sharedflows:
             revision_number=revision_number,
         )
         hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.delete(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_undeploy_a_shared_flow_9(uri, hdrs)
 
     def delete_undeployed_revisions(self, shared_flow_name, save_last=0, dry_run=False):
         details = SharedflowsSerializer.filter_deployment_details(
@@ -95,9 +93,7 @@ class Sharedflows:
         uri = GET_A_LIST_OF_SHARED_FLOWS_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name
         )
-        hdrs = auth.set_header(self._auth, {"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        resp = self._extracted_from_get_shared_flow_revisions_5(uri)
         return SharedflowsSerializer.serialize_details(resp, "json", prefix=prefix)
 
     def import_a_shared_flow(self, shared_flow_file, shared_flow_name):
@@ -120,15 +116,9 @@ class Sharedflows:
     #     pass
 
     def get_a_shared_flow(self, shared_flow_name):
-        uri = GET_A_SHARED_FLOW_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
-            shared_flow_name=shared_flow_name,
+        return self._extracted_from_get_shared_flow_revisions_2(
+            GET_A_SHARED_FLOW_PATH, shared_flow_name
         )
-        hdrs = auth.set_header(self._auth, {"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
 
     def deploy_a_shared_flow(
         self,
@@ -206,6 +196,10 @@ class Sharedflows:
             revision_number=revision_number,
         )
         hdrs = auth.set_header(self._auth, {"Accept": "application/json"})
+        return self._extracted_from_undeploy_a_shared_flow_9(uri, hdrs)
+
+    # TODO Rename this here and in `delete_a_shared_flow_revision` and `undeploy_a_shared_flow`
+    def _extracted_from_undeploy_a_shared_flow_9(self, uri, hdrs):
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -219,10 +213,7 @@ class Sharedflows:
             shared_flow_name=shared_flow_name,
             revision_number=revision_number,
         )
-        hdrs = auth.set_header(self._auth, {"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_get_shared_flow_revisions_5(uri)
 
     def delete_a_shared_flow(self, shared_flow_name):
         pass
@@ -240,32 +231,33 @@ class Sharedflows:
             environment=environment,
             flow_hook=flow_hook,
         )
-        hdrs = auth.set_header(self._auth, {"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_get_shared_flow_revisions_5(uri)
 
     def get_shared_flow_deployments(self, shared_flow_name):
-        uri = GET_SHARED_FLOW_DEPLOYMENTS_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
-            shared_flow_name=shared_flow_name,
+        return self._extracted_from_get_shared_flow_revisions_2(
+            GET_SHARED_FLOW_DEPLOYMENTS_PATH, shared_flow_name
         )
-        hdrs = auth.set_header(self._auth, {"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
 
     def get_shared_flow_revisions(self, shared_flow_name):
-        uri = GET_SHARED_FLOW_REVISIONS_PATH.format(
+        return self._extracted_from_get_shared_flow_revisions_2(
+            GET_SHARED_FLOW_REVISIONS_PATH, shared_flow_name
+        )
+
+    # TODO Rename this here and in `get_a_list_of_shared_flows`, `get_a_shared_flow`, `get_deployment_environments_for_shared_flows`, `get_the_shared_flow_attached_to_a_flow_hook`, `get_shared_flow_deployments` and `get_shared_flow_revisions`
+    def _extracted_from_get_shared_flow_revisions_2(self, arg0, shared_flow_name):
+        uri = arg0.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,
             shared_flow_name=shared_flow_name,
         )
+        return self._extracted_from_get_shared_flow_revisions_5(uri)
+
+    # TODO Rename this here and in `get_a_list_of_shared_flows`, `get_a_shared_flow`, `get_deployment_environments_for_shared_flows`, `get_the_shared_flow_attached_to_a_flow_hook`, `get_shared_flow_deployments` and `get_shared_flow_revisions`
+    def _extracted_from_get_shared_flow_revisions_5(self, uri):
         hdrs = auth.set_header(self._auth, {"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        result = requests.get(uri, headers=hdrs)
+        result.raise_for_status()
+        return result
 
     def export_shared_flow(
         self, shared_flow_name, revision_number, output_file, fs_write=True

@@ -12,6 +12,7 @@ import urllib.request
 import webbrowser
 
 import click
+import contextlib
 import jwt
 import pyotp
 import requests
@@ -40,7 +41,7 @@ from apigee.verbose import common_verbose_options
 
 def attach_username_option(func, profile):
     username = get_credential(profile, "username")
-    username_envvar = os.environ.get(f"APIGEE_USERNAME", "")
+    username_envvar = os.environ.get("APIGEE_USERNAME", "")
     if username:
         func = click.option(
             "-u", "--username", default=username, show_default="current username"
@@ -56,7 +57,7 @@ def attach_username_option(func, profile):
 
 def attach_password_option(func, profile):
     password = get_credential(profile, "password")
-    password_envvar = os.environ.get(f"APIGEE_PASSWORD", "")
+    password_envvar = os.environ.get("APIGEE_PASSWORD", "")
     if password:
         func = click.option(
             "-p", "--password", default=password, show_default="current password"
@@ -72,7 +73,7 @@ def attach_password_option(func, profile):
 
 def attach_mfa_secret_option(func, profile):
     mfa_secret = get_credential(profile, "mfa_secret")
-    mfa_envvar = os.environ.get(f"APIGEE_MFA_SECRET", "")
+    mfa_envvar = os.environ.get("APIGEE_MFA_SECRET", "")
     if mfa_secret:
         func = click.option(
             "-mfa", "--mfa-secret", default=mfa_secret, show_default="current mfa key"
@@ -88,7 +89,7 @@ def attach_mfa_secret_option(func, profile):
 
 def attach_is_token_option(func, profile):
     is_token = get_credential(profile, "is_token")
-    is_token_envvar = os.environ.get(f"APIGEE_IS_TOKEN", "")
+    is_token_envvar = os.environ.get("APIGEE_IS_TOKEN", "")
     if is_token in (True, "True", "true", "1"):
         func = click.option(
             "--token/--no-token",
@@ -137,7 +138,7 @@ def attach_zonename_option(func, profile):
 
 def attach_org_option(func, profile):
     org = get_credential(profile, "org")
-    org_envvar = os.environ.get(f"APIGEE_ORG", "")
+    org_envvar = os.environ.get("APIGEE_ORG", "")
     if org:
         func = click.option("-o", "--org", default=org, show_default="current org")(
             func
@@ -154,11 +155,9 @@ def attach_org_option(func, profile):
 def common_auth_options(func):
     profile = "default"
     for i, arg in enumerate(sys.argv):
-        if arg == "-P" or arg == "--profile":
-            try:
+        if arg in ["-P", "--profile"]:
+            with contextlib.suppress(IndexError):
                 profile = sys.argv[i + 1]
-            except IndexError:
-                pass
     attach_username_option(func, profile)
     attach_password_option(func, profile)
     attach_mfa_secret_option(func, profile)
@@ -178,12 +177,9 @@ def common_auth_options(func):
 def check_access_token(auth_obj):
     access_token = ""
     make_dirs(APIGEE_CLI_DIRECTORY)
-    try:
+    with contextlib.suppress(IOError, OSError):
         with open(APIGEE_CLI_ACCESS_TOKEN_FILE, "r") as f:
             access_token = f.read().strip()
-    except (IOError, OSError):
-        pass
-
     if access_token:
         decoded = jwt.decode(
             access_token,
@@ -334,11 +330,13 @@ def get_credential(section, key):
         config.read(APIGEE_CLI_CREDENTIALS_FILE)
         if section in config:
             return config[section][key]
-    except:
+    except Exception:
         return
 
 
-def set_header(auth_obj, headers={}):
+def set_header(auth_obj, headers=None):
+    if headers is None:
+        headers = {}
     if auth_obj.mfa_secret or auth_obj.token or auth_obj.zonename:
         access_token = check_access_token(auth_obj)
         if not access_token:

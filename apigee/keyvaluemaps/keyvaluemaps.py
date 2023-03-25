@@ -133,14 +133,9 @@ class Keyvaluemaps:
         uri = CREATE_KEYVALUEMAP_IN_AN_ENVIRONMENT_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
+        return self._extracted_from_update_keyvaluemap_in_an_environment_5(
+            request_body, uri
         )
-        body = json.loads(request_body)
-        resp = requests.post(uri, headers=hdrs, json=body)
-        resp.raise_for_status()
-        return resp
 
     def create_or_update_entry(self, environment, entry):
         try:
@@ -168,10 +163,7 @@ class Keyvaluemaps:
             environment=environment,
             name=self._map_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.delete(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_delete_keyvaluemap_entry_in_an_environment_8(uri)
 
     def delete_keyvaluemap_entry_in_an_environment(self, environment, entry_name):
         uri = DELETE_KEYVALUEMAP_ENTRY_IN_AN_ENVIRONMENT_PATH.format(
@@ -181,6 +173,10 @@ class Keyvaluemaps:
             name=self._map_name,
             entry_name=entry_name,
         )
+        return self._extracted_from_delete_keyvaluemap_entry_in_an_environment_8(uri)
+
+    # TODO Rename this here and in `delete_keyvaluemap_from_an_environment` and `delete_keyvaluemap_entry_in_an_environment`
+    def _extracted_from_delete_keyvaluemap_entry_in_an_environment_8(self, uri):
         hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
@@ -193,10 +189,11 @@ class Keyvaluemaps:
             environment=environment,
             name=self._map_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return (
+            self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
+                uri
+            )
+        )
 
     def get_a_keys_value_in_an_environment_scoped_keyvaluemap(
         self, environment, entry_name
@@ -208,10 +205,11 @@ class Keyvaluemaps:
             name=self._map_name,
             entry_name=entry_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return (
+            self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
+                uri
+            )
+        )
 
     def list_keyvaluemaps_in_an_environment(
         self, environment, prefix=None, format="json"
@@ -219,9 +217,11 @@ class Keyvaluemaps:
         uri = LIST_KEYVALUEMAPS_IN_AN_ENVIRONMENT_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        resp = (
+            self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
+                uri
+            )
+        )
         return KeyvaluemapsSerializer().serialize_details(resp, format, prefix=prefix)
 
     def update_keyvaluemap_in_an_environment(self, environment, request_body):
@@ -231,33 +231,39 @@ class Keyvaluemaps:
             environment=environment,
             name=self._map_name,
         )
+        return self._extracted_from_update_keyvaluemap_in_an_environment_5(
+            request_body, uri
+        )
+
+    def _extracted_from_update_keyvaluemap_in_an_environment_5(self, request_body, uri):
         hdrs = auth.set_header(
             self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
         )
         body = json.loads(request_body)
-        resp = requests.post(uri, headers=hdrs, json=body)
-        resp.raise_for_status()
-        return resp
+        return (
+            self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+                uri, hdrs, body
+            )
+        )
 
-    def create_an_entry_in_an_environment_scoped_kvm(
-        self, environment, entry_name, entry_value
-    ):
+    def create_an_entry_in_an_environment_scoped_kvm(self, environment, entry_name, entry_value):
         uri = CREATE_AN_ENTRY_IN_AN_ENVIRONMENT_SCOPED_KVM_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
             org=self._org_name,
             environment=environment,
             name=self._map_name,
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
+        return (
+            self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+                entry_name, entry_value, uri
+            )
         )
-        body = {"name": entry_name, "value": entry_value}
-        resp = requests.post(uri, headers=hdrs, json=body)
-        resp.raise_for_status()
-        return resp
 
+    # TODO Rename this here and in `create_keyvaluemap_in_an_environment`, `update_keyvaluemap_in_an_environment`, `create_an_entry_in_an_environment_scoped_kvm` and `update_an_entry_in_an_environment_scoped_kvm`
     def update_an_entry_in_an_environment_scoped_kvm(
         self, environment, entry_name, updated_value
     ):
@@ -268,11 +274,30 @@ class Keyvaluemaps:
             name=self._map_name,
             entry_name=entry_name,
         )
+        return (
+            self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+                entry_name, updated_value, uri
+            )
+        )
+
+    # TODO Rename this here and in `create_keyvaluemap_in_an_environment`, `update_keyvaluemap_in_an_environment`, `create_an_entry_in_an_environment_scoped_kvm` and `update_an_entry_in_an_environment_scoped_kvm`
+    def _extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(self, entry_name, arg1, uri):
         hdrs = auth.set_header(
             self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
         )
-        body = {"name": entry_name, "value": updated_value}
+        body = {"name": entry_name, "value": arg1}
+        return (
+            self._extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(
+                uri, hdrs, body
+            )
+        )
+
+    # TODO Rename this here and in `create_keyvaluemap_in_an_environment`, `update_keyvaluemap_in_an_environment`, `create_an_entry_in_an_environment_scoped_kvm` and `update_an_entry_in_an_environment_scoped_kvm`
+    def _extracted_from_update_an_entry_in_an_environment_scoped_kvm_10(self, uri, hdrs, body):
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp
@@ -288,11 +313,18 @@ class Keyvaluemaps:
             startkey=startkey,
             count=count,
         )
+        return (
+            self._extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(
+                uri
+            )
+        )
+
+    # TODO Rename this here and in `get_keyvaluemap_in_an_environment`, `get_a_keys_value_in_an_environment_scoped_keyvaluemap`, `list_keyvaluemaps_in_an_environment` and `list_keys_in_an_environment_scoped_keyvaluemap`
+    def _extracted_from_list_keys_in_an_environment_scoped_keyvaluemap_8(self, uri):
         hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        # return KeyvaluemapsSerializer().serialize_details(resp, 'json', prefix=prefix)
-        return resp
+        result = requests.get(uri, headers=hdrs)
+        result.raise_for_status()
+        return result
 
     def push_keyvaluemap(self, environment, file, secret=None):
         local_map = read_file(file, type="json")
@@ -305,33 +337,13 @@ class Keyvaluemaps:
                 console.echo("Done.")
             else:
                 console.echo("Nothing to decrypt.")
-        else:
-            if any(is_encrypted(entry.get("value")) for entry in local_map["entry"]):
-                sys.exit(
-                    "KVM appears to be encrypted but no symmetric key (secret) was specified."
-                )
+        elif any(is_encrypted(entry.get("value")) for entry in local_map["entry"]):
+            sys.exit(
+                "KVM appears to be encrypted but no symmetric key (secret) was specified."
+            )
         self._map_name = local_map["name"]
         try:
-            remote_map = self.get_keyvaluemap_in_an_environment(environment).json()
-            deleted_keys = Keyvaluemaps.find_deleted_keys(local_map, remote_map)
-            local_map_updated = {
-                "entry": [
-                    entry
-                    for entry in local_map["entry"]
-                    if entry not in remote_map["entry"]
-                ]
-            }
-            if deleted_keys:
-                self.delete_entries(environment, deleted_keys)
-                console.echo("Removed entries.")
-            if local_map_updated["entry"]:
-                for entry in tqdm(
-                    local_map_updated["entry"], **TQDM_KWARGS("Updating")
-                ):
-                    self.create_or_update_entry(environment, entry)
-                console.echo("Updated entries.")
-            if not deleted_keys and not local_map_updated["entry"]:
-                console.echo("All entries up-to-date.")
+            self._extracted_from_push_keyvaluemap_18(environment, local_map)
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
@@ -341,3 +353,26 @@ class Keyvaluemaps:
                     environment, json.dumps(local_map)
                 ).text
             )
+
+    # TODO Rename this here and in `push_keyvaluemap`
+    def _extracted_from_push_keyvaluemap_18(self, environment, local_map):
+        remote_map = self.get_keyvaluemap_in_an_environment(environment).json()
+        deleted_keys = Keyvaluemaps.find_deleted_keys(local_map, remote_map)
+        local_map_updated = {
+            "entry": [
+                entry
+                for entry in local_map["entry"]
+                if entry not in remote_map["entry"]
+            ]
+        }
+        if deleted_keys:
+            self.delete_entries(environment, deleted_keys)
+            console.echo("Removed entries.")
+        if local_map_updated["entry"]:
+            for entry in tqdm(
+                local_map_updated["entry"], **TQDM_KWARGS("Updating")
+            ):
+                self.create_or_update_entry(environment, entry)
+            console.echo("Updated entries.")
+        if not deleted_keys and not local_map_updated["entry"]:
+            console.echo("All entries up-to-date.")

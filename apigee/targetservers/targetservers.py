@@ -88,9 +88,7 @@ class Targetservers:
         uri = LIST_TARGETSERVERS_IN_AN_ENVIRONMENT_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        resp = self._extracted_from_get_targetserver_7(uri)
         return TargetserversSerializer().serialize_details(resp, format, prefix=prefix)
 
     def get_targetserver(self, environment):
@@ -100,10 +98,14 @@ class Targetservers:
             environment=environment,
             name=self._targetserver_name,
         )
+        return self._extracted_from_get_targetserver_7(uri)
+
+    # TODO Rename this here and in `list_targetservers_in_an_environment` and `get_targetserver`
+    def _extracted_from_get_targetserver_7(self, uri):
         hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        result = requests.get(uri, headers=hdrs)
+        result.raise_for_status()
+        return result
 
     def update_a_targetserver(self, environment, request_body):
         uri = UPDATE_A_TARGETSERVER_PATH.format(

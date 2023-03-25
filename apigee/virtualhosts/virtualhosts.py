@@ -63,10 +63,7 @@ class Virtualhosts:
             environment=environment,
             virtualhost_name=self._virtualhost_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_list_virtual_hosts_for_an_environment_8(uri)
 
     def list_virtual_hosts_for_an_environment(
         self, environment, prefix=None, format="json"
@@ -76,10 +73,15 @@ class Virtualhosts:
             org_name=self._org_name,
             environment=environment,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        resp = self._extracted_from_list_virtual_hosts_for_an_environment_8(uri)
         return VirtualhostsSerializer().serialize_details(resp, format, prefix=prefix)
+
+    # TODO Rename this here and in `get_a_virtual_host_for_an_environment` and `list_virtual_hosts_for_an_environment`
+    def _extracted_from_list_virtual_hosts_for_an_environment_8(self, uri):
+        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        result = requests.get(uri, headers=hdrs)
+        result.raise_for_status()
+        return result
 
     def update_virtual_host_for_an_environment(self):
         pass

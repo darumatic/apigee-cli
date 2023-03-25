@@ -162,7 +162,7 @@ def _export_api_proxy(
         name,
         revision_number,
         fs_write=True,
-        output_file=output_file if output_file else f"{name}.zip",
+        output_file=output_file or f"{name}.zip",
     )
 
 

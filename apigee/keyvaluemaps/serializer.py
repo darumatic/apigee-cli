@@ -9,10 +9,8 @@ class KeyvaluemapsSerializer:
         maps = maps.json()
         if prefix:
             maps = [map for map in maps if map.startswith(prefix)]
-        if format == "json":
-            return json.dumps(maps)
-        elif format == "table":
-            pass
-        elif format == "dict":
+        if format == "dict":
             return maps
+        elif format == "json":
+            return json.dumps(maps)
         return resp

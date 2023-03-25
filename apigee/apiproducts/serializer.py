@@ -13,10 +13,8 @@ class ApiproductsSerializer:
                 for apiproduct in apiproducts
                 if apiproduct.startswith(prefix)
             ]
-        if format == "json":
-            return json.dumps(apiproducts)
-        elif format == "table":
-            pass
-        elif format == "dict":
+        if format == "dict":
             return apiproducts
+        elif format == "json":
+            return json.dumps(apiproducts)
         return resp

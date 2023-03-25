@@ -41,8 +41,4 @@ class SharedflowsSerializer:
                 for sharedflow in sharedflows
                 if sharedflow.startswith(prefix)
             ]
-        if format == "json":
-            return json.dumps(sharedflows)
-        elif format == "table":
-            pass
-        return resp
+        return json.dumps(sharedflows) if format == "json" else resp

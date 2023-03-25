@@ -52,10 +52,7 @@ class Apis:
             api_name=api_name,
             revision_number=revision_number,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.delete(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_undeploy_api_proxy_revision_8(uri)
 
     def deploy_api_proxy_revision(
         self, api_name, environment, revision_number, delay=0, override=False
@@ -111,39 +108,41 @@ class Apis:
             api_name=api_name,
             revision_number=revision_number,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        resp = self._extracted_from_list_api_proxy_revisions_10(uri)
         if fs_write:
             write_zip(output_file, resp.content)
         return resp
 
     def get_api_proxy(self, api_name):
-        uri = GET_API_PROXY_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=api_name
+        return self._extracted_from_list_api_proxy_revisions_2(
+            GET_API_PROXY_PATH, api_name
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
 
     def list_api_proxies(self, prefix=None, format="json"):
         uri = LIST_API_PROXIES_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        resp = self._extracted_from_list_api_proxy_revisions_10(uri)
         return ApisSerializer.serialize_details(resp, format, prefix=prefix)
 
     def list_api_proxy_revisions(self, api_name):
-        uri = LIST_API_PROXY_REVISIONS_PATH.format(
+        return self._extracted_from_list_api_proxy_revisions_2(
+            LIST_API_PROXY_REVISIONS_PATH, api_name
+        )
+
+    # TODO Rename this here and in `export_api_proxy`, `get_api_proxy`, `list_api_proxies` and `list_api_proxy_revisions`
+    def _extracted_from_list_api_proxy_revisions_2(self, arg0, api_name):
+        uri = arg0.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=api_name
         )
+        return self._extracted_from_list_api_proxy_revisions_10(uri)
+
+    # TODO Rename this here and in `export_api_proxy`, `get_api_proxy`, `list_api_proxies` and `list_api_proxy_revisions`
+    def _extracted_from_list_api_proxy_revisions_10(self, uri):
         hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        result = requests.get(uri, headers=hdrs)
+        result.raise_for_status()
+        return result
 
     def undeploy_api_proxy_revision(self, api_name, environment, revision_number):
         uri = UNDEPLOY_API_PROXY_REVISION_PATH.format(
@@ -153,6 +152,10 @@ class Apis:
             api_name=api_name,
             revision_number=revision_number,
         )
+        return self._extracted_from_undeploy_api_proxy_revision_8(uri)
+
+    # TODO Rename this here and in `delete_api_proxy_revision` and `undeploy_api_proxy_revision`
+    def _extracted_from_undeploy_api_proxy_revision_8(self, uri):
         hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()

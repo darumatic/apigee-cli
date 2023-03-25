@@ -83,9 +83,7 @@ class Keystores:
             org_name=self._org_name,
             environment=environment,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        resp = self._extracted_from_get_alias_9(uri)
         return KeystoresSerializer().serialize_details(resp, format, prefix=prefix)
 
     def get_a_keystore_or_truststore(self, environment):
@@ -95,10 +93,7 @@ class Keystores:
             environment=environment,
             keystore_name=self._keystore_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_get_alias_9(uri)
 
     def test_a_keystore_or_truststore(self):
         pass
@@ -111,24 +106,17 @@ class Keystores:
             keystore_name=self._keystore_name,
             cert_name=cert_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_get_alias_9(uri)
 
     def get_all_certs_from_a_keystore_or_truststore(
         self, environment, prefix=None, format="json"
     ):
-        uri = GET_ALL_CERTS_FROM_A_KEYSTORE_OR_TRUSTSTORE_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL,
-            org_name=self._org_name,
-            environment=environment,
-            keystore_name=self._keystore_name,
+        return self._extracted_from_list_aliases_4(
+            GET_ALL_CERTS_FROM_A_KEYSTORE_OR_TRUSTSTORE_PATH,
+            environment,
+            format,
+            prefix,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return KeystoresSerializer().serialize_details(resp, format, prefix=prefix)
 
     def delete_cert_from_a_keystore_or_truststore(self):
         pass
@@ -142,9 +130,7 @@ class Keystores:
             cert_name=cert_name,
         )
         hdrs = auth.set_header(self._auth, headers={})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_export_a_certificate_for_an_alias_10(uri, hdrs)
 
     def upload_a_certificate_to_a_truststore(self):
         pass
@@ -156,17 +142,21 @@ class Keystores:
         pass
 
     def list_aliases(self, environment, prefix=None, format="json"):
-        uri = LIST_ALIASES_PATH.format(
+        return self._extracted_from_list_aliases_4(
+            LIST_ALIASES_PATH, environment, format, prefix
+        )
+
+    def _extracted_from_list_aliases_4(self, arg0, environment, format, prefix):
+        uri = arg0.format(
             api_url=APIGEE_ADMIN_API_URL,
             org_name=self._org_name,
             environment=environment,
             keystore_name=self._keystore_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        resp = self._extracted_from_get_alias_9(uri)
         return KeystoresSerializer().serialize_details(resp, format, prefix=prefix)
 
+    # TODO Rename this here and in `list_all_keystores_and_truststores`, `get_a_keystore_or_truststore`, `get_cert_details_from_a_keystore_or_truststore`, `get_all_certs_from_a_keystore_or_truststore`, `list_aliases` and `get_alias`
     def get_alias(self, environment, alias_name):
         uri = GET_ALIAS_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
@@ -175,10 +165,12 @@ class Keystores:
             keystore_name=self._keystore_name,
             alias_name=alias_name,
         )
+        return self._extracted_from_get_alias_9(uri)
+
+    # TODO Rename this here and in `list_all_keystores_and_truststores`, `get_a_keystore_or_truststore`, `get_cert_details_from_a_keystore_or_truststore`, `get_all_certs_from_a_keystore_or_truststore`, `list_aliases` and `get_alias`
+    def _extracted_from_get_alias_9(self, uri):
         hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_export_a_certificate_for_an_alias_10(uri, hdrs)
 
     def update_the_certificate_in_an_alias(self):
         pass
@@ -195,6 +187,10 @@ class Keystores:
             alias_name=alias_name,
         )
         hdrs = auth.set_header(self._auth, headers={})
+        return self._extracted_from_export_a_certificate_for_an_alias_10(uri, hdrs)
+
+    # TODO Rename this here and in `export_a_cert`, `_extracted_from_get_alias_9` and `export_a_certificate_for_an_alias`
+    def _extracted_from_export_a_certificate_for_an_alias_10(self, uri, hdrs):
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()
         return resp

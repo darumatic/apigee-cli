@@ -11,7 +11,9 @@ from pathlib import Path
 import click
 
 
-def add_to_dict_if_exists(options_dict, initial_dict={}):
+def add_to_dict_if_exists(options_dict, initial_dict=None):
+    if initial_dict is None:
+        initial_dict = {}
     for k, v in options_dict.items():
         if v:
             initial_dict[k] = v
@@ -19,9 +21,7 @@ def add_to_dict_if_exists(options_dict, initial_dict={}):
 
 
 def convert_to_set(iterable):
-    if not isinstance(iterable, set):
-        return set(iterable)
-    return iterable
+    return iterable if isinstance(iterable, set) else set(iterable)
 
 
 def extract_zip(source, dest):
@@ -97,9 +97,7 @@ def paths_exist(files):
 
 def read_file(file, type="text"):
     with open(file, "r") as f:
-        if type == "json":
-            return json.loads(f.read())
-        return f.read()
+        return json.loads(f.read()) if type == "json" else f.read()
 
 
 def remove_file_above_size(file, size_kb=100):
@@ -108,9 +106,7 @@ def remove_file_above_size(file, size_kb=100):
 
 
 def remove_last_items_from_list(init_list, integer=0):
-    if integer <= 0:
-        return init_list
-    return init_list[:-integer]
+    return init_list if integer <= 0 else init_list[:-integer]
 
 
 def resolve_target_directory(target_directory=None):
@@ -121,22 +117,24 @@ def resolve_target_directory(target_directory=None):
     return os.getcwd()
 
 
-def run_func_on_dir_files(dir, func, glob="**/*", args=(), kwargs={}):
+def run_func_on_dir_files(dir, func, glob="**/*", args=(), kwargs=None):
+    if kwargs is None:
+        kwargs = {}
     state = []
     for file_path in Path(resolve_target_directory(dir)).resolve().glob(glob):
         _tuple = (str(file_path),)
-        result = func(*(_tuple + args), **kwargs)
-        if result:
+        if result := func(*(_tuple + args), **kwargs):
             state.append(result)
     return state
 
 
-def run_func_on_iterable(iterable, func, state_op="append", args=(), kwargs={}):
+def run_func_on_iterable(iterable, func, state_op="append", args=(), kwargs=None):
+    if kwargs is None:
+        kwargs = {}
     state = []
     for item in iterable:
         _tuple = (item,)
-        result = func(*(_tuple + args), **kwargs)
-        if result:
+        if result := func(*(_tuple + args), **kwargs):
             getattr(state, state_op)(result)
     return state
 
@@ -168,7 +166,7 @@ def write_file(content, path, fs_write=True, indent=None, eof=True):
             if eof:
                 content = f"{content}\n"
             f.write(content)
-        elif isinstance(content, dict) or isinstance(content, list):
+        elif isinstance(content, (dict, list)):
             if isinstance(indent, int):
                 content = f"{json.dumps(content, indent=indent)}"
             else:

@@ -396,10 +396,7 @@ def _export_shared_flow(
     return Sharedflows(
         gen_auth(username, password, mfa_secret, token, zonename), org
     ).export_shared_flow(
-        name,
-        revision_number,
-        output_file if output_file else f"{name}.zip",
-        fs_write=True,
+        name, revision_number, output_file or f"{name}.zip", fs_write=True
     )
 
 

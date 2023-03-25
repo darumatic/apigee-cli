@@ -13,10 +13,8 @@ class TargetserversSerializer:
                 for targetserver in targetservers
                 if targetserver.startswith(prefix)
             ]
-        if format == "json":
-            return json.dumps(targetservers)
-        elif format == "table":
-            pass
-        elif format == "dict":
+        if format == "dict":
             return targetservers
+        elif format == "json":
+            return json.dumps(targetservers)
         return resp

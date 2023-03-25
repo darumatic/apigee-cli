@@ -11,10 +11,8 @@ class DevelopersSerializer:
             developers = [
                 developer for developer in developers if developer.startswith(prefix)
             ]
-        if format == "json":
-            return json.dumps(developers)
-        elif format == "table":
-            pass
-        elif format == "dict":
+        if format == "dict":
             return developers
+        elif format == "json":
+            return json.dumps(developers)
         return resp

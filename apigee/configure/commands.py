@@ -76,13 +76,7 @@ except KeyError:
     default=profile_dict["zonename"],
     show_default=True,
 )
-@click.option(
-    "--token/--no-token",
-    default=True if profile_dict["is_token"] in (True, "True", "true", "1") else False,
-    help="specify to use oauth without MFA",
-    prompt="Use OAuth, no MFA (optional)?",
-    show_default=True,
-)
+@click.option("--token/--no-token", default=profile_dict["is_token"] in (True, "True", "true", "1"), help="specify to use oauth without MFA", prompt="Use OAuth, no MFA (optional)?", show_default=True)
 @click.option(
     "-o",
     "--org",

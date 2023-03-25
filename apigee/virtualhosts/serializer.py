@@ -13,10 +13,8 @@ class VirtualhostsSerializer:
                 for virtualhost in virtualhosts
                 if virtualhost.startswith(prefix)
             ]
-        if format == "json":
-            return json.dumps(virtualhosts)
-        elif format == "table":
-            pass
-        elif format == "dict":
+        if format == "dict":
             return virtualhosts
+        elif format == "json":
+            return json.dumps(virtualhosts)
         return resp

@@ -37,10 +37,8 @@ class ApisSerializer:
         apis = apis.json()
         if prefix:
             apis = [api for api in apis if api.startswith(prefix)]
-        if format == "json":
-            return json.dumps(apis)
-        elif format == "table":
-            pass
-        elif format == "dict":
+        if format == "dict":
             return apis
+        elif format == "json":
+            return json.dumps(apis)
         return resp

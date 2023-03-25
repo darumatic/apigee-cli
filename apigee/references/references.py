@@ -56,9 +56,7 @@ class References:
             org_name=self._org_name,
             environment=environment,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
+        resp = self._extracted_from_get_reference_7(uri)
         return ReferencesSerializer().serialize_details(resp, format, prefix=prefix)
 
     def get_reference(self, environment):
@@ -68,10 +66,14 @@ class References:
             environment=environment,
             ref_name=self._ref_name,
         )
+        return self._extracted_from_get_reference_7(uri)
+
+    # TODO Rename this here and in `list_all_references` and `get_reference`
+    def _extracted_from_get_reference_7(self, uri):
         hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        result = requests.get(uri, headers=hdrs)
+        result.raise_for_status()
+        return result
 
     def delete_reference(self):
         pass

@@ -11,10 +11,8 @@ class ReferencesSerializer:
             references = [
                 reference for reference in references if reference.startswith(prefix)
             ]
-        if format == "json":
-            return json.dumps(references)
-        elif format == "table":
-            pass
-        elif format == "dict":
+        if format == "dict":
             return references
+        elif format == "json":
+            return json.dumps(references)
         return resp

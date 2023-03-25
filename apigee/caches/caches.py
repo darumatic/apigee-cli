@@ -66,16 +66,7 @@ class Caches:
             environment=environment,
             name=self._cache_name,
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={
-                "Accept": "application/json",
-                "Content-Type": "application/octet-stream",
-            },
-        )
-        resp = requests.post(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_clear_a_cache_entry_8(uri)
 
     def clear_a_cache_entry(self, environment, entry):
         uri = CLEAR_A_CACHE_ENTRY_PATH.format(
@@ -85,6 +76,10 @@ class Caches:
             name=self._cache_name,
             entry=entry,
         )
+        return self._extracted_from_clear_a_cache_entry_8(uri)
+
+    # TODO Rename this here and in `clear_all_cache_entries` and `clear_a_cache_entry`
+    def _extracted_from_clear_a_cache_entry_8(self, uri):
         hdrs = auth.set_header(
             self._auth,
             headers={

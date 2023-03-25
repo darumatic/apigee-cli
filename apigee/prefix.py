@@ -2,6 +2,7 @@ import configparser
 
 import click
 
+import contextlib
 from apigee import APIGEE_CLI_CREDENTIALS_FILE
 
 
@@ -12,21 +13,15 @@ def common_prefix_options(func):
     import sys
 
     for i, arg in enumerate(sys.argv):
-        if arg == "-P" or arg == "--profile":
-            try:
+        if arg in ["-P", "--profile"]:
+            with contextlib.suppress(IndexError):
                 profile = sys.argv[i + 1]
-            except IndexError:
-                pass
     profile_dict = {}
-    try:
+    with contextlib.suppress(KeyError):
         profile_dict = dict(config._sections[profile])
-    except KeyError:
-        pass
     prefix = ""
-    try:
+    with contextlib.suppress(KeyError):
         prefix = profile_dict["prefix"]
-    except KeyError:
-        pass
     return click.option(
         "--prefix",
         help="team/resource prefix filter",

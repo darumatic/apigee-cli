@@ -56,9 +56,7 @@ class Permissions:
             headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         body = json.loads(request_body)
-        resp = requests.post(uri, headers=hdrs, json=body)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_team_permissions_10(uri, hdrs, body)
 
     def team_permissions(
         self, template_file, placeholder_key=None, placeholder_value=""
@@ -78,6 +76,10 @@ class Permissions:
                 body["resourcePermission"][idx]["path"] = path.replace(
                     placeholder_key, placeholder_value
                 )
+        return self._extracted_from_team_permissions_10(uri, hdrs, body)
+
+    # TODO Rename this here and in `create_permissions` and `team_permissions`
+    def _extracted_from_team_permissions_10(self, uri, hdrs, body):
         resp = requests.post(uri, headers=hdrs, json=body)
         resp.raise_for_status()
         return resp

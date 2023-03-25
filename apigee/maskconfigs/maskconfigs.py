@@ -89,24 +89,22 @@ class Maskconfigs:
             api_name=self._api_name,
             maskconfig_name=maskconfig_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_list_data_masks_for_an_organization_8(uri)
 
     def list_data_masks_for_an_api_proxy(self):
         uri = LIST_DATA_MASKS_FOR_AN_API_PROXY_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name, api_name=self._api_name
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
-        resp = requests.get(uri, headers=hdrs)
-        resp.raise_for_status()
-        return resp
+        return self._extracted_from_list_data_masks_for_an_organization_8(uri)
 
     def list_data_masks_for_an_organization(self):
         uri = LIST_DATA_MASKS_FOR_AN_ORGANIZATION_PATH.format(
             api_url=APIGEE_ADMIN_API_URL, org=self._org_name
         )
+        return self._extracted_from_list_data_masks_for_an_organization_8(uri)
+
+    # TODO Rename this here and in `get_data_mask_details_for_an_api_proxy`, `list_data_masks_for_an_api_proxy` and `list_data_masks_for_an_organization`
+    def _extracted_from_list_data_masks_for_an_organization_8(self, uri):
         hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
         resp = requests.get(uri, headers=hdrs)
         resp.raise_for_status()

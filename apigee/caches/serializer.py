@@ -9,10 +9,8 @@ class CachesSerializer:
         caches = caches.json()
         if prefix:
             caches = [cache for cache in caches if cache.startswith(prefix)]
-        if format == "json":
-            return json.dumps(caches)
-        elif format == "table":
-            pass
-        elif format == "dict":
+        if format == "dict":
             return caches
+        elif format == "json":
+            return json.dumps(caches)
         return resp

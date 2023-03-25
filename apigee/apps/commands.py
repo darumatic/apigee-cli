@@ -331,25 +331,9 @@ def revoke_creds(*args, **kwargs):
     console.echo(_update_key_for_a_developer_app(*args, **kwargs))
 
 
-def _create_a_consumer_key_and_secret(
-    username,
-    password,
-    mfa_secret,
-    token,
-    zonename,
-    org,
-    profile,
-    name,
-    developer,
-    consumer_key=None,
-    consumer_secret=None,
-    key_length=32,
-    secret_length=32,
-    key_suffix=None,
-    key_delimiter="-",
-    products=[],
-    **kwargs
-):
+def _create_a_consumer_key_and_secret(username, password, mfa_secret, token, zonename, org, profile, name, developer, consumer_key=None, consumer_secret=None, key_length=32, secret_length=32, key_suffix=None, key_delimiter="-", products=None, **kwargs):
+    if products is None:
+        products = []
     return (
         Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
         .create_a_consumer_key_and_secret(

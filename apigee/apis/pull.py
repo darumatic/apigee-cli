@@ -136,10 +136,12 @@ class PullApis:
         def _func(f, _state):
             try:
                 root = et.parse(f).getroot()
-                if root.tag == "KeyValueMapOperations":
-                    if root.attrib["mapIdentifier"] not in _state:
-                        _state.add(root.attrib["mapIdentifier"])
-                        return root.attrib["mapIdentifier"]
+                if (
+                    root.tag == "KeyValueMapOperations"
+                    and root.attrib["mapIdentifier"] not in _state
+                ):
+                    _state.add(root.attrib["mapIdentifier"])
+                    return root.attrib["mapIdentifier"]
             except Exception as e:
                 logging.warning(f"{e}; file={f}", exc_info=True)
 

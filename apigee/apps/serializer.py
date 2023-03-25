@@ -9,10 +9,8 @@ class AppsSerializer:
         apps = apps.json()
         if prefix:
             apps = [app for app in apps if app.startswith(prefix)]
-        if format == "json":
-            return json.dumps(apps)
-        elif format == "table":
-            pass
-        elif format == "dict":
+        if format == "dict":
             return apps
+        elif format == "json":
+            return json.dumps(apps)
         return resp

@@ -13,8 +13,4 @@ class MaskconfigsSerializer:
                 for maskconfig in maskconfigs
                 if maskconfig.startswith(prefix)
             ]
-        if format == "json":
-            return json.dumps(maskconfigs)
-        elif format == "table":
-            pass
-        return resp
+        return json.dumps(maskconfigs) if format == "json" else resp

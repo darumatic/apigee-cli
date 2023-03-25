@@ -11,10 +11,8 @@ class KeystoresSerializer:
             keystores = [
                 keystore for keystore in keystores if keystore.startswith(prefix)
             ]
-        if format == "json":
-            return json.dumps(keystores)
-        elif format == "table":
-            pass
-        elif format == "dict":
+        if format == "dict":
             return keystores
+        elif format == "json":
+            return json.dumps(keystores)
         return resp
