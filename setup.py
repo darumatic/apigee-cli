@@ -48,7 +48,7 @@ SETUP_ARGS = dict(
         "PyJWT==2.6.0",
         "pyotp==2.8.0",
         "python-gnupg>=0.3.5,<0.5.0",  # Note the updated version range
-        "requests==2.28.1",
+        "requests==2.31.0",
         "tabulate==0.9.0",
         "tqdm==4.64.1",
     ],
