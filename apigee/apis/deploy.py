@@ -15,6 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import base64
+import getopt
 import http.client
 import io
 import json
@@ -60,19 +62,23 @@ def httpCall(verb, uri, headers, body):
     else:
         conn = http.client.HTTPConnection(httpHost)
 
-    hdrs = {} if headers is None else headers
+    if headers == None:
+        hdrs = {}
+    else:
+        hdrs = headers
+
     # if Auth:
     #     # hdrs['Authorization'] = 'Bearer %s' % AccessToken
     #     hdrs = auth.set_header(hdrs, Auth)
     # else:
     #     hdrs['Authorization'] = 'Basic %s' % base64.b64encode(UserPW.encode()).decode()
-    hdrs = auth.set_header(Auth, headers=hdrs)
+    hdrs = auth.set_authentication_headers(Auth, custom_headers=hdrs)
     conn.request(verb, uri, body, hdrs)
 
     return conn.getresponse()
 
 
-def getElementText(n):  # sourcery skip: avoid-builtin-shadow
+def getElementText(n):
     c = n.firstChild
     str = io.StringIO()
 
@@ -100,7 +106,11 @@ def getElementVal(n, name):
 def pathContainsDot(p):
     c = re.compile("\.\w+")
 
-    return any(c.match(pc) != None for pc in p.split("/"))
+    for pc in p.split("/"):
+        if c.match(pc) != None:
+            return True
+
+    return False
 
 
 def getDeployments():
@@ -108,7 +118,7 @@ def getDeployments():
     hdrs = {"Accept": "application/xml"}
     resp = httpCall(
         "GET",
-        f"/v1/organizations/{Organization}/apis/{Name}/deployments",
+        "/v1/organizations/%s/apis/%s/deployments" % (Organization, Name),
         hdrs,
         None,
     )
@@ -120,16 +130,20 @@ def getDeployments():
     deployments = xml.dom.minidom.parse(resp)
     environments = deployments.getElementsByTagName("Environment")
 
-    error = None
     for env in environments:
         envName = env.getAttribute("name")
         revisions = env.getElementsByTagName("Revision")
         for rev in revisions:
             revNum = int(rev.getAttribute("name"))
+            error = None
             state = getElementVal(rev, "State")
             basePaths = rev.getElementsByTagName("BasePath")
 
-            basePath = getElementText(basePaths[0]) if len(basePaths) > 0 else "unknown"
+            if len(basePaths) > 0:
+                basePath = getElementText(basePaths[0])
+            else:
+                basePath = "unknown"
+
             # svrs = rev.getElementsByTagName('Server')
             status = {
                 "environment": envName,
@@ -153,9 +167,9 @@ def printDeployments(dep, check_revision=None):
             sys.exit("Error: proxy version %i not found" % check_revision)
         console.echo("Proxy version %i found" % check_revision)
     for d in dep:
-        console.echo(f'Environment: {d["environment"]}')
+        console.echo("Environment: %s" % d["environment"])
         console.echo("  Revision: %i BasePath = %s" % (d["revision"], d["basePath"]))
-        console.echo(f'  State: {d["state"]}')
+        console.echo("  State: %s" % d["state"])
         if d["state"] == "missing":
             console.echo("Missing deployment. Attempting deletion...")
             try:
@@ -173,10 +187,10 @@ def printDeployments(dep, check_revision=None):
         elif d["state"] != "deployed":
             sys.exit(1)
         if "error" in d:
-            console.echo(f'  Error: {d["error"]}')
+            console.echo("  Error: %s" % d["error"])
 
 
-def deploy(args):  # sourcery skip: low-code-quality
+def deploy(args):
     global UserPW
     global Directory
     global Organization
@@ -187,7 +201,7 @@ def deploy(args):  # sourcery skip: low-code-quality
     global Auth
 
     # ApigeeHost = 'https://api.enterprise.apigee.com'
-    UserPW = f"{args.username}:{args.password}"
+    UserPW = args.username + ":" + args.password
     Directory = args.directory
     Organization = args.org
     Environment = args.environment
@@ -226,16 +240,35 @@ def deploy(args):  # sourcery skip: low-code-quality
     # body = None
 
     if Directory != None:
-        body = _extracted_from_deploy_52(Directory)
-    elif zipfile.ZipFile != None:
-        with open(zipfile.ZipFile, "r") as f:
-            body = f.read()
+        # Construct a ZIPped copy of the bundle in memory
+        tf = io.BytesIO()
+        zipout = zipfile.ZipFile(tf, "w")
+
+        dirList = os.walk(Directory)
+        for dirEntry in dirList:
+            if not pathContainsDot(dirEntry[0]):
+                for fileEntry in dirEntry[2]:
+                    if not fileEntry.endswith("~"):
+                        fn = os.path.join(dirEntry[0], fileEntry)
+                        en = os.path.join(
+                            os.path.relpath(dirEntry[0], Directory), fileEntry
+                        )
+                        console.echo("Writing %s to %s" % (fn, en))
+                        zipout.write(fn, en)
+
+        zipout.close()
+        body = tf.getvalue()
+    elif ZipFile != None:
+        f = open(ZipFile, "r")
+        body = f.read()
+        f.close()
+
     # Upload the bundle to the API
     hdrs = {"Content-Type": "application/octet-stream", "Accept": "application/json"}
-    uri = f"/v1/organizations/{Organization}/apis?action=import&name={Name}"
+    uri = "/v1/organizations/%s/apis?action=import&name=%s" % (Organization, Name)
     resp = httpCall("POST", uri, hdrs, body)
 
-    if resp.status not in [200, 201]:
+    if resp.status != 200 and resp.status != 201:
         console.echo(
             "Import failed to %s with status %i:\n%s"
             % (uri, resp.status, resp.read().decode())
@@ -260,7 +293,7 @@ def deploy(args):  # sourcery skip: low-code-quality
                     "Undeploying revision %i in same environment and path:"
                     % d["revision"]
                 )
-                http.client.HTTPSConnection(httpHost)
+                conn = http.client.HTTPSConnection(httpHost)
                 resp = httpCall(
                     "POST",
                     (
@@ -273,7 +306,7 @@ def deploy(args):  # sourcery skip: low-code-quality
                     None,
                     None,
                 )
-                if resp.status not in [200, 204]:
+                if resp.status != 200 and resp.status != 204:
                     console.echo(
                         "Error %i on undeployment:\n%s"
                         % (resp.status, resp.read().decode())
@@ -295,7 +328,7 @@ def deploy(args):  # sourcery skip: low-code-quality
             None,
         )
 
-        if resp.status not in [200, 201]:
+        if resp.status != 200 and resp.status != 201:
             console.echo(
                 "Deploy failed with status %i:\n%s"
                 % (resp.status, resp.read().decode())
@@ -304,7 +337,7 @@ def deploy(args):  # sourcery skip: low-code-quality
 
     if ShouldOverride:
         # Seamless Deploy the bundle
-        console.echo(f"Seamless deploy {Name}")
+        console.echo("Seamless deploy %s" % Name)
         hdrs = {"Content-Type": "application/x-www-form-urlencoded"}
         resp = httpCall(
             "POST",
@@ -318,7 +351,7 @@ def deploy(args):  # sourcery skip: low-code-quality
             None,
         )
 
-        if resp.status not in [200, 201]:
+        if resp.status != 200 and resp.status != 201:
             console.echo(
                 "Deploy failed with status %i:\n%s"
                 % (resp.status, resp.read().decode())
@@ -331,28 +364,6 @@ def deploy(args):  # sourcery skip: low-code-quality
         printDeployments(deps)
     if ShouldOverride:
         printDeployments(deps, check_revision=revision)
-
-
-# TODO Rename this here and in `deploy`
-def _extracted_from_deploy_52(Directory):
-    # Construct a ZIPped copy of the bundle in memory
-    tf = io.BytesIO()
-    zipout = zipfile.ZipFile(tf, "w")
-
-    dirList = os.walk(Directory)
-    for dirEntry in dirList:
-        if not pathContainsDot(dirEntry[0]):
-            for fileEntry in dirEntry[2]:
-                if not fileEntry.endswith("~"):
-                    fn = os.path.join(dirEntry[0], fileEntry)
-                    en = os.path.join(
-                        os.path.relpath(dirEntry[0], Directory), fileEntry
-                    )
-                    console.echo(f"Writing {fn} to {en}")
-                    zipout.write(fn, en)
-
-    zipout.close()
-    return tf.getvalue()
 
 
 def main():

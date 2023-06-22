@@ -1,22 +1,12 @@
 import click
 
-from apigee.auth import common_auth_options, gen_auth
-from apigee.backups.backups import Backups
-# from apigee.cls import OptionEatAll
+from apigee.auth import common_auth_options, generate_authentication
+from apigee.backups.backups import BackupConfig, Backups
+from apigee.exceptions import InvalidApisError
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
+from apigee.types import APIGEE_API_CHOICES
 from apigee.verbose import common_verbose_options
-
-APIS_CHOICES = {
-    "apis",
-    "keyvaluemaps",
-    "targetservers",
-    "caches",
-    "developers",
-    "apiproducts",
-    "apps",
-    "userroles",
-}
 
 
 @click.group(
@@ -40,17 +30,20 @@ def _take_snapshot(
     apis,
     **kwargs
 ):
+    for choice in apis:
+        if choice not in APIGEE_API_CHOICES:
+            raise InvalidApisError(f"The choice '{choice}' is not a valid APIGEE API choice.")
     if not isinstance(apis, set):
         apis = set(apis)
-    Backups(
-        gen_auth(username, password, mfa_secret, token, zonename),
-        org,
-        target_directory,
+    config = BackupConfig(
+        authentication=generate_authentication(username, password, mfa_secret, token, zonename),
+        org_name=org,
+        working_directory=target_directory,
         prefix=prefix,
-        # fs_write=True,
-        apis=apis,
-        envs=list(environments),
-    ).take_snapshot()
+        api_choices=apis,
+        environments=list(environments)
+    )
+    Backups(config).generate_snapshot_files_and_download_data()
 
 
 @backups.command(
@@ -67,9 +60,9 @@ def _take_snapshot(
 )
 @click.option(
     "--apis",
-    type=click.Choice(APIS_CHOICES, case_sensitive=False),
+    type=click.Choice(APIGEE_API_CHOICES, case_sensitive=False),
     multiple=True,
-    default=APIS_CHOICES,
+    default=APIGEE_API_CHOICES,
     show_default=True,
 )
 # @click.option('--apis', metavar='LIST', cls=OptionEatAll, default=APIS_CHOICES, show_default=True, help='')

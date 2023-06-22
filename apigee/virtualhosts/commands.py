@@ -1,7 +1,7 @@
 import click
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
@@ -53,7 +53,7 @@ def _get_a_virtual_host_for_an_environment(
 ):
     return (
         Virtualhosts(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .get_a_virtual_host_for_an_environment(environment)
         .text
@@ -83,7 +83,7 @@ def _list_virtual_hosts_for_an_environment(
     **kwargs
 ):
     return Virtualhosts(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).list_virtual_hosts_for_an_environment(environment, prefix=prefix)
 
 

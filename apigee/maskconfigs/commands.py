@@ -1,7 +1,7 @@
 import click
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.maskconfigs.maskconfigs import Maskconfigs
 # from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
@@ -18,7 +18,7 @@ def _create_data_masks_for_an_api_proxy(
 ):
     return (
         Maskconfigs(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .create_data_masks_for_an_api_proxy(body)
         .text
@@ -51,7 +51,7 @@ def _delete_data_masks_for_an_api_proxy(
 ):
     return (
         Maskconfigs(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .delete_data_masks_for_an_api_proxy(maskconfig_name)
         .text
@@ -82,7 +82,7 @@ def _get_data_mask_details_for_an_api_proxy(
 ):
     return (
         Maskconfigs(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .get_data_mask_details_for_an_api_proxy(maskconfig_name)
         .text
@@ -104,7 +104,7 @@ def _list_data_masks_for_an_api_proxy(
 ):
     return (
         Maskconfigs(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .list_data_masks_for_an_api_proxy()
         .text
@@ -125,7 +125,7 @@ def _list_data_masks_for_an_organization(
 ):
     return (
         Maskconfigs(
-            gen_auth(username, password, mfa_secret, token, zonename), org, None
+            generate_authentication(username, password, mfa_secret, token, zonename), org, None
         )
         .list_data_masks_for_an_organization()
         .text
@@ -144,7 +144,7 @@ def _push_data_masks_for_an_api_proxy(
     username, password, mfa_secret, token, zonename, org, profile, name, file, **kwargs
 ):
     return Maskconfigs(
-        gen_auth(username, password, mfa_secret, token, zonename), org, name
+        generate_authentication(username, password, mfa_secret, token, zonename), org, name
     ).push_data_masks_for_an_api_proxy(file)
 
 

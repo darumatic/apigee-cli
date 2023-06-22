@@ -4,6 +4,14 @@ apigee.apis package
 Submodules
 ----------
 
+apigee.apis.api\_puller\_with\_dependency\_extraction module
+------------------------------------------------------------
+
+.. automodule:: apigee.apis.api_puller_with_dependency_extraction
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.apis.apis module
 -----------------------
 

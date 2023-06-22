@@ -1,7 +1,7 @@
 import click
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.keystores.keystores import Keystores
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
@@ -52,7 +52,7 @@ def _list_all_keystores_and_truststores(
     **kwargs
 ):
     return Keystores(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).list_all_keystores_and_truststores(environment, prefix=prefix)
 
 
@@ -81,7 +81,7 @@ def _get_a_keystore_or_truststore(
     **kwargs
 ):
     return (
-        Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Keystores(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_a_keystore_or_truststore(environment)
         .text
     )
@@ -123,7 +123,7 @@ def _get_cert_details_from_a_keystore_or_truststore(
     **kwargs
 ):
     return (
-        Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Keystores(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_cert_details_from_a_keystore_or_truststore(environment, cert_name)
         .text
     )
@@ -154,7 +154,7 @@ def _get_all_certs_from_a_keystore_or_truststore(
     **kwargs
 ):
     return Keystores(
-        gen_auth(username, password, mfa_secret, token, zonename), org, name
+        generate_authentication(username, password, mfa_secret, token, zonename), org, name
     ).get_all_certs_from_a_keystore_or_truststore(environment, prefix=prefix)
 
 
@@ -195,7 +195,7 @@ def _export_a_cert(
     **kwargs
 ):
     return (
-        Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Keystores(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .export_a_cert(environment, cert_name)
         .text
     )
@@ -262,7 +262,7 @@ def _list_aliases(
     **kwargs
 ):
     return Keystores(
-        gen_auth(username, password, mfa_secret, token, zonename), org, name
+        generate_authentication(username, password, mfa_secret, token, zonename), org, name
     ).list_aliases(environment, prefix=prefix)
 
 
@@ -291,7 +291,7 @@ def _get_alias(
     **kwargs
 ):
     return (
-        Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Keystores(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_alias(environment, alias_name)
         .text
     )
@@ -346,7 +346,7 @@ def _export_a_certificate_for_an_alias(
     **kwargs
 ):
     return (
-        Keystores(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Keystores(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .export_a_certificate_for_an_alias(environment, alias_name)
         .text
     )

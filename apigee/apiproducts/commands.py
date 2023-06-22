@@ -2,7 +2,7 @@ import click
 
 from apigee import console
 from apigee.apiproducts.apiproducts import Apiproducts
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
@@ -20,7 +20,7 @@ def _create_api_product(
 ):
     return (
         Apiproducts(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .create_api_product(body)
         .text
@@ -42,7 +42,7 @@ def _delete_api_product(
 ):
     return (
         Apiproducts(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .delete_api_product()
         .text
@@ -63,7 +63,7 @@ def _get_api_product(
 ):
     return (
         Apiproducts(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .get_api_product()
         .text
@@ -96,7 +96,7 @@ def _list_api_products(
     **kwargs
 ):
     return Apiproducts(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).list_api_products(prefix=prefix, expand=expand, count=count, startkey=startkey)
 
 
@@ -132,7 +132,7 @@ def _update_api_product(
 ):
     return (
         Apiproducts(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .update_api_product(body)
         .text
@@ -155,7 +155,7 @@ def _push_apiproducts(
     username, password, mfa_secret, token, zonename, org, profile, file, **kwargs
 ):
     return Apiproducts(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).push_apiproducts(file)
 
 

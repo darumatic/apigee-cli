@@ -2,7 +2,7 @@ import click
 from click_aliases import ClickAliasedGroup
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.deployments.deployments import Deployments
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
@@ -54,7 +54,7 @@ def _get_api_proxy_deployment_details(
     **kwargs
 ):
     return Deployments(
-        gen_auth(username, password, mfa_secret, token, zonename), org, name
+        generate_authentication(username, password, mfa_secret, token, zonename), org, name
     ).get_api_proxy_deployment_details(
         formatted=True,
         format=format,
@@ -108,7 +108,7 @@ def _get_shared_flow_deployment_details(
     **kwargs
 ):
     return Deployments(
-        gen_auth(username, password, mfa_secret, token, zonename), org, name
+        generate_authentication(username, password, mfa_secret, token, zonename), org, name
     ).get_shared_flow_deployment_details(
         formatted=True,
         format=format,

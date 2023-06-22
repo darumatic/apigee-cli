@@ -4,8 +4,8 @@ from click_option_group import MutuallyExclusiveOptionGroup, optgroup
 from apigee import console
 from apigee.apis.apis import Apis
 from apigee.apis.deploy import deploy as deploy_tool
-from apigee.apis.pull import PullApis
-from apigee.auth import common_auth_options, gen_auth
+from apigee.apis.api_puller_with_dependency_extraction import ApiPullerWithDependencyExtraction
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.types import Struct
@@ -32,7 +32,7 @@ def _delete_api_proxy_revision(
     **kwargs,
 ):
     return (
-        Apis(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .delete_api_proxy_revision(name, revision_number)
         .text
     )
@@ -68,7 +68,7 @@ def _deploy_api_proxy_revision(
     **kwargs,
 ):
     return (
-        Apis(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .deploy_api_proxy_revision(
             name, environment, revision_number, delay=delay, override=override
         )
@@ -116,7 +116,7 @@ def _delete_undeployed_revisions(
     **kwargs,
 ):
     return Apis(
-        gen_auth(username, password, mfa_secret, token, zonename), org
+        generate_authentication(username, password, mfa_secret, token, zonename), org
     ).delete_undeployed_revisions(name, save_last=save_last, dry_run=dry_run)
 
 
@@ -142,6 +142,33 @@ def clean(*args, **kwargs):
     _delete_undeployed_revisions(*args, **kwargs)
 
 
+def _delete_api_proxy(
+    username,
+    password,
+    mfa_secret,
+    token,
+    zonename,
+    org,
+    profile,
+    name,
+    **kwargs,
+):
+    return Apis(
+        generate_authentication(username, password, mfa_secret, token, zonename), org
+    ).delete_api_proxy(name)
+
+
+@apis.command(
+    help="Deletes an API proxy and all policies, resources, endpoints, and revisions associated with it."
+)
+@common_auth_options
+@common_verbose_options
+@common_silent_options
+@click.option("-n", "--name", help="name", required=True)
+def delete(*args, **kwargs):
+    _delete_api_proxy(*args, **kwargs)
+
+
 def _export_api_proxy(
     username,
     password,
@@ -152,17 +179,17 @@ def _export_api_proxy(
     profile,
     name,
     revision_number,
-    fs_write=True,
+    write_to_filesystem=True,
     output_file=None,
     **kwargs,
 ):
     return Apis(
-        gen_auth(username, password, mfa_secret, token, zonename), org
+        generate_authentication(username, password, mfa_secret, token, zonename), org
     ).export_api_proxy(
         name,
         revision_number,
-        fs_write=True,
-        output_file=output_file or f"{name}.zip",
+        write_to_filesystem=True,
+        output_file=output_file if output_file else f"{name}.zip",
     )
 
 
@@ -190,7 +217,7 @@ def _get_api_proxy(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Apis(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .get_api_proxy(name)
         .text
     )
@@ -220,7 +247,7 @@ def _list_api_proxies(
     **kwargs,
 ):
     return Apis(
-        gen_auth(username, password, mfa_secret, token, zonename), org
+        generate_authentication(username, password, mfa_secret, token, zonename), org
     ).list_api_proxies(prefix=prefix)
 
 
@@ -239,7 +266,7 @@ def _list_api_proxy_revisions(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Apis(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .list_api_proxy_revisions(name)
         .text
     )
@@ -268,7 +295,7 @@ def _undeploy_api_proxy_revision(
     **kwargs,
 ):
     return (
-        Apis(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .undeploy_api_proxy_revision(name, environment, revision_number)
         .text
     )
@@ -301,7 +328,7 @@ def _force_undeploy_api_proxy_revision(
     **kwargs,
 ):
     return (
-        Apis(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Apis(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .force_undeploy_api_proxy_revision(name, environment, revision_number)
         .text
     )
@@ -340,14 +367,14 @@ def _pull(
     # basepath=None,
     **kwargs,
 ):
-    return PullApis(
-        gen_auth(username, password, mfa_secret, token, zonename),
+    return ApiPullerWithDependencyExtraction(
+        generate_authentication(username, password, mfa_secret, token, zonename),
         org,
         revision_number,
         environment,
-        work_tree=work_tree,
+        working_directory=work_tree,
         # ).pull(name, force=force, prefix=prefix, basepath=basepath)
-    ).pull(name, force=force)
+    ).export_and_extract_api_proxy(name, force=force)
 
 
 @apis.command(

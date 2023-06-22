@@ -1,7 +1,7 @@
 import click
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.prefix import common_prefix_options
 from apigee.references.references import References
 from apigee.silent import common_silent_options
@@ -26,7 +26,7 @@ def _list_all_references(
     **kwargs
 ):
     return References(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).list_all_references(environment, prefix=prefix)
 
 
@@ -53,7 +53,7 @@ def _get_reference(
     **kwargs
 ):
     return (
-        References(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        References(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_reference(environment)
         .text
     )

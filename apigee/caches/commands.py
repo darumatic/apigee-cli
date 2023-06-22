@@ -1,7 +1,7 @@
 import click
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.caches.caches import Caches
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
@@ -28,7 +28,7 @@ def _clear_all_cache_entries(
     **kwargs
 ):
     return (
-        Caches(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Caches(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .clear_all_cache_entries(environment)
         .text
     )
@@ -58,7 +58,7 @@ def _clear_a_cache_entry(
     **kwargs
 ):
     return (
-        Caches(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Caches(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .clear_a_cache_entry(environment, entry)
         .text
     )
@@ -91,7 +91,7 @@ def _create_a_cache_in_an_environment(
     **kwargs
 ):
     return (
-        Caches(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Caches(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .create_a_cache_in_an_environment(environment, body)
         .text
     )
@@ -123,7 +123,7 @@ def _get_information_about_a_cache(
     **kwargs
 ):
     return (
-        Caches(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Caches(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_information_about_a_cache(environment)
         .text
     )
@@ -154,7 +154,7 @@ def _list_caches_in_an_environment(
     **kwargs
 ):
     return Caches(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).list_caches_in_an_environment(environment, prefix=prefix)
 
 
@@ -182,7 +182,7 @@ def _update_a_cache_in_an_environment(
     **kwargs
 ):
     return (
-        Caches(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Caches(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .update_a_cache_in_an_environment(environment, body)
         .text
     )
@@ -214,7 +214,7 @@ def _delete_a_cache(
     **kwargs
 ):
     return (
-        Caches(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Caches(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .delete_a_cache(environment)
         .text
     )
@@ -243,7 +243,7 @@ def _push_cache(
     **kwargs
 ):
     return Caches(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).push_cache(environment, file)
 
 

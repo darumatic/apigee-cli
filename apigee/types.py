@@ -1,4 +1,4 @@
-APIS = {
+APIGEE_API_CHOICES = {
     "apis",
     "keyvaluemaps",
     "targetservers",

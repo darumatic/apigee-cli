@@ -61,6 +61,14 @@ apigee.crypto module
    :undoc-members:
    :show-inheritance:
 
+apigee.encryption\_utils module
+-------------------------------
+
+.. automodule:: apigee.encryption_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 apigee.exceptions module
 ------------------------
 
@@ -97,6 +105,14 @@ apigee.utils module
 -------------------
 
 .. automodule:: apigee.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+apigee.utils\_init module
+-------------------------
+
+.. automodule:: apigee.utils_init
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,7 +1,7 @@
 import click
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.developers.developers import Developers
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
@@ -31,7 +31,7 @@ def _create_developer(
     **kwargs
 ):
     return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Developers(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .create_developer(first_name, last_name, user_name, attributes=attributes)
         .text
     )
@@ -70,7 +70,7 @@ def _delete_developer(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Developers(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .delete_developer()
         .text
     )
@@ -96,7 +96,7 @@ def _get_developer(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Developers(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_developer()
         .text
     )
@@ -122,7 +122,7 @@ def _get_developer_by_app(
     username, password, mfa_secret, token, zonename, org, profile, app_name, **kwargs
 ):
     return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, None)
+        Developers(generate_authentication(username, password, mfa_secret, token, zonename), org, None)
         .get_developer_by_app(app_name)
         .text
     )
@@ -154,7 +154,7 @@ def _list_developers(
     **kwargs
 ):
     return Developers(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).list_developers(prefix=prefix, expand=expand, count=count, startkey=startkey)
 
 
@@ -200,7 +200,7 @@ def _set_developer_status(
     **kwargs
 ):
     return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Developers(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .set_developer_status(action)
         .text
     )
@@ -232,7 +232,7 @@ def _update_developer(
     username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs
 ):
     return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Developers(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .update_developer(body)
         .text
     )
@@ -273,7 +273,7 @@ def _update_a_developer_attribute(
     **kwargs
 ):
     return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Developers(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .update_a_developer_attribute(attribute_name, updated_value)
         .text
     )
@@ -308,7 +308,7 @@ def _delete_developer_attribute(
     **kwargs
 ):
     return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Developers(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .delete_developer_attribute(attribute_name)
         .text
     )
@@ -333,7 +333,7 @@ def _get_all_developer_attributes(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Developers(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_all_developer_attributes()
         .text
     )
@@ -357,7 +357,7 @@ def _update_all_developer_attributes(
     username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs
 ):
     return (
-        Developers(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Developers(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .update_all_developer_attributes(body)
         .text
     )

@@ -1,11 +1,16 @@
+import sys
+
 import click
 
 from apigee import APIGEE_CLI_SYMMETRIC_KEY, console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
+from apigee.encryption_utils import (ENCRYPTED_HEADER_BEGIN, ENCRYPTED_HEADER_END,
+                           decrypt_message_with_gpg, encrypt_message_with_gpg, has_encrypted_header)
 from apigee.keyvaluemaps.keyvaluemaps import Keyvaluemaps
+from apigee.keyvaluemaps.serializer import KeyvaluemapsSerializer
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
-from apigee.utils import read_file, write_file
+from apigee.utils import read_file_content, write_content_to_file
 from apigee.verbose import common_verbose_options
 
 
@@ -31,7 +36,7 @@ def _create_keyvaluemap_in_an_environment(
 ):
     return (
         Keyvaluemaps(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .create_keyvaluemap_in_an_environment(environment, body)
         .text
@@ -63,7 +68,7 @@ def _delete_keyvaluemap_from_an_environment(
 ):
     return (
         Keyvaluemaps(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .delete_keyvaluemap_from_an_environment(environment)
         .text
@@ -97,7 +102,7 @@ def _delete_keyvaluemap_entry_in_an_environment(
 ):
     return (
         Keyvaluemaps(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .delete_keyvaluemap_entry_in_an_environment(environment, entry_name)
         .text
@@ -131,7 +136,7 @@ def _get_keyvaluemap_in_an_environment(
 ):
     return (
         Keyvaluemaps(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .get_keyvaluemap_in_an_environment(environment)
         .text
@@ -165,7 +170,7 @@ def _get_a_keys_value_in_an_environment_scoped_keyvaluemap(
 ):
     return (
         Keyvaluemaps(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .get_a_keys_value_in_an_environment_scoped_keyvaluemap(environment, entry_name)
         .text
@@ -200,7 +205,7 @@ def _list_keyvaluemaps_in_an_environment(
     **kwargs
 ):
     return Keyvaluemaps(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).list_keyvaluemaps_in_an_environment(environment, prefix=prefix)
 
 
@@ -231,7 +236,7 @@ def _update_keyvaluemap_in_an_environment(
 ):
     return (
         Keyvaluemaps(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .update_keyvaluemap_in_an_environment(environment, body)
         .text
@@ -267,7 +272,7 @@ def _create_an_entry_in_an_environment_scoped_kvm(
 ):
     return (
         Keyvaluemaps(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .create_an_entry_in_an_environment_scoped_kvm(
             environment, entry_name, entry_value
@@ -306,7 +311,7 @@ def _update_an_entry_in_an_environment_scoped_kvm(
 ):
     return (
         Keyvaluemaps(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .update_an_entry_in_an_environment_scoped_kvm(
             environment, entry_name, updated_value
@@ -345,7 +350,7 @@ def _list_keys_in_an_environment_scoped_keyvaluemap(
 ):
     return (
         Keyvaluemaps(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
         .list_keys_in_an_environment_scoped_keyvaluemap(environment, startkey, count)
         .text
@@ -393,7 +398,7 @@ def _push_keyvaluemap(
     **kwargs
 ):
     return Keyvaluemaps(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).push_keyvaluemap(environment, file, secret=symmetric_key)
 
 
@@ -435,14 +440,14 @@ def push(*args, **kwargs):
     "--symmetric-key", required=True, help="symmetric secret key for encrypting"
 )
 def encrypt_file(symmetric_key, file, verbose, silent):
-    contents = read_file(file, type="json")
+    contents = read_file_content(file, type="json")
     encrypted_count = 0
-    console.echo("Encrypting... ", end="", flush=True)
+    console.echo("Encrypting... ", line_ending="", should_flush=True)
     contents, encrypted_count = Keyvaluemaps.encrypt_keyvaluemap(
         contents, symmetric_key
     )
     if encrypted_count:
-        write_file(contents, file, indent=2)
+        write_content_to_file(contents, file, indentation=2)
         console.echo("Done.")
         return contents
     console.echo("Nothing to encrypt.")
@@ -465,14 +470,14 @@ def encrypt_file(symmetric_key, file, verbose, silent):
     "--symmetric-key", required=True, help="symmetric secret key for decrypting"
 )
 def decrypt_file(symmetric_key, file, verbose, silent):
-    contents = read_file(file, type="json")
+    contents = read_file_content(file, type="json")
     decrypted_count = 0
-    console.echo("Decrypting... ", end="", flush=True)
+    console.echo("Decrypting... ", line_ending="", should_flush=True)
     contents, decrypted_count = Keyvaluemaps.decrypt_keyvaluemap(
         contents, symmetric_key
     )
     if decrypted_count:
-        write_file(contents, file, indent=2)
+        write_content_to_file(contents, file, indentation=2)
         console.echo("Done.")
         return contents
     console.echo("Nothing to decrypt.")

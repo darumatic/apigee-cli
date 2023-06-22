@@ -110,14 +110,19 @@
 <span class="sig-name descname"><span class="pre">add_permissions_for_multiple_resources_to_a_user_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.add_permissions_for_multiple_resources_to_a_user_role" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.auth">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth</span></span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.auth" title="Permalink to this definition"></a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.add_permissions_for_multiple_resources_to_user_role">
+<span class="sig-name descname"><span class="pre">add_permissions_for_multiple_resources_to_user_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint_template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request_body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.add_permissions_for_multiple_resources_to_user_role" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.create_a_user_role_in_an_organization">
 <span class="sig-name descname"><span class="pre">create_a_user_role_in_an_organization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roles</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.create_a_user_role_in_an_organization" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.create_user_role_in_organization">
+<span class="sig-name descname"><span class="pre">create_user_role_in_organization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request_body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.create_user_role_in_organization" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -160,9 +165,9 @@
 <span class="sig-name descname"><span class="pre">list_user_roles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.list_user_roles" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.org_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">org_name</span></span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.org_name" title="Permalink to this definition"></a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.remove_user_membership_from_role">
+<span class="sig-name descname"><span class="pre">remove_user_membership_from_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.remove_user_membership_from_role" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -170,19 +175,19 @@
 <span class="sig-name descname"><span class="pre">remove_user_membership_in_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_email</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.remove_user_membership_in_role" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.role_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">role_name</span></span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.role_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.sort_permissions">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sort_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource_permissions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.sort_permissions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.sort_resource_permissions">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sort_resource_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource_permissions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.sort_resource_permissions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.verify_a_user_roles_permission_on_a_specific_RBAC_resource">
 <span class="sig-name descname"><span class="pre">verify_a_user_roles_permission_on_a_specific_RBAC_resource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">permission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resource_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.verify_a_user_roles_permission_on_a_specific_RBAC_resource" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.userroles.userroles.Userroles.verify_and_fetch_user_role_membership">
+<span class="sig-name descname"><span class="pre">verify_and_fetch_user_role_membership</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.userroles.userroles.Userroles.verify_and_fetch_user_role_membership" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

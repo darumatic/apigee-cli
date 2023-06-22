@@ -95,14 +95,14 @@
 <dt class="sig sig-object py" id="apigee.permissions.permissions.Permissions">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.permissions.permissions.</span></span><span class="sig-name descname"><span class="pre">Permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.permissions.permissions.Permissions" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.permissions.permissions.Permissions.auth">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth</span></span><a class="headerlink" href="#apigee.permissions.permissions.Permissions.auth" title="Permalink to this definition"></a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.permissions.permissions.Permissions.apply_team_permissions_template">
+<span class="sig-name descname"><span class="pre">apply_team_permissions_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.permissions.permissions.Permissions.apply_team_permissions_template" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.permissions.permissions.Permissions.create_permissions">
-<span class="sig-name descname"><span class="pre">create_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.permissions.permissions.Permissions.create_permissions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.permissions.permissions.Permissions.create_role_permissions">
+<span class="sig-name descname"><span class="pre">create_role_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.permissions.permissions.Permissions.create_role_permissions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -110,19 +110,9 @@
 <span class="sig-name descname"><span class="pre">get_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formatted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showindex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tablefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plain'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.permissions.permissions.Permissions.get_permissions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.permissions.permissions.Permissions.org_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">org_name</span></span><a class="headerlink" href="#apigee.permissions.permissions.Permissions.org_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.permissions.permissions.Permissions.role_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">role_name</span></span><a class="headerlink" href="#apigee.permissions.permissions.Permissions.role_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.permissions.permissions.Permissions.team_permissions">
-<span class="sig-name descname"><span class="pre">team_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placeholder_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.permissions.permissions.Permissions.team_permissions" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.permissions.permissions.Permissions.send_create_role_permissions_request">
+<span class="sig-name descname"><span class="pre">send_create_role_permissions_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hdrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.permissions.permissions.Permissions.send_create_role_permissions_request" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

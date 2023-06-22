@@ -4,7 +4,8 @@ import sys
 import click
 
 from apigee import APIGEE_CLI_CREDENTIALS_FILE, APIGEE_CLI_DIRECTORY
-from apigee.utils import make_dirs
+from apigee.utils import create_directory
+from apigee.utils_init import is_truthy_envvar
 
 
 class HiddenSecret(object):
@@ -42,8 +43,7 @@ try:
 except KeyError:
     profile_dict = {k: "" for k in KEY_LIST}
 
-# @click.group(cls=ClickAliasedGroup)
-# @click.command(aliases=['conf', 'config', 'cfg'])
+
 @click.command(help="Configure Apigee Edge credentials.")
 @click.option(
     "-u",
@@ -77,7 +77,7 @@ except KeyError:
 )
 @click.option(
     "--token/--no-token",
-    default=profile_dict["is_token"] in (True, "True", "true", "1"),
+    default=is_truthy_envvar(profile_dict["is_token"]),
     help="specify to use oauth without MFA",
     prompt="Use OAuth, no MFA (optional)?",
     show_default=True,
@@ -115,6 +115,6 @@ def configure(username, password, mfa_secret, token, zonename, org, prefix, prof
     profile_dict["org"] = org
     profile_dict["prefix"] = prefix
     config[profile] = {k: v for k, v in profile_dict.items() if v}
-    make_dirs(APIGEE_CLI_DIRECTORY)
+    create_directory(APIGEE_CLI_DIRECTORY)
     with open(APIGEE_CLI_CREDENTIALS_FILE, "w") as cf:
         config.write(cf)

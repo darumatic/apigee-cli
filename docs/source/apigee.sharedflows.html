@@ -124,19 +124,14 @@
 <dt class="sig sig-object py" id="apigee.sharedflows.sharedflows.Sharedflows">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.sharedflows.sharedflows.</span></span><span class="sig-name descname"><span class="pre">Sharedflows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.sharedflows.sharedflows.Sharedflows.auth">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth</span></span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.auth" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.sharedflows.sharedflows.Sharedflows.delete_a_shared_flow">
-<span class="sig-name descname"><span class="pre">delete_a_shared_flow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shared_flow_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.delete_a_shared_flow" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.sharedflows.sharedflows.Sharedflows.delete_a_shared_flow_revision">
 <span class="sig-name descname"><span class="pre">delete_a_shared_flow_revision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shared_flow_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revision_number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.delete_a_shared_flow_revision" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.sharedflows.sharedflows.Sharedflows.delete_or_undeploy_a_shared_flow">
+<span class="sig-name descname"><span class="pre">delete_or_undeploy_a_shared_flow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hdrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.delete_or_undeploy_a_shared_flow" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -151,7 +146,12 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.sharedflows.sharedflows.Sharedflows.export_shared_flow">
-<span class="sig-name descname"><span class="pre">export_shared_flow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shared_flow_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revision_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs_write</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.export_shared_flow" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">export_shared_flow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shared_flow_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revision_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_to_filesystem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.export_shared_flow" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.sharedflows.sharedflows.Sharedflows.fetch_shared_flow_revisions">
+<span class="sig-name descname"><span class="pre">fetch_shared_flow_revisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.fetch_shared_flow_revisions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -189,9 +189,9 @@
 <span class="sig-name descname"><span class="pre">import_a_shared_flow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shared_flow_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shared_flow_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.import_a_shared_flow" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.sharedflows.sharedflows.Sharedflows.org_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">org_name</span></span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.org_name" title="Permalink to this definition"></a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.sharedflows.sharedflows.Sharedflows.retrieve_shared_flow_revisions">
+<span class="sig-name descname"><span class="pre">retrieve_shared_flow_revisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint_template</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shared_flow_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.sharedflows.sharedflows.Sharedflows.retrieve_shared_flow_revisions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

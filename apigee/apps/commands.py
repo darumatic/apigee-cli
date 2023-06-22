@@ -3,8 +3,7 @@ from click_option_group import MutuallyExclusiveOptionGroup, optgroup
 
 from apigee import console
 from apigee.apps.apps import Apps
-from apigee.auth import common_auth_options, gen_auth
-# from apigee.cls import OptionEatAll
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
@@ -29,7 +28,7 @@ def _create_developer_app(
     **kwargs
 ):
     return (
-        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None)
+        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, None)
         .create_developer_app(developer, body)
         .text
     )
@@ -61,7 +60,7 @@ def _delete_developer_app(
     **kwargs
 ):
     return (
-        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .delete_developer_app(developer)
         .text
     )
@@ -92,7 +91,7 @@ def _create_empty_developer_app(
     **kwargs
 ):
     return (
-        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .create_empty_developer_app(
             developer, display_name=display_name, callback_url=callback_url
         )
@@ -133,7 +132,7 @@ def _get_developer_app_details(
     **kwargs
 ):
     return (
-        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_developer_app_details(developer)
         .text
     )
@@ -152,11 +151,11 @@ def get(*args, **kwargs):
 
 
 def _list_org_apps(
-    username, password, mfa_secret, token, zonename, org, profile, **kwargs
+    username, password, mfa_secret, token, zonename, org, profile, apptype, expand, rows, startkey, status, **kwargs
 ):
     return (
-        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None)
-        .list_org_apps()
+        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, None)
+        .list_org_apps(apptype, expand, rows, startkey, status)
         .text
     )
 
@@ -165,6 +164,11 @@ def _list_org_apps(
 @common_auth_options
 @common_verbose_options
 @common_silent_options
+@click.option("--apptype", default=None, help="The type of the apps that you want to view. The value can be 'company' or 'developer'.")
+@click.option("--expand", is_flag=True, show_default=True, help="Whether to get expanded details for each app.")
+@click.option("--rows", default=None, type=click.INT, help="The number of apps to return.")
+@click.option("--startkey", default=None, help="The ID of the app from which to start displaying the list of apps.")
+@click.option("--status", default=None, help="The status of the apps that you want to view. The value can be 'approved' or 'revoked'.")
 def list_org_apps(*args, **kwargs):
     console.echo(_list_org_apps(*args, **kwargs))
 
@@ -173,7 +177,7 @@ def _get_org_app(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_org_app()
         .text
     )
@@ -204,7 +208,7 @@ def _list_developer_apps(
     **kwargs
 ):
     return Apps(
-        gen_auth(username, password, mfa_secret, token, zonename), org, None
+        generate_authentication(username, password, mfa_secret, token, zonename), org, None
     ).list_developer_apps(
         developer, prefix=prefix, expand=expand, count=count, startkey=startkey
     )
@@ -266,11 +270,8 @@ def _delete_key_for_a_developer_app(
     **kwargs
 ):
     return (
-        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
-        .delete_key_for_a_developer_app(
-            developer,
-            consumer_key=consumer_key,
-        )
+        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
+        .delete_key_for_a_developer_app(developer, consumer_key=consumer_key,)
         .text
     )
 
@@ -301,11 +302,9 @@ def _update_key_for_a_developer_app(
     **kwargs
 ):
     return (
-        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .update_key_for_a_developer_app(
-            developer,
-            consumer_key=consumer_key,
-            action=action,
+            developer, consumer_key=consumer_key, action=action,
         )
         .text
     )
@@ -351,13 +350,11 @@ def _create_a_consumer_key_and_secret(
     secret_length=32,
     key_suffix=None,
     key_delimiter="-",
-    products=None,
+    products=[],
     **kwargs
 ):
-    if products is None:
-        products = []
     return (
-        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .create_a_consumer_key_and_secret(
             developer,
             consumer_key=consumer_key,
@@ -441,8 +438,8 @@ def _restore_app(
     username, password, mfa_secret, token, zonename, org, profile, file, **kwargs
 ):
     return (
-        Apps(gen_auth(username, password, mfa_secret, token, zonename), org, None)
-        .restore_app(file)
+        Apps(generate_authentication(username, password, mfa_secret, token, zonename), org, None)
+        .restore_and_update_app_details(file)
         .text
     )
 

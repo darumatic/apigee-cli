@@ -86,15 +86,94 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
+<section id="module-apigee.apis.api_puller_with_dependency_extraction">
+<span id="apigee-apis-api-puller-with-dependency-extraction-module"></span><h2>apigee.apis.api_puller_with_dependency_extraction module<a class="headerlink" href="#module-apigee.apis.api_puller_with_dependency_extraction" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.apis.api_puller_with_dependency_extraction.</span></span><span class="sig-name descname"><span class="pre">ApiPullerWithDependencyExtraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revision_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">working_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.apiproxy_dir">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">apiproxy_dir</span></span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.apiproxy_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.caches_dir">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">caches_dir</span></span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.caches_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_and_extract_api_proxy">
+<span class="sig-name descname"><span class="pre">export_and_extract_api_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_and_extract_api_proxy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_cache_dependencies">
+<span class="sig-name descname"><span class="pre">export_cache_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caches</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_cache_dependencies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_keyvaluemap_dependencies">
+<span class="sig-name descname"><span class="pre">export_keyvaluemap_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyvaluemaps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_keyvaluemap_dependencies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_resource_dependencies_using_getattr">
+<span class="sig-name descname"><span class="pre">export_resource_dependencies_using_getattr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_resource_dependencies_using_getattr" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_targetserver_dependencies">
+<span class="sig-name descname"><span class="pre">export_targetserver_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetservers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.export_targetserver_dependencies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.get_apiproxy_files">
+<span class="sig-name descname"><span class="pre">get_apiproxy_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.get_apiproxy_files" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.get_cache_dependencies">
+<span class="sig-name descname"><span class="pre">get_cache_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.get_cache_dependencies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.get_keyvaluemap_dependencies">
+<span class="sig-name descname"><span class="pre">get_keyvaluemap_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.get_keyvaluemap_dependencies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.get_targetserver_dependencies">
+<span class="sig-name descname"><span class="pre">get_targetserver_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.get_targetserver_dependencies" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.keyvaluemaps_dir">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">keyvaluemaps_dir</span></span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.keyvaluemaps_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.targetservers_dir">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">targetservers_dir</span></span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.targetservers_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.working_directory">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">working_directory</span></span><a class="headerlink" href="#apigee.apis.api_puller_with_dependency_extraction.ApiPullerWithDependencyExtraction.working_directory" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-apigee.apis.apis">
 <span id="apigee-apis-apis-module"></span><h2>apigee.apis.apis module<a class="headerlink" href="#module-apigee.apis.apis" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="apigee.apis.apis.Apis">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.apis.apis.</span></span><span class="sig-name descname"><span class="pre">Apis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.apis.Apis.auth">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth</span></span><a class="headerlink" href="#apigee.apis.apis.Apis.auth" title="Permalink to this definition"></a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.apis.apis.Apis.delete_api_proxy">
+<span class="sig-name descname"><span class="pre">delete_api_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.delete_api_proxy" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -114,7 +193,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.apis.apis.Apis.export_api_proxy">
-<span class="sig-name descname"><span class="pre">export_api_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revision_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fs_write</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.export_api_proxy" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">export_api_proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revision_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_to_filesystem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.export_api_proxy" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -135,11 +214,6 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.apis.apis.Apis.list_api_proxy_revisions">
 <span class="sig-name descname"><span class="pre">list_api_proxy_revisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.apis.Apis.list_api_proxy_revisions" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.apis.Apis.org_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">org_name</span></span><a class="headerlink" href="#apigee.apis.apis.Apis.org_name" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -202,109 +276,8 @@
 <dd></dd></dl>
 
 </section>
-<section id="module-apigee.apis.pull">
-<span id="apigee-apis-pull-module"></span><h2>apigee.apis.pull module<a class="headerlink" href="#module-apigee.apis.pull" title="Permalink to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.apis.pull.</span></span><span class="sig-name descname"><span class="pre">PullApis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revision_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">work_tree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.pull.PullApis" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.apiproxy_dir">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">apiproxy_dir</span></span><a class="headerlink" href="#apigee.apis.pull.PullApis.apiproxy_dir" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.auth">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth</span></span><a class="headerlink" href="#apigee.apis.pull.PullApis.auth" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.caches_dir">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">caches_dir</span></span><a class="headerlink" href="#apigee.apis.pull.PullApis.caches_dir" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.call_export_method">
-<span class="sig-name descname"><span class="pre">call_export_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">resource_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.pull.PullApis.call_export_method" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.environment">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">environment</span></span><a class="headerlink" href="#apigee.apis.pull.PullApis.environment" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.export_cache_dependencies">
-<span class="sig-name descname"><span class="pre">export_cache_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caches</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expc_verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.pull.PullApis.export_cache_dependencies" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.export_keyvaluemap_dependencies">
-<span class="sig-name descname"><span class="pre">export_keyvaluemap_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyvaluemaps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expc_verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.pull.PullApis.export_keyvaluemap_dependencies" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.export_targetserver_dependencies">
-<span class="sig-name descname"><span class="pre">export_targetserver_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targetservers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expc_verbosity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.pull.PullApis.export_targetserver_dependencies" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.get_apiproxy_files">
-<span class="sig-name descname"><span class="pre">get_apiproxy_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.pull.PullApis.get_apiproxy_files" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.get_cache_dependencies">
-<span class="sig-name descname"><span class="pre">get_cache_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.pull.PullApis.get_cache_dependencies" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.get_keyvaluemap_dependencies">
-<span class="sig-name descname"><span class="pre">get_keyvaluemap_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.pull.PullApis.get_keyvaluemap_dependencies" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.get_targetserver_dependencies">
-<span class="sig-name descname"><span class="pre">get_targetserver_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.pull.PullApis.get_targetserver_dependencies" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.keyvaluemaps_dir">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">keyvaluemaps_dir</span></span><a class="headerlink" href="#apigee.apis.pull.PullApis.keyvaluemaps_dir" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.org_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">org_name</span></span><a class="headerlink" href="#apigee.apis.pull.PullApis.org_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.pull">
-<span class="sig-name descname"><span class="pre">pull</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.pull.PullApis.pull" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.revision_number">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">revision_number</span></span><a class="headerlink" href="#apigee.apis.pull.PullApis.revision_number" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.targetservers_dir">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">targetservers_dir</span></span><a class="headerlink" href="#apigee.apis.pull.PullApis.targetservers_dir" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.work_tree">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">work_tree</span></span><a class="headerlink" href="#apigee.apis.pull.PullApis.work_tree" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.apis.pull.PullApis.zip_file">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">zip_file</span></span><a class="headerlink" href="#apigee.apis.pull.PullApis.zip_file" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<section id="apigee-apis-pull-module">
+<h2>apigee.apis.pull module<a class="headerlink" href="#apigee-apis-pull-module" title="Permalink to this heading"></a></h2>
 </section>
 <section id="module-apigee.apis.serializer">
 <span id="apigee-apis-serializer-module"></span><h2>apigee.apis.serializer module<a class="headerlink" href="#module-apigee.apis.serializer" title="Permalink to this heading"></a></h2>
@@ -314,17 +287,17 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.apis.serializer.ApisSerializer.filter_deployed_revisions">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_deployed_revisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.filter_deployed_revisions" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_deployed_revisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">revision_details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.filter_deployed_revisions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.apis.serializer.ApisSerializer.filter_deployment_details">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_deployment_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.filter_deployment_details" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_deployment_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_details</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.filter_deployment_details" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="apigee.apis.serializer.ApisSerializer.filter_undeployed_revisions">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_undeployed_revisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">revisions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_last</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.filter_undeployed_revisions" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filter_undeployed_revisions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_revisions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployed_revisions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_last</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.apis.serializer.ApisSerializer.filter_undeployed_revisions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

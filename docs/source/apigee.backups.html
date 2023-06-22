@@ -89,77 +89,148 @@
 <section id="module-apigee.backups.backups">
 <span id="apigee-backups-backups-module"></span><h2>apigee.backups.backups module<a class="headerlink" href="#module-apigee.backups.backups" title="Permalink to this heading"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.backups.backups.</span></span><span class="sig-name descname"><span class="pre">Backups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">org_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">work_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'apiproducts',</span> <span class="pre">'apis',</span> <span class="pre">'apps',</span> <span class="pre">'caches',</span> <span class="pre">'developers',</span> <span class="pre">'keyvaluemaps',</span> <span class="pre">'targetservers',</span> <span class="pre">'userroles'}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">envs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.backups.backups.</span></span><span class="sig-name descname"><span class="pre">BackupConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">api_choices:</span> <span class="pre">Set[str],</span> <span class="pre">authentication:</span> <span class="pre">apigee.types.Struct,</span> <span class="pre">environments:</span> <span class="pre">List[str],</span> <span class="pre">org_name:</span> <span class="pre">str,</span> <span class="pre">prefix:</span> <span class="pre">Optional[str],</span> <span class="pre">working_directory:</span> <span class="pre">str,</span> <span class="pre">progress_bar:</span> <span class="pre">Any</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">snapshot_data:</span> <span class="pre">apigee.types.Struct</span> <span class="pre">=</span> <span class="pre">&lt;apigee.types.Struct</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x7fe9f7b382b0&gt;,</span> <span class="pre">snapshot_size:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">working_org_directory:</span> <span class="pre">Optional[pathlib.Path]</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.BackupConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py property">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.apis">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">apis</span></span><a class="headerlink" href="#apigee.backups.backups.Backups.apis" title="Permalink to this definition"></a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig.api_choices">
+<span class="sig-name descname"><span class="pre">api_choices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#apigee.backups.backups.BackupConfig.api_choices" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig.authentication">
+<span class="sig-name descname"><span class="pre">authentication</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="apigee.html#apigee.types.Struct" title="apigee.types.Struct"><span class="pre">Struct</span></a></em><a class="headerlink" href="#apigee.backups.backups.BackupConfig.authentication" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig.environments">
+<span class="sig-name descname"><span class="pre">environments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#apigee.backups.backups.BackupConfig.environments" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig.org_name">
+<span class="sig-name descname"><span class="pre">org_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#apigee.backups.backups.BackupConfig.org_name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig.prefix">
+<span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#apigee.backups.backups.BackupConfig.prefix" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig.progress_bar">
+<span class="sig-name descname"><span class="pre">progress_bar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#apigee.backups.backups.BackupConfig.progress_bar" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig.snapshot_data">
+<span class="sig-name descname"><span class="pre">snapshot_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="apigee.html#apigee.types.Struct" title="apigee.types.Struct"><span class="pre">Struct</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;apigee.types.Struct</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#apigee.backups.backups.BackupConfig.snapshot_data" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig.snapshot_size">
+<span class="sig-name descname"><span class="pre">snapshot_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#apigee.backups.backups.BackupConfig.snapshot_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig.working_directory">
+<span class="sig-name descname"><span class="pre">working_directory</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#apigee.backups.backups.BackupConfig.working_directory" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="apigee.backups.backups.BackupConfig.working_org_directory">
+<span class="sig-name descname"><span class="pre">working_org_directory</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#apigee.backups.backups.BackupConfig.working_org_directory" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apigee.backups.backups.</span></span><span class="sig-name descname"><span class="pre">Backups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#apigee.backups.backups.BackupConfig" title="apigee.backups.backups.BackupConfig"><span class="pre">BackupConfig</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.calculate_total_snapshot_size">
+<span class="sig-name descname"><span class="pre">calculate_total_snapshot_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.calculate_total_snapshot_size" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.calculate_snapshot_size">
-<span class="sig-name descname"><span class="pre">calculate_snapshot_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.calculate_snapshot_size" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.create_apiproducts_snapshot">
+<span class="sig-name descname"><span class="pre">create_apiproducts_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.create_apiproducts_snapshot" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_apiproducts">
-<span class="sig-name descname"><span class="pre">download_apiproducts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apiproducts" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.create_apis_snapshot">
+<span class="sig-name descname"><span class="pre">create_apis_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.create_apis_snapshot" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_apiproducts_snapshot">
-<span class="sig-name descname"><span class="pre">download_apiproducts_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apiproducts_snapshot" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.create_apps_snapshot">
+<span class="sig-name descname"><span class="pre">create_apps_snapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expand</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.create_apps_snapshot" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_apis">
-<span class="sig-name descname"><span class="pre">download_apis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apis" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.create_caches_snapshot">
+<span class="sig-name descname"><span class="pre">create_caches_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.create_caches_snapshot" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_apis_snapshot">
-<span class="sig-name descname"><span class="pre">download_apis_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apis_snapshot" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.create_developers_snapshot">
+<span class="sig-name descname"><span class="pre">create_developers_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.create_developers_snapshot" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_apps">
-<span class="sig-name descname"><span class="pre">download_apps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apps" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.create_keyvaluemaps_snapshot">
+<span class="sig-name descname"><span class="pre">create_keyvaluemaps_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.create_keyvaluemaps_snapshot" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_apps_snapshot">
-<span class="sig-name descname"><span class="pre">download_apps_snapshot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expand</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_apps_snapshot" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.create_targetservers_snapshot">
+<span class="sig-name descname"><span class="pre">create_targetservers_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.create_targetservers_snapshot" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_caches">
-<span class="sig-name descname"><span class="pre">download_caches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_caches" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.create_userroles_snapshot">
+<span class="sig-name descname"><span class="pre">create_userroles_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.create_userroles_snapshot" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_caches_snapshot">
-<span class="sig-name descname"><span class="pre">download_caches_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_caches_snapshot" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_and_save_apiproducts">
+<span class="sig-name descname"><span class="pre">download_and_save_apiproducts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_and_save_apiproducts" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_developers">
-<span class="sig-name descname"><span class="pre">download_developers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_developers" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_and_save_apis">
+<span class="sig-name descname"><span class="pre">download_and_save_apis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_and_save_apis" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_developers_snapshot">
-<span class="sig-name descname"><span class="pre">download_developers_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_developers_snapshot" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_and_save_apps">
+<span class="sig-name descname"><span class="pre">download_and_save_apps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_and_save_apps" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_keyvaluemaps">
-<span class="sig-name descname"><span class="pre">download_keyvaluemaps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_keyvaluemaps" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_and_save_caches">
+<span class="sig-name descname"><span class="pre">download_and_save_caches</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_and_save_caches" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_keyvaluemaps_snapshot">
-<span class="sig-name descname"><span class="pre">download_keyvaluemaps_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_keyvaluemaps_snapshot" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_and_save_developers">
+<span class="sig-name descname"><span class="pre">download_and_save_developers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_and_save_developers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_and_save_keyvaluemaps">
+<span class="sig-name descname"><span class="pre">download_and_save_keyvaluemaps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_and_save_keyvaluemaps" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_and_save_targetservers">
+<span class="sig-name descname"><span class="pre">download_and_save_targetservers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_and_save_targetservers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_and_save_userroles">
+<span class="sig-name descname"><span class="pre">download_and_save_userroles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_and_save_userroles" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -168,53 +239,28 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_targetservers">
-<span class="sig-name descname"><span class="pre">download_targetservers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_targetservers" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_targetservers_snapshot">
-<span class="sig-name descname"><span class="pre">download_targetservers_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_targetservers_snapshot" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_userroles">
-<span class="sig-name descname"><span class="pre">download_userroles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_userroles" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_userroles_snapshot">
-<span class="sig-name descname"><span class="pre">download_userroles_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_userroles_snapshot" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="apigee.backups.backups.Backups.download_users_for_a_role">
 <span class="sig-name descname"><span class="pre">download_users_for_a_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.download_users_for_a_role" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.get_snapshots">
-<span class="sig-name descname"><span class="pre">get_snapshots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.get_snapshots" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.fetch_and_generate_snapshots">
+<span class="sig-name descname"><span class="pre">fetch_and_generate_snapshots</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.fetch_and_generate_snapshots" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.log_error">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append_msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.log_error" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.generate_snapshot_files_and_download_data">
+<span class="sig-name descname"><span class="pre">generate_snapshot_files_and_download_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.generate_snapshot_files_and_download_data" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subpath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.save" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.save_content_to_file">
+<span class="sig-name descname"><span class="pre">save_content_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subpath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.save_content_to_file" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.take_snapshot">
-<span class="sig-name descname"><span class="pre">take_snapshot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.take_snapshot" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="apigee.backups.backups.Backups.update_progress">
-<span class="sig-name descname"><span class="pre">update_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.update_progress" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="apigee.backups.backups.Backups.update_progress_bar">
+<span class="sig-name descname"><span class="pre">update_progress_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#apigee.backups.backups.Backups.update_progress_bar" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

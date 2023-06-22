@@ -1,7 +1,7 @@
 import click
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 # from apigee.cls import OptionEatAll
 # from apigee.prefix import common_prefix_options
 from apigee.silent import common_silent_options
@@ -29,7 +29,7 @@ def _add_a_user_to_a_role(
     **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .add_a_user_to_a_role(user_email)
         .text
     )
@@ -49,7 +49,7 @@ def _add_permissions_for_a_resource_to_a_user_role(
     username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .add_permissions_for_a_resource_to_a_user_role(body)
         .text
     )
@@ -69,7 +69,7 @@ def _add_permissions_for_multiple_resources_to_a_user_role(
     username, password, mfa_secret, token, zonename, org, profile, name, body, **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .add_permissions_for_multiple_resources_to_a_user_role(body)
         .text
     )
@@ -93,7 +93,7 @@ def _create_a_user_role_in_an_organization(
     username, password, mfa_secret, token, zonename, org, profile, names, **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, None)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, None)
         .create_a_user_role_in_an_organization(names)
         .text
     )
@@ -125,7 +125,7 @@ def _delete_a_permission_for_a_resource(
     **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .delete_a_permission_for_a_resource(permission, resource_path)
         .text
     )
@@ -157,7 +157,7 @@ def _delete_resource_from_permissions(
     **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .delete_resource_from_permissions(resource_path)
         .text
     )
@@ -179,7 +179,7 @@ def _delete_a_user_role(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .delete_a_user_role()
         .text
     )
@@ -200,7 +200,7 @@ def _get_a_role(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_a_role()
         .text
     )
@@ -228,7 +228,7 @@ def _get_resource_permissions_for_a_specific_role(
     **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_resource_permissions_for_a_specific_role(resource_path=resource_path)
         .text
     )
@@ -250,7 +250,7 @@ def _get_users_for_a_role(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .get_users_for_a_role()
         .text
     )
@@ -269,7 +269,7 @@ def _list_permissions_for_a_resource(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .list_permissions_for_a_resource()
         .text
     )
@@ -290,7 +290,7 @@ def _list_user_roles(
     username, password, mfa_secret, token, zonename, org, profile, **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, None)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, None)
         .list_user_roles()
         .text
     )
@@ -318,7 +318,7 @@ def _remove_user_membership_in_role(
     **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .remove_user_membership_in_role(user_email)
         .text
     )
@@ -348,7 +348,7 @@ def _verify_a_user_roles_permission_on_a_specific_RBAC_resource(
     **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .verify_a_user_roles_permission_on_a_specific_RBAC_resource(
             permission, resource_path
         )
@@ -384,7 +384,7 @@ def _verify_user_role_membership(
     **kwargs
 ):
     return (
-        Userroles(gen_auth(username, password, mfa_secret, token, zonename), org, name)
+        Userroles(generate_authentication(username, password, mfa_secret, token, zonename), org, name)
         .verify_user_role_membership(user_email)
         .text
     )

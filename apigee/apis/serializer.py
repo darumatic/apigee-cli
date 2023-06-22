@@ -1,33 +1,30 @@
 import json
 
-from apigee.utils import remove_last_items_from_list, run_func_on_iterable
+from apigee.utils import remove_last_elements, apply_function_on_iterable
 
 
 class ApisSerializer:
     @staticmethod
-    def filter_deployed_revisions(details):
-        return list(
-            set(
-                run_func_on_iterable(
-                    details, lambda d: d["revision"], state_op="extend"
-                )
-            )
-        )
+    def filter_deployed_revisions(revision_details):
+        revisions = apply_function_on_iterable(revision_details, lambda d: d["revision"], state_operation="extend")
+        unique_revisions = set(revisions)
+        return list(unique_revisions)
 
     @staticmethod
-    def filter_deployment_details(details):
-        return run_func_on_iterable(
-            details["environment"],
-            lambda d: {
-                "name": d["name"],
-                "revision": [revision["name"] for revision in d["revision"]],
+    def filter_deployment_details(deployment_details):
+        return apply_function_on_iterable(
+            deployment_details["environment"],
+            lambda env: {
+                "name": env["name"],
+                "revision": [revision["name"] for revision in env["revision"]],
             },
         )
 
     @staticmethod
-    def filter_undeployed_revisions(revisions, deployed, save_last=0):
-        undeployed = [int(rev) for rev in revisions if rev not in set(deployed)]
-        return remove_last_items_from_list(sorted(undeployed), save_last)
+    def filter_undeployed_revisions(all_revisions, deployed_revisions, save_last=0):
+        undeployed_revisions = [int(rev) for rev in all_revisions if rev not in set(deployed_revisions)]
+        sorted_undeployed_revisions = sorted(undeployed_revisions)
+        return remove_last_elements(sorted_undeployed_revisions, save_last)
 
     @staticmethod
     def serialize_details(apis, format, prefix=None):

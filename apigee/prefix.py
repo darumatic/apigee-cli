@@ -1,8 +1,8 @@
 import configparser
-import contextlib
 
 import click
 
+import contextlib
 from apigee import APIGEE_CLI_CREDENTIALS_FILE
 
 

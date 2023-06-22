@@ -2,7 +2,7 @@ import click
 from click_option_group import RequiredMutuallyExclusiveOptionGroup, optgroup
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.prefix import common_prefix_options
 from apigee.sharedflows.sharedflows import Sharedflows
 from apigee.silent import common_silent_options
@@ -29,7 +29,7 @@ def _delete_a_shared_flow_revision(
     **kwargs,
 ):
     return (
-        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .delete_a_shared_flow_revision(name, revision_number)
         .text
     )
@@ -53,7 +53,7 @@ def _get_a_list_of_shared_flows(
     username, password, mfa_secret, token, zonename, org, profile, prefix=None, **kwargs
 ):
     return Sharedflows(
-        gen_auth(username, password, mfa_secret, token, zonename), org
+        generate_authentication(username, password, mfa_secret, token, zonename), org
     ).get_a_list_of_shared_flows(prefix=prefix)
 
 
@@ -72,7 +72,7 @@ def _import_a_shared_flow(
     username, password, mfa_secret, token, zonename, org, profile, file, name, **kwargs
 ):
     return (
-        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .import_a_shared_flow(file, name)
         .text
     )
@@ -106,7 +106,7 @@ def _get_a_shared_flow(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .get_a_shared_flow(name)
         .text
     )
@@ -140,7 +140,7 @@ def _deploy_a_shared_flow(
     **kwargs,
 ):
     return (
-        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .deploy_a_shared_flow(
             environment,
             name,
@@ -205,7 +205,7 @@ def _undeploy_a_shared_flow(
     **kwargs,
 ):
     return (
-        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .undeploy_a_shared_flow(environment, name, revision_number)
         .text
     )
@@ -237,7 +237,7 @@ def _get_deployment_environments_for_shared_flows(
     **kwargs,
 ):
     return (
-        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .get_deployment_environments_for_shared_flows(name, revision_number)
         .text
     )
@@ -271,7 +271,7 @@ def _delete_undeployed_revisions(
     **kwargs,
 ):
     return Sharedflows(
-        gen_auth(username, password, mfa_secret, token, zonename), org
+        generate_authentication(username, password, mfa_secret, token, zonename), org
     ).delete_undeployed_revisions(name, save_last=save_last, dry_run=dry_run)
 
 
@@ -321,7 +321,7 @@ def _get_the_shared_flow_attached_to_a_flow_hook(
     **kwargs,
 ):
     return (
-        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .get_the_shared_flow_attached_to_a_flow_hook(environment, flow_hook)
         .text
     )
@@ -345,7 +345,7 @@ def _get_shared_flow_deployments(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .get_shared_flow_deployments(name)
         .text
     )
@@ -364,7 +364,7 @@ def _get_shared_flow_revisions(
     username, password, mfa_secret, token, zonename, org, profile, name, **kwargs
 ):
     return (
-        Sharedflows(gen_auth(username, password, mfa_secret, token, zonename), org)
+        Sharedflows(generate_authentication(username, password, mfa_secret, token, zonename), org)
         .get_shared_flow_revisions(name)
         .text
     )
@@ -389,14 +389,17 @@ def _export_shared_flow(
     profile,
     name,
     revision_number,
-    fs_write=True,
+    write_to_filesystem=True,
     output_file=None,
     **kwargs,
 ):
     return Sharedflows(
-        gen_auth(username, password, mfa_secret, token, zonename), org
+        generate_authentication(username, password, mfa_secret, token, zonename), org
     ).export_shared_flow(
-        name, revision_number, output_file or f"{name}.zip", fs_write=True
+        name,
+        revision_number,
+        output_file if output_file else f"{name}.zip",
+        write_to_filesystem=True,
     )
 
 

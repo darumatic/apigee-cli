@@ -27,6 +27,4 @@ class DeploymentsSerializer:
             elif showindex == "never" or showindex is False:
                 headers = ["name", "revision", "state"]
             return tabulate(table, headers, showindex=showindex, tablefmt=tablefmt)
-        else:
-            raise ValueError(format)
-        return deployment_details
+        raise ValueError(format)

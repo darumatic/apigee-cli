@@ -5,65 +5,28 @@ from requests.exceptions import HTTPError
 
 from apigee import APIGEE_ADMIN_API_URL, auth, console
 from apigee.targetservers.serializer import TargetserversSerializer
-from apigee.utils import read_file
+from apigee.utils import read_file_content
 
-CREATE_A_TARGETSERVER_PATH = (
-    "{api_url}/v1/organizations/{org}/environments/{environment}/targetservers"
-)
-DELETE_A_TARGETSERVER_PATH = (
-    "{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}"
-)
-LIST_TARGETSERVERS_IN_AN_ENVIRONMENT_PATH = (
-    "{api_url}/v1/organizations/{org}/environments/{environment}/targetservers"
-)
-GET_TARGETSERVER_PATH = (
-    "{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}"
-)
-UPDATE_A_TARGETSERVER_PATH = (
-    "{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}"
-)
+CREATE_A_TARGETSERVER_PATH = "{api_url}/v1/organizations/{org}/environments/{environment}/targetservers"
+DELETE_A_TARGETSERVER_PATH = "{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}"
+LIST_TARGETSERVERS_IN_AN_ENVIRONMENT_PATH = "{api_url}/v1/organizations/{org}/environments/{environment}/targetservers"
+GET_TARGETSERVER_PATH = "{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}"
+UPDATE_A_TARGETSERVER_PATH = "{api_url}/v1/organizations/{org}/environments/{environment}/targetservers/{name}"
 
 
 class Targetservers:
     def __init__(self, auth, org_name, targetserver_name):
-        self._auth = auth
-        self._org_name = org_name
-        self._targetserver_name = targetserver_name
-
-    def __call__(self):
-        pass
-
-    @property
-    def auth(self):
-        return self._auth
-
-    @auth.setter
-    def auth(self, value):
-        self._auth = value
-
-    @property
-    def org_name(self):
-        return self._org_name
-
-    @org_name.setter
-    def org_name(self, value):
-        self._org_name = value
-
-    @property
-    def targetserver_name(self):
-        return self._targetserver_name
-
-    @targetserver_name.setter
-    def targetserver_name(self, value):
-        self._targetserver_name = value
+        self.auth = auth
+        self.org_name = org_name
+        self.targetserver_name = targetserver_name
 
     def create_a_targetserver(self, environment, request_body):
         uri = CREATE_A_TARGETSERVER_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
+            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, environment=environment
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
+        hdrs = auth.set_authentication_headers(
+            self.auth,
+            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         body = json.loads(request_body)
         resp = requests.post(uri, headers=hdrs, json=body)
@@ -73,11 +36,11 @@ class Targetservers:
     def delete_a_targetserver(self, environment):
         uri = DELETE_A_TARGETSERVER_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
+            org=self.org_name,
             environment=environment,
-            name=self._targetserver_name,
+            name=self.targetserver_name,
         )
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+        hdrs = auth.set_authentication_headers(self.auth, custom_headers={"Accept": "application/json"})
         resp = requests.delete(uri, headers=hdrs)
         resp.raise_for_status()
         return resp
@@ -86,23 +49,24 @@ class Targetservers:
         self, environment, prefix=None, format="json"
     ):
         uri = LIST_TARGETSERVERS_IN_AN_ENVIRONMENT_PATH.format(
-            api_url=APIGEE_ADMIN_API_URL, org=self._org_name, environment=environment
+            api_url=APIGEE_ADMIN_API_URL, org=self.org_name, environment=environment
         )
-        resp = self._extracted_from_get_targetserver_7(uri)
+        resp = self.fetch_target_server_data(uri)
         return TargetserversSerializer().serialize_details(resp, format, prefix=prefix)
 
     def get_targetserver(self, environment):
         uri = GET_TARGETSERVER_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
+            org=self.org_name,
             environment=environment,
-            name=self._targetserver_name,
+            name=self.targetserver_name,
         )
-        return self._extracted_from_get_targetserver_7(uri)
+        return self.fetch_target_server_data(uri)
 
-    # TODO Rename this here and in `list_targetservers_in_an_environment` and `get_targetserver`
-    def _extracted_from_get_targetserver_7(self, uri):
-        hdrs = auth.set_header(self._auth, headers={"Accept": "application/json"})
+    def fetch_target_server_data(self, uri):
+        hdrs = auth.set_authentication_headers(
+            self.auth, custom_headers={"Accept": "application/json"}
+        )
         result = requests.get(uri, headers=hdrs)
         result.raise_for_status()
         return result
@@ -110,13 +74,13 @@ class Targetservers:
     def update_a_targetserver(self, environment, request_body):
         uri = UPDATE_A_TARGETSERVER_PATH.format(
             api_url=APIGEE_ADMIN_API_URL,
-            org=self._org_name,
+            org=self.org_name,
             environment=environment,
-            name=self._targetserver_name,
+            name=self.targetserver_name,
         )
-        hdrs = auth.set_header(
-            self._auth,
-            headers={"Accept": "application/json", "Content-Type": "application/json"},
+        hdrs = auth.set_authentication_headers(
+            self.auth,
+            custom_headers={"Accept": "application/json", "Content-Type": "application/json"},
         )
         body = json.loads(request_body)
         resp = requests.put(uri, headers=hdrs, json=body)
@@ -124,18 +88,18 @@ class Targetservers:
         return resp
 
     def push_targetserver(self, environment, file):
-        targetserver = read_file(file, type="json")
-        self._targetserver_name = targetserver["name"]
+        targetserver = read_file_content(file, type="json")
+        self.targetserver_name = targetserver["name"]
         try:
             self.get_targetserver(environment)
-            console.echo(f"Updating {self._targetserver_name}")
+            console.echo(f"Updating {self.targetserver_name}")
             console.echo(
                 self.update_a_targetserver(environment, json.dumps(targetserver)).text
             )
         except HTTPError as e:
             if e.response.status_code != 404:
                 raise e
-            console.echo(f"Creating {self._targetserver_name}")
+            console.echo(f"Creating {self.targetserver_name}")
             console.echo(
                 self.create_a_targetserver(environment, json.dumps(targetserver)).text
             )

@@ -2,7 +2,7 @@ import click
 from click_aliases import ClickAliasedGroup
 
 from apigee import console
-from apigee.auth import common_auth_options, gen_auth
+from apigee.auth import common_auth_options, generate_authentication
 from apigee.permissions.permissions import Permissions
 from apigee.silent import common_silent_options
 from apigee.verbose import common_verbose_options
@@ -43,9 +43,9 @@ def _create_permissions(
 ):
     return (
         Permissions(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
-        .create_permissions(body)
+        .create_role_permissions(body)
         .text
     )
 
@@ -76,9 +76,9 @@ def _team_permissions(
 ):
     return (
         Permissions(
-            gen_auth(username, password, mfa_secret, token, zonename), org, name
+            generate_authentication(username, password, mfa_secret, token, zonename), org, name
         )
-        .team_permissions(
+        .apply_team_permissions_template(
             file, placeholder_key=placeholder_key, placeholder_value=placeholder_value
         )
         .text
@@ -129,7 +129,7 @@ def _get_permissions(
     **kwargs
 ):
     return Permissions(
-        gen_auth(username, password, mfa_secret, token, zonename), org, name
+        generate_authentication(username, password, mfa_secret, token, zonename), org, name
     ).get_permissions(
         formatted=True,
         format="text" if format == "json" else format,
