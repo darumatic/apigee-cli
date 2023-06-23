@@ -115,7 +115,7 @@ or Continuous Integration/Continuous Deployment (CI/CD).
 When to use this over the official tool
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`Apigee Corporation maintains their own fully-featured CLI for the Apigee Management API`_
+Apigee Corporation maintains their own `fully-featured CLI`_ for the Apigee Management API
 that can be used as an SDK to orchestrate tasks and may be more than suitable for your needs.
 
 We built and use the Apigee CLI to implement and distribute features that allow our clients
@@ -144,7 +144,7 @@ Disclaimer
 This is not an officially supported Google product.
 
 
-.. _`Apigee Corporation maintains their own fully-featured CLI for the Apigee Management API`: https://github.com/apigee/apigeetool-node
+.. _`fully-featured CLI`: https://github.com/apigee/apigeetool-node
 
 .. |Upload Python Package badge| image:: https://github.com/mdelotavo/apigee-cli/workflows/Upload%20Python%20Package/badge.svg
     :target: https://github.com/mdelotavo/apigee-cli/actions?query=workflow%3A%22Upload+Python+Package%22
