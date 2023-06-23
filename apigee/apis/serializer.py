@@ -6,7 +6,7 @@ from apigee.utils import remove_last_elements, apply_function_on_iterable
 class ApisSerializer:
     @staticmethod
     def filter_deployed_revisions(revision_details):
-        revisions = apply_function_on_iterable(revision_details, lambda d: d["revision"], state_operation="extend")
+        revisions = apply_function_on_iterable(revision_details, lambda d: d["revision"], state_op="extend")
         unique_revisions = set(revisions)
         return list(unique_revisions)
 
