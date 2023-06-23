@@ -7,8 +7,8 @@ from apigee import utils_init
 APP = "apigeecli"
 CMD = "apigee"
 __version__ = "0.53.1"
-description = "(Unofficial) Apigee Management API command-line interface with multi-factor authentication (MFA) and single sign-on (SSO)/SAML support"
-long_description = """(Unofficial) Apigee Management API command-line interface with multi-factor authentication (MFA) and single sign-on (SSO)/SAML support"""
+description = "apigee-cli is an unofficial command-line interface tool designed to simplify the use of the Apigee Edge Management API"
+long_description = """apigee-cli is an unofficial command-line interface tool designed to simplify the use of the Apigee Edge Management API. It provides a user-friendly experience with features such as SSO support. While Google or Apigee does not officially support the tool, it can be used for general administrative tasks, as a developer package, and to support automation for common development tasks such as CI/CD. With the apigee-cli, you can manage your Apigee Edge credentials using environment variables, config files, or command-line arguments. The tool is highly experimental and is not affiliated with Apigee or Google. For more information on getting started with the apigee-cli or for troubleshooting help, refer to the documentation and links provided."""
 
 APIGEE_CLI_DIRECTORY = utils_init.join_path_components(Path.home(), ".apigee")
 APIGEE_CLI_PLUGINS_DIRECTORY = utils_init.join_path_components(APIGEE_CLI_DIRECTORY, "plugins")
