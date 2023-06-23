@@ -95,14 +95,18 @@ class Backups:
         self.backupConfig.snapshot_size = self.calculate_total_snapshot_size()
 
     def retrieve_listing(self, api_choice):
-        if api_choice in {"apis", "apps"}:
+        if api_choice in ("apis", "apps"):
             console.echo(
                 f"Retrieving {api_choice} listing (this may take a while)... ",
                 line_ending="",
                 should_flush=True,
             )
         else:
-            console.echo(f"Retrieving {api_choice} listing... ", line_ending="", should_flush=True)
+            console.echo(
+                f"Retrieving {api_choice} listing... ",
+                line_ending="",
+                should_flush=True,
+            )
 
     def create_snapshot(self, api_choice):
         getattr(self, f"create_{api_choice}_snapshot")()
@@ -112,7 +116,6 @@ class Backups:
     def generate_snapshot_files_and_download_data(self):
         self.fetch_and_generate_snapshots()
         self.generate_snapshot_files()
-        # self.download_data()
         self.close_progress_bar()
         console.echo("Done.")
 
@@ -120,10 +123,6 @@ class Backups:
         console.echo("Generating snapshot files...")
         for api_choice in self.backupConfig.api_choices:
             getattr(self, f"download_and_save_{api_choice}")()
-
-    # def download_data(self):
-    #     # Placeholder method for downloading data
-    #     pass
 
     def close_progress_bar(self):
         self.backupConfig.progress_bar.close()
