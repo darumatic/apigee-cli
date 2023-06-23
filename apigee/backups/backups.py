@@ -396,7 +396,7 @@ class Backups:
             except HTTPError as e:
                 self.handle_apiproduct_download_error(e, apiproduct)
             except Exception as e:
-                    self.handle_general_exception(type(e).__name__, apiproduct)
+                self.handle_general_exception(type(e).__name__, apiproduct)
             self.update_progress_bar(description="API Products")
 
     def get_apiproduct_content(self, apiproduct):
@@ -498,7 +498,7 @@ class Backups:
             except HTTPError as e:
                 self.handle_developer_download_error(e, developer)
             except Exception as e:
-                    self.handle_general_exception(e, developer)
+                self.handle_general_exception(e, developer)
             self.update_progress_bar(description="Developers")
 
     def get_developer_details(self, developer):
