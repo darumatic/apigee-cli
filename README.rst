@@ -4,6 +4,8 @@ apigee-cli
 
 ⚠️ **Warning:** This project is no longer actively maintained and was created specifically for previous Darumatic clients.
 
+|License| |Python version| |Downloads|
+
 apigee-cli is a command-line interface tool designed to simplify the use of the Apigee Edge Management API. 
 It provides a user-friendly experience with features such as SSO support.
 
