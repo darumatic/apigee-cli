@@ -19,14 +19,14 @@ class ApiPullerWithDependencyExtraction:
     def __init__(self, auth, org_name, revision_number, environment, working_directory=None):
         self.auth = auth
         self.org_name = org_name
-        self._working_directory = working_directory
+        self.working_directory = working_directory
         self.revision_number = revision_number
         self.environment = environment
-        self._keyvaluemaps_dir = "keyvaluemaps"
-        self._targetservers_dir = "targetservers"
-        self._caches_dir = "caches"
-        self._apiproxy_dir = self._working_directory
-        self.zip_file = str(Path(self._apiproxy_dir).with_suffix(".zip"))
+        self.keyvaluemaps_dir = "keyvaluemaps"
+        self.targetservers_dir = "targetservers"
+        self.caches_dir = "caches"
+        self.apiproxy_dir = self.working_directory
+        self.zip_file = str(Path(self.apiproxy_dir).with_suffix(".zip"))
 
     @property
     def working_directory(self):
