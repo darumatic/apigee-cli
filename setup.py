@@ -43,7 +43,7 @@ SETUP_ARGS = dict(
         "click-option-group==0.5.5",
         "colorama==0.4.6",
         "coverage==7.0.1",
-        "GitPython==3.1.30",
+        "GitPython==3.1.34",
         "pudb==2022.1.3",
         "PyJWT==2.6.0",
         "pyotp==2.8.0",
